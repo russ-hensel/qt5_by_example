@@ -1,0 +1,31 @@
+
+
+KEY_WORDS:  some stuff from the m fitz book
+MODULE:     fitz_module
+CLASS_NAME: still need CLASS
+WIDGETS:    some widgets
+
+
+
+----------------------- Table of Contents -----------------
+
+
+----Purpose/Functionality
+........Widgets included
+---- User interaction
+---- Discussion
+---- Ask a ChatBot
+---- Ideas for Improvement
+
+---- Purpose/Functionality
+---- Ask a ChatBot
+---- Ideas for Improvement 
+
+
+
+
+
+
+
+
+

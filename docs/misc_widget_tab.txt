@@ -1,0 +1,57 @@
+
+
+MiscWidgets
+
+
+----------------------- Table of Contents -----------------
+ 
+
+---- Purpose/Functionality
+........Widgets included
+---- User interaction
+---- Discussion
+---- Ask a ChatBot
+---- Ideas for Extension
+
+ ----------------------- Contents -----------------
+
+ 
+ 
+---- Purpose/Functionality--------------------------------------------------------------------------
+
+    With the widgets on this tab
+
+    This tab contains several different widgets, typically the smaller and simpler ones.  At some point
+    these may be split out into their own tabs
+
+    Often a QLable Widget is used next fo the widge of interest to make clear which widget you are looking
+    at an what its name is in the code.
+
+........Widgets included:
+
+    QLable
+    QPushbutton
+    QCheckBox
+    QRadioButton
+    QLineEdit
+
+---- Ask a ChatBot
+
+
+    I have a QPushbutton ( or other control ). What signals is this widget set up to emit and what arguments are emitted for each signal.
+
+    I have a QPushbutton ( or other control ). What can I do to change its visual appearance.
+
+    I have a QLineEdit.  What can I do to change the way it manages input?
+
+
+
+---- Ideas for Extension
+
+
+
+
+
+
+
+----eof --------------------------------------------

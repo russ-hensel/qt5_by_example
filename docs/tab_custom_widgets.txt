@@ -1,0 +1,169 @@
+
+----------------------- Table of Contents -----------------
+ 
+
+---- Purpose/Functionality
+........Widgets included
+---- User interaction
+---- Discussion
+---- Ask a ChatBot
+---- Ideas for Extension
+
+ ----------------------- Contents -----------------
+
+CustomWidgets:
+
+    One set for criteria_fields, one for field_edits
+
+    field_edits
+
+        features
+            does data conversions to and from the record
+            sets to default including copy of prior
+            tracks if is_changed or not
+
+        they still have the old api of the wid
+
+    small class heiriarcy starting at -- this is a dual inherit which cause
+    some issues be careful.
+
+            CQEditBase
+
+            the original api exists but should be used with care.
+
+
+
+
+
+
+================= old may not be incorporated ===================
+
+class DiscussEdits( QWidget,  ):
+    """
+    these are intended to replace mapping and delegates
+    all need to have very simillar methods after being set up
+    so we can loop thru them always calling the same function
+
+    we would like to set up as much as possible from some sort of data dictionay
+    prehaps in dicts perhaps in a sqllite dictionary
+
+
+    note datetimes must be ints in my vocab floats that are ints
+    are ng
+
+
+    so:
+        need to get data from a record
+            set_data_from_record( record )
+        also need to set back in reocord
+            get_data_for_record( record )
+
+        need to know the record state
+            self.record_state
+            {                       RECORD_NULL:    "RECORD_NULL",
+                                    RECORD_FETCHED: "RECORD_FETCHED",
+                                    RECORD_NEW:     "RECORD_NEW",
+                                    RECORD_DELETE:  "RECORD_DELETE",
+                                    }
+
+            I think we need only RECORD_FETCHED and RECORD_NEW
+                where record_new can move some data back to the record
+                that record fetched cannot
+
+        For conversions for db to display first go to some standard representation
+            for timestamps go to datetimes which eventually will alwasle come
+            in as utc and display as local
+
+            after conversion there may be some modifiers like time of day
+            or rounding
+
+
+
+        for the edit controls ( not the criteria )
+            the main methods are
+
+                    set_data_from_record           get from db
+                    get_data_for_record            get from user
+                    set_data_to_default            is_changed     set to True  ( from_last_value = False )
+                                                clear/default new values ( include copy prior )
+                    validate_date               return error message or None -- or except ??? verify data
+
+                    set_data( data, in_type )   actually sets the data in_type for conversion
+
+        properties of the control and what they mean
+
+
+                    field_name
+                    display_type        data type in from record
+                    db_type             data type out to record
+
+                    self.db_type               = db_type       data type in the db
+                    self.display_type          = display_type  typically fixed by edit control no,
+                                                     for line edit alway string but perhaps modified
+                                                     to int, but this  may be for validate
+
+
+                    default_type        not a data type but like today or your name used in conjunction with default value set_to default
+                    default_value
+                    prior_value         in db_type so process using same conversions
+                            self.field_name            = field_name
+
+                    is_changed     more or less is changed from db
+                    is_editable    --- by the user   may be built in
+
+
+
+
+
+
+
+        functions
+
+                    set_config_xxxxxin
+
+
+
+
+        in each case the edit ( should we call it a field  or field_edit )
+        will know the name of the field, and any conversions.
+
+        In addition we would like the edit to be able to validate the data ( including user message? )
+            validate_data()
+
+        Also we should be able to set default values
+            set_data_to_default( from_last = False )
+            ( setup_default_behaviour )
+
+        And default the data from the last reccord which may or may not be the same as
+        the defalut data
+            defalut_data_last  or default_data( from_last = True )
+
+        We would like the edit to be able to always return the same value as pased
+        in -- property is_constant and it saves and returns the passed in value
+        with not conversion  is_constant may just be a nop on get_value_for_record
+
+        properties and methods set in out conversions, display options, interactions.....
+
+        in_data_type     the data type of ??
+        display_data_type  better
+        display_type
+
+        out_data_type    the data type that is going out to the record or database
+        db_data_type     better
+        db_type          best
+
+        types
+            timestamp
+            qdate
+            qdate_eod      or timestamp_eod    if input is date
+            qdate_bod
+            qdate_epd          end of previous day
+
+    """
+    
+---- Ask a ChatBot
+---- Ideas for Extension    
+    
+    
+    
+#     eof     

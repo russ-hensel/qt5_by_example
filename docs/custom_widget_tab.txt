@@ -1,0 +1,70 @@
+
+
+This tab is related to working with some of my custom edits, that is
+fields indened to edit data from database models like qsql_.....
+
+
+
+----------------------- Table of Contents -----------------
+
+
+----Purpose/Functionality
+
+---- Work still to do
+
+--------------------------------------------------------
+
+---- Purpose/Functionality--------------------------------------------------------------------------
+
+With the widgets on this tab
+
+The code is found in    and focus on the use of     and  .
+
+    * <default> sets ... to thier default values
+
+    * <select_some> selects some the records see the code and console output
+
+    * <insert_record> what it says see the code and console output
+
+    *Inspect <inspect>
+        the usual
+
+    *Breakpoint <breakpoint>
+        the usual
+
+
+........Widget included:
+
+            QGridLayot
+
+This shows loops being used to layout lables which indicate their own row column position.
+
+The last row of buttons is a box layout inside the larger grid layout
+
+
+---- Ask a ChatBot --------------------------------------------------------------------------
+
+            I have a QGridLayot. How to I add and remove widgets from it?
+.
+            I have a QGridLayot. What signals is this widget set up to emit and what arguments are emitted for each signal?
+
+            I have a QGridLayot. What can I do to change its visual appearance?
+
+
+---- Work still to do --------------------------------------------------------------------------
+
+    Lots, indluding this section
+
+
+
+---- eof
+
+---- Work still to do  --------------------------------------------------------------------------
+
+    * more Update, and add delete functionality
+
+
+
+
+
+----eof --------------------------------------------

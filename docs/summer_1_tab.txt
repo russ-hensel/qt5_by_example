@@ -1,0 +1,27 @@
+
+
+
+
+this is the help for the q splitter not yet written 
+
+
+----------------------- Table of Contents -----------------
+
+
+----Purpose/Functionality
+........Widgets included
+---- User interaction
+---- Discussion
+---- Ask a ChatBot
+---- Ideas for Improvement
+
+
+ 
+----------------------- Contents -----------------------
+
+
+
+
+
+
+

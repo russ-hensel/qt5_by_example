@@ -1,0 +1,60 @@
+
+
+test_tab_tab.txt     move me to ..... 
+
+
+----------------------- Table of Contents -----------------
+
+
+
+---- Purpose/Functionality
+........Widgets included
+---- User interaction
+---- Discussion
+---- Questions
+---- Ask a ChatBot
+---- Work still to do
+
+ 
+
+--------------------------------------------------------
+
+---- Purpose/Functionality --------------------------------------------------------------------------
+
+      The date delegate is used to co.... 
+
+ 
+ 
+
+
+---- User interaction --------------------------------------------------------------------------
+
+    * Clicking on a 
+
+     delegaate memtions calendar popup but i do not see it 
+
+
+    Buttons:
+
+        * <select_all> selects all the records in both tables
+
+        *Inspect <inspect>
+            the usual
+
+        *Breakpoint <breakpoint>
+            the usual
+
+
+---- Questions
+
+        can we do the join the other way around
+
+---- Work still to do  --------------------------------------------------------------------------
+
+    *Add, Update, and delete functionality
+
+
+
+
+
+----eof --------------------------------------------

@@ -1,0 +1,38 @@
+
+
+
+This tab can open other main windows that contain dockable widgets.
+
+
+
+----------------------- Table of Contents -----------------
+
+
+----Purpose/Functionality
+ 
+---- User interaction
+---- Discussion
+---- Ask a ChatBot
+---- Ideas for Improvement
+
+
+
+----------------------- Contents -----------------------
+
+----Purpose/Functionality
+ 
+---- User interaction
+        Play around with it
+        
+        inspect         as usual, but also on the dockwidgets
+        
+        breakpoint      as usual, but also on the dockwidgets
+        
+---- Discussion
+
+---- Ask a ChatBot
+
+---- Ideas for Improvement
+        More dockwidget features
+        Menu on dockwidget like in spyder 
+

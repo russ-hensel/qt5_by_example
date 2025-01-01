@@ -1,0 +1,58 @@
+
+
+KEY_WORDS:  grid layout
+MODULE:     grid_layout
+CLASS_NAME: grid_layout_tab still need CLASS
+WIDGETS:    QGridLayout
+STATUS:     partly works
+
+
+
+
+
+
+----------------------- Table of Contents -----------------
+
+
+---- Purpose/Functionality
+---- Discussion
+---- Ask a ChatBot
+---- Work still to do
+---- User interaction
+---- Questions
+
+
+--------------------------------------------------------
+
+---- Purpose/Functionality --------------------------------------------------------------------------
+
+    This show objects ( so far lables ) layed out using a QGridLayot
+    Other than that it does not do much
+
+........Widget included:
+
+            QGridLayot
+
+---- Discussion
+
+
+    This shows loops being used to layout lables which indicate their own row column position.
+
+    The last row of buttons is a box layout inside the larger grid layout
+
+
+---- Ask a ChatBot --------------------------------------------------------------------------
+
+            I have a QGridLayot. How to I add and remove widgets from it?
+.
+            I have a QGridLayot. What signals is this widget set up to emit and what arguments are emitted for each signal?
+
+            I have a QGridLayot. What can I do to change its visual appearance?
+
+
+---- Work still to do --------------------------------------------------------------------------
+
+    Lots, indluding this section
+
+
+---- eof

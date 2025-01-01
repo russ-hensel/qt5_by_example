@@ -1,0 +1,100 @@
+
+
+ 
+
+----------------------- Table of Contents -----------------
+
+
+---- Purpose/Functionality
+ 
+---- User interaction
+---- Discussion
+---- Ask a ChatBot
+---- Ideas for Improvement
+
+
+
+----------------------- Contents -----------------------
+
+---- Purpose/Functionality --------------------------------------------------------------------------
+
+From this tab you can rebuild the database from scratch, and print out the data ( to the console ).
+Also you can do the usual inspection and breakpoint.
+
+The code for this tab is found in QSqlDatabaseTab and SampleDB.  The tab focus on the use of
+QSqlDatabase and QSqlQuery
+
+---- Discussion
+
+Generally we are using bind variables as a best pratice against sql injection.
+
+
+The tables in brief ( for more detail see the SQL in SampleDB )
+
+    people
+        rows of people and some of their properties
+
+    people_phones
+        the phone numbers of people, to be joined to people
+        this is a one (people) to many ( people_phones ) join.
+
+    book_clubs -- work in progress
+        the book clubs that people belong to
+        the plan is for this to be a many to many join
+
+    To help distinguish the id's of the various tables I have
+    tried to build them in widely separated numeric ranges
+
+---- User interaction ---------------------------------------
+
+Buttons
+
+    *<rebuild_db>
+        Rebuild the db from scratch (  also done every time the application
+        is started )
+        The database may be in memory ( fast ) or on disk ( where you can inspect
+        it with other utilities -- very useful )
+
+    *<print_db>
+        Print out the data in all the tables.
+        
+    *<insert_more_data>
+    
+    
+    *<delete_data>
+    
+    *<update_data>
+        
+         
+
+    *<inspect>
+        the usual
+
+    *<breakpoint>
+        the usual
+
+
+........Widgets included:
+
+        No visual widgets but uses... 
+        QSqlQuery
+        QSqlDatabase
+
+ 
+
+---- Ask a ChatBot --------------------------------------------------------------------------
+
+            I have a database...... How using QSQLQuery can I ..... 
+
+
+---- Ideas for Improvement --------------------------------------------------------------------------
+
+        workin on it 
+
+
+
+
+
+
+
+----eof --------------------------------------------

@@ -1,0 +1,50 @@
+
+ 
+
+----------------------- Table of Contents -----------------
+
+
+----Purpose/Functionality
+........Widgets included
+---- User interaction
+---- Discussion
+---- Ask a ChatBot
+---- Ideas for Improvement
+
+
+
+----------------------- Contents -----------------------
+
+
+----Purpose/Functionality
+    A data mapper moves data from a model to a form, that is maps
+    from model to form ( and I think the reverse )
+
+---- User interaction
+    click to field      -- then you can edit the data
+    <<Prior>
+    <Next>>
+    <Save Changes>
+
+
+
+
+---- Discussion
+
+
+
+
+
+---- Ask a ChatBot
+
+
+
+---- Ideas for Improvement
+
+    Illustrate a full crud cycle 
+
+ 
+ 
+ 
+ 
+---- eof 

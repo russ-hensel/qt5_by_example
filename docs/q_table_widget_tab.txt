@@ -1,0 +1,64 @@
+
+ 
+ 
+
+----------------------- Table of Contents -----------------
+ 
+
+---- Purpose/Functionality
+---- User interaction
+---- Discussion
+---- Ask a ChatBot
+---- Ideas for Improvement
+
+ 
+
+------------------------- Contents -------------------------------
+
+----Purpose/Functionality--------------------------------------------------------------------------
+
+
+........Widgets included:
+
+        QTableWidget
+
+---- Interactions
+
+
+    Buttons:
+
+        * <select_all> selects all the records in both tables
+
+        *Inspect <inspect>
+            the usual
+
+        *Breakpoint <breakpoint>
+            the usual
+
+
+
+
+---- Discussion
+
+
+    This tab is related to QTableWidget, not an SQL widget, but
+    a two dimensional table for user interaction.  It may be used
+    for any data including SQL data, but the data needs to be moved
+    in and out "manually"
+    
+    it is a bit simpler than table models which needed to be 
+    implemented fro abstracttable models and used with a tableview
+    which this guy doesw not need.
+
+---- Ask a ChatBot --------------------------------------------------------------------------
+
+        I have a QTableWidget ..... 
+
+
+---- Ideas for Improvement --------------------------------------------------------------------------
+
+         
+
+
+
+# ---- eof

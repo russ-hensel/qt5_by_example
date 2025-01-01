@@ -1,0 +1,30 @@
+
+
+
+
+
+
+Select from a table with sorting on one field 
+
+
+Mostly from Chapter 23
+         Chapter 23 C skipped for now is the Relational model \
+        
+        
+        Chapter 23 C  Generic queries with QSqlQueryModel
+
+
+----------------------- Table of Contents -----------------
+ 
+
+---- Purpose/Functionality
+---- User interaction
+---- Discussion
+---- Ask a ChatBot
+---- Ideas for Improvement
+
+ 
+
+------------------------- Contents -------------------------------
+
+----Purpose/Functionality--------------------------------------------------------------------------

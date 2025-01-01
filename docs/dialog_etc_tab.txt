@@ -1,0 +1,60 @@
+
+
+KEY_WORDS:  dialogs message boxs
+MODULE:     module tbd
+CLASS_NAME: class tbd
+WIDGETS:    some widgets
+STATUS:     pretty much working
+
+
+
+
+----------------------- Table of Contents -----------------
+
+
+---- Purpose/Functionality
+........Widgets included
+---- User interaction
+---- Discussion
+---- Ask a ChatBot
+---- Ideas for Extension
+
+
+
+
+---- Purpose/Functionality --------------------------------------------------------------------------
+
+        demo the qt widget for list some dialogs including
+        browse for file and directories
+
+
+........Widgets included:
+
+             QMessageBox() QFileDialog
+
+---- User interaction
+
+
+        <buttons, read them>
+
+
+
+---- Discussion
+
+
+
+
+---- Ask a ChatBot
+
+
+        I have a QMessageBox. how can I customize it.
+
+
+
+---- Ideas for Extension
+
+
+    there are more sorts of dialogs, i think
+
+
+---- eof

@@ -1,0 +1,39 @@
+
+
+
+
+
+----------------------- Table of Contents -----------------
+ 
+
+---- Purpose/Functionality
+---- User interaction
+---- Discussion
+---- Ask a ChatBot
+---- Ideas for Improvement
+
+ 
+
+------------------------- Contents -------------------------------
+
+----Purpose/Functionality--------------------------------------------------------------------------
+
+
+
+---- Purpose/Functionality
+        Sql queries into a table with a sql select statement 
+
+
+
+---- User interaction
+        explore the gui
+
+
+
+---- Discussion
+---- Ask a ChatBot
+---- Ideas for Improvement
+
+        add more of crud cycle
+        clean up dead
+        fix select_all 

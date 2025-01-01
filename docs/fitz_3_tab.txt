@@ -1,0 +1,19 @@
+
+
+
+KEY_WORDS:      some stuff from the m fitz book mouse events
+MODULE:         tab_fitz_3
+CLASS_NAME:     Fitz_3_Tab
+WIDGETS:        Qt.LeftButton ....
+STATUS:         partly works
+MODULE/CLASS:
+TAB_TITLE:     Fitz_3
+
+
+
+
+
+
+
+
+

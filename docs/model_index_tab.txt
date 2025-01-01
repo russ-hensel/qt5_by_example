@@ -1,0 +1,13 @@
+
+
+In this example we use a ModelIndex to index a couple  of
+
+columns in boith a tableModel from the abstract and in
+a QSqlTableModel.
+
+After getting data in eithr model click on a row
+
+and see that the indexer is build, gets a key and
+findes ths row.
+
+All this code is to no purpose her except to illustrate the indexer.
