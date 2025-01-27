@@ -20,51 +20,39 @@ ls
 echo "hit any key to continue... "
 read RESPONSE
 
+rsync -u -t -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/*.*       /mnt/WIN_D/for_github/qt5_by_example
+rsync -u -t -vv -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/docs/*.*  /mnt/WIN_D/for_github/qt5_by_example/docs 
+rsync -u -t -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/*.*  /mnt/WIN_D/for_github/qt5_by_example/tabs
+ 
+ 
+# to libs ---------------------------------------------- 
+rsync -u -t -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/rshlib_qt/*.*     /mnt/WIN_D/for_github/qt5_by_example/libs
+ 
+rsync -u -t -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/in_spect/*.*      /mnt/WIN_D/for_github/qt5_by_example/libs
 
+ 
+rsync -u -t -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb//key*.*           /mnt/WIN_D/for_github/qt5_by_example/libs
 
-cp  ia_qt.py               /mnt/WIN_D/for_github/qt_by_example/   -f
-cp  io_qt.py               /mnt/WIN_D/for_github/qt_by_example/   -f
-cp  qt_sql_query.py        /mnt/WIN_D/for_github/qt_by_example/   -f
-cp  qt_sql_widgets.py      /mnt/WIN_D/for_github/qt_by_example/   -f
-cp  tab_*.py               /mnt/WIN_D/for_github/qt_by_example/   -f
+rsync -u -t -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/string_util.py     /mnt/WIN_D/for_github/qt5_by_example/libs
+rsync -u -t -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/app_*.py            /mnt/WIN_D/for_github/qt5_by_example/libs
+rsync -u -t -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/os_call.py            /mnt/WIN_D/for_github/qt5_by_example/libs
 
-cp  qt_wat.py               /mnt/WIN_D/for_github/qt_by_example/   -f
-cp  qt_wat_app.py           /mnt/WIN_D/for_github/qt_by_example/   -f
-cp  qt_widgets.py           /mnt/WIN_D/for_github/qt_by_example/   -f
-cp  qt_sql_widget.py        /mnt/WIN_D/for_github/qt_by_example/   -f
-cp  qt_sql_widget.py        /mnt/WIN_D/for_github/qt_by_example/   -f
-cp  qt_fitz_book.py         /mnt/WIN_D/for_github/qt_by_example/   -f
+ 
+ 
 
-cp  qt_table_model.py      /mnt/WIN_D/for_github/qt_by_example/   -f
-
-
-
-cp  parameters.py           /mnt/WIN_D/for_github/qt_by_example/   -f
-cp  wat_inspector.py        /mnt/WIN_D/for_github/qt_by_example/   -f
-
-
-cp  info_*.py               /mnt/WIN_D/for_github/qt_by_example/   -f
-
-cp  ./*.jpg                 /mnt/WIN_D/for_github/qt_by_example/   -f
-
-cp  readme_rsh.txt          /mnt/WIN_D/for_github/qt_by_example/   -f
+rsync -u -t -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qsql_utils.py     /mnt/WIN_D/for_github/qt5_by_example/libs
 
 #cp  theprofm_bku_here_to_l.sh     /mnt/WIN_D/for_github/qt_by_example/   -f
-cp  utils_for_tabs.py       /mnt/WIN_D/for_github/qt_by_example/   -f
-cp  wat_inspector.py        /mnt/WIN_D/for_github/qt_by_example/   -f
+# cp  utils_for_tabs.py       /mnt/WIN_D/for_github/qt_by_example/   -f
+ 
 
-cp  watt_inspector_help.txt       /mnt/WIN_D/for_github/qt_by_example/   -f
-
-cp  ./docs/*.*             /mnt/WIN_D/for_github/qt_by_example/docs   -f
-
-/mnt/WIN_D/Russ/0000/python00/python3/_projects/qt_by_example/a_cat.jpg
-/mnt/WIN_D/Russ/0000/python00/python3/_projects/qt_by_example/bird_house.jpg
+ 
 
 # ---------------------
 
-cd  /mnt/WIN_D/Russ/0000/python00/python3/_projects/qt_by_example/docs
+ 
 
-cp  *.*                          /mnt/WIN_D/for_github/qt_by_example/docs   -f
+ 
 
 # here just wait for a keystroke ( or comment out )
 echo "hit any key to continue and exit "

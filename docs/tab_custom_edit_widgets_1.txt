@@ -1,0 +1,114 @@
+
+
+
+RshCustomEditWidgets_2   -- with some sql
+
+This tab is related to custom versions of QLineEdit, QTextEdit...
+which have been extended for the use with database queries and thier
+interaction with the user.
+All these edits relay on a QSqlTableModel to interact with the DB
+  It is also a place to test out the coding
+and implementation of the edits
+
+
+
+----------------------- Table of Contents -----------------
+
+
+
+---- Purpose/Functionality
+    ---- Function of the Edits
+---- User interaction
+---- Discussion
+---- Questions
+---- Ask a ChatBot
+---- Ideas for Improvement
+
+----------------------- Contents ----------------- 
+
+
+---- Purpose/Functionality
+        see top of file
+        
+        plus.... 
+        
+        The tab is connected to the example database and can progress forward
+        and backward thru a short list of id's in that database.
+        The table in use is the people table.
+        
+        No data is fetched until the prior or next button is pressed.
+        
+        We fetch data one row at a time
+        
+        Afte the data is fetched the user may interact with the
+        data on the screen, but there ( so far ) is no save functionality.
+        
+        There is some insert functionality, but only to the screen
+        the inserted data is not saved.
+        
+    ---- Function of the Edits  
+    
+        The edits have the usual functions of the parent edits plus functions 
+        to facilitate their use with a database.
+        
+        * move data from a QRecord to an QEdit doing desired conversions.
+        * clearing data from the edit
+        * defaulting values into the edit
+        * tracking if the data has been changed
+        * copying ( or is it retaining ) value from one record for the next
+        * validate data in the edit
+        * moving data from the edit back to the record 
+        
+    ---- QSqlTableModel
+    
+        take a table ( or perhaps also a query ) and a db connection as input
+        you can set the select via a filter.
+        
+        It can then select add and delete records.
+        
+        To interact with it your get and set records QRecords from it which hold
+        the data in Fields ( are there QFields or similiar )
+        
+        See the code.
+        
+        Here I use my custom edits but that is not necessarey it just saves a bit of
+        code .
+        
+---- User interaction
+
+        note: the collection of the edits on the screen is a "form"
+
+        prior             fetches the prior record from the db, wraping at the end of its list 
+        next
+        insert_default    inserts a new record into the form using the "default" set up in each
+                          edit
+        
+        insert_prior     inserts a new record into the form using the "default" set up in each
+                         edit ( but is this not the same as keep-prior
+                          
+        clear             inserts a new record with the edits cleard  
+        
+        context_menu     on edits -- see what is there                 
+
+
+---- Discussion
+        second model to look for interactions, did not find any
+
+---- Questions
+---- Ask a ChatBot
+
+        How do I clear a QSqlTableModel of all data -- is there a clear function 
+        
+
+        
+---- Ideas for Improvement
+        
+        ** context menu for edit inc str() 
+
+
+
+
+    Allow for db updates and additions --- or should this just be in stuffdb 
+
+
+

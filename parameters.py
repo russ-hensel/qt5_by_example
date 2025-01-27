@@ -13,7 +13,6 @@ if __name__ == "__main__":
 
 # --------------------
 
-
 import logging
 import os
 import sys
@@ -60,8 +59,8 @@ class Parameters( ):
         a mode for the new user, pretty much empty,
         a new user may experiment here.
         """
-        self.mode               = "mode_russ_on_theprof"
-        # but do they use the same units ?
+        self.mode               = "mode_russ_on_theprof in qt5_by_example"
+        # but do they use the same units ?QDateEdit
         self.qt_width           = 1500
         self.qt_height          = 600    # 700 most of win height
         self.qt_xpos            = 10
@@ -73,13 +72,16 @@ class Parameters( ):
         self.wat_qt_ypos        = 10
 
 
+        self.dir_for_tabs       = [
+                                    "/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb",
+                                    # "/mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/test",
+                                    "/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs",
+                                    "/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs",
+                                    "/mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/rshlib_qt",
+                                    ]
 
 
-        self.dir_for_tabs       = [ "./",
-                                    "/mnt/WIN_D/Russ/0000/python00/python3/_projects/stuffdb",
-                                    "/mnt/WIN_D/Russ/0000/python00/python3/_projects/rshlib/test" ]
-
-        self.default_search     =      "zz"
+        self.default_search     = "zzz"
         self.do_search_on_init  = True
 
     # -------
@@ -255,17 +257,17 @@ class Parameters( ):
 #        self.text_editor        = "xed"
 
         # ---- logging
-        self.pylogging_fn       = "./logs/app.py_log"   # file name for the python logging
+        self.pylogging_fn       = "./app.py_log"   # file name for the python logging
         self.logging_level      = logging.DEBUG         # may be very verbose
         self.logging_level      = logging.INFO
         #self.logging_level      = logging.INFO
 
         self.logger_id          = "qt_ex"         # id of app in logging file
 
-        self.gui_text_log_fn    = None   # for edit window if None then no logging
-        self.gui_text_log_fn    = "./logs/gui_log.log"
+        # self.gui_text_log_fn    = None   # for edit window if None then no logging
+        # self.gui_text_log_fn    = "./logs/gui_log.log"
 
-        self.log_gui_text       = False # this is for gui_ext message area
+        # self.log_gui_text       = False # this is for gui_ext message area
                                              # goes to normal log file  not special one
         # ---- database
 
@@ -283,20 +285,24 @@ class Parameters( ):
 
         # ---- file names
         # control button for editing the readme file
-        self.readme_fn          = "readme_rsh.txt"   # or None to suppress in gui
+        self.readme_fn      = "readme_rsh.txt"   # or None to suppress in gui
             # a readme file accessable from the main menu
 
 
         # or anything else ( will try to shell out may or may not work )
-        self.help_fn       =  "./docs/help.txt"   #  >>. this is the path to our main .py file self.py_path + "/" +
-        self.help_path     =  "./docs"
+        self.help_fn        =  "./docs/help.txt"   #  >>. this is the path to our main .py file self.py_path + "/" +
+
+        self.help_path      =  "./docs"
+        self.help_path      =  "/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/docs/"
             # path leading to all docs and help
 
-        self.dir_for_tabs           = [ "./",  ]
+        self.dir_for_tabs       = [ "./",  ]
+        self.dir_for_tabs       = [    ]
+        self.dir_for_tabs       = [ "/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs" ]
+        #may need to be on path sys.path.insert( 1, f"{src_root}/_projects/stuffdb/qt_tabs" )
 
-
-        self.default_search  =      ""
-        self.do_search_on_init      = False
+        self.default_search     =      ""
+        self.do_search_on_init  = False
 
     # -------
     def __init__( self, ):
@@ -386,6 +392,9 @@ class Parameters( ):
                                            f"{self.wat_qt_xpos}" ] )
         a_str   = self.to_columns( a_str, ["wat_qt_ypos",
                                            f"{self.wat_qt_ypos}" ] )
+        a_str   = self.to_columns( a_str, ["self.dir_for_tabs",
+                                           f"{self.dir_for_tabs}" ] )
+
         return a_str
 
 # # something like this for creating on import

@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# russ beware
+*.sh
+
+
 # C extensions
 *.so
 

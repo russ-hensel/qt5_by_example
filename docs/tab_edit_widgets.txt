@@ -1,0 +1,7 @@
+
+
+
+this needs to be written for edit widgets .... the base widget for sql and database widgets
+i have made custom extensions to most of these
+
+this tab may be quite incomplete see source and inspect 

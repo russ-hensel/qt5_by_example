@@ -13,8 +13,18 @@ Table of Contents
 =================================================
 
 ---- Versions
+/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tab_select_tab.py
 
-        !! add about
+
+        ** report if self.dir_for_tabs is not found
+        ** display widgets across top of tab
+        ** sort search results
+        ** enable close tabs
+        !! what to do about rebuild of db
+        !! output to a window as well as console  see fitz 23 a or so
+        ?? can we do something about dup tabs
+
+        ** add about
         ** add help
         !! add toolbar ??
         !! work on headers and column widths

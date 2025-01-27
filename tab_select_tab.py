@@ -110,7 +110,7 @@ class Search_Tab( QWidget ) :
         tab_page        = self
         layout          = QVBoxLayout( tab_page )
 
-        widget = QLabel("Enter key words to search for a widget or use"
+        widget          = QLabel("Enter key words to search for a widget or use"
                         "\n    Box works, list works .... "
                         "\n    Capitilization... is ignored \n      ")
 
@@ -141,7 +141,7 @@ class Search_Tab( QWidget ) :
 
         # ---- PB
         widget = QPushButton("Select")
-        widget.clicked.connect( self.run_select    )
+        widget.clicked.connect( self.run_select )
         row_layout.addWidget( widget,   )
 
         # ---- a row
@@ -162,6 +162,7 @@ class Search_Tab( QWidget ) :
         self.list_view       = view
         view.setSelectionBehavior( QTableView.SelectRows )
         view.setModel( model )
+        view.setSortingEnabled( True )
 
         row_layout.addWidget( view )
 
@@ -206,21 +207,6 @@ class Search_Tab( QWidget ) :
         # Stretch columns to fit	QHeaderView.Stretch
 
 
-        # self.widgets_list   = widgets   # for inspection later
-
-        # for w in widgets:
-        #     layout.addWidget(w())
-
-        # # ---- new row, standard buttons
-        # button_layout = QHBoxLayout(   )
-        # layout.addLayout( button_layout,  )
-
-
-
-        # # ---- PB breakpoint
-        # widget = QPushButton("breakpoint\n")
-        # widget.clicked.connect( self.breakpoint    )
-        # button_layout.addWidget( widget,   )
 
     # ------------------------
     def run_select(self):
@@ -331,7 +317,11 @@ class Search_Tab( QWidget ) :
     # ------------------------
     def open_tab_select(self, index ):
         """
-            CREATE TABLE tabs (
+        opens a tab that is clicked on
+        goes to controller.open_tab_select
+
+
+       sql for ref      CREATE TABLE tabs (
                 id              INTEGER PRIMARY KEY AUTOINCREMENT,
                 doc_file_name   TEXT,
                 name            TEXT,
@@ -355,30 +345,31 @@ class Search_Tab( QWidget ) :
                     # /mnt/WIN_D/Russ/0000/python00/python3/_projects/stuffdb/tab_custom_widgets
                     # i want the stem so rsplit on /
 
-
-        model_index       = model.index( row, column)
+        model_index = model.index( row, column)
         module      = model.data( model_index ).strip()
         splits      = module.rsplit( "/", maxsplit = 1 )
         if len( splits )  == 2:
-            module   = splits[1]
+            module  = splits[1]
         else:
-            module   = splits[0]
+            module  = splits[0]
 
         column      = model.fieldIndex( "class" )
-        model_index       = model.index( row, column)
+        model_index = model.index( row, column)
         a_class     = model.data( model_index ).strip()
+
+        column      = model.fieldIndex( "widgets" )
+        model_index = model.index( row, column)
+        widgets     = model.data( model_index ).strip()
+        print( f"{widgets} ====================================================")
+
 
         ix          = global_vars.CONTROLLER.switch_to_tab_by_class_name( a_class )
         if ix >= 0:
             return
 
         #rint( f"open_tab_select: {row = },  {tab_title = }    {module = }   {a_class = }   ")
-        pass
 
-        global_vars.CONTROLLER.open_tab_select( module, a_class , tab_title  )
-
-
-
+        global_vars.CONTROLLER.open_tab_select( module, a_class , tab_title, widgets = widgets  )
 
 
 # ---- eof

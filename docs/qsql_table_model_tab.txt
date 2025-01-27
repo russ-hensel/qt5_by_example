@@ -62,7 +62,7 @@ The code is found in QSqlTableModelTab and focus on the use of QSqlTableModel an
 
         that is the id of the person ( column 0 ) is used to select rows in the people_phones.person_id
 
- 
+    * Click on column headers for sorting.
 
 
     Buttons:

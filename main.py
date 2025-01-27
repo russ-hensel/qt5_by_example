@@ -7,6 +7,6 @@
 
 
 import adjust_path
-import qt_by_example
+import qt5_by_example
 
-qt_by_example.main()
+qt5_by_example.main()

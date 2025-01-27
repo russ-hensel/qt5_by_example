@@ -1,7 +1,8 @@
 
 
 
-This tab can open other main windows that contain dockable widgets.
+This tab can open other main windows that contain dockable widgets.  Not so sure correctly stated 
+
 
 
 

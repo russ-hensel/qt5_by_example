@@ -35,10 +35,8 @@ def create_instance( module_name, class_name ):
     else:
         pass
 
-    cls = getattr( module, class_name )
-
-    instance = cls()
-
+    cls         = getattr( module, class_name )
+    instance    = cls()
     return  instance
 
 

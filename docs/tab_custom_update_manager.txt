@@ -1,0 +1,35 @@
+
+
+
+tab_custom_update_manger.txt
+
+
+test bed and demo of 
+
+    update_manager
+    custom_widgets
+    key_word .....
+    
+    
+    
+    What works
+    
+    
+    
+        
+        update
+            fetched -- ok 
+            insert default ....  ok  check with dbutil 
+            
+            
+            key words          
+                fetch                ok  check with dbutil 
+                insert_default       ok 
+                    
+            
+            
+            
+
+
+
+

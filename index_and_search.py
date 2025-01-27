@@ -14,6 +14,7 @@ if __name__ == "__main__":
     # qt_search.main()
 # --------------------
 
+import logging
 import inspect
 import os
 import sqlite3 as lite
@@ -91,19 +92,25 @@ def delete_db_file( file_name ):
     will delete any file, but intended for db file
     """
     exists    = str( os.path.isfile( file_name ) )
-    print( f"{file_name} exists {exists}" )
+    msg       =  f"{file_name} exists {exists}"
+    logging.error( msg )
 
     if exists:
         try:
             os.remove( file_name )   # error if file not found
             print(f"removed {file_name} "  )
+            logging.debug( msg )
 
         except OSError as error:
-            print( error )
-            print( f"os.remove threw error on file {file_name}")
+            msg    = f"{error = }"
+            logging.debug( msg )
+
+            msg        = ( f"os.remove threw error on file {file_name}")
+            logging.debug( msg )
 
     else:
-        print( f"file already gone  {file_name}                ")
+        msg         = ( f"file already gone  {file_name}   ")
+        logging.debug( msg )
 
 # -------------------------------------
 class TabDBBuilder():
@@ -140,9 +147,8 @@ class TabDBBuilder():
 
         db_file_name             = parameters.PARAMETERS.tab_db_file_name
 
-        if db_file_name !=  ':memory:':
-            # delete for a fresh start
-            pass
+        if db_file_name !=  ':memory:':  # delete for a fresh start
+
             delete_db_file( db_file_name )
 
         db              = QSqlDatabase.addDatabase( parameters.PARAMETERS.tab_db_type, "tab_db" )
@@ -150,8 +156,10 @@ class TabDBBuilder():
         self.db         = QSqlDatabase.database( "tab_db" )  # may need to do neare to use lets see
 
         if not db.open():
-            print("IndexDB Error: Unable to establish a database connection.")
+            msg       = ("IndexDB Error: Unable to establish a database connection.")
+            logging.error( msg )
             return False
+
         return True
 
     # ---------------------------
@@ -190,7 +198,8 @@ class TabDBBuilder():
         """
 
         if not query.exec_(sql):
-            print("Error executing query:", query.lastError().text())
+            msg      = ("Error executing query: {query.lastError().text() }" )
+            logging.error( msg )
         else:
             pass
             #rint("Query executed successfully.")
@@ -210,7 +219,9 @@ class TabDBBuilder():
         """
 
         if not query.exec_(sql):
-            print("create_tab_key_words_table Error executing query:", query.lastError().text())
+
+            msg     = ("create_tab_key_words_table Error executing query: {query.lastError().text()}" )
+            logging.error( msg )
         else:
             pass
             #rint("create_tab_key_words_table Query executed successfully.")
@@ -226,14 +237,16 @@ class TabDBBuilder():
         #i_directory    = Path( "./" )
         for i_directory in directory_list:
             i_directory = Path( i_directory )
-
             i_file_list    = [file  for file in i_directory.glob('tab*.py')  ]
                     # not .stem or .name whic may be needed later
-
             file_list      = file_list + i_file_list
+
+        msg         = "index_and_search.py find_doc_files this is the file list"
+        logging.debug( msg )
         for ix, i_file in enumerate( file_list ):
             pass
-            #rint( ix, i_file)
+            msg    = f" {ix }ix, {i_file} "
+            logging.debug( msg )
 
         return file_list
 
@@ -261,6 +274,8 @@ class TabDBBuilder():
             module       = doc_data[ "module" ].strip()
             class_name   = doc_data[ "class_name" ].strip()
             if not bool( class_name ) or not bool( module ):
+                msg    = "TabDBBuilder dropping {module = }"
+                logging.debug( msg )
                 continue
 
             self.doc_data_to_db( doc_data )
@@ -307,7 +322,8 @@ class TabDBBuilder():
 
             result   = query.exec_()
             if not result:
-                print("doc_data_to_db Error executing query:", query.lastError().text())
+                msg      = f"doc_data_to_db Error executing query:  {query.lastError().text()} "
+                logging.error( msg )
                 1/0
             else:
                 pass
@@ -403,8 +419,8 @@ class TabDBBuilder():
         sql   = "SELECT id, module, class, widgets, key_words FROM tabs"
 
         if not query.exec_( sql ):  # Check if execution failed
-            print("Error executing query:", query.lastError().text())
-
+            msg        = ("Error executing query:  {query.lastError().text()}" )
+            logging.error( msg )
 
         while query.next():
             a_id                = query.value(0)

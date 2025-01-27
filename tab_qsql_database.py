@@ -211,7 +211,8 @@ class SampleDB():
                 id              INTEGER PRIMARY KEY AUTOINCREMENT,
                 name            TEXT,
                 age             INTEGER,
-                family_relation TEXT
+                family_relation TEXT,
+                add_kw          TEXT
             )
         """
 
@@ -224,7 +225,6 @@ class SampleDB():
     # ---------------------------
     def create_people_key_words_table( self, ):
         """
-
         query.prepare( f"INSERT INTO {self.table_name}"
                         "  (id, key_word ) VALUES ( :id, :key_word )")
         ."""
@@ -544,7 +544,6 @@ class SampleDB():
         query           = QSqlQuery( self.db )
 
         print("people_key_words table:")
-
 
         self.query_exec_error_check( query, sql )
 

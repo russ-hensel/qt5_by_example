@@ -1,15 +1,14 @@
 
 
 
-RshCustomEditWidgets     
+RshCustomEditWidgets_2   -- with some sql
 
 This tab is related to custom versions of QLineEdit, QTextEdit...
 which have been extended for the use with database queries and thier
 interaction with the user.
-
-
-There should be other tabs that use these controls with sql, this tab
-is free of those complications
+All these edits relay on a QSqlTableModel to interact with the DB
+  It is also a place to test out the coding
+and implementation of the edits
 
 
 
@@ -33,20 +32,32 @@ is free of those complications
         
         plus.... 
         
+        The tab is connected to the example database and can progress forward
+        and backward thru a short list of id's in that database.
+        The table in use is the people table.
         
+        No data is fetched until the prior or next button is pressed.
+        
+        We fetch data one row at a time
+        
+        Afte the data is fetched the user may interact with the
+        data on the screen, but there ( so far ) is no save functionality.
+        
+        There is some insert functionality, but only to the screen
+        the inserted data is not saved.
         
     ---- Function of the Edits  
     
         The edits have the usual functions of the parent edits plus functions 
         to facilitate their use with a database.
         
-        * move data into and out of the edit doing conversions ( in other tabs used with records )
+        * move data from a QRecord to an QEdit doing desired conversions.
         * clearing data from the edit
         * defaulting values into the edit
         * tracking if the data has been changed
         * copying ( or is it retaining ) value from one record for the next
         * validate data in the edit
- 
+        * moving data from the edit back to the record 
         
          
         
@@ -54,15 +65,12 @@ is free of those complications
 
         note: the collection of the edits on the screen is a "form"
 
-        set_to_none       see the code, this works some sometimes but generally not  may want
-                          to establish some defaults, empty string, current date or have fancier edits
-                          that can hold these values
-                          
-     
+        prior             fetches the prior record from the db, wraping at the end of its list 
+        next
         insert_default    inserts a new record into the form using the "default" set up in each
                           edit
         
-        ???insert_prior     inserts a new record into the form using the "default" set up in each
+        insert_prior     inserts a new record into the form using the "default" set up in each
                          edit ( but is this not the same as keep-prior
                           
         clear             inserts a new record with the edits cleard  
@@ -76,23 +84,18 @@ is free of those complications
 ---- Questions
 ---- Ask a ChatBot
 
-        How is the setting/getting of Null or None values managed in QLineEdits:
+        How do I clear a QSqlTableModel of all data -- is there a clear function 
         
-        In PyQt5, QLineEdit is designed to handle text input as strings. If you want to manage None or NULL values specifically, 
-        you need to implement your own logic because QLineEdit does not natively support None or NULL values. 
-        Here’s how you can manage setting and getting None or NULL values in QLineEdit:
-        ...... note: line_edit.clear()
-        
-            how can you tell if a QLineEdit is clear:
-            
-            QLineEdit is considered clear if its text is an empty string ("").
+
         
 ---- Ideas for Improvement
         
         ** context menu for edit inc str() 
 
 
- 
+
+
+    Allow for db updates and additions --- or should this just be in stuffdb 
 
 
 
