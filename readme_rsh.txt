@@ -15,6 +15,8 @@ Table of Contents
 ---- Versions
 /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tab_select_tab.py
 
+Change list newest at bottom
+
 
         ** report if self.dir_for_tabs is not found
         ** display widgets across top of tab
@@ -33,7 +35,13 @@ Table of Contents
         !! fix for 2 line tabs?
         !! list widget needs lots of work
         *! have version in title and in about
-        !! add open parameters
+        ** add open parameters
+
+
+    ver_08
+        why
+            major additions checkpoint
+
 
 
     ver_07

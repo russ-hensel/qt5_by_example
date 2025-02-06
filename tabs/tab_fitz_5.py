@@ -3,10 +3,10 @@
 
 # ----tof
 """
-KEY_WORDS:      some stuff from the m fitz book a dynamic graph
+KEY_WORDS:      some stuff from the m fitz book a dynamic graph revised
 CLASS_NAME:     Fitz_5_Tab
 WIDGETS:        QTimer pg.PlotWidget pg.mkPen
-STATUS:         works ??
+STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
 TAB_TITLE:      Fitz Dynamic Plot
 
 
@@ -16,8 +16,8 @@ TAB_TITLE:      Fitz Dynamic Plot
 # --------------------
 if __name__ == "__main__":
     #----- run the full app
-    import qt_fitz_book
-    qt_fitz_book.main()
+    import main
+    #qt_fitz_book.main()
 # --------------------
 
 
@@ -90,44 +90,47 @@ from PyQt5.QtWidgets import (QAction,
 #import qt_widgets
 import utils_for_tabs as uft
 import wat_inspector
-
-# ---- imports neq qt
-
-
+import tab_base
 
 # ---- end imports
 
-print_func_header   = uft.print_func_header
+
 
 basedir = os.path.dirname(__file__)
 
 
 #  --------
-class Fitz_5_Tab( QWidget ) :
+class Fitz_5_Tab( tab_base.TabBase ) :
     def __init__(self):
         """
 
         """
         super().__init__()
-        self._build_gui()
+
 
         self.help_file_name     =  "fitz_5_tab.txt"
-        self.mutate_ix   = 0
+        self.mutate_dict[0]    = self.mutate_0
+        self.mutate_dict[1]    = self.mutate_1
+        # self.mutate_dict[2]    = self.mutate_2
+        # self.mutate_dict[3]    = self.mutate_3
+        # self.mutate_dict[4]    = self.mutate_4
 
         self.timer = QTimer()
         self.timer.setInterval(50)
+        self._build_gui()
+
         self.timer.timeout.connect(self.update_plot_data)
         self.timer.start()
 
-    # -------------------------------
-    def _build_gui(self,   ):
+    def _build_gui_widgets(self, main_layout  ):
         """
-        layouts
-            a vbox for main layout
-            h_box for or each row of widgets
+        the usual, build the gui with the widgets of interest
+        and the buttons for examples
         """
-        tab_page      = self
-        layout        = QVBoxLayout( tab_page )
+        layout              = QVBoxLayout(   )
+
+        main_layout.addLayout( layout )
+        #button_layout        = QHBoxLayout(   )
 
         widget              = pg.PlotWidget()
         self.graphWidget    = widget
@@ -145,7 +148,6 @@ class Fitz_5_Tab( QWidget ) :
             self.x, self.y, pen=pen
         )  # <1>
 
-
         # ---- new row
         row_layout    = QHBoxLayout(   )
         layout.addLayout( row_layout,  )
@@ -160,6 +162,10 @@ class Fitz_5_Tab( QWidget ) :
         widget.clicked.connect( self.stop    )
         row_layout.addWidget( widget,   )
 
+        widget = QPushButton("mutate\n")
+        self.button_ex_1         = widget
+        widget.clicked.connect( lambda: self.mutate( ) )
+        row_layout.addWidget( widget,   )
 
         # ---- PB inspect
         widget = QPushButton("inspect\n")
@@ -174,17 +180,18 @@ class Fitz_5_Tab( QWidget ) :
     # ------------------------
     def start(self):
         """ """
-        print_func_header( "start" )
+        self.append_function_msg( "start" )
 
         self.timer.start()
+        self.append_msg( "start done" )
 
     # ------------------------
     def stop(self):
         """ """
-        print_func_header( "stop" )
+        self.append_function_msg( "stop" )
 
         self.timer.stop()
-
+        self.append_msg( "stop done" )
 
     # ------------------------
     def update_plot_data(self):
@@ -199,14 +206,31 @@ class Fitz_5_Tab( QWidget ) :
 
         self.data_line.setData(self.x, self.y)  # Update the data.
 
+    # ------------------------------------
+    def mutate_0( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_0" )
+        msg    = "so far not implemented "
+        self.append_msg( msg, clear = False )
 
+    # ------------------------------------
+    def mutate_1( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_1" )
+        msg    = "so far not implemented "
+        self.append_msg( msg, clear = False )
+        self.append_msg( "mutate_1 done" )
 
     # ------------------------
     def inspect(self):
         """
         the usual
         """
-        print_func_header( "inspect" )
+        self.append_function_msg( "inspect" )
 
         self_graph_widget   = self.graphWidget
         self_timer          = self.timer
@@ -221,7 +245,7 @@ class Fitz_5_Tab( QWidget ) :
         each tab gets its own function so we break in that
         tabs code
         """
-        print_func_header( "breakpoint" )
+        self.append_function_msg( "breakpoint" )
 
         breakpoint()
 

@@ -5,21 +5,27 @@
 
 self.help_file_name     =  "sql_query_model_tab.txt"
 
-KEY_WORDS:      sql query model select update delete crud
+KEY_WORDS:      sql query model select update delete crud  uuuu
 CLASS_NAME:     SqlQueryModelTab
 WIDGETS:        QSqlQueryModel  QTableWidget
 STATUS:         works
 TAB_TITLE:      SqlQueryModel
 
-
+or
+# --------------------
+if __name__ == "__main__":
+    #----- run the full app
+    import main
+    #qt_fitz_book.main()
+# --------------------
 
 """
 # ---- tof
 # --------------------
 if __name__ == "__main__":
     #----- run the full app
-    import qt_sql_widgets
-    qt_sql_widgets.main()
+    import main
+    #qt_fitz_book.main()
 # --------------------
 
 
@@ -99,21 +105,20 @@ import parameters
 
 import utils_for_tabs as uft
 import wat_inspector
-
-# ---- imports
+import tab_base
 
 
 
 # ---- end imports
 
-print_func_header   = uft.print_func_header
+
 
 basedir = os.path.dirname(__file__)
 
 print( "salvaged but not functional is it a dup ??")
 
 #  --------
-class SqlQueryModelTab( QWidget ) :
+class SqlQueryModelTab( tab_base.TabBase ) :
     def __init__(self):
         """
 
@@ -121,23 +126,30 @@ class SqlQueryModelTab( QWidget ) :
         super().__init__()
 
         self.help_file_name     =  "sql_query_model_tab.txt"
-        self._build_gui()
-        self.mutate_ix          = 0
+
+
+
+        self.mutate_dict[0]    = self.mutate_0
+        self.mutate_dict[1]    = self.mutate_1
+        # self.mutate_dict[2]    = self.mutate_2
+        # self.mutate_dict[3]    = self.mutate_3
+        # self.mutate_dict[4]    = self.mutate_4
 
         # self.timer = QTimer()
         # self.timer.setInterval(50)
         # self.timer.timeout.connect(self.update_plot_data)
         # self.timer.start()
+        self._build_gui()
 
-    # -------------------------------
-    def _build_gui(self,   ):
+    def _build_gui_widgets(self, main_layout  ):
         """
-        layouts
-            a vbox for main layout
-            h_box for or each row of widgets
+        the usual, build the gui with the widgets of interest
+        and the buttons for examples
         """
-        tab_page            = self
-        layout              = QVBoxLayout( tab_page )
+        layout              = QVBoxLayout(   )
+
+        main_layout.addLayout( layout )
+        button_layout        = QHBoxLayout(   )
 
         table_widget        = QTableWidget(4, 5)  # row, column ??third arg parent
         self.table_widget   = table_widget
@@ -157,6 +169,11 @@ class SqlQueryModelTab( QWidget ) :
         # widget.clicked.connect( self.stop    )
         # row_layout.addWidget( widget,   )
 
+
+        widget = QPushButton("mutate\n")
+        self.button_ex_1         = widget
+        widget.clicked.connect( lambda: self.mutate( ) )
+        row_layout.addWidget( widget,   )
 
         # ---- PB inspect
         widget = QPushButton("inspect\n")
@@ -227,13 +244,32 @@ class SqlQueryModelTab( QWidget ) :
     #     self.y.append(randint(0, 100))  # Add a new random value.
 
     #     self.data_line.setData(self.x, self.y)  # Update the data.
+    # ------------------------------------
+    def mutate_0( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_0" )
+
+        msg    = "so far not implemented "
+        self.append_msg( msg, clear = False )
+
+    # ------------------------------------
+    def mutate_1( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_1" )
+
+        msg    = "so far not implemented "
+        self.append_msg( msg, clear = False )
 
     # ------------------------
     def inspect(self):
         """
         the usual
         """
-        print_func_header( "inspect" )
+        self.append_function_msg( "inspect" )
 
         # self_graph_widget   = self.graphWidget
         # self_timer          = self.timer
@@ -248,7 +284,7 @@ class SqlQueryModelTab( QWidget ) :
         each tab gets its own function so we break in that
         tabs code
         """
-        print_func_header( "breakpoint" )
+        self.append_function_msg( "breakpoint" )
 
         breakpoint()
 

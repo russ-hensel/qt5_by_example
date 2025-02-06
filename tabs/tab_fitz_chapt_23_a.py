@@ -280,14 +280,14 @@ class Fitz_23_A_Tab( tab_base.TabBase ) :
 
         model                   = QSqlTableModel( self, global_vars.EX_DB   )
         self.model              = model
-        self.people_model       = model
-        model.setTable('people')
+        self.persons_model       = model
+        model.setTable('persons')
 
 
         self.view.setModel( self.model )
 
-        # #query       = QSqlQuery( "SELECT Name,   FROM people ", db = global_vars.EX_DB )
-        # self.model.setTable( "People" )
+        # #query       = QSqlQuery( "SELECT Name,   FROM persons ", db = global_vars.EX_DB )
+        # self.model.setTable( "persons" )
 
 
 

@@ -15,6 +15,7 @@ Qt Widgets, Qt Sql Widgets, and closely related objects.
 ---- Purpose/Functionality
 ---- Finding a Widget
 ---- Tracing the code
+---- Mutate
 ---- QtWidgets
 
 ---- qt_sql_widgets -- work in pipeline
@@ -32,7 +33,7 @@ Qt Widgets, Qt Sql Widgets, and closely related objects.
 ---- Purpose/Functionality--------------------------------------------------------------------------
 
 This application in intended to show how to use Qt widgets largely through
-a running application, inspection the code behind it, and some documentation ( like this file ).
+a running application, inspection of the code behind it, and some documentation ( like this file ).
 
 Most of the widgets have some visual aspect, but especially for the sql widgets
 they also have some important non visual aspects.  The code should illustrate
@@ -64,10 +65,10 @@ both.
     
     If one search does not work try another.
    
---- Finding the code
+---- Finding the code
     see tracing the code below 
 
-
+---- Mutate
               
 
 Use of widgets involves several different programming aspects:
@@ -112,13 +113,17 @@ was in one giant namespace.
 Each Tab has its own help file, this this the General Help for all
 the tabs.
 
-  
-
-When you interact with the application a lot of what happens is sent
-to your python console.  Try to size and position the application
-so you can see the output to the console.
+ 
 
 Typical Tab Functionality:
+
+    The tabs are divided into three may areas:
+    
+    1.  the widges of interest.
+    2.  buttons for interaction with the widgets (typically labele with the name
+        of the method they call 
+    3.  An area to report on what is happening in the tab, information that is
+        also printed to your console.
 
     Usually a tab displays some widgets of interest and some buttons
     to interact with underlying objects.  The buttons are often labeled
@@ -130,17 +135,25 @@ Typical Tab Functionality:
         print something     buttons do not say this but any time you press
                             a button keep your eye on the console output
 
-        mutate something    maybe not so common
+        <mutate>            most widgets have a lot of state and minipulation of this
+                            state at runtime is very useful.  The mutate button loop
+                            through a series of mutations of the widgets that
+                            may be of interest.  The number of mutations on
+                            each tab varies.  While the button says mutate it
+                            may also display state 
 
-        inspect             this pulls up an gui version of wat
+        <inspect>           this pulls up an gui version of wat
 
-        breakpoint          breaks into the debugger in the tab object you are viewing
+        <breakpoint>        breaks into the debugger in the tab object you are viewing
+                            this can be very useful to find the code for the tab
+                            and can let you add additional breakpoints from your
+                            ide.  Very useful when running from Spyder.
+                            
+                            
+        <print>             old style button for reporting state, now
+                            merge into mutate.  will be deleted                   
 
-    A lot of actions cause output to the console, typically the function
-    causing this will print something like:
-         ------------ print_db ------------
-    where the name of the function ( in the tab ) is: print_db
-    this should make it easy to find the code.
+ 
 
 ---- Help ------------------------
 
@@ -183,7 +196,7 @@ Typical Tab Functionality:
     I have tried to be consistent in naming so that function describe what they do, or
     what triggered them.
 
-    Name attempt to be consistent so once you learn your way around one tab it should
+    Names attempt to be consistent so once you learn your way around one tab it should
     help with other tabs.
 
     Generally there are methods that are run when:
@@ -192,11 +205,11 @@ Typical Tab Functionality:
 
         see the individual help for each object
 
-    Other methods have name that are pretty good giveaways as to what they do.
+    Other methods have names that are pretty good giveaways as to what they do.
 
     Methods often execute something like:
 
-        print_func_header( "mutate" )
+        self.append_function_msg( "mutate_0" )
         where this argument is the name of the method, should make finding code easy.
 
   
@@ -277,12 +290,10 @@ Overall App Illustrates:
 
 Individual Tabs:
 
-    
-
+   
     Each tab is documented internally by comments, by text printed to the console when you
     interact with the tab, and by a text file document, like this, for each tab.
 
- 
  
     if lower case with underscores they the text is the method name being called
 
@@ -290,11 +301,8 @@ Individual Tabs:
 
 Reading the code:
 
- 
 
     I sometimes have a Search comment at the top of the code to help you find code of interest
-
-
 
             Try them, and read the docs for more information.
 

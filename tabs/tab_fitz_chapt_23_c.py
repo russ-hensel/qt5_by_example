@@ -5,13 +5,11 @@
 
 
 """
-KEY_WORDS:  Fitz chapter 23 C  Generic queries with QSqlQueryModel sql where like
+KEY_WORDS:  Fitz chapter 23 C  Generic queries with QSqlQueryModel sql where like new_base
 CLASS_NAME: Fitz_23_C_Tab
 WIDGETS:    QTableView QSqlQueryModel QSqlQuery
-STATUS:     good first draft
+STATUS:     runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
 TAB_TITLE:  Fitz SqlModel Chapt 23 C
-
-
 
 
 
@@ -123,13 +121,12 @@ import parameters
 import utils_for_tabs as uft
 import wat_inspector
 import global_vars
-# ---- imports neq qt
-
+import tab_base
 
 
 # ---- end imports
 
-print_func_header   = uft.print_func_header
+
 
 basedir = os.path.dirname(__file__)
 
@@ -155,17 +152,8 @@ COLORS = [
 
 
 
-
-
-
-
-#basedir = os.path.dirname(__file__)
-
-
-
-
 #  --------
-class Fitz_23_C_Tab( QWidget ) :
+class Fitz_23_C_Tab( tab_base.TabBase ) :
     def __init__(self):
         """
 
@@ -173,20 +161,28 @@ class Fitz_23_C_Tab( QWidget ) :
         super().__init__()
         self.help_file_name     =  "fitz_23_c_tab.txt"
         self._build_model()
-        self._build_gui()
+        self.mutate_dict[0]     = self.mutate_0
+        self.mutate_dict[1]     = self.mutate_1
+        # self.mutate_dict[2]    = self.mutate_2
+        # self.mutate_dict[3]    = self.mutate_3
+        # self.mutate_dict[4]    = self.mutate_4
         self.mutate_ix   = 0
         self.ix_sort     = 0   # for sorting
+        self._build_gui()
 
 
-    # -------------------------------
-    def _build_gui(self,   ):
+
+    def _build_gui_widgets(self, main_layout  ):
         """
-        layouts
-            a vbox for main layout
-            h_box for or each row of widgets
+        the usual, build the gui with the widgets of interest
+        and the buttons for examples
         """
-        tab_page      = self
-        layout        = QVBoxLayout( tab_page )
+        layout              = QVBoxLayout(   )
+
+        main_layout.addLayout( layout )
+        #button_layout        = QHBoxLayout(   )
+
+
 
         # ---- new row
         row_layout    = QHBoxLayout(   )
@@ -237,6 +233,12 @@ class Fitz_23_C_Tab( QWidget ) :
         # widget.clicked.connect( self.save    )
         # row_layout.addWidget( widget,   )
 
+        widget = QPushButton("mutate\n")
+        self.button_ex_1         = widget
+        widget.clicked.connect( lambda: self.mutate( ) )
+        row_layout.addWidget( widget )
+
+
         # ---- self.inspect
         widget = QPushButton("inspect\n")
         widget.clicked.connect( self.inspect    )
@@ -249,7 +251,7 @@ class Fitz_23_C_Tab( QWidget ) :
 
     # -------------------------------
     def _build_model(self,   ):
-        """
+        """        print_func_header(
         and the view
         """
 
@@ -258,10 +260,10 @@ class Fitz_23_C_Tab( QWidget ) :
         self.model      = QSqlQueryModel( )   # no db connection that comw thru query
         self.view.setModel( self.model )
 
-        sql         = "SELECT name   FROM people "
+        sql         = "SELECT name   FROM persons "
         query       = QSqlQuery( sql, db = global_vars.EX_DB )
             # error reporta are missing
-            # insetad of self.model.setTable( "People" )
+            # insetad of self.model.setTable( "persons" )
         self.model.setQuery( query )
 
         # print( "button code from other example may reacivate some ")
@@ -272,7 +274,7 @@ class Fitz_23_C_Tab( QWidget ) :
         Add an item to our todo list, getting the text from the QLineEdit .todoEdit
         and then clearing it.
         """
-        print_func_header( "add" )
+        self.append_function_msg( "add" )
 
         text = self.todoEdit.text()
         # Remove whitespace from the ends of the string.
@@ -287,7 +289,7 @@ class Fitz_23_C_Tab( QWidget ) :
 
     def delete(self):
         """ """
-        print_func_header( "delete" )
+        self.append_function_msg( "delete" )
 
         indexes = self.todoView.selectedIndexes()
         if indexes:
@@ -303,7 +305,7 @@ class Fitz_23_C_Tab( QWidget ) :
         """
         mark selected row as complete
         """
-        print_func_header( "complete" )
+        self.append_function_msg( "complete" )
 
         indexes = self.todoView.selectedIndexes()
         if indexes:
@@ -324,7 +326,7 @@ class Fitz_23_C_Tab( QWidget ) :
 
     def set_headers( self ):
         """ """
-        print_func_header( "select_with_filter" )
+        self.append_function_msg( "select_with_filter" )
 
         model    = self.model      # would think in view but no
 
@@ -333,7 +335,7 @@ class Fitz_23_C_Tab( QWidget ) :
 
     def remove_columns( self ):
         """ """
-        print_func_header( "remove_columns from what is visible " )
+        self.append_function_msg( "remove_columns from what is visible " )
         msg                 = "here remove by column name"
         print( msg )
         model               = self.model
@@ -344,15 +346,15 @@ class Fitz_23_C_Tab( QWidget ) :
 
     def select_with_where( self ):
         """ """
-        print_func_header( "select_with_where" )
+        self.append_function_msg( "select_with_where" )
 
 
 
         a_name          = "%a%"
         msg             = f" where like   {a_name =} "
         print( msg )
-        sql             =  "SELECT name, age  FROM people "
-        filter_str      = f"WHERE people.name  LIKE :a_name"
+        sql             =  "SELECT name, age  FROM persons "
+        filter_str      = f"WHERE persons.name  LIKE :a_name"
         sql             = sql +  filter_str
         print( f"{sql =}" )
 
@@ -365,7 +367,7 @@ class Fitz_23_C_Tab( QWidget ) :
 
     def select_all( self ):
         """ """
-        print_func_header( "select_all  is a nop " )
+        self.append_function_msg( "select_all  is a nop " )
 
         # self.ix_sort    += 1
         # if self.ix_sort > 1:
@@ -389,11 +391,35 @@ class Fitz_23_C_Tab( QWidget ) :
 
 
     def save(self):
-        print_func_header( "save" )
+        self.append_function_msg( "save" )
 
         with open("data.json", "w") as f:
             data = json.dump(self.model.todos, f)
 
+
+
+    # ------------------------------------
+    def mutate_0( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_0" )
+
+        msg    = "so far not implemented "
+        self.append_msg( msg, clear = False )
+
+        self.append__msg( "mutate_0 done" )
+
+    # ------------------------------------
+    def mutate_1( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_1" )
+        msg    = "so far not implemented "
+        self.append_msg( msg, clear = False )
+
+        self.append__msg( "mutate_1 done" )
 
     # ------------------------
     def inspect(self):

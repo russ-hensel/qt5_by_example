@@ -4,7 +4,7 @@
 
 # ---- tof
 """
-KEY_WORDS:      dialog boxes of various forms modal browse for file or directory path    new tab
+KEY_WORDS:      dialog boxes of various forms modal browse for file or directory path   new_base
 CLASS_NAME:     DialogEtcTab
 WIDGETS:        QMessageBox  QFileDialog
 STATUS:         !! runs    runs_correctly  demo_partial   demo_complete
@@ -16,7 +16,7 @@ TAB_HELP:       use  self.help_file_name     =  "dialog_boxes_tab.txt"
 
 /mnt/WIN_D/Russ/0000/python00/python3/_projects/qt_by_example/docs/date_edit_widget_tab.txtper_tab.txt
 
-
+see also the wat window and the python execute window in stuffdb
 
 """
 
@@ -80,6 +80,12 @@ from PyQt5.QtWidgets import (QAction,
                              QVBoxLayout,
                              QWidget)
 
+
+from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QLineEdit,
+                             QDialog, QVBoxLayout, QHBoxLayout, QLabel,
+                             QDialogButtonBox)
+from PyQt5.QtCore import pyqtSignal, pyqtSlot
+
 import parameters
 
 import utils_for_tabs as uft
@@ -114,17 +120,8 @@ class DialogEtcTab( tab_base.TabBase  ):
         # self.mutate_dict[3]    = self.mutate_3
         # self.mutate_dict[4]    = self.mutate_4
 
+        self._build_gui()   # in base class
 
-        self._build_gui()
-
-
-    # -------------------------------
-    def _build_guixxxx(self,   ):
-        """
-        layouts
-            a vbox for main layout
-            h_box f or each row
-        """
 
 
     def _build_gui_widgets(self, main_layout  ):
@@ -147,6 +144,11 @@ class DialogEtcTab( tab_base.TabBase  ):
         widget.clicked.connect( lambda: self.show_message_box( ) )
         row_layout.addWidget( widget )
 
+        # ---- dialog_for_data
+        widget = QPushButton("dialog_for_data")
+        widget.clicked.connect( self.dialog_for_data    )
+        row_layout.addWidget( widget,   )
+
         # ---- PB inspect
         widget = QPushButton("browse_for\nfile")
         widget.clicked.connect( self.browse_for_file    )
@@ -161,7 +163,6 @@ class DialogEtcTab( tab_base.TabBase  ):
         self.button_ex_1         = widget
         widget.clicked.connect( lambda: self.mutate( ) )
         button_layout.addWidget( widget )
-
 
         # ---- PB inspect
         widget = QPushButton("inspect\n")
@@ -199,6 +200,50 @@ class DialogEtcTab( tab_base.TabBase  ):
 
         QMessageBox.information( self, "a title",
                                 "additional message")
+
+    # ------------------------
+    def dialog_for_data( self, ): #open_input_dialog_ds(self):
+        """ """
+
+        self.append_function_msg( "dialog_for_data" )
+
+        # Mutable object to pass data to and from the dialog
+        data = {"initial_value": "Default Value"}  # Optional: Set initial value
+
+        # Create and show the dialog
+        dialog = InputDialogDS (data, self)
+        result = dialog.exec()
+
+        # Check if the dialog was accepted or rejected
+        if result == QDialog.Accepted:
+            msg     = f"Entered data: {data['return_value']}"
+            #QMessageBox.information(self, "Result", msg )
+            self.append_msg( msg )
+
+        else:
+            msg     = "Dialog was canceled"
+            #QMessageBox.information(self, "Result",  msg )
+            self.append_msg( msg )
+
+
+    # ------------------------
+    def message_box_2( self, msg = "this is a default message " ):
+        """
+        not hooked up
+        what it says
+        could i have some simple python code to give the user a message
+        write it as a method which takes the message as an argument
+        pretty much the same as my example
+        """
+        self.append_function_msg( "message_box_2" )
+        msg_box = QMessageBox()
+        msg_box.setIcon( QMessageBox.Information )
+        msg_box.setText( msg )  # Set the message text
+        msg_box.setWindowTitle( "Sorry that is a No Go " )
+        msg_box.setStandardButtons( QMessageBox.Ok )
+
+        # Show the message box and wait for the user to close it
+        msg_box.exec_()
 
     # ------------------------
     def browse_for_file(self):
@@ -306,5 +351,78 @@ class DialogEtcTab( tab_base.TabBase  ):
         self.append_function_msg( "breakpoint" )
 
         breakpoint()
+
+# class InputDialogDS(QDialog):
+# import sys
+# from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog, QVBoxLayout, QLineEdit, QPushButton, QLabel, QMessageBox
+
+class InputDialogDS(QDialog):
+    """
+    deep seek did draft
+    """
+    def __init__(self, data, parent=None):
+        super().__init__(parent)
+        self.data = data  # Mutable object to store input and output data
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle("Input Dialog")
+        self.setGeometry(100, 100, 300, 150)
+
+        layout = QVBoxLayout()
+
+        # Label
+        label = QLabel("Enter some data:")
+        layout.addWidget(label)
+
+        # Line Edit for input
+        self.line_edit = QLineEdit(self)
+        if "initial_value" in self.data:
+            self.line_edit.setText(self.data["initial_value"])
+        layout.addWidget(self.line_edit)
+
+        # OK Button
+        ok_button = QPushButton("OK", self)
+        ok_button.clicked.connect(self.on_ok)
+        layout.addWidget(ok_button)
+
+        # Cancel Button
+        cancel_button = QPushButton("Cancel", self)
+        cancel_button.clicked.connect(self.on_cancel)
+        layout.addWidget(cancel_button)
+
+        self.setLayout(layout)
+
+    def on_ok(self):
+        # Store the input data in the mutable object
+        self.data["return_value"] = self.line_edit.text()
+        self.accept()  # Close the dialog and return QDialog.Accepted
+
+    def on_cancel(self):
+        self.reject()  # Close the dialog and return QDialog.Rejected
+
+
+# class MainWindow(QMainWindow):
+#     def __init__(self):
+#         super().__init__()
+#         self.initUI()
+
+#     def initUI(self):
+#         self.setWindowTitle("Main Application")
+#         self.setGeometry(100, 100, 400, 200)
+
+#         # Button to open the dialog
+#         open_dialog_button = QPushButton("Open Input Dialog", self)
+#         open_dialog_button.clicked.connect(self.open_input_dialog)
+#         self.setCentralWidget(open_dialog_button)
+
+
+
+
+# if __name__ == "__main__":
+#     app = QApplication(sys.argv)
+#     main_window = MainWindow()
+#     main_window.show()
+#     sys.exit(app.exec_())
 
 # ---- eof

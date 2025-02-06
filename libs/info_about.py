@@ -6,34 +6,7 @@
 """
 the main file for info_about
 
---
---
---
---
---
---
---
---
---
---
---
---
---
---
---
---
---
---
---
---
---
---
---
---
---
---
---
---
+
 --
 --
 """
@@ -41,17 +14,40 @@ the main file for info_about
 
 # ---- search
 """
+Use
+        think this is call but check
 
+import info_about
 
+info_about.INFO_ABOUT.find_info_for(
+                    an_object,
+                    # *,
+                    msg      = None,
+                    max_len  = None,
+                    xin      = "",
+                    print_it = True,
+                    sty      = "",
+                    include_dir  = False,  )
 
+typically
 
+info_about.INFO_ABOUT.find_info_for(
+                    an_object,
+                    msg      = msg
+                        )
+
+# with logging
+
+log_msg      = info_about.INFO_ABOUT.find_info_for(
+                    an_object,
+                    msg         = msg,
+                    print_it    = False
+                   )
+logging.debug( log_msg )
 
 
 
 """
-
-
-
 
 
 
@@ -73,7 +69,7 @@ import ia_search
 # ---- end imports
 
 
-INFO_ABOUT      = None
+INFO_ABOUT      = None   # after import is an infoabout object
 
 
 DEBUGGING       = False  # in testing may be changed externally
@@ -87,8 +83,8 @@ MAX_STR_LEN     = 150 #
 MAX_LIST_ITEMS  = 8
 
 NEW_LINE        = "\n"
+MSG_PREFIX      = "\nInfo About >>>> "
 
-joe = f"joe{NEW_LINE}then some more "
 
 if DEBUGGING:
     pass
@@ -137,8 +133,7 @@ def make_list( a_string,   ):
     splits      = a_string.split()
     return splits
 
-
-
+# ------------------------
 def is_imported( module_name,   ):
     """what it says
     too simple to live?
@@ -280,30 +275,37 @@ class InfoAbout(   ):
         self.file_data_list     = search.file_data_list
             # sorted list is returned
 
-        print( "------------- create objects ------------------")
-        for i_file_data in self.file_data_list:
-            module_name     = i_file_data[ "module:" ]
-            class_names     = i_file_data[ "class_names:" ]
-            class_names     = make_list( class_names )
+        verbose   = "brief"     # verbose"   #
+        if verbose == "verbose":
+            print( "------------- InfoAbout create objects ------------------")
+            for i_file_data in self.file_data_list:
+                module_name     = i_file_data[ "module:" ]
+                class_names     = i_file_data[ "class_names:" ]
+                class_names     = make_list( class_names )
 
-            for i_class_name in class_names:
-                print( f"create {i_class_name}")
-                i_inspector   = create_instance( module_name, i_class_name )
-                self.info_provider_list.append( i_inspector )
+                for i_class_name in class_names:
+                    print( f"create {i_class_name}")
+                    i_inspector   = create_instance( module_name, i_class_name )
+                    self.info_provider_list.append( i_inspector )
+        if  verbose == "brief":
+            print( f"------------- InfoAbout create objects is {verbose} ------------------")
+
 
     #-------------------------
     def find_info_for( self,
                     inspect_me,
                     *,
-                    msg      = None,
-                    max_len  = None,
-                    xin      = "",
-                    print_it = True,
-                    sty      = "",
-                    include_dir  = False,  ):
+                    msg             = None,
+                    max_len         = None,
+                    xin             = "",
+                    print_it        = True,
+                    sty             = "",
+                    include_dir     = False,  ):
 
         """
         search for an object that know about an  inspect_me
+
+
         """
         info  = None
 
@@ -316,12 +318,12 @@ class InfoAbout(   ):
                 print( "---------------")
                 info = i_info_provider.get_info(
                          inspect_me,
-                         msg      = None,
-                         max_len  = None,
-                         xin      = "",
-                         print_it = True,
-                         sty      = "",
-                         include_dir  = False,
+                         msg            = None,
+                         max_len        = None,
+                         xin            = "",
+                         print_it       = True,
+                         sty            = "",
+                         include_dir    = False,
                         )
                 break
 
@@ -329,12 +331,12 @@ class InfoAbout(   ):
             #info = "no_info" # has info for everything, but not much
             info = self.info_about_base.get_info(
                      inspect_me,
-                     msg      = None,
-                     max_len  = None,
-                     xin      = "",
-                     print_it = True,
-                     sty      = "",
-                     include_dir  = False,
+                     msg            = None,
+                     max_len        = None,
+                     xin            = "",
+                     print_it       = True,
+                     sty            = "",
+                     include_dir    = False,
                     )
 
         return info
@@ -417,12 +419,11 @@ class InfoAbout(   ):
         return a_str
 
 
-
 class InfoAboutBase(   ):
     """
     lots may be implemented as utations
     """
-    MSG_PREFIX  = "\n>>>> "
+
     #----------- init -----------
     def __init__(self,       ):
         """
@@ -471,6 +472,7 @@ class InfoAboutBase(   ):
         self.include_dir    = include_dir
         self.details_only   = details_only
         self.fix_msg( )
+        self.add_line( self.msg )  # move inside fix._msg ??
 
         self.begin_info()
         self.mid_info()
@@ -582,10 +584,10 @@ class InfoAboutBase(   ):
         """ """
         if self.msg is None:
             #self.msg  = default_msg( my_type_str )
-            self.msg         = f"{self.MSG_PREFIX}for instance of  {type( self.inspect_me )}"
+            self.msg    = f"{MSG_PREFIX}for instance of  {type( self.inspect_me )}"
 
         else:
-            self.msg = f"{self.MSG_PREFIX}{self.msg} "
+            self.msg    = f"{MSG_PREFIX}{self.msg} "
 
     # ------------------------
     def return_info( self ):

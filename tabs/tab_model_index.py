@@ -257,7 +257,7 @@ class Model_Index_Tab( QWidget ):
 
         layout.addWidget( table_view )
 
-        layout.addWidget( self.people_view   )
+        layout.addWidget( self.persons_view   )
 
         #layout.addWidget( self.phone_view    )
 
@@ -274,8 +274,8 @@ class Model_Index_Tab( QWidget ):
 
         #button_layout.addWidget( widget )
 
-        widget        = QPushButton('people_\nselect_all')
-        widget.clicked.connect(self.people_select_all )
+        widget        = QPushButton('persons_\nselect_all')
+        widget.clicked.connect(self.persons_select_all )
         button_layout.addWidget( widget )
 
         #-------------
@@ -331,10 +331,10 @@ class Model_Index_Tab( QWidget ):
 
         """
         #print_func_header( "_build_model" )
-        # ---- people
+        # ---- persons
         model                  = QSqlTableModel( self, global_vars.EX_DB )
-        self.people_model      = model
-        model.setTable('people')
+        self.persons_model      = model
+        model.setTable('persons')
 
         model.setEditStrategy( QSqlTableModel.OnManualSubmit )
             #  OnFieldChange , OnRowChange , and OnManualSubmit .
@@ -343,12 +343,12 @@ class Model_Index_Tab( QWidget ):
         #model->setHeaderData(1, Qt::Horizontal, tr("Salary"));
 
         view                    = QTableView( )
-        self.people_view        = view
+        self.persons_view        = view
         view.setModel( model  )
         view.hideColumn( 0 )       # hide is hear but header on model
         view.setSelectionBehavior( QTableView.SelectRows )
-        #view.clicked.connect( self._people_view_clicked  )
-        view.clicked.connect( self.people_view_clicked  )
+        #view.clicked.connect( self._persons_view_clicked  )
+        view.clicked.connect( self.persons_view_clicked  )
 
     # -------------------------------------
     def table_model_tab_populate(self,   ):
@@ -389,11 +389,11 @@ class Model_Index_Tab( QWidget ):
             self.table_model_filter   = FilterProxyModelHideRows( )
 
     # ------------------------
-    def people_select_all(self):
+    def persons_select_all(self):
         """ """
         print_func_header( "select_all" )
 
-        self.people_model.select()  # Load the data into the model
+        self.persons_model.select()  # Load the data into the model
 
         # self.phone_model.setFilter( "" )
         # self.phone_model.select()
@@ -413,18 +413,18 @@ class Model_Index_Tab( QWidget ):
         #self.add_ix_other( row )
 
     #-----------------------------------------------
-    def people_view_clicked( self, index: QModelIndex):
+    def persons_view_clicked( self, index: QModelIndex):
         """
         what it says,
         index comes from table view
         """
-        print_func_header( "people_view_clicked" )
+        print_func_header( "persons_view_clicked" )
 
-        model       = self.people_model
+        model       = self.persons_model
         row_ix      = index.row()
-        print( f"people_view_clicked {row_ix = }")
+        print( f"persons_view_clicked {row_ix = }")
 
-        model          = self.people_model
+        model          = self.persons_model
         # row_start      = model.index(row_index, 0)
         # row_end        = model.index(row_index, model.columnCount() - 1)
 
@@ -446,7 +446,7 @@ class Model_Index_Tab( QWidget ):
         print( f"key for clicked row { row_ix = }  is {key = } ")
 
         # now try to find
-        indexer       =  self.people_indexer
+        indexer       =  self.persons_indexer
         indexer.refresh_index()
         found_ix      = indexer.find( key )
 
@@ -660,8 +660,8 @@ class Model_Index_Tab( QWidget ):
         self.indexer   = self.table_model.add_indexer( index_tuple )
 
         index_tuple             = ( 0, 1 ) # columns in index
-        self.people_indexer     =  table_model.ModelIndexer( self.people_model, index_tuple )
-        self.people_indexer.refresh_index()
+        self.persons_indexer     =  table_model.ModelIndexer( self.persons_model, index_tuple )
+        self.persons_indexer.refresh_index()
 
     # ------------------------
     def inspect(self):
@@ -673,7 +673,7 @@ class Model_Index_Tab( QWidget ):
         self_table_model    = self.table_model
         #self_table_view     = self.table_view
         table_indexer       = self.table_model.indexer
-        self_people_indexer = self.people_indexer
+        self_persons_indexer = self.persons_indexer
         wat_inspector.go(
              msg            = "tbd add more locals",
              a_locals       = locals(),

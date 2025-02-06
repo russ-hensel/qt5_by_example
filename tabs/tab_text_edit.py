@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 # ---- tof
 """
-KEY_WORDS:      Example of a text edit for string input
+KEY_WORDS:      Example of a text edit for string input fix
 CLASS_NAME:     QTextEditTab
 WIDGETS:        QTextEdit
-STATUS:         works
+STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
 TAB_TITLE:      QTextEdit
 """
 
@@ -67,25 +67,11 @@ from PyQt5.QtWidgets import (QAction,
                              QVBoxLayout,
                              QWidget)
 
-import parameters
+#import parameters
 
 import utils_for_tabs as uft
 import wat_inspector
-
-# ---- imports neq qt
-
-
-
-
-
-
-
-
-
-
-
-
-
+import tab_base
 
 
 # ---- end imports
@@ -97,28 +83,36 @@ INDENT          = uft.BEGIN_MARK_1
 INDENT          = uft.BEGIN_MARK_2
 #INDENT          = qt_sql_widgets.
 
-print_func_header =  uft.print_func_header
 
 
 #  --------
-class QTextEditTab( QWidget ) :
+class QTextEditTab( tab_base.TabBase ) :
     def __init__(self):
         """
         the usual
         tab_text_edit.py
         """
         super().__init__()
-        self._build_gui()
+        self.mutate_dict[0]     = self.mutate_0
+        self.mutate_dict[1]     = self.mutate_1
+        # self.mutate_dict[2]    = self.mutate_2
+        # self.mutate_dict[3]    = self.mutate_3
+        # self.mutate_dict[4]    = self.mutate_4
         # State variable to track search position
         self.last_position = 0
+        self._build_gui()
 
-    #  --------
-    def _build_gui(self,   ):
+    #----------------------------
+    def _build_gui_widgets(self, main_layout  ):
         """
-        the usual
+        the usual, build the gui with the widgets of interest
+        and the buttons for examples
         """
-        tab_page      = self
-        layout        = QGridLayout( tab_page )
+        layout              = QGridLayout(   )
+
+        main_layout.addLayout( layout )
+        # button_layout        = QHBoxLayout(   )
+
 
         # ---- the QTextEdit
         text_edit       = QTextEdit()
@@ -275,6 +269,12 @@ Undo/Redo:
         widget.clicked.connect( self.copy_selected_text )
         button_layout.addWidget( widget,   )
 
+        # ---- mutate
+        widget = QPushButton("mutate\n")
+        self.button_ex_1         = widget
+        widget.clicked.connect( lambda: self.mutate( ) )
+        button_layout.addWidget( widget )
+
         # ---- PB inspect
         widget = QPushButton("inspect\n")
         widget.clicked.connect( self.inspect    )
@@ -304,60 +304,63 @@ Undo/Redo:
         !! add parameter clear_msg = True or false
 
         """
-        """
-        what it says
-        """
-        print_func_header( "display_string" )
 
-        print(  f"in display_string, with a_string = {a_string}")
+        self.append_function_msg( "display_string" )
+
+        self.append_msg(  f"in display_string, with a_string = {a_string}")
         # return
         #   try  !!!  QTextEdit.clear()
         cursor = self.text_edit.textCursor()
         # cursor.movePosition( QTextCursor::End )
         cursor.insertText( a_string )
 
+        self.append_msg( "display_string done" )
     #  --------
     def print_message(self, text):
         """
         what is says
         """
-        print_func_header( "print_message" )
+        self.append_function_msg( "print_message" )
 
-        print("Button clicked:", text)
+        self.append_msg( "Button clicked:", text)
+        self.append_msg( "print_message done" )
 
     #  --------
     def clear_text( self ):
         """
         """
-        print_func_header( "clear_text" )
+        self.append_function_msg( "clear_text" )
 
         self.text_edit.clear()
+        self.append_msg( "clear_text done" )
 
     #  --------
     def copy_text(self, text_edit):
         """
         what is says
         """
-        print_func_header( "copy_text" )
+        self.append_function_msg( "copy_text" )
 
-        print( "QTextEditTab.copy_text"   )
+        self.append_msg( "QTextEditTab.copy_text"   )
         selected_text      = text_edit.toPlainText()
         QApplication.clipboard().setText(selected_text)
-        print(  f" copy_text -> {selected_text }" )
-
+        self.append_msg(  f" copy_text -> {selected_text }" )
+        self.append_msg( "copy_text done" )
 
     #  --------
     def copy_all_text( self, text_edit ):
         """
         what it says
         """
-        print_func_header( "copy_all_text" )
+        self.append_function_msg( "copy_all_text" )
 
         # text_edit not used
         all_text = self.text_edit.toPlainText()
-        print( f"{all_text = }")
+        self.append_msg( f"{all_text = }")
 
         self.copy_all_text_b( None )
+
+        self.append_msg( "copy_all_text done" )
 
         return all_text  # return not used
 
@@ -366,7 +369,7 @@ Undo/Redo:
         """
         what it says
         """
-        print_func_header( "copy_all_text_b" )
+        self.append_function_msg( "copy_all_text_b" )
 
         text_edit   = self.text_edit
         # Save current cursor position
@@ -383,7 +386,8 @@ Undo/Redo:
         cursor.setPosition(original_position)
         text_edit.setTextCursor(cursor)
 
-        print( "all text copied to clipboard" )
+        self.append_msg( "all text copied to clipboard" )
+        self.append_msg( "copy_all_text_b done" )
 
         return  all_text
 
@@ -392,7 +396,7 @@ Undo/Redo:
         """
         what is says
         """
-        print_func_header( "set_text_ver_1" )
+        self.append_function_msg( "set_text_ver_1" )
 
         a_string    = 1 * (
 
@@ -409,12 +413,15 @@ before your eyes with the touch of a few keys.
         """ )
 
         self.text_edit.setText( a_string )
-    # ----
+
+        self.append_msg( "set_text_ver_1 done" )
+
+    #---------------
     def set_text_ver_2(self,  ):
         """
         what is says
         """
-        print_func_header( "set_text_ver_2" )
+        self.append_function_msg( "set_text_ver_2" )
 
         a_string    = 22  * (
 
@@ -427,31 +434,35 @@ before your eyes with the touch of a few keys.
 
         self.text_edit.setText( a_string )
 
+        self.append_msg( "set_text_ver_2 done" )
+
     # ----------
     def set_textxxx(self, a_string ):
         """
         """
-        print_func_header( "set_text_ver_2" )
+        self.append_function_msg( "set_text_ver_2" )
 
         text_edit       = self.text_edit
         text_edit.clear()
         cursor          = text_edit.textCursor()
         cursor.insertText(a_string)
 
-    # ----
+    #-------------------
     def delete_text(self, text_edit):
         """
         """
-        print_func_header( "delete_text" )
+        self.append_function_msg( "delete_text" )
 
         text_edit.clear()
 
-    # ----
+        self.append_msg( "delete_text done" )
+
+    #--------
     def insert_text( self, ):
         """
         insert text at the cursor position
         """
-        print_func_header( "insert_text" )
+        self.append_function_msg( "insert_text" )
 
         a_string  = ( """>>---- so here is a bit
 of text the we will
@@ -461,12 +472,13 @@ at the cursor ----<<""")
         text_edit       = self.text_edit
         cursor          = text_edit.textCursor()
         cursor.insertText( a_string )
+        self.append_msg( "insert_text done" )
 
     #----------------------------
     def copy_selected_text(self,  ):
         """
         """
-        print_func_header( "copy_selected_text" )
+        self.append_function_msg( "copy_selected_text" )
 
         text_edit       = self.text_edit
         selected_text   = text_edit.textCursor().selectedText()
@@ -475,7 +487,8 @@ at the cursor ----<<""")
         # to paste get the text with QApplication.clipboard().text()
         #clipboard = QApplication.clipboard()
 
-        print(  f"   -> {selected_text = } now in clipboard" )
+        self.append_msg(  f"   -> {selected_text = } now in clipboard" )
+        self.append_msg( "copy_selected_text done" )
 
     #----------------------
     def copy_n_lines_of_text(self, text_edit, num_lines ):
@@ -483,7 +496,7 @@ at the cursor ----<<""")
         copy some number of lines of text to clipboard
 
         """
-        print_func_header( "copy_n_lines_of_text" )
+        self.append_function_msg( "copy_n_lines_of_text" )
 
         cursor = text_edit.textCursor()
 
@@ -513,7 +526,8 @@ at the cursor ----<<""")
         text_edit.setTextCursor(cursor)
 
         # Print or return the list of lines
-        print(f"Next {num_lines} lines:", lines)
+        self.append_msg( f"Next {num_lines} lines:", lines)
+        self.append_msg( "copy_n_lines_of_text done" )
         return lines
 
     #----------------------
@@ -524,7 +538,7 @@ at the cursor ----<<""")
         from the cursor position copy the text from the
         beginning of the line to the end of the line.
         """
-        print_func_header( "copy_line_of_text" )
+        self.append_function_msg( "copy_line_of_text" )
 
         text_edit           = self.text_edit
         cursor              = text_edit.textCursor()
@@ -545,7 +559,8 @@ at the cursor ----<<""")
         cursor.setPosition(original_position)
         self.text_edit.setTextCursor(cursor)
 
-        print(f"Copied text: {selected_text = }")
+        self.append_msg( f"Copied text: {selected_text = }")
+        self.append_msg( "copy_line_of_text done" )
 
     # ---------------------
     def search_down(self):
@@ -590,13 +605,14 @@ at the cursor ----<<""")
         in a QTextEdit how do i find the position of the cursor
         move the cursor to some position, move the cursor to the top, or bottom
         """
-        print_func_header( "inspect" )
+        self.append_function_msg( "inspect" )
 
         print( "\n >>>> inspect_widget.inspect_widget  -- to do "   )
         print( "some cursor stuff in copy__")
         # print( f"copy_all_text {self.copy_all_text( self.text_edit )}" )
+        self.append_msg( "inspect_widget done" )
 
-    # ----
+    #------------------
     def change_widget(self, text_edit ):
         """
         in a QTextEdit how do i find the position of the cursor
@@ -608,10 +624,10 @@ at the cursor ----<<""")
         # Apply the modified cursor to the QTextEdit to reflect the selection
         text_edit.setTextCursor(cursor)
         """
-        print_func_header( "change_widget" )
+        self.append_function_msg( "change_widget" )
 
-        print( "\n>>>>change_widget   -- to do "   )
-        print( "some cursor stuff in copy__")
+        self.append_msg( "\n>>>>change_widget   -- to do "   )
+        self.append_msg( "some cursor stuff in copy__")
 
         # Ensure that the cursor is visible and the widget scrolls to it
         text_edit.ensureCursorVisible()
@@ -641,14 +657,39 @@ at the cursor ----<<""")
         # cursor.setPosition(100)
         # text_edit.setTextCursor(cursor)
 
-        print( "\n>>>>change_widget   -- to do "   )
+        self.append_msg( "\n>>>>change_widget   -- to do "   )
+        self.append_msg( "change_widget done" )
+
+    # ------------------------------------
+    def mutate_0( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_0" )
+
+        msg    = "so far not implemented "
+        self.append_msg( msg, clear = False )
+
+        self.append_msg( "mutate_0 done" )
+
+    # ------------------------------------
+    def mutate_1( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_1" )
+
+        msg    = "so far not implemented "
+        self.append_msg( msg, clear = False )
+
+        self.append_msg( "mutate_1 done" )
 
     # ------------------------
     def inspect(self):
         """
         the usual
         """
-        print_func_header( "inspect" )
+        self.append_function_msg( "inspect" )
 
         # make some locals for inspection
         local_self            = self
@@ -659,12 +700,16 @@ at the cursor ----<<""")
              a_locals       = locals(),
              a_globals      = globals(), )
 
+        self.append_msg( "inspect done" )
+
     # ------------------------
     def breakpoint(self):
         """
         each tab gets its own function so we break in that
         tabs code
         """
-        print_func_header( "breakpoint" )
+        self.append_function_msg( "breakpoint" )
 
         breakpoint()
+
+        self.append_msg( "breakpoint done" )

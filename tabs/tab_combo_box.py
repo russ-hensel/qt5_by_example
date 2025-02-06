@@ -175,7 +175,7 @@ class QComboBoxTab( tab_base.TabBase  ) :
         widget.addItem('Two')
         widget.addItem('Three')
         widget.addItem('Four')
-        #widget.editable( True )
+
         widget.setEditable( True )   # if is edited then value does not match index
 
         widget.currentIndexChanged.connect( self.conbo_currentIndexChanged )
@@ -376,14 +376,13 @@ class QComboBoxTab( tab_base.TabBase  ) :
     def mutate_old(self,   ):
         """
         what it says
+        new mutate may be in base class
         """
         self.append_function_msg( "mutate old" )
 
         self.append_msg( "\n>>>>mutate   -- to do more "   )
         self.combo_1.setCurrentIndex( 2 )
-
         self.combo_2.setCurrentText( "2" )
-
 
 
     # ------------------------------------
@@ -393,8 +392,9 @@ class QComboBoxTab( tab_base.TabBase  ) :
         """
         self.append_function_msg( "mutate_0" )
 
-        msg    = "so far not implemented "
+        msg    = 'combo_2.lineEdit().setText( "mutate_0" )  '
         self.append_msg( msg, clear = False )
+        self.combo_2.lineEdit().setText( "mutate_0" )
 
     # ------------------------------------
     def mutate_1( self ):
@@ -402,10 +402,14 @@ class QComboBoxTab( tab_base.TabBase  ) :
         read it -- mutate the widgets
         """
         self.append_function_msg( "mutate_1" )
-        msg    = "so far not implemented "
+
+        msg    = 'combo_2.setCurrentText( "2" )'
         self.append_msg( msg, clear = False )
+        self.combo_2.setCurrentText( "2" )
 
-
+        msg    = 'combo_1.setCurrentIndex( 2 )'
+        self.append_msg( msg, clear = False )
+        self.combo_1.setCurrentIndex( 2 )
 
     # ------------------------
     def inspect(self):

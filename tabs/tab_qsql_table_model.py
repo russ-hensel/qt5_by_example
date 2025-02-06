@@ -7,10 +7,10 @@ tab_qsql_table_model.
 
 self.help_file_name     =  "qsql_table_model_tab.txt"
 
-KEY_WORDS:      sql query of a single table crud select insert update delete zz
+KEY_WORDS:      sql query of a single table crud select insert update delete zzz
 CLASS_NAME:     QSqlTableModelTab
 WIDGETS:        QSqlTableModel QTableView
-STATUS:         works
+STATUS:         runs_correctly_?_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
 TAB_TITLE:      QSqlTableModel
 
 Search
@@ -120,7 +120,7 @@ class QSqlTableModelTab( QWidget ):
         layout        = QVBoxLayout( tab_page )
         self.layout   = layout
 
-        layout.addWidget( self.people_view   )
+        layout.addWidget( self.persons_view   )
 
         layout.addWidget( self.phone_view    )
 
@@ -182,10 +182,10 @@ class QSqlTableModelTab( QWidget ):
         build model and views if used here
 
         """
-        # ---- people
+        # ---- persons
         model                  = QSqlTableModel( self, global_vars.EX_DB   )
-        self.people_model      = model
-        model.setTable('people')
+        self.persons_model      = model
+        model.setTable('persons')
 
         model.setEditStrategy( QSqlTableModel.OnManualSubmit )
             #  OnFieldChange , OnRowChange , and OnManualSubmit .
@@ -194,17 +194,17 @@ class QSqlTableModelTab( QWidget ):
         #model->setHeaderData(1, Qt::Horizontal, tr("Salary"));
 
         view                    = QTableView( )
-        self.people_view        = view
+        self.persons_view        = view
         view.setModel( model  )
         view.hideColumn( 0 )       # hide is hear but header on model
         view.setSelectionBehavior( QTableView.SelectRows )
-        view.clicked.connect( self._people_view_clicked  )
+        view.clicked.connect( self._persons_view_clicked  )
         view.setSortingEnabled( True )
 
-        # ---- people_phones
+        # ---- persons_phones
         model                  = QSqlTableModel( self, global_vars.EX_DB  )
         self.phone_model       = model
-        model.setTable( 'people_phones' )
+        model.setTable( 'persons_phones' )
 
         model.setEditStrategy( QSqlTableModel.OnManualSubmit )
             #  OnFieldChange , OnRowChange , and OnManualSubmit .
@@ -229,8 +229,8 @@ class QSqlTableModelTab( QWidget ):
         """ """
         print_func_header( "get_selected_rows" )
 
-        print( "looking at the people view ")
-        view            = self.people_view
+        print( "looking at the persons view ")
+        view            = self.persons_view
         # Assuming `view` is your QTableView
         selection_model = view.selectionModel()
         if selection_model:
@@ -249,7 +249,7 @@ class QSqlTableModelTab( QWidget ):
         column          = 1
         print( "for now not selectd by by x,y {x = } {y = }")
 
-        model           = self.people_model
+        model           = self.persons_model
 
 
         # Retrieve the QModelIndex for the specified cell
@@ -276,11 +276,11 @@ class QSqlTableModelTab( QWidget ):
             print( f"Value at row {row}, column '{column_name}': {value}")
 
     # ------------------------
-    def _people_view_clicked(self, index,   ):
+    def _persons_view_clicked(self, index,   ):
         """ """
-        print_func_header( "_people_view_clicked" )
+        print_func_header( "_persons_view_clicked" )
 
-        view    = self.people_view
+        view    = self.persons_view
         msg     = f"_view_clicked {index} "
         print( msg )
         msg     = f"{INDENT}{view = } there is much to explore here, row, column, values"
@@ -289,8 +289,8 @@ class QSqlTableModelTab( QWidget ):
         msg     = f"{INDENT}{index} {index.row() = } {index.column() = } "
         print( msg )
 
-        model           = self.people_model
-        people_model    = model
+        model           = self.persons_model
+        persons_model    = model
         no_rows         = model.rowCount()
 
         msg     = f"{INDENT}{model.rowCount() = }   "
@@ -312,12 +312,12 @@ class QSqlTableModelTab( QWidget ):
         msg     = f"{INDENT}extracted data {key = }   "
         print( msg )
 
-        msg     = f"{INDENT}phones are now displayed for for the person clicked on"
+        msg     = f"{INDENT}phones are now displayed for for the persons clicked on"
         print( msg )
 
         # ---- sync up second model with row clicked in first
         phone_model     = self.phone_model
-        phone_model.setFilter( f"person_id = {key}" )
+        phone_model.setFilter( f"persons_id = {key}" )
         phone_model.select()
 
     # -----------------------
@@ -362,10 +362,10 @@ class QSqlTableModelTab( QWidget ):
         What it says
         taken from stuff and simplifed
         """
-        print_func_header( f"select_by_id for people {a_id = }" )
+        print_func_header( f"select_by_id for persons {a_id = }" )
 
         record   = None
-        model    = self.people_model
+        model    = self.persons_model
 
         #ia_qt.q_sql_query_model( model, "select_record 1" )
         model.setFilter( f"id = {a_id}" )
@@ -374,7 +374,8 @@ class QSqlTableModelTab( QWidget ):
 
         print( f"{INDENT}select_by_id{model.rowCount() = }  ")
 
-        print( info_about.get( model, msg = "select_by_id post filter and select " ) )
+        #print( info_about.get( model, msg = "select_by_id post filter and select " ) )
+        print(  info_about.INFO_ABOUT.find_info_for(  model, msg = "select_by_id post filter and select " ) )
 
         if model.rowCount() > 0:
             record                  = model.record(0)
@@ -383,7 +384,7 @@ class QSqlTableModelTab( QWidget ):
             #self.textField.setText(record.value("text_data"))
             #self.record_state       = RECORD_FETCHED
             self.current_id         = a_id
-            print( f"people id = {a_id}")
+            print( f"persons id = {a_id}")
 
         else:
             msg    = f"Record not found! {a_id = }"
@@ -407,10 +408,10 @@ class QSqlTableModelTab( QWidget ):
 
 
         """
-        print_func_header( "clear experimenting with methods people_model" )
+        print_func_header( "clear experimenting with methods persons_model" )
         # like this the best
         # try a know bad select
-        model       = self.people_model
+        model       = self.persons_model
         model.setFilter( f"id = -99" )
         model.select()
 
@@ -441,8 +442,8 @@ class QSqlTableModelTab( QWidget ):
         """ """
         print_func_header( "select_all" )
 
-        self.people_model.setFilter( "" )
-        self.people_model.select()  # Load the data into the model
+        self.persons_model.setFilter( "" )
+        self.persons_model.select()  # Load the data into the model
 
         self.phone_model.setFilter( "" )
         self.phone_model.select()
@@ -456,11 +457,11 @@ class QSqlTableModelTab( QWidget ):
         my_tab_widget       = self
         parent_window       = self.parent( ).parent( ).parent().parent()
         #a_db                = parent_window.sample_db
-        people_model        = self.people_model
-        people_view         = self.people_view
+        persons_model        = self.persons_model
+        persons_view         = self.persons_view
         wat_inspector.go(
              msg            = "inspect QSqlTableModelTab",
-             # inspect_me     = self.people_model,
+             # inspect_me     = self.persons_model,
              a_locals       = locals(),
              a_globals      = globals(), )
 

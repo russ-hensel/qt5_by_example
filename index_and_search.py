@@ -84,6 +84,7 @@ import utils_for_tabs as uft
 import wat_inspector
 
 # ---- ---- local imports
+
 print_func_header  = uft.print_func_header
 
 # -----------------------------
@@ -98,18 +99,18 @@ def delete_db_file( file_name ):
     if exists:
         try:
             os.remove( file_name )   # error if file not found
-            print(f"removed {file_name} "  )
+            msg    = ( f"delete_db_file removed {file_name} "  )
             logging.debug( msg )
 
         except OSError as error:
             msg    = f"{error = }"
             logging.debug( msg )
 
-            msg        = ( f"os.remove threw error on file {file_name}")
+            msg        = ( f"delete_db_file os.remove threw error on file {file_name}")
             logging.debug( msg )
 
     else:
-        msg         = ( f"file already gone  {file_name}   ")
+        msg         = ( f"delete_db_file file already gone  {file_name}   ")
         logging.debug( msg )
 
 # -------------------------------------
@@ -121,6 +122,9 @@ class TabDBBuilder():
     def __init__( self ):
         """
         The usual
+        global_vars.set_tab_db_builder( self  )
+        global_vars.TAB_DB_BUILDER.widget_list
+
         """
         self.db    = None
         self.reset()
@@ -133,8 +137,15 @@ class TabDBBuilder():
         """
         Reset and rebuild the db
         """
+        self.widget_set   = set( )
         self.create_connection()
         self.create_populate_tables()
+        self.widget_set = self.widget_set - { "" }
+
+        widget_list   = list( self.widget_set )
+        widget_list.sort()
+        self.widget_list   = widget_list   # intervace
+        print( f"{widget_list = }")
 
     #------------
     def create_connection( self, ):
@@ -244,7 +255,6 @@ class TabDBBuilder():
         msg         = "index_and_search.py find_doc_files this is the file list"
         logging.debug( msg )
         for ix, i_file in enumerate( file_list ):
-            pass
             msg    = f" {ix }ix, {i_file} "
             logging.debug( msg )
 
@@ -284,8 +294,14 @@ class TabDBBuilder():
     def doc_data_to_db( self, doc_data ):
         """
         add a doc data to the db
+        and our set ... read it
         """
-        query = QSqlQuery( self.db )
+        widget_list     = doc_data[ "widgets"].split( " " )
+
+        self.widget_set = self.widget_set | set( widget_list )
+        #rint( f"{self.widget_set = }")
+
+        query           = QSqlQuery( self.db )
 
         table_data = [
             ( str( doc_data[ "doc_file_name"] ),
@@ -361,8 +377,8 @@ class TabDBBuilder():
 
 
             if i_line.startswith( "KEY_WORDS:"):
-                    i_line    = i_line[ 10: ].strip()
-                    doc_data[ "key_words" ] = doc_data[ "key_words" ] + " " + i_line
+                i_line    = i_line[ 10: ].strip()
+                doc_data[ "key_words" ] = doc_data[ "key_words" ] + " " + i_line
 
             # if i_line.startswith( "MODULE:"):
             #         i_line    = i_line[ len("MODULE:" ): ].strip()
@@ -419,7 +435,7 @@ class TabDBBuilder():
         sql   = "SELECT id, module, class, widgets, key_words FROM tabs"
 
         if not query.exec_( sql ):  # Check if execution failed
-            msg        = ("Error executing query:  {query.lastError().text()}" )
+            msg        = ("query_print_tab Error executing query:  {query.lastError().text()}" )
             logging.error( msg )
 
         while query.next():
@@ -432,13 +448,13 @@ class TabDBBuilder():
 class IndexSearch(   ):
     def __init__(self):
         """
-        pass
+        obj.index_db.
+
         """
         pass
         self.build_stuff()
 
     def build_stuff( self ):
-        pass
         self.index_db     = TabDBBuilder( )
         return self.index_db.db
 

@@ -35,7 +35,7 @@ import ia_parameters
 
 #port wat_inspector
 
-
+VERBOSE    = True
 # ---- ---- local imports
 #print_func_header  = uft.print_func_header
 
@@ -56,12 +56,14 @@ class IaSearch():
 
         # global_vars.set_tab_db( self.db  )
         # global_vars.set_tab_db_builder( self  )
-        print( "find_ia_files")
 
-        print( "loop thru files")
+        if  VERBOSE is True:
+            print( "ia_search.IaSearch find_ia_files now know as info_about, not yet updated ")
 
-        print( "    finding file data")
-        print( "    save file data")
+            print( "loop thru files")
+
+            print( "    finding file data")
+            print( "    save file data")
 
         self.file_path_list    = self.find_ia_files()
         self.inspect_files( self.file_path_list )
@@ -85,8 +87,8 @@ class IaSearch():
 
             file_path_list      = file_path_list + i_file_path_list
         for ix, i_file_path in enumerate( file_path_list ):
-            pass
-            print( ix, i_file_path)
+            if  VERBOSE is True:
+               print( ix, i_file_path)
 
         return file_path_list
 

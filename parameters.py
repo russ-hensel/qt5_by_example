@@ -39,8 +39,8 @@ class Parameters( ):
             if you comment all out all modes you get the default mode which should
             run, perhaps not in the way you want
         """
-        self.mode_russ_on_theprof()
-        #self.new_user_mode()
+        #self.mode_russ_on_theprof()
+        self.new_user_mode()
         #self.millhouse_1_mode()
 
         # two of my computers
@@ -53,6 +53,28 @@ class Parameters( ):
 
 
     # ---- ---->> Methods:  one for each mode
+    # -------
+    def mode_test_win( self ):
+        """
+        a mode for the new user, pretty much empty,
+        a new user may experiment here.
+        """
+        self.mode               = "mode_russ_on_theprof in qt5_by_example"
+        # but do they use the same units ?QDateEdit
+        self.qt_width           = 1500
+        self.qt_height          = 600    # 700 most of win height
+        self.qt_xpos            = 10
+        self.qt_ypos            = 10
+
+        self.wat_qt_width       = 1500
+        self.wat_qt_height      = 900
+        self.wat_qt_xpos        = 10
+        self.wat_qt_ypos        = 10
+
+
+        self.dir_for_tabs       = [ "./",  ]
+
+  
     # -------
     def mode_russ_on_theprof( self ):
         """
@@ -80,6 +102,15 @@ class Parameters( ):
                                     "/mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/rshlib_qt",
                                     ]
 
+        # ---- for sample database
+        self.db_file_name        = "/tmp/ramdisk/qt_sql.db"
+
+
+        # ---- for qt tabs
+        self.tab_db_type         = "QSQLITE"
+        self.tab_db_file_name    = "/tmp/ramdisk/tab.db"
+
+
 
         self.default_search     = "zzz"
         self.do_search_on_init  = True
@@ -91,6 +122,14 @@ class Parameters( ):
         a new user may experiment here.
         """
         self.mode               = "mode new_user"
+
+        self.dir_for_tabs       = [ "./tabs",
+                                    "/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb",
+                                    # "/mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/test",
+                                    "/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs",
+                                    "/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs",
+                                    "/mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/rshlib_qt",
+                                    ]
 
     # -------
     def running_on_tweaks(self,  ):
@@ -163,18 +202,21 @@ class Parameters( ):
         for particular operating systems
         you may need to mess with this based on your os setup
         """
-        pass
-        # if  self.os_win:
-        #     self.icon               = r"./images/clipboard_b.ico"
-        #         #  very dark greenhouse this has issues on rasPi
-        #     self.icon               = r"./images/clipboard_b_red_GGV_icon.ico"
-        #         #  looks same as clipboard_b_red_gimp.ico
-        #     self.icon               = r"./images/clipboard_b_red_gimp.ico"    # pretty visible -- make black version -- cannot get gimp to do it
+        our_os           = sys.platform
+        self.our_os      = our_os
+             #testing if our_os == "linux" or our_os == "linux2"  "darwin"  "win32"
 
+        if our_os == "win32":
+            self.os_win = True     # the OS is windows any version
+        else:
+            self.os_win = False    # the OS is not windows
 
-        # else:
-        #     pass
-        #     #self.gui_style          = "linux"
+        if  self.os_win:
+            self.text_editor        = "notepad"
+
+        else:
+            pass
+            # print( "os_tweaks for not windows " )
 
     #
 
@@ -252,7 +294,6 @@ class Parameters( ):
         self.icon               = r"./images/icon_red.png"    # icon for running app
         self.icon               = r"./icons/icons/binocular.png"
 
-
         self.text_editor        = "gedit"
 #        self.text_editor        = "xed"
 
@@ -273,12 +314,18 @@ class Parameters( ):
 
         self.db_type            = "QSQLITE"
             # the type of database, so far we only support sqllite
-        self.db_file_name        = "sample.db"   #  = "sample.db"   =  ":memory:"
-        self.db_file_name        = ":memory:"     #  = "sample.db"   =  ":memory:"
-        self.db_file_name        = "/tmp/ramdisk/qt_sql.db"
 
+        # ---- for sample database
+        self.db_file_name        = "/tmp/ramdisk/qt_sql.db"
+        self.db_file_name        = ":memory:"     #  = "sample.db"   =  ":memory:"
+        #self.db_file_name        = "./qt_sql.db"    #  real files are very slow
+
+        # ---- for qt tabs
         self.tab_db_type         = "QSQLITE"
-        self.tab_db_file_name    =  "/tmp/ramdisk/tab.db"
+        self.tab_db_file_name    = "/tmp/ramdisk/tab.db"
+        self.tab_db_file_name    = "./tab.db"
+        self.tab_db_file_name    = ":memory:"
+
         # this is the name of a program: its executable with path info.
         # to be used in opening an external editor
         #self.db_file_name        = "sample2.db"   #  = "sample.db"   =  ":memory:"
@@ -287,7 +334,6 @@ class Parameters( ):
         # control button for editing the readme file
         self.readme_fn      = "readme_rsh.txt"   # or None to suppress in gui
             # a readme file accessable from the main menu
-
 
         # or anything else ( will try to shell out may or may not work )
         self.help_fn        =  "./docs/help.txt"   #  >>. this is the path to our main .py file self.py_path + "/" +
@@ -301,7 +347,7 @@ class Parameters( ):
         self.dir_for_tabs       = [ "/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs" ]
         #may need to be on path sys.path.insert( 1, f"{src_root}/_projects/stuffdb/qt_tabs" )
 
-        self.default_search     =      ""
+        self.default_search     = ""
         self.do_search_on_init  = False
 
     # -------
@@ -312,6 +358,7 @@ class Parameters( ):
         may be down in listing because it should not be messed with.
         """
         self.mode_default()
+        self.os_tweaks()
         self.running_on_tweaks()
         self.choose_mode()
 
@@ -348,20 +395,28 @@ class Parameters( ):
 
         a_str   = ""
         a_str   = ">>>>>>>>>>* Parameters *<<<<<<<<<<<<"
-        a_str   = self.to_columns( a_str, ["db_file_name",
-                                           f"{self.db_file_name}" ] )
+
+        a_str   = self.to_columns( a_str, ["our_os",
+                                           f"{self.our_os}" ] )
+
         a_str   = self.to_columns( a_str, ["db_type",
                                            f"{self.db_type}" ] )
-        a_str   = self.to_columns( a_str, ["gui_text_log_fn",
-                                           f"{self.gui_text_log_fn}" ] )
+        a_str   = self.to_columns( a_str, ["db_file_name",
+                                           f"{self.db_file_name}" ] )
+
+
+        a_str   = self.to_columns( a_str, ["tab_db_type",
+                                           f"{self.tab_db_type}" ] )
+        a_str   = self.to_columns( a_str, [ "tab_db_file_name",
+                                            f"{self.tab_db_file_name}" ] )
+
         a_str   = self.to_columns( a_str, ["help_fn",
                                            f"{self.help_fn}" ] )
         a_str   = self.to_columns( a_str, ["help_path",
                                            f"{self.help_path}" ] )
         a_str   = self.to_columns( a_str, ["icon",
                                            f"{self.icon}" ] )
-        a_str   = self.to_columns( a_str, ["log_gui_text",
-                                           f"{self.log_gui_text}" ] )
+
         a_str   = self.to_columns( a_str, ["logger_id",
                                            f"{self.logger_id}" ] )
         a_str   = self.to_columns( a_str, ["logging_level",

@@ -7,7 +7,7 @@ tab_qsql_database.
 
 self.help_file_name     =  "qsql_database_tab.txt"
 
-KEY_WORDS:      sql database insert define schema query create db select cursor bind error last join table
+KEY_WORDS:      sql database insert define schema query create db select cursor bind error last join table zzz
 CLASS_NAME:     QSqlDatabaseTab
 WIDGETS:        QSqlDatabase QSqlQuery
 STATUS:         works
@@ -183,13 +183,13 @@ class SampleDB():
         """
         print_func_header( "create_populate_tables" )
 
-        self.create_people_table()
-        self.populate_people_table()
+        self.create_persons_table()
+        self.populate_persons_table()
 
-        self.create_people_key_words_table()
+        self.create_persons_key_words_table()
 
-        self.create_people_phones_table()
-        self.populate_people_phones_table()
+        self.create_persons_phones_table()
+        self.populate_persons_phones_table()
 
         self.create_book_club_table()
         self.populate_book_club_table()
@@ -198,16 +198,16 @@ class SampleDB():
         self.populate_employee_table()
 
     # ---------------------------
-    def create_people_table( self, ):
+    def create_persons_table( self, ):
         """
         Create people and people_phones tables
         ."""
-        print_func_header( "create_people_table" )
+        print_func_header( "create_persons_table" )
 
         query   = QSqlQuery( self.db )
 
         sql     = """
-            CREATE TABLE people (
+            CREATE TABLE persons (
                 id              INTEGER PRIMARY KEY AUTOINCREMENT,
                 name            TEXT,
                 age             INTEGER,
@@ -223,17 +223,17 @@ class SampleDB():
             #rint("Query executed successfully.")
 
     # ---------------------------
-    def create_people_key_words_table( self, ):
+    def create_persons_key_words_table( self, ):
         """
         query.prepare( f"INSERT INTO {self.table_name}"
                         "  (id, key_word ) VALUES ( :id, :key_word )")
         ."""
-        print_func_header( "create_people_key_words_table" )
+        print_func_header( "create_persons_key_words_table" )
 
         query   = QSqlQuery( self.db )
 
         sql     = """
-            CREATE TABLE people_key_words (
+            CREATE TABLE persons_key_words (
                 id              INTEGER,
                 key_word        TEXT
             )
@@ -250,11 +250,11 @@ class SampleDB():
 
 
     #------------
-    def populate_people_table( self, ):
+    def populate_persons_table( self, ):
         """
         Populate the people table with sample data.
         """
-        print_func_header( "populate_people_table" )
+        print_func_header( "populate_persons_table" )
 
         if False:
             # a bit of straight sql lite -- this does not work for in memory?
@@ -262,16 +262,16 @@ class SampleDB():
             #conn       = sqlite3.connect("example.db")
             cursor     = sql_con.cursor()
             # Insert a row with a specific starting ID
-            cursor.execute("INSERT INTO people (id, name) VALUES (?, ?)", (1000, "Initial Entry"))
+            cursor.execute("INSERT INTO persons (id, name) VALUES (?, ?)", (1000, "Initial Entry"))
             # cursor.commit()
             sql_con.commit()
 
-            #rint( "people table initialized to starting id of 1000")
+            #rint( "persons table initialized to starting id of 1000")
 
         if True:
 
             query       = QSqlQuery( self.db )
-            sql  =   """INSERT INTO people (
+            sql  =   """INSERT INTO persons (
                     id,
                     name,
                     age,
@@ -297,7 +297,7 @@ class SampleDB():
             # ("Jo",      29,   "God"       ),
         ]
 
-        sql  =   """INSERT INTO people (
+        sql  =   """INSERT INTO persons (
                 name,
                 age,
                 family_relation )
@@ -348,31 +348,31 @@ class SampleDB():
         query.exec_( sql )
 
     # ---------------------------
-    def create_people_phones_table( self, ):
+    def create_persons_phones_table( self, ):
         """
-        Create people_phones table.
+        Create persons_phones table.
         """
-        print_func_header( "create_people_phones_table" )
+        print_func_header( "create_persons_phones_table" )
 
         query = QSqlQuery( self.db )
 
         sql   = """
-            CREATE TABLE people_phones (
+            CREATE TABLE persons_phones (
                 id              INTEGER PRIMARY KEY AUTOINCREMENT,
                 person_id       INTEGER,
                 phone_number    TEXT,
                 zone            TEXT,
-                FOREIGN KEY(person_id) REFERENCES people(id) ON DELETE CASCADE
+                FOREIGN KEY(person_id) REFERENCES persons(id) ON DELETE CASCADE
             )
         """
         query.exec( sql )
 
     #------------
-    def populate_people_phones_table( self, ):
+    def populate_persons_phones_table( self, ):
         """
-        Populate the people_phones table.
+        Populate the persons_phones table.
         """
-        print_func_header( "populate_people_phones_table" )
+        print_func_header( "populate_persons_phones_table" )
 
         query = QSqlQuery( self.db )
 
@@ -386,7 +386,7 @@ class SampleDB():
             # (2, "555-2345", "A"),    (1, "555-3456", "B"),
         ]
 
-        sql   = """INSERT INTO people_phones (
+        sql   = """INSERT INTO persons_phones (
                       person_id,
                       phone_number,
                       zone )
@@ -405,8 +405,8 @@ class SampleDB():
     #------------
     def create_book_club_table( self, ):
         """
-        Book Clubs that people can belong to
-        a many to many relationship based on people and book_club
+        Book Clubs that persons can belong to
+        a many to many relationship based on persons and book_club
         """
         what    = "create_book_club_table"
         print( f"{BEGIN_MARK_1}{what}{BEGIN_MARK_2}")
@@ -454,16 +454,16 @@ class SampleDB():
             query.exec_()
 
     #------------
-    def create_people_book_club_table( self, ):
+    def create_persons_book_club_table( self, ):
         """
         Create  table -- what it says
         """
-        print_func_header( "create_people_book_club_table" )
+        print_func_header( "create_persons_book_club_table" )
 
         query = QSqlQuery( self.db )
 
         sql    = """
-            CREATE TABLE people_book_club (        print_func_header( "query_print_people" )
+            CREATE TABLE persons_book_club (        print_func_header( "query_print_people" )
                 id              INTEGER PRIMARY KEY AUTOINCREMENT,
                 people_id       INTEGER,
                 book_club_id    INTEGER
@@ -472,7 +472,7 @@ class SampleDB():
         query.exec_( sql )
 
     #------------
-    def populate_people_book_club_data( self, ):
+    def populate_persons_book_club_data( self, ):
         """
         what it says
         """
@@ -489,7 +489,7 @@ class SampleDB():
             ("Jo",      29,   "God"       ),
         ]
 
-        sql     = """INSERT INTO people (
+        sql     = """INSERT INTO persons (
                   name, age, family_relation) VALUES (?,?, ? )
         """
 
@@ -502,18 +502,18 @@ class SampleDB():
             query.exec_()
 
     #------------
-    def query_print_people( self, ):
+    def query_print_persons( self, ):
         """
         Print out the table
         """
-        print_func_header( "query_print_people" )
+        print_func_header( "query_print_persons" )
 
         query           = QSqlQuery( self.db )
 
         print("People:")
 
         # Execute the query
-        if not query.exec_("SELECT id, name, age, family_relation FROM people"):  # Check if execution failed
+        if not query.exec_("SELECT id, name, age, family_relation FROM persons"):  # Check if execution failed
             print("Error executing query:", query.lastError().text())
         else:
             pass
@@ -527,23 +527,23 @@ class SampleDB():
             print(f"ID: {person_id}, Name: {name}, Age: {age} {family_relation = }")
 
     #------------
-    def query_people_key_words( self, ):
+    def query_persons_key_words( self, ):
         """
         Print out the table
         """
-        print_func_header( "query_people_key_words" )
+        print_func_header( "query_persons_key_words" )
 
         sql     = """
             SELECT
                 id,
                 key_word
 
-                FROM people_key_words
+                FROM persons_key_words
             """
 
         query           = QSqlQuery( self.db )
 
-        print("people_key_words table:")
+        print("persons_key_words table:")
 
         self.query_exec_error_check( query, sql )
 
@@ -591,8 +591,8 @@ class SampleDB():
 
         query           = QSqlQuery( self.db )
 
-        print("people_phones_data table:")
-        sql  = ("SELECT id, person_id, phone_number, zone FROM people_phones")
+        print("persons_phones_data table:")
+        sql  = ("SELECT id, person_id, phone_number, zone FROM persons_phones")
 
         self.query_exec_error_check( query, sql )
 
@@ -605,7 +605,7 @@ class SampleDB():
             print(f"ID: {a_id = }  { person_id = }  {phone_number = }  {zone = }")
 
     #------------
-    def query_print_people_phone( self, ):
+    def query_print_person_phone( self, ):
         """
         Print a join of people and people_phones
         """
@@ -617,10 +617,10 @@ class SampleDB():
         print("\nPeople and their phone numbers: join of people and people_phones")
 
         sql = ("""
-            SELECT people.name, people_phones.phone_number
-            FROM people
-            JOIN people_phones ON people.id = people_phones.person_id
-            ORDER BY people.name ASC
+            SELECT persons.name, persons_phones.phone_number
+            FROM persons
+            JOIN persons_phones ON persons.id = persons_phones.person_id
+            ORDER BY persons.name ASC
         """)
 
         self.query_exec_error_check( query, sql )
@@ -751,12 +751,12 @@ class QSqlDatabaseTab( QWidget ):
         """ """
         print_func_header( "print_db" )
 
-        self.sample_db.query_print_people()
-        self.sample_db.query_people_key_words()
+        self.sample_db.query_print_persons()
+        self.sample_db.query_persons_key_words()
         self.sample_db.query_print_phone()
 
         self.sample_db.query_book_club()
-        self.sample_db.query_print_people_phone()
+        self.sample_db.query_print_person_phone()
 
     # ------------------------
     def rebuild_db(self):

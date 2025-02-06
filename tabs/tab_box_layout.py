@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 """
 
-KEY_WORDS:      examples of box layouts stretch new tab base
+KEY_WORDS:      examples of box layouts stretch new_base
 
 CLASS_NAME:     QBoxLayoutTab
 WIDGETS:        QHBoxLayout QVBoxLayout
-STATUS:         partly works
+STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
 TAB_TITLE:      Box\nLayouts
 
 
@@ -271,8 +271,6 @@ class QBoxLayoutTab( tab_base.TabBase ) :
         button_layout        = QHBoxLayout(   )
 
         # ---------
-
-
         row_layout      = QHBoxLayout( )
         self.row_layout_1   = row_layout
         wigets_layout.addLayout( row_layout )

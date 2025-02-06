@@ -19,8 +19,8 @@ tab_fitz_7
 # --------------------
 if __name__ == "__main__":
     #----- run the full app
-    import qt_fitz_book
-    qt_fitz_book.main()
+    import main
+    #qt_fitz_book.main()
 # --------------------
 
 

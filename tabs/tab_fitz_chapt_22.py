@@ -5,7 +5,7 @@
 
 
 """
-KEY_WORDS:  Fitz chapter 22. A Table Model and View  formating  new base tab stagetwo
+KEY_WORDS:  Fitz chapter 22. A Table Model and View  formating    xxx
 CLASS_NAME: Fitz_22_Tab
 WIDGETS:    QAbstractTableModel  QTableView DecorationRole    BackgroundRole QIcon TextAlignmentRole
 STATUS:     runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
@@ -106,15 +106,9 @@ from PyQt5.QtWidgets import (QAction,
                              QWidget)
 
 import parameters
-#import qt_widgets
 import utils_for_tabs as uft
 import wat_inspector
 import tab_base
-
-
-
-# ---- imports neq qt
-
 
 
 # ---- end imports
@@ -233,22 +227,20 @@ class Fitz_22_Tab( tab_base.TabBase ) :
         """
         super().__init__()
         self.help_file_name     =  "fitz_22_tab.txt"
-        self._build_model()
-        self.mutate_dict[0]    = self.mutate_0
-        self.mutate_dict[1]    = self.mutate_1
+
+        self.mutate_dict[0]     = self.mutate_0
+        self.mutate_dict[1]     = self.mutate_1
         # self.mutate_dict[2]    = self.mutate_2
         # self.mutate_dict[3]    = self.mutate_3
         # self.mutate_dict[4]    = self.mutate_4
-
-
+        self._build_model()
         self._build_gui()
-
 
     # -------------------------------
     def _build_guixxxxx(self,   ):
         """
         layouts
-            a vbox for main layout
+            a vbox for main layoutnew base tab stagetwo
             h_box for or each row of widgets
         """
         tab_page      = self
@@ -318,10 +310,15 @@ class Fitz_22_Tab( tab_base.TabBase ) :
         # widget.clicked.connect( self.save    )
         # row_layout.addWidget( widget,   )
 
+        # ---- new row,
+        row_layout = QHBoxLayout(   )
+        layout.addLayout( row_layout,  )
+
+
         widget = QPushButton("mutate\n")
         self.button_ex_1         = widget
         widget.clicked.connect( lambda: self.mutate( ) )
-        button_layout.addWidget( widget )
+        row_layout.addWidget( widget )
 
         # ---- self.inspect
         widget = QPushButton("inspect\n")
@@ -356,7 +353,8 @@ class Fitz_22_Tab( tab_base.TabBase ) :
 
         self.view .setModel(self.model)
 
-        self.append_msg( "button code from other example may reacivate some ")
+        # too soon form mesages
+        # self.append_msg( "button code from other example may reacivate some ")
 
     def add(self):
         """

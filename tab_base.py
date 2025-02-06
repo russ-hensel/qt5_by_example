@@ -90,14 +90,13 @@ import global_vars
 # ---- imports neq qt
 import logging
 
-
 # ---- end imports
 
-print_func_header   = uft.print_func_header
+
 
 basedir = os.path.dirname(__file__)
 
-tick = QImage(os.path.join("tick.png"))
+tick    = QImage(os.path.join("tick.png"))
 
 logger          = logging.getLogger( )
 
@@ -116,15 +115,6 @@ COLORS = [
     "#b2182b",
     "#67001f",
 ]
-
-
-
-
-
-
-
-#basedir = os.path.dirname(__file__)
-
 
 
 
@@ -154,13 +144,11 @@ class TabBase( QWidget ) :
         layout        = QVBoxLayout( tab_page )
 
         self._build_gui_top(     layout )
-
         self._build_gui_widgets( layout )
         self._build_gui_bot(     layout )
 
-
     # -------------------------------
-    def _build_gui_top(self, layout  ):
+    def _build_gui_top( self, layout ):
         """
         layouts
             a vbox for main layout
@@ -175,7 +163,7 @@ class TabBase( QWidget ) :
         row_layout.addWidget( widget,   )
 
     # -------------------------------
-    def _build_gui_widgets(self, layout  ):
+    def _build_gui_widgetsssss(self, layout  ):
         """
         layouts
             a vbox for main layout
@@ -218,6 +206,8 @@ class TabBase( QWidget ) :
     # -------------------------------
     def _build_gui_bot(self, layout  ):
         """
+        make the bottom of the gui, mostly the large
+        message widget
         layouts
             a vbox for main layout
         """
@@ -230,102 +220,6 @@ class TabBase( QWidget ) :
         self.msg_widget     = widget
         #widget.clicked.connect( self.load    )
         row_layout.addWidget( widget,   )
-
-
-    def addxxx(self):
-        """
-        Add an item to our todo list, getting the text from the QLineEdit .todoEdit
-        and then clearing it.
-        """
-        print_func_header( "add" )
-
-        text = self.todoEdit.text()
-        # Remove whitespace from the ends of the string.
-        text = text.strip()
-        if text:  # Don't add empty strings.
-            # Access the list via the model.
-            self.model.todos.append((False, text))
-            # Trigger refresh.
-            self.model.layoutChanged.emit()  # <1>
-            # Empty the input
-            self.todoEdit.setText("")
-
-    def deletexxx(self):
-        """ """
-        print_func_header( "delete" )
-
-        indexes = self.todoView.selectedIndexes()
-        if indexes:
-            # Indexes is a single-item list in single-select mode.
-            index = indexes[0]
-            # Remove the item and refresh.
-            del self.model.todos[index.row()]
-            self.model.layoutChanged.emit()
-            # Clear the selection (as it is no longer valid).
-            self.todoView.clearSelection()
-
-    def completexxx(self):
-        """
-        mark selected row as complete
-        """
-        print_func_header( "complete" )
-
-        indexes = self.todoView.selectedIndexes()
-        if indexes:
-            index           = indexes[0]
-            row             = index.row()
-            msg             = f"completing {row = }"
-            print( msg )
-            status, text = self.model.todos[row]
-            self.model.todos[row] = (True, text)
-            # .dataChanged takes top-left and bottom right, which are equal
-            # for a single selection.
-            self.model.dataChanged.emit(index, index)
-            # Clear the selection (as it is no longer valid).
-            self.todoView.clearSelection()
-        else:
-            msg    = "no selection to complete"
-            print( msg )
-
-    def set_headersxxx( self ):
-        """ """
-        print_func_header( "select_with_filter" )
-
-        model    = self.model      # would think in view but no
-
-        model.setHeaderData(1, Qt.Horizontal, "SetCol1")
-        model.setHeaderData(2, Qt.Horizontal, "SetCol2")
-
-    def remove_columnsxxx( self ):
-        """ """
-        print_func_header( "remove_columns from what is visible " )
-        msg                 = "here remove by column name"
-        print( msg )
-        model               = self.model
-        columns_to_remove   = ['name', 'something']
-        for c_name in columns_to_remove:
-            idx = model.fieldIndex( c_name )
-            model.removeColumns( idx, 1 )  # what is 1
-
-    def select_with_wherexxx( self ):
-        """ """
-        print_func_header( "select_with_where" )
-
-
-
-        a_name          = "%a%"
-        msg             = f" where like   {a_name =} "
-        print( msg )
-        sql             =  "SELECT name, age  FROM people "
-        filter_str      = f"WHERE people.name  LIKE :a_name"
-        sql             = sql +  filter_str
-        print( f"{sql =}" )
-
-        query = QSqlQuery( db = global_vars.EX_DB )
-        query.prepare( sql )
-        query.bindValue(":a_name", a_name )
-        query.exec_()
-        self.model.setQuery(query)
 
 
     # ------------------------------------
@@ -345,36 +239,6 @@ class TabBase( QWidget ) :
             self.mutate_ix = 0
 
 
-    def select_all( self ):
-        """ """
-        print_func_header( "select_all  is a nop " )
-
-        # self.ix_sort    += 1
-        # if self.ix_sort > 1:
-        #     self.ix_sort = 0
-
-        # if self.ix_sort == 0:
-        #     sort_order   = Qt.DescendingOrder
-        # else:
-        #     sort_order   = Qt.AscendingOrder
-
-        # msg      = f"{sort_order = }"
-        # print( msg )
-
-        # self.model.setFilter( "" )  'QSqlQueryModel' object has no attribute 'setFilter'
-        # idx = self.model.fieldIndex( "age" )
-        # self.model.setSort( idx, sort_order )
-
-        # self.model.select()  'QSqlQueryModel' object has no attribute 'select'
-
-        #self.model.layoutChanged.emit() # This triggers a refresh of the entirety of the view. I
-
-
-    def save(self):
-        print_func_header( "save" )
-
-        with open("data.json", "w") as f:
-            data = json.dump(self.model.todos, f)
 
     #----------------------------
     def clear_msg( self,  ):
@@ -410,27 +274,27 @@ class TabBase( QWidget ) :
         self.msg_widget.append( msg )
         print( msg )
 
-    # ------------------------
-    def inspect(self):
-        """
-        the usual
-        """
-        print_func_header( "inspect" )
+    # # ------------------------
+    # def inspect(self):
+    #     """
+    #     the usual
+    #     """
+    #     print_func_header( "inspect" )
 
-        self_model         = self.model
-        self_view     = self.view
+    #     self_model         = self.model
+    #     self_view     = self.view
 
-        wat_inspector.go(
-             msg            = "locals for model and view",
-             a_locals       = locals(),
-             a_globals      = globals(), )
+    #     wat_inspector.go(
+    #          msg            = "locals for model and view",
+    #          a_locals       = locals(),
+    #          a_globals      = globals(), )
 
-    # ------------------------
-    def breakpoint(self):
-        """
-        each tab gets its own function so we break in that
-        tabs code
-        """
-        print_func_header( "breakpoint" )
+    # # ------------------------
+    # def breakpoint(self):
+    #     """
+    #     each tab gets its own function so we break in that
+    #     tabs code
+    #     """
+    #     print_func_header( "breakpoint" )
 
-        breakpoint()
+    #     breakpoint()

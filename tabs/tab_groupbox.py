@@ -8,10 +8,10 @@ tab_groupbox.py
 
 self.help_file_name     =  "group_widget_tab.txt"
 
-KEY_WORDS:      group collect widgets
+KEY_WORDS:      group collect widgets   new_base
 CLASS_NAME:     QGroupBoxTab
-WIDGETS:        QGroupBox
-STATUS:         works
+WIDGETS:        QGroupBox  StyleSheet
+STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
 TAB_TITLE:      QGroupBox
 
 
@@ -19,8 +19,8 @@ TAB_TITLE:      QGroupBox
 # --------------------
 if __name__ == "__main__":
     #----- run the full app
-    import qt_widgets
-    qt_widgets.main( )
+    import main
+    #qt_fitz_book.main()
 # --------------------
 
 import inspect
@@ -75,14 +75,11 @@ from PyQt5.QtWidgets import (QAction,
                              QVBoxLayout,
                              QWidget)
 
-import parameters
+# import parameters
 
 import utils_for_tabs as uft
 import wat_inspector
-
-# ---- imports neq qt
-
-
+import tab_base
 
 
 # ---- end imports
@@ -94,11 +91,11 @@ INDENT          = uft.BEGIN_MARK_1
 INDENT          = uft.BEGIN_MARK_2
 #INDENT          = qt_sql_widgets.
 
-print_func_header =  uft.print_func_header
+
 
 
 #  --------
-class QGroupBoxTab( QWidget ) :
+class QGroupBoxTab( tab_base.TabBase  ) :
     def __init__(self):
         """
         some content from and there may be more
@@ -106,14 +103,33 @@ class QGroupBoxTab( QWidget ) :
         tab_groupbox.py
         """
         super().__init__()
+
+        self.mutate_dict[0]     = self.mutate_0
+        self.mutate_dict[1]     = self.mutate_1
+        # self.mutate_dict[2]    = self.mutate_2
+        # self.mutate_dict[3]    = self.mutate_3
+        # self.mutate_dict[4]    = self.mutate_4
+
         self._build_gui()
 
-    def _build_gui(self,   ):
+    # def _build_gui(self,   ):
+    #     """
+    #     build the gui
+    #     """
+    #     tab_page      = self
+    #     layout        = QVBoxLayout( tab_page )
+
+    #----------------------------
+    def _build_gui_widgets(self, main_layout  ):
         """
-        build the gui
+        the usual, build the gui with the widgets of interest
+        and the buttons for examples
         """
-        tab_page      = self
-        layout        = QVBoxLayout( tab_page )
+        layout              = QVBoxLayout(   )
+
+        main_layout.addLayout( layout )
+        #button_layout        = QHBoxLayout(   )
+
         # ---- QGroupBox
         #groupbox   = QGroupBox()  # no title
         groupbox   = QGroupBox( "QGroupBox 1" )   # version with title
@@ -140,6 +156,11 @@ class QGroupBoxTab( QWidget ) :
 
         button_layout = layout # needs fixing
 
+        widget = QPushButton("mutate\n")
+        self.button_ex_1         = widget
+        widget.clicked.connect( lambda: self.mutate( ) )
+        button_layout.addWidget( widget )
+
         # ---- PB inspect
         widget          = QPushButton("inspect\n")
         widget.clicked.connect( self.inspect    )
@@ -160,12 +181,36 @@ class QGroupBoxTab( QWidget ) :
         #widget.clicked.connect(  self.show_values  )
         layout.addWidget( widget )
 
+    # ------------------------------------
+    def mutate_0( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_0" )
+
+        msg    = "so far not implemented "
+        self.append_msg( msg, clear = False )
+
+        self.append_msg( "mutate_0 done" )
+
+    # ------------------------------------
+    def mutate_1( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_1" )
+
+        msg    = "so far not implemented "
+        self.append_msg( msg, clear = False )
+
+        self.append_msg( "mutate_1 done" )
+
     # ------------------------
     def inspect(self):
         """
         the usual
         """
-        print_func_header( "inspect" )
+        self.append_function_msg(  "inspect" )
 
         # make some locals for inspection
         my_tab_widget = self
@@ -176,15 +221,18 @@ class QGroupBoxTab( QWidget ) :
              a_locals       = locals(),
              a_globals      = globals(), )
 
+        self.append_msg( "inspect done" )
+
     # ------------------------
     def breakpoint(self):
         """
         each tab gets its own function so we break in that
         tabs code
         """
-        print_func_header( "breakpoint" )
+        self.append_function_msg(  "breakpoint" )
 
         breakpoint()
 
+        self.append_msg( "breakpoint done" )
 
 # ---- eof

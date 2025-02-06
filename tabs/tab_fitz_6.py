@@ -5,10 +5,10 @@
 could use a rename to chapter of the book
 
 
-KEY_WORDS:      some stuff from the m fitz book a graph of static data chapter 35
+KEY_WORDS:      some stuff from the m fitz book a line graph  with points of static data chapter 35
 CLASS_NAME:     Fitz_6_Tab
 WIDGETS:        PlotWidget PyQtGraph pg.PlotWidget pg.mkPen  Grid Range
-STATUS:         works
+STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
 TAB_TITLE:      Fitz_Chapter 35 A_Tab
 
 
@@ -30,8 +30,8 @@ largely the last
 if __name__ == "__main__":
     #----- run the full app
     import main
-    #main.main()
-# -------------------
+    #qt_fitz_book.main()
+# --------------------
 
 
 import inspect
@@ -103,39 +103,42 @@ from PyQt5.QtWidgets import (QAction,
 #import qt_widgets
 import utils_for_tabs as uft
 import wat_inspector
-
-# ---- imports neq qt
-
+import tab_base
 
 
 # ---- end imports
 
-print_func_header   = uft.print_func_header
+
 
 basedir = os.path.dirname(__file__)
 
 
 #  --------
-class Fitz_6_Tab( QWidget ) :
+class Fitz_6_Tab( tab_base.TabBase ) :
     def __init__(self):
         """
 
         """
         super().__init__()
-        self.help_file_name     =  "fitz_6_tab.txt"
-        self._build_gui()
-        self.mutate_ix   = 0
+        self.help_file_name    =  "fitz_6_tab.txt"
+        self.mutate_dict[0]    = self.mutate_0
+        self.mutate_dict[1]    = self.mutate_1
+        # self.mutate_dict[2]    = self.mutate_2
+        # self.mutate_dict[3]    = self.mutate_3
+        # self.mutate_dict[4]    = self.mutate_4
 
-    # -------------------------------
-    def _build_gui(self,   ):
+        self._build_gui()
+
+    def _build_gui_widgets( self, main_layout  ):
         """
-        layouts
-            a vbox for main layout
-            h_box for or each row of widgets
+        the usual, build the gui with the widgets of interest
+        and the buttons for examples
         """
-        tab_page      = self
-        layout        = QVBoxLayout( tab_page )
-        #self.graphWidget = pg.PlotWidget()
+        layout              = QVBoxLayout(   )
+
+        main_layout.addLayout( layout )
+        #button_layout        = QHBoxLayout(   )
+
         widget              = pg.PlotWidget()
         self.graphWidget    = widget
         layout.addWidget( self.graphWidget )
@@ -167,13 +170,18 @@ class Fitz_6_Tab( QWidget ) :
         layout.addLayout( row_layout,  )
 
         # ---- PB clear
-        widget = QPushButton("clear\n")
-        widget.clicked.connect( self.graphWidget.clear     )
+        widget = QPushButton("clear_data\n")
+        widget.clicked.connect( self.clear_data        )
         row_layout.addWidget( widget,   )
 
         # ---- PB plot
         widget = QPushButton("plot\n")
         widget.clicked.connect( self.plot    )
+        row_layout.addWidget( widget,   )
+
+        widget = QPushButton("mutate\n")
+        self.button_ex_1         = widget
+        widget.clicked.connect( lambda: self.mutate( ) )
         row_layout.addWidget( widget,   )
 
         # ---- PB inspect
@@ -189,7 +197,7 @@ class Fitz_6_Tab( QWidget ) :
 
     def plot(self,  ):
         """ """
-        print_func_header( "plot" )
+        self.append_function_msg( "plot" )
 
         hour            = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         temperature_1   = [30, 32, 34, 32, 33, 31, 29, 32, 35, 45]
@@ -198,10 +206,18 @@ class Fitz_6_Tab( QWidget ) :
         self.plot_data(hour, temperature_1, "Sensor1", "r")
         self.plot_data(hour, temperature_2, "Sensor2", "b")
 
+    #-------------------------------
+    def clear_data(self, x, y, plotname, color):
+        """ """
+        self.append_function_msg( "clear_data" )
+        self.graphWidget.clear()
+        self.append_msg( "clear_data complete" )
 
+
+    #-------------------------------
     def plot_data(self, x, y, plotname, color):
         """ """
-        print_func_header( "plot_data" )
+        self.append_function_msg( "plot_data" )
 
         pen = pg.mkPen(color=color)
         self.graphWidget.plot(
@@ -214,12 +230,30 @@ class Fitz_6_Tab( QWidget ) :
             symbolBrush=(color),
         )
 
+    # ------------------------------------
+    def mutate_0( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_0" )
+        msg    = "so far not implemented "
+        self.append_msg( msg, clear = False )
+
+    # ------------------------------------
+    def mutate_1( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_1" )
+        msg    = "so far not implemented "
+        self.append_msg( msg, clear = False )
+
     # ------------------------
     def inspect(self):
         """
         the usual
         """
-        print_func_header( "inspect" )
+        self.append_function_msg( "inspect" )
 
         self_graph_widget   = self.graphWidget
 
@@ -234,7 +268,7 @@ class Fitz_6_Tab( QWidget ) :
         each tab gets its own function so we break in that
         tabs code
         """
-        print_func_header( "breakpoint" )
+        self.append_function_msg( "breakpoint" )
 
         breakpoint()
 

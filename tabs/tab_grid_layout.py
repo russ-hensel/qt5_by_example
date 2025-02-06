@@ -7,7 +7,7 @@ tab_groupbox.py
 
 self.help_file_name     =  "group_widget_tab.txt"
 
-KEY_WORDS:      grid layout table new   new tab base stagetwo
+KEY_WORDS:      grid layout table new   new_base
 CLASS_NAME:     GridLayoutTab
 WIDGETS:        GridLayout
 STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10

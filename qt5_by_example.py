@@ -108,7 +108,7 @@ BEGIN_MARK_2    = uft.BEGIN_MARK_2
 
 print_func_header  = uft.print_func_header
 
-__VERSION__  = "ver_07_____2"
+__VERSION__  = "ver_08 - 2025 02 06.0"
 
 # ---- main window ===================================================================
 class Qt5ByExample( QMainWindow ):
@@ -139,9 +139,9 @@ class Qt5ByExample( QMainWindow ):
 
         self.config_logger()
 
-
         # next builds and populates the db, or may depending on refactor
         self.index_search    =  index_and_search.IndexSearch()
+
         #self.test_init()
 
         self.tab_dict        = {}    # key class name, contents for now just index
@@ -170,7 +170,6 @@ class Qt5ByExample( QMainWindow ):
         """
         self.setWindowTitle( f"Qt5Example  {__VERSION__}" )
         self.build_menu( )
-
 
         icon    = QtGui.QIcon(  "./other/broom_edit_2.png"  )
         #/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/other/broom_edit_2.png
@@ -597,14 +596,14 @@ class Qt5ByExample( QMainWindow ):
         what it says, but !! more inf
         """
         mode        = parameters.PARAMETERS.mode
-        version     = "Version = {stuffdb.__version__}"
+        version     = f"Version = {__VERSION__}"
         process_pid = psutil.Process(os.getpid())
         #print( f"process.memory_info().rss >>{process.memory_info().rss}<<")  # in bytes
 
         msg      =  "get the size this process thru its pid "
         memory   = process_pid.memory_info().rss/1_000_000
         memory   = f"Memory = {memory} Mbytes"
-        repo     = " coming soom          "
+        repo     = " coming soon... more stuff          "
         msg      = ( f"Stuff DB {version} {mode}"
                      f"\n{memory}"
                      f"\n{repo}"

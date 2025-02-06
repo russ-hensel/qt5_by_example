@@ -110,11 +110,26 @@ class Search_Tab( QWidget ) :
         tab_page        = self
         layout          = QVBoxLayout( tab_page )
 
-        widget          = QLabel("Enter key words to search for a widget or use"
-                        "\n    Box works, list works .... "
-                        "\n    Capitilization... is ignored \n      ")
+        widget          = QLabel("Enter key words to search for a widget or use  "
+                        "-- Box works, list works...  "
+                        "-- Capitilization... is ignored  "
+                        "-- Click on widget to add to select  ")
 
         layout.addWidget( widget  )
+
+        # ---- QListWidget
+        widget              = QListWidget(    )
+        self.widget_list    = widget
+        widget.setMaximumHeight( 100 )
+        layout.addWidget( widget )
+
+        widget.itemClicked.connect( self.widget_list_clicked )
+
+        #values    =  [ "one", "two"]
+        values    = global_vars.TAB_DB_BUILDER.widget_list
+        for value in values:
+            item = QListWidgetItem( value )
+            widget.addItem( item )
 
         # ---- a row
         row_layout      = QHBoxLayout(   )
@@ -139,14 +154,19 @@ class Search_Tab( QWidget ) :
         # widget.setReadOnly(False)
         row_layout.addWidget( widget )
 
-        # ---- PB
+        # ---- clear
+        widget = QPushButton("Clear")
+        widget.clicked.connect( self.clear_select )
+        row_layout.addWidget( widget,   )
+
+        # ---- "Select"
         widget = QPushButton("Select")
-        widget.clicked.connect( self.run_select )
+        widget.clicked.connect( self.criteria_select )
         row_layout.addWidget( widget,   )
 
         # ---- a row
         row_layout          = QHBoxLayout(   )
-        layout.addLayout( row_layout )
+        layout.addLayout( row_layout, ) # stretch = 6  )
 
         db                  = global_vars.TAB_DB
         model               = QSqlTableModel( self, db )
@@ -207,25 +227,32 @@ class Search_Tab( QWidget ) :
         # Stretch columns to fit	QHeaderView.Stretch
 
 
+    # ------------------------
+    def widget_list_clicked( self, item ):
+        """
+        what it says
+            item comes from the list
+        """
+        widget    = self.key_word_widget
+        #text      = item.text()
+        text      =  widget.text() + " " + item.text()
+        widget.setText( text )
 
     # ------------------------
-    def run_select(self):
+    def clear_select(self):
         """
         what it says
         """
-        self.criteria_select()
-        return
-
         widget = self.key_word_widget
 
         widget.clear()
 
-        values    =  [ "oneish", "twoish", "threeish"]
-        for value in values:
-            item = QListWidgetItem( value )
-            widget.addItem( item )
-            index_to_select = 2
-            widget.setCurrentRow(index_to_select)
+        # values    =  [ "oneish", "twoish", "threeish"]
+        # for value in values:
+        #     item = QListWidgetItem( value )
+        #     widget.addItem( item )
+        #     index_to_select = 2
+        #     widget.setCurrentRow(index_to_select)
 
     # -------------
     def criteria_select( self,     ):

@@ -30,10 +30,21 @@ def create_instance( module_name, class_name ):
     assumes no args to create class -
     could add args to this
     """
+
+
+    module_name    = module_name.replace( "\\", "." )
+    # if module_name == 'tabs\\tab_grid_layout':
+    #     pass
+    print( f"module name trap {module_name = }" )
+        #module_name = '.\\tabs\\tab_grid_layout'
+
     if not is_imported( module_name, ):
-         module = importlib.import_module( module_name )
+        print( f"create_instance import_module {module_name}")
+        module = importlib.import_module( module_name )
     else:
         pass
+        # which will ppretty quicky result in an error !!
+        # but how best to fix !!
 
     cls         = getattr( module, class_name )
     instance    = cls()

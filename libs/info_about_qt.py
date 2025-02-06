@@ -571,6 +571,9 @@ class InfoAboutQSqlRecord( info_about.InfoAboutBase  ):
 
     #-------------------------
     def custom_info( self ):
+        """
+
+        """
         obj         = self.inspect_me
         self.add_line(  "custom_info about a QSqlRecord -- !! indents are a mess" )
 
@@ -581,7 +584,7 @@ class InfoAboutQSqlRecord( info_about.InfoAboutBase  ):
         # self.add_line(  f"{self.xin}{INDENT2}{obj.isOpen() = }" )
         # self.add_line(  f"{self.xin}{INDENT2}{obj.isOpen() = }" )
 
-        column_count   = obj.count( )
+        column_count   = obj.count( )    # record.count()
         # bad isea ?
         for  ix, ix_field in enumerate( list( range( column_count ) ) ):
 
@@ -590,25 +593,17 @@ class InfoAboutQSqlRecord( info_about.InfoAboutBase  ):
                 self.add_line( f"{self.xin}{INDENT}and{more_items} more items.... " )
                 break
 
-            self.add_line( f"{self.xin}{INDENT2}{obj.fieldName( ix_field ) = } {obj.field( ix_field ).value() = }" )
+            self.add_line( f"{self.xin}{INDENT2}{obj.fieldName( ix_field ) = } "
+                           f"{obj.field( ix_field ).value() = }"     )
+
+            # self.add_line( f"{self.xin}{INDENT2}{obj.fieldName( ix_field ) = } "
+            #                f"{obj.field( ix_field ).value() = }"     )
 
             field   = obj.field( ix_field )
             f       = field
             self.add_line( f"{f.isAutoValue( ) = } {f.isGenerated( ) = } "
-                           f"{f.isNull() = }  {f.isReadOnly( ) = } {f.isValid( ) = }  " )
+                           f"{f.isNull() = }  {f.isReadOnly( ) = } {f.isValid( ) = } {f.type() = } " )
             # self.add_line( f"{INDENT2}      field_info = {field_info}" )
-
-
-        look_into_this = """
-        for ix_field in range( 0,field_count ):
-            a_str   = f"{a_str}\n{xin}{INDENT2}    {ix_field}: name/value = {a_obj.fieldName( ix_field )} /  {a_obj.field( ix_field ).value() }"
-            field   = a_obj.field( ix_field )
-            f       = field
-            field_info   = ( f"{f.isAutoValue( ) = } {f.isGenerated( ) = } "
-                             f"{f.isNull() = }  {f.isReadOnly( ) = } {f.isValid( ) = }    ")
-
-            #a_str   = f"{a_str}\n{xin}{INDENT2}      {ix_field}: field_info = {field_info}"
-            a_str   = f"{a_str}\n{xin}{INDENT2}      field_info = {field_info}"   """
 
 
 # -----------------------------------
@@ -985,6 +980,13 @@ class InfoAboutQSqlTableModel( info_about.InfoAboutBase  ):
     def custom_info( self ):
         """
         info just for this instance type
+
+        this next may be useful look into !!
+        # Check if a specific field is dirty
+        original_record = model.query().record()  # Fetch original record
+        current_record = model.record(row)        # Fetch current record
+
+
         """
         model           = self.inspect_me
         a_obj           = model   # needs fix
@@ -993,12 +995,11 @@ class InfoAboutQSqlTableModel( info_about.InfoAboutBase  ):
         xin             = self.xin
 
         self.add_line(  "custom_info for a QSqlTableModel " )
-        self.add_line(  f"{self.xin}{INDENT2}tableName()    = {model.tableName() }" )
-        self.add_line(  f"{self.xin}{INDENT2}rowCount()     = {model.rowCount() }" )
-        self.add_line(  f"{xin}{INDENT2}database()          = {a_obj.database() }" )
-
-        self.add_line(  f"{xin}{INDENT2}model.rowCount()     = {a_obj.rowCount() }" )
-        self.add_line(  f"{xin}{INDENT2}model.isDirty()      = {a_obj.isDirty() }" )
+        self.add_line(  f"{xin}{INDENT2}tableName()         = {model.tableName() }" )
+        self.add_line(  f"{xin}{INDENT2}rowCount()          = {model.rowCount() }" )
+        self.add_line(  f"{xin}{INDENT2}database().databaseName()          = {model.database().databaseName() }" )
+        self.add_line(  f"{xin}{INDENT2}model.isDirty()     = {model.isDirty() }" )
+        self.add_line(  f"{xin}{INDENT2}model.filter()      = {model.filter() }" )
 
         more = """
         # choose onne
@@ -1028,7 +1029,6 @@ class InfoAboutQSqlTableModel( info_about.InfoAboutBase  ):
                 do_record    = True
             elif ( ix_clean >= max_clean ) and (ix_dirty >= max_dirty ):
                 break
-
 
         """
         # ---- get based on dataa
@@ -1087,7 +1087,7 @@ class InfoAboutQSqlTableModel( info_about.InfoAboutBase  ):
         for i_name in c_names:
             self.add_line( f"{self.xin}{INDENT2}{i_name = }:  {new_record.indexOf( i_name ) = } " )
 
-        print( "by records in model ")
+        print( "ia by records in model ")
         for ix_row in range( obj.rowCount()  ):
             record = obj.record(ix_row)  # obj = model
 

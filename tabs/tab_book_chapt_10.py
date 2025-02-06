@@ -5,7 +5,7 @@
 
 
 """
-KEY_WORDS:  Some book chapter 10 dock widgets   tab base new tab stagetwo
+KEY_WORDS:  Some book chapter 10 dock widgets    new_base
 CLASS_NAME: Dock_10_Tab
 WIDGETS:    QDockWidget
 STATUS:     runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
@@ -254,7 +254,7 @@ class Dock_10_Tab( tab_base.TabBase ) :
         row_layout.addWidget( widget,   )
 
 
-    def add(self):
+    def addxxxx(self):
         """
         Add an item to our todo list, getting the text from the QLineEdit .todoEdit
         and then clearing it.
@@ -288,13 +288,15 @@ class Dock_10_Tab( tab_base.TabBase ) :
         new_window.destroyed.connect(lambda: self.remove_window_reference(new_window))
 
     def remove_window_reference(self, window):
-        """Remove reference to the window when it is closed."""
+        """
+        Remove reference to the window when it is closed.
+        """
         if window in self.open_windows:
             self.open_windows.remove(window)
-            self.append_msg( "Window reference removed!")
+            self.append_msg( "remove_window_reference Window reference removed!")
 
 
-    def delete(self):
+    def deletexxx(self):
         """ """
         self.append_function_msg( "delete" )
 
@@ -308,7 +310,7 @@ class Dock_10_Tab( tab_base.TabBase ) :
             # Clear the selection (as it is no longer valid).
             self.todoView.clearSelection()
 
-    def complete(self):
+    def completexxxxx(self):
         """
         mark selected row as complete
         """
@@ -348,9 +350,11 @@ class Dock_10_Tab( tab_base.TabBase ) :
         read it -- mutate the widgets
         """
         self.append_function_msg( "mutate_1" )
+
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
 
+        self.append_msg( "mutate_1 done" )
 
 
     def set_headers( self ):

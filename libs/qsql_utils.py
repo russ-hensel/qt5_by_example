@@ -114,6 +114,12 @@ class SQLError( Exception ):
         self.errors = errors
 
 
+
+
+
+
+
+
 class DisplaySQLError( QDialog ):
     """
     for display of errors, may move out of here
@@ -216,6 +222,25 @@ def query_exec_error_check( *, query, sql = None, raise_except = True ):
         pass
         #rint("Query executed successfully.")
     return query_ok
+
+# ------------------------
+def ok_message_box(  title = "please a title", msg = "this is a default message " ):
+    """
+    read it
+    qsql_utils.ok_message_box(  title  = " a_title",
+                                 msg   = msg  )
+    """
+
+    msg_box = QMessageBox()
+    msg_box.setIcon( QMessageBox.Information )
+    msg_box.setText( msg )  # Set the message text
+    msg_box.setWindowTitle( title  )
+    msg_box.setStandardButtons( QMessageBox.Ok )
+
+    # Show the message box and wait for the user to close it
+    msg_box.exec_()
+
+
 
 #--------------
 def execute_sql_may_delete_not_used( msg = None, db = None, sql = None  ):

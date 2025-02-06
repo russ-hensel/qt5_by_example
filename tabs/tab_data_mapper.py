@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
- KEY_WORDS:      data mapper moves data from a model to a form crud sql
+ KEY_WORDS:      data mapper moves data from a model to a form crud sql     new_base
  CLASS_NAME:     DataMapperTab
  WIDGETS:        QSqlTableModel QDataWidgetMapper
- STATUS:         works
+STATUS:          runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
  TAB_TITLE:      DataMapper
  TAB_HELP:       data_mapper_tab.txt
 
+
+review number goes up as reviewee
 
 self.help_file_name     =  "data_mapper_tab.txt"
 
@@ -82,16 +84,16 @@ from PyQt5.QtWidgets import (QAction,
                              QWidget)
 
 import parameters
-
+import tab_base
 import utils_for_tabs as uft
 import wat_inspector
 import global_vars
 # ---- end imports
 
-print_func_header   = uft.print_func_header
+
 
 #-----------------------------------------------
-class DataMapperTab( QWidget ):
+class DataMapperTab( tab_base.TabBase  ):
     """
     here build a tab in its own class to hide its variables
     and have its own namespace
@@ -103,24 +105,35 @@ class DataMapperTab( QWidget ):
         """
         super().__init__( )
         self.help_file_name     =  "data_mapper_tab.txt"
-        # Create a QSqlTableModel and set it to the people table
+        # Create a QSqlTableModel and set it to the persons table
         model       = QSqlTableModel( self, global_vars.EX_DB  )
         self.model  = model
         model.setTable( 'employee' )
         model.select()
         self.row_index = 1
 
-        self.build_tab()
+        self.mutate_dict[0]    = self.mutate_0
+        self.mutate_dict[1]    = self.mutate_1
+        # self.mutate_dict[2]    = self.mutate_2
+        # self.mutate_dict[3]    = self.mutate_3
+        # self.mutate_dict[4]    = self.mutate_4
+
+
+
+        self._build_gui()
+
 
     #-----------------------------------------------
-    def build_tab(self,   ):
+    def _build_gui_widgets(self, main_layout  ):
         """
-        the usual widget construct and init
+        the usual, build the gui with the widgets of interest
+        and the buttons for examples
         """
-        tab_page        = self
-        layout          = QVBoxLayout( tab_page )
+        layout              = QVBoxLayout(   )
 
-        button_layout = QHBoxLayout( tab_page )
+        main_layout.addLayout( layout )
+        button_layout        = QHBoxLayout(   )
+
 
         # Create QLineEdit widgets
         self.name_edit          = QLineEdit(self)
@@ -201,7 +214,7 @@ class DataMapperTab( QWidget ):
 
     #     # Create a sample table and insert data
     #     query = db.exec_("""
-    #         CREATE TABLE people (
+    #         CREATE TABLE persons (
     #             id INTEGER PRIMARY KEY AUTOINCREMENT,
     #             name TEXT,
     #             dob TEXT,
@@ -210,7 +223,7 @@ class DataMapperTab( QWidget ):
     #     """)
 
     #     query = db.exec_("""
-    #         INSERT INTO people (name, dob, occupation) VALUES
+    #         INSERT INTO persons (name, dob, occupation) VALUES
     #         ('Alice', '1990-04-20', 'Engineer'),
     #         ('Bob', '1985-11-30', 'Designer'),
     #         ('Charlie', '1992-06-15', 'Developer');
@@ -224,21 +237,33 @@ class DataMapperTab( QWidget ):
         """
         Submit changes back to the database.
         """
-        print_func_header( "submit_changes" )
+        self.append_function_msg( "submit_changes" )
 
         # Submit the changes to the model and the database
         self.mapper.submit()
         if self.model.submitAll():
-            print("Changes submitted successfully!")
+            self.append_msg( "Changes submitted successfully!")
         else:
-            print(f"Error submitting changes: {self.model.lastError().text()}")
+            self.append_msg( f"Error submitting changes: {self.model.lastError().text()}")
 
     # -----------------------------
     def goto_next(self):
         """
         readme
         """
-        print_func_header( "goto_next" )
+        self.append_function_msg( "goto_next" )
+        self.append_msg( "no implementation here " )
+
+
+    def build_tab(self,   ):
+        """
+        the usual widget construct and init
+        """
+        tab_page        = self
+        layout          = QVBoxLayout( tab_page )
+
+        button_layout = QHBoxLayout( tab_page )
+        self.append_function_msg( "goto_next" )
 
         self.row_index += 1
         self.mapper.setCurrentIndex( self.row_index )
@@ -249,7 +274,7 @@ class DataMapperTab( QWidget ):
         """
         readme
         """
-        print_func_header( "goto_prior" )
+        self.append_function_msg( "goto_prior" )
 
         self.row_index -= 1
         self.mapper.setCurrentIndex( self.row_index )
@@ -260,12 +285,32 @@ class DataMapperTab( QWidget ):
         # Setup a connection to an SQLite database (for example)
         pass
 
+    # ------------------------------------
+    def mutate_0( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_0" )
+
+        msg    = "so far not implemented "
+        self.append_msg( msg, clear = False )
+
+    # ------------------------------------
+    def mutate_1( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_1" )
+
+        msg    = "so far not implemented "
+        self.append_msg( msg, clear = False )
+
     # ------------------------
     def inspect(self):
         """
         the usual
         """
-        print_func_header( "inspect" )
+        self.append_function_msg( "inspect" )
 
         #self_widgets_list   = self.widgets_list
         wat_inspector.go(
@@ -279,7 +324,7 @@ class DataMapperTab( QWidget ):
         each tab gets its own function so we break in that
         tabs code
         """
-        print_func_header( "breakpoint" )
+        self.append_function_msg(  "breakpoint" )
 
         breakpoint()
 

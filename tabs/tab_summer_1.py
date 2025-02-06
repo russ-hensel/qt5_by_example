@@ -7,10 +7,10 @@
 """
 self.help_file_name     =  "qsql_relational_table_model_tab_2.txt"
 
-KEY_WORDS:      spliter inspired by summer news reader
+KEY_WORDS:      spliter inspired by summer news reader new_base split
 CLASS_NAME:     Summer_1_Tab
 WIDGETS:        QSplitter
-STATUS:         works but incomplete
+STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
 TAB_TITLE:      QSplitter
 
 """
@@ -34,8 +34,8 @@ ISBN: 0132354187
 # --------------------
 if __name__ == "__main__":
     #----- run the full app
-    import qt_summer_book
-    qt_summer_book.main()
+    import main
+    #qt_fitz_book.main()
 # --------------------
 
 
@@ -104,16 +104,15 @@ import parameters
 #import qt_widgets
 import utils_for_tabs as uft
 import wat_inspector
-
-# ---- imports neq qt
+import tab_base
 
 
 # ---- end imports
 
-print_func_header   = uft.print_func_header
+
 
 #  --------
-class Summer_1_Tab( QWidget ) :
+class Summer_1_Tab( tab_base.TabBase  ) :
     def __init__(self):
         """
         the usual
@@ -122,19 +121,39 @@ class Summer_1_Tab( QWidget ) :
         self.help_file_name     = ( self.__class__.__name__ + ".txt" ).lower()
 
         # self.help_file_name     =  "build_from_classname.txt"
-
+        self.mutate_dict[0]     = self.mutate_0
+        self.mutate_dict[1]     = self.mutate_1
+        # self.mutate_dict[2]    = self.mutate_2
+        # self.mutate_dict[3]    = self.mutate_3
+        # self.mutate_dict[4]    = self.mutate_4
         self._build_gui()
-        self.mutate_ix   = 0
 
-    # -------------------------------
-    def _build_gui(self,   ):
+
+
+
+
+    # # -------------------------------
+    # def _build_gui(self,   ):
+    #     """
+    #     layouts
+    #         a vbox for main layout
+    #         h_box for or each row of buttons
+    #     """
+    #     tab_page      = self
+    #     layout        = QVBoxLayout( tab_page )
+
+    #----------------------------
+    def _build_gui_widgets(self, main_layout  ):
         """
-        layouts
-            a vbox for main layout
-            h_box for or each row of buttons
+        the usual, build the gui with the widgets of interest
+        and the buttons for examples
         """
-        tab_page      = self
-        layout        = QVBoxLayout( tab_page )
+        layout              = QVBoxLayout(   )
+
+        main_layout.addLayout( layout )
+        #button_layout        = QHBoxLayout(   )
+
+
 
 #-----------------
         self.groupsList    = QListWidget()
@@ -159,10 +178,17 @@ class Summer_1_Tab( QWidget ) :
         self.messageSplitter.setStretchFactor(0, 1)
         self.messageSplitter.setStretchFactor(1, 2)
 
-#-#--------------
+
         # ---- new row, standard buttons
         button_layout = QHBoxLayout(   )
         layout.addLayout( button_layout,  )
+
+
+        widget = QPushButton("mutate\n")
+        self.button_ex_1         = widget
+        widget.clicked.connect( lambda: self.mutate( ) )
+        button_layout.addWidget( widget )
+
 
         # ---- PB inspect
         widget = QPushButton("inspect\n")
@@ -174,18 +200,44 @@ class Summer_1_Tab( QWidget ) :
         widget.clicked.connect( self.breakpoint    )
         button_layout.addWidget( widget,   )
 
+
+    # ------------------------------------
+    def mutate_0( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_0" )
+
+        msg    = "so far not implemented "
+        self.append_msg( msg, clear = False )
+
+        self.append_msg( "mutate_0 done" )
+
+    # ------------------------------------
+    def mutate_1( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_1" )
+
+        msg    = "so far not implemented "
+        self.append_msg( msg, clear = False )
+
+        self.append__msg( "breakpoint done" )
+
     # ------------------------
     def inspect(self):
         """
         the usual
         """
-        print_func_header( "inspect" )
+        self.append_function_msg(  "inspect" )
 
         #self_widgets_list   = self.widgets_list
         wat_inspector.go(
              msg            = "see self_widgets_list",
              a_locals       = locals(),
              a_globals      = globals(), )
+        self.append_msg( "mutate_0 done" )
 
     # ------------------------
     def breakpoint(self):
@@ -193,6 +245,9 @@ class Summer_1_Tab( QWidget ) :
         each tab gets its own function so we break in that
         tabs code
         """
-        print_func_header( "breakpoint" )
+        self.append_function_msg(  "breakpoint" )
 
         breakpoint()
+        self.append_msg( "breakpoint done" )
+
+# ---- eof

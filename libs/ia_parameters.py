@@ -47,7 +47,7 @@ class Parameters( ):
         good chance these settings will at least let the app run
         """
         self.mode              = "mode_default"
-        self.dir_for_search    = [ "/mnt/WIN_D/Russ/0000/python00/python3/_projects/qt_by_example/info_about" ]
+        self.dir_for_search    = [ "/mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/in_spect/" ]
             # where we seareh for inofmation about modules
 
 if PARAMETERS is None:

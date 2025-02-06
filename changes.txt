@@ -31,7 +31,7 @@ STATUS:     works
 TAB_TITLE:  QAbstractListModel
 
 
-KEY_WORDS:      some stuff rsh custom for stuffdb edit and criteria  qq
+KEY_WORDS:      some stuff rsh custom for stuffdb edit and criteria  new_base
 CLASS_NAME:     CustomCriteriaWidgetTab
 WIDGETS:        CQLineEditCriteria CQDateCriteria
 STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
@@ -70,8 +70,8 @@ import tab_base
              grid_layout_tab.GridLayoutTab
          """
 ---------------------------------
-        self.mutate_dict[0]    = self.mutate_0
-        self.mutate_dict[1]    = self.mutate_1
+        self.mutate_dict[0]     = self.mutate_0
+        self.mutate_dict[1]     = self.mutate_1
         # self.mutate_dict[2]    = self.mutate_2
         # self.mutate_dict[3]    = self.mutate_3
         # self.mutate_dict[4]    = self.mutate_4
@@ -86,6 +86,8 @@ import tab_base
 
 -------------------------------
 
+
+    #----------------------------
     def _build_gui_widgets(self, main_layout  ):
         """
         the usual, build the gui with the widgets of interest
@@ -98,13 +100,11 @@ import tab_base
 
 
 
-
-
 ------------------------------
 
 
 
-
+        # ---- mutate
         widget = QPushButton("mutate\n")
         self.button_ex_1         = widget
         widget.clicked.connect( lambda: self.mutate( ) )
@@ -112,7 +112,7 @@ import tab_base
 
 --------------------------------
 
-
+# ---- xxx
 
 
     # ------------------------------------
@@ -125,6 +125,8 @@ import tab_base
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
 
+        self.append_msg( "mutate_0 done" )
+
     # ------------------------------------
     def mutate_1( self ):
         """
@@ -135,6 +137,7 @@ import tab_base
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
 
+        self.append_msg( "mutate_1 done" )
 
 
 logging.debug( "call was: logging.debug" )
