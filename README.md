@@ -7,6 +7,10 @@ be deleted real soon )
 Also included is a GUI version of wat-inspector a great little introspection
 utility.
 
+    wat -- check it out:
+    igrek51/wat: Deep inspection of Python objects
+    https://github.com/igrek51/wat
+    
 The code for each tab is easy to find, read, understand, and copy.
 
 A search feature help you find the tab for your widget....
