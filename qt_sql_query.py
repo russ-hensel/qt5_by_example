@@ -331,7 +331,7 @@ class QueryBuilder(    ):
         return a_str
 
 # ----------------------------------------
-class SQLBuilder_fromstructurednotes(   ):
+class SQLBuilder_fromstructurednotesxxxxx(   ):
     """
     from structured notes  may be more classes of interest
     build sql based on criteria ( all should be in reset )
@@ -932,7 +932,7 @@ class SQLBuilder_fromstructurednotes(   ):
 
 
 # ----------------------------------------
-class SQLBuilderfromtwitteranal(   ):
+class SQLBuilderfromtwitteranalxxxxx(   ):
     """
     fromtwitteranal
     build sql based on criteria ( all should be in reset )

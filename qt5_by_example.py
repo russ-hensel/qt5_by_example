@@ -96,11 +96,11 @@ import wat_inspector
 import show_parameters
 import tab_base
 import logging
+import app_logging
 
-logger   = logging.getLogger()
+#logger   = logging.getLogger()
 
 # ---- end imports
-
 
 INDENT          = uft.INDENT
 BEGIN_MARK_1    = uft.BEGIN_MARK_2
@@ -108,7 +108,7 @@ BEGIN_MARK_2    = uft.BEGIN_MARK_2
 
 print_func_header  = uft.print_func_header
 
-__VERSION__  = "ver_08 - 2025 02 06.0"
+__VERSION__  = "ver_12 - 2025 02 06.0"
 
 # ---- main window ===================================================================
 class Qt5ByExample( QMainWindow ):
@@ -137,7 +137,9 @@ class Qt5ByExample( QMainWindow ):
 
         DB_FILE             = my_parameters.db_file_name
 
-        self.config_logger()
+        app_logging.init()
+
+        #self.config_logger()
 
         # next builds and populates the db, or may depending on refactor
         self.index_search    =  index_and_search.IndexSearch()
@@ -157,6 +159,7 @@ class Qt5ByExample( QMainWindow ):
         #self.create_db()
 
         self.build_gui()
+
         self.current_tab_index   = 0   # I need to track in changed
         self.tab_widget.setCurrentIndex( 0 )
 
@@ -225,14 +228,14 @@ class Qt5ByExample( QMainWindow ):
         tab_dict will not work as index is not stable
         """
         tab_index   = -1
-        print( f"looking for {class_name} = " )
+        #print( f"looking for {class_name} = " )
         tab            =  self.tab_widget
         for ix_tab in range( tab.count() ):
              tab_page       = tab.widget( ix_tab )
              full_type      = type( tab_page )
              i_class_name   = full_type.__name__
 
-             print( f"found for {class_name =}   " )
+             #rint( f"found for {class_name =}   " )
              if class_name == i_class_name:
                  tab_index   = ix_tab
                  break
@@ -372,16 +375,15 @@ class Qt5ByExample( QMainWindow ):
         what it says read:
         but moving around causes index change
 
-
         """
-        print( "close tab ")
+        #rint( "close tab ")
         tab         = self.tab_widget
         widget      = tab.widget(index)
         text        = tab.tabText(index)
         tooltip     = tab.tabToolTip(index)
         icon        = tab.tabIcon(index)
 
-        print( f"{type( widget )=}")
+        #rint( f"{type( widget )=}")
 
         if ( isinstance( widget,  tab_select_tab.Search_Tab ) or
              isinstance( widget,  tab_qsql_database.QSqlDatabaseTab )
@@ -392,7 +394,7 @@ class Qt5ByExample( QMainWindow ):
         # if index in [0, 1]:  # Allow closing the first tab
         #     print(f"Tab {index} cannot be closed.")
         else:
-            print(f"Tab {index} will be closed.")
+            #rint(f"Tab {index} will be closed.")
             self.tab_widget.removeTab(index)
 
     #----------------------------
@@ -414,107 +416,105 @@ class Qt5ByExample( QMainWindow ):
         text = self.tab_widget.tabText(0)  # Get the label of the first tab
         self.tab_widget.setTabText(0, "New Label")  # Set a new label
 
-    # ------------------------------------------
-    def config_logger( self, ):
-        """
-        configure the python logger
-        return change of state
-        !! consider putting in app global, include close
-        new with print from chat
-        import logging
-        logger  = logging.get_
-        """
+    # # ------------------------------------------
+    # def config_logger( self, ):
+    #     """
+    #     configure the python logger
+    #     return change of state
+    #     !! consider putting in app global, include close
+    #     new with print from chat
+    #     import logging
+    #     logger  = logging.get_
+    #     """
 
-        # Configure logging
-        log_filename = self.parameters.pylogging_fn  # File to log messages
-        logging.basicConfig(
-            level=self.parameters.logging_level,  # Set the logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
-            format='%(asctime)s - %(levelname)s - %(message)s',  # Log message format
-            handlers=[
-                logging.FileHandler(log_filename),  # Log to a file
-                # had to restart spyder for this to work may be wanky
-                logging.StreamHandler( sys.stdout )  # Log to the console (stdout)
-            ]
-        )
+    #     # Configure logging
+    #     log_filename = self.parameters.pylogging_fn  # File to log messages
+    #     logging.basicConfig(
+    #         level=self.parameters.logging_level,  # Set the logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+    #         format='%(asctime)s - %(levelname)s - %(message)s',  # Log message format
+    #         handlers=[
+    #             logging.FileHandler(log_filename),  # Log to a file
+    #             # had to restart spyder for this to work may be wanky
+    #             logging.StreamHandler( sys.stdout )  # Log to the console (stdout)
+    #         ]
+    #     )
 
-        # for old setup
-        logger          = logging.getLogger( )
-        self.logger     = logger
+    #     # for old setup
+    #     logger          = logging.getLogger( )
+    #     self.logger     = logger
 
-        # # Example usage
-        # logging.debug("This is a DEBUG message")
-        # logging.info("This is an INFO message")
-        # logging.warning("This is a WARNING message")
-        # logging.error("This is an ERROR message")
-        # logging.critical("This is a CRITICAL message")
-
-
-        # # Explicitly log with a specific level
-        # logging.log(logging.DEBUG, "This is a DEBUG message.")
-        # logging.log(logging.INFO, "This is an INFO message.")
-        # logging.log(logging.WARNING, "This is a WARNING message.")
-        # logging.log(logging.ERROR, "This is an ERROR message.")
-        # logging.log(logging.CRITICAL, "This is a CRITICAL message.")
+    #     # # Example usage
+    #     # logging.debug("This is a DEBUG message")
+    #     # logging.info("This is an INFO message")
+    #     # logging.warning("This is a WARNING message")
+    #     # logging.error("This is an ERROR message")
+    #     # logging.critical("This is a CRITICAL message")
 
 
-
-        # # Explicitly log messages at specific levels
-        # logger.log(logging.DEBUG, "This is a DEBUG message from my_logger.")
-        # logger.log(logging.INFO, "This is an INFO message from my_logger.")
-        # logger.log(logging.WARNING, "This is a WARNING message from my_logger.")
-        # logger.log(logging.ERROR, "This is an ERROR message from my_logger.")
-        # logger.log(logging.CRITICAL, "This is a CRITICAL message from my_logger.")
-        # logger.log(22, "This is a 22 message from my_logger.")
-
-
-        # AppGlobal.logger.log(22, "This is a 22 message from my_AppGlobal.")
-
-        # use these
-        logger.log( logging.CRITICAL, "call was logger.log( logging.CRITICAL,")
-        logger.log(22, "This is a 22 message from my_logger.")
-        logging.debug( "call was: logging.debug" )
-        logging.info( "call was: logging.info"  )
-
-        # AppGlobal.logger.log(22, "AppGlobal.logger.log(22 This is a 22 message from my_AppGlobal.")
-        # AppGlobal.logger.debug(" AppGlobal.logger.debug This is a DEBUG message my_AppGlobal ")
-
-
-        # import inspect  # for debug i
-        # import logging
-        loc        = f"{self.__class__.__name__}.{inspect.currentframe().f_code.co_name} "
-        debug_msg  = f"{loc} >>> this might be our standard {self = }"
-        logging.debug( debug_msg )
+    #     # # Explicitly log with a specific level
+    #     # logging.log(logging.DEBUG, "This is a DEBUG message.")
+    #     # logging.log(logging.INFO, "This is an INFO message.")
+    #     # logging.log(logging.WARNING, "This is a WARNING message.")
+    #     # logging.log(logging.ERROR, "This is an ERROR message.")
+    #     # logging.log(logging.CRITICAL, "This is a CRITICAL message.")
 
 
 
-        # AppGlobal.logger_id     = "App"
-        # logger                  = logging.getLogger( AppGlobal.logger_id )
-        # logger.handlers         = []  # get stuff to close from here
-
-        # logger.setLevel( self.parameters.logging_level )
-
-        # # create the logging file handler
-        # file_handler = logging.FileHandler( self.parameters.pylogging_fn )
-
-        # formatter    = logging.Formatter( '%(asctime)s - %(name)s - %(levelname)s - %(message)s' )
-        # file_handler.setFormatter( formatter )
-
-        # # add handler to logger object -- want only one add may be a problem
-        # logger.addHandler( file_handler )
-        # msg  = "pre logger debug -- did it work"
-        # AppGlobal.logger.debug( msg )
-
-        # logger.info( "Done config_logger .. next AppGlobal msg" )
-        # #rint( "configured logger", flush = True )
-        # self.logger      = logger   # for access in rest of class?
-        # AppGlobal.set_logger( logger )
-
-        # msg  = ( f"Message from AppGlobal.print_debug >> logger level in App = "
-        #          f"{self.logger.level} will show at level 10"
-        #         )
-        # AppGlobal.print_debug( msg )
+    #     # # Explicitly log messages at specific levels
+    #     # logger.log(logging.DEBUG, "This is a DEBUG message from my_logger.")
+    #     # logger.log(logging.INFO, "This is an INFO message from my_logger.")
+    #     # logger.log(logging.WARNING, "This is a WARNING message from my_logger.")
+    #     # logger.log(logging.ERROR, "This is an ERROR message from my_logger.")
+    #     # logger.log(logging.CRITICAL, "This is a CRITICAL message from my_logger.")
+    #     # logger.log(22, "This is a 22 message from my_logger.")
 
 
+    #     # AppGlobal.logger.log(22, "This is a 22 message from my_AppGlobal.")
+
+    #     # use these
+    #     logger.log( logging.CRITICAL, "call was logger.log( logging.CRITICAL,")
+    #     logger.log(22, "This is a 22 message from my_logger.")
+    #     logging.debug( "call was: logging.debug" )
+    #     logging.info( "call was: logging.info"  )
+
+    #     # AppGlobal.logger.log(22, "AppGlobal.logger.log(22 This is a 22 message from my_AppGlobal.")
+    #     # AppGlobal.logger.debug(" AppGlobal.logger.debug This is a DEBUG message my_AppGlobal ")
+
+
+    #     # import inspect  # for debug i
+    #     # import logging
+    #     loc        = f"{self.__class__.__name__}.{inspect.currentframe().f_code.co_name} "
+    #     debug_msg  = f"{loc} >>> this might be our standard {self = }"
+    #     logging.debug( debug_msg )
+
+
+
+    #     # AppGlobal.logger_id     = "App"
+    #     # logger                  = logging.getLogger( AppGlobal.logger_id )
+    #     # logger.handlers         = []  # get stuff to close from here
+
+    #     # logger.setLevel( self.parameters.logging_level )
+
+    #     # # create the logging file handler
+    #     # file_handler = logging.FileHandler( self.parameters.pylogging_fn )
+
+    #     # formatter    = logging.Formatter( '%(asctime)s - %(name)s - %(levelname)s - %(message)s' )
+    #     # file_handler.setFormatter( formatter )
+
+    #     # # add handler to logger object -- want only one add may be a problem
+    #     # logger.addHandler( file_handler )
+    #     # msg  = "pre logger debug -- did it work"
+    #     # AppGlobal.logger.debug( msg )
+
+    #     # logger.info( "Done config_logger .. next AppGlobal msg" )
+    #     # #rint( "configured logger", flush = True )
+    #     # self.logger      = logger   # for access in rest of class?
+    #     # AppGlobal.set_logger( logger )
+
+    #     # msg  = ( f"Message from AppGlobal.print_debug >> logger level in App = "
+    #     #          f"{self.logger.level} will show at level 10"
+    #     #         )
+    #     # AppGlobal.print_debug( msg )
 
 
     #-------
@@ -532,7 +532,7 @@ class Qt5ByExample( QMainWindow ):
         """
         what it says, read it
         """
-        #print(f"on_tab_changed from { self.current_tab_index = } to {index = }")
+        #rint(f"on_tab_changed from { self.current_tab_index = } to {index = }")
         # !! THINK the widge does this itself
         self.current_tab_index   = index
         self.tab_page_info()
@@ -598,7 +598,7 @@ class Qt5ByExample( QMainWindow ):
         mode        = parameters.PARAMETERS.mode
         version     = f"Version = {__VERSION__}"
         process_pid = psutil.Process(os.getpid())
-        #print( f"process.memory_info().rss >>{process.memory_info().rss}<<")  # in bytes
+        #rint( f"process.memory_info().rss >>{process.memory_info().rss}<<")  # in bytes
 
         msg      =  "get the size this process thru its pid "
         memory   = process_pid.memory_info().rss/1_000_000
@@ -663,11 +663,7 @@ class Qt5ByExample( QMainWindow ):
         """
         print_func_header( "breakpoint" )
 
-
-        __file__
-
         print( __file__ )
-
 
         breakpoint()
 

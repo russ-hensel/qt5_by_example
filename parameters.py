@@ -21,6 +21,10 @@ import sys
 #import string_util
 #from   app_global import AppGlobal
 #import running_on  parameters.PARAMETERSdir_for_tabs
+import in_spect_env
+
+
+
 
 global PARAMETERS
 PARAMETERS   = None
@@ -71,10 +75,8 @@ class Parameters( ):
         self.wat_qt_xpos        = 10
         self.wat_qt_ypos        = 10
 
-
         self.dir_for_tabs       = [ "./",  ]
 
-  
     # -------
     def mode_russ_on_theprof( self ):
         """
@@ -93,7 +95,6 @@ class Parameters( ):
         self.wat_qt_xpos        = 10
         self.wat_qt_ypos        = 10
 
-
         self.dir_for_tabs       = [
                                     "/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb",
                                     # "/mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/test",
@@ -104,20 +105,22 @@ class Parameters( ):
 
         # ---- for sample database
         self.db_file_name        = "/tmp/ramdisk/qt_sql.db"
-
+        self.db_file_name        = ":memory:"
 
         # ---- for qt tabs
         self.tab_db_type         = "QSQLITE"
+
+        # next will blow program if dir does not exist
         self.tab_db_file_name    = "/tmp/ramdisk/tab.db"
+        self.tab_db_file_name    = ":memory:"
 
 
-
-        self.default_search     = "zzz"
+        self.default_search     = "xxx"
         self.do_search_on_init  = True
 
     # -------
     def new_user_mode( self ):
-        """
+        """ ['/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb', '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs', '/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs', '/mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/rshlib_qt']
         a mode for the new user, pretty much empty,
         a new user may experiment here.
         """
@@ -134,6 +137,11 @@ class Parameters( ):
     # -------
     def running_on_tweaks(self,  ):
         """
+        this is only for things other than the os typically for
+        the computer name or hardware info
+
+        !! would we like to get the window size or number or monitors
+
         not a mode, a tweak to other modes , see documentation
         you need to customize this for your own computers, what you may
             find here are customization's for russ and his computers
@@ -142,12 +150,19 @@ class Parameters( ):
         may replace them
         this is computer name tweaks code,
             !! find run_on on which uses os or put computer name under this
+            import in_spect_env
+            in_spect_env.InSpectEnv.value
         """
         pass
         # self.os_tweaks()
 
-        # computer_id    =   self.running_on.computer_id
+        computer_id    =   in_spect_env.InSpectEnv.computer_id
 
+        print( f"Parameters running_on_tweaks {computer_id = }")
+        print( f"Parameters {  in_spect_env.InSpectEnv.__str__()  } ")  #ok
+        # print( "------------------------------")
+        # print( f"{ str(in_spect_env.InSpectEnv)   } ")       # ng
+        pass
         # if computer_id == "smithers":
         #     self.win_geometry       = '1450x700+20+20'      # width x height position
         #     self.ex_editor          =  r"D:\apps\Notepad++\notepad++.exe"
@@ -299,6 +314,12 @@ class Parameters( ):
 
         # ---- logging
         self.pylogging_fn       = "./app.py_log"   # file name for the python logging
+
+
+        self.log_mode               = "w"    # "a" append "w" truncate and write
+        self.delete_log_on_start    = True
+
+
         self.logging_level      = logging.DEBUG         # may be very verbose
         self.logging_level      = logging.INFO
         #self.logging_level      = logging.INFO
@@ -347,8 +368,9 @@ class Parameters( ):
         self.dir_for_tabs       = [ "/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs" ]
         #may need to be on path sys.path.insert( 1, f"{src_root}/_projects/stuffdb/qt_tabs" )
 
-        self.default_search     = ""
-        self.do_search_on_init  = False
+        # ---- search
+        self.default_search     = "zzzz"
+        self.do_search_on_init  = True
 
     # -------
     def __init__( self, ):
@@ -396,6 +418,10 @@ class Parameters( ):
         a_str   = ""
         a_str   = ">>>>>>>>>>* Parameters *<<<<<<<<<<<<"
 
+        a_str   = self.to_columns( a_str, ["mode",
+                                           f"{self.mode}" ] )
+
+
         a_str   = self.to_columns( a_str, ["our_os",
                                            f"{self.our_os}" ] )
 
@@ -419,14 +445,29 @@ class Parameters( ):
 
         a_str   = self.to_columns( a_str, ["logger_id",
                                            f"{self.logger_id}" ] )
+
         a_str   = self.to_columns( a_str, ["logging_level",
                                            f"{self.logging_level}" ] )
+
+        a_str   = self.to_columns( a_str, ["pylogging_fn",
+                                                  f"{self.pylogging_fn}" ] )
+
+        a_str   = self.to_columns( a_str, [ "log_mode",
+                                                  f"{self.log_mode}" ] )
+
+
         a_str   = self.to_columns( a_str, ["minimun_useful",
                                            f"{self.minimun_useful}" ] )
-        a_str   = self.to_columns( a_str, ["mode",
-                                           f"{self.mode}" ] )
+
+
+
         a_str   = self.to_columns( a_str, ["pylogging_fn",
                                            f"{self.pylogging_fn}" ] )
+
+
+
+
+
         a_str   = self.to_columns( a_str, ["qt_height",
                                            f"{self.qt_height}" ] )
         a_str   = self.to_columns( a_str, ["qt_width",

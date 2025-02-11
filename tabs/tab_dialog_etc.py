@@ -28,10 +28,10 @@ if __name__ == "__main__":
 # --------------------
 
 
-import inspect
-import subprocess
-import sys
-import time
+#import inspect
+#import subprocess
+#import sys
+#import time
 from datetime import datetime
 from functools import partial
 from subprocess import PIPE, STDOUT, Popen, run
@@ -92,7 +92,6 @@ import utils_for_tabs as uft
 import wat_inspector
 import tab_base
 # ---- imports neq qt
-
 
 
 # ---- end imports
@@ -201,6 +200,7 @@ class DialogEtcTab( tab_base.TabBase  ):
         QMessageBox.information( self, "a title",
                                 "additional message")
 
+        self.append_msg( "-- done" )
     # ------------------------
     def dialog_for_data( self, ): #open_input_dialog_ds(self):
         """ """
@@ -287,6 +287,8 @@ class DialogEtcTab( tab_base.TabBase  ):
         else:
             self.append_msg(  "No file selected.")
 
+        self.append_msg( "-- done" )
+
     # ------------------------
     def new_main(self):
         """
@@ -309,6 +311,8 @@ class DialogEtcTab( tab_base.TabBase  ):
         else:
             self.append_msg( "No directory selected")
 
+        self.append_msg( "-- done" )
+
     # ------------------------------------
     def mutate_0( self ):
         """
@@ -319,6 +323,7 @@ class DialogEtcTab( tab_base.TabBase  ):
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
 
+        self.append_msg( "-- done" )
     # ------------------------------------
     def mutate_1( self ):
         """
@@ -328,6 +333,8 @@ class DialogEtcTab( tab_base.TabBase  ):
 
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
+
+        self.append_msg( "mutate_1 done" )
 
 
     # ------------------------
@@ -341,6 +348,8 @@ class DialogEtcTab( tab_base.TabBase  ):
              msg            = "DialogEtcTab",
              a_locals       = locals(),
              a_globals      = globals(), )
+
+        self.append_msg( "-- done" )
 
     # ------------------------
     def breakpoint(self):
@@ -358,14 +367,16 @@ class DialogEtcTab( tab_base.TabBase  ):
 
 class InputDialogDS(QDialog):
     """
-    deep seek did draft
+    deep seek did draft fixed a bit
     """
     def __init__(self, data, parent=None):
         super().__init__(parent)
-        self.data = data  # Mutable object to store input and output data
+        self.data = data  # dict
         self.initUI()
 
     def initUI(self):
+        """ """
+
         self.setWindowTitle("Input Dialog")
         self.setGeometry(100, 100, 300, 150)
 
@@ -382,47 +393,29 @@ class InputDialogDS(QDialog):
         layout.addWidget(self.line_edit)
 
         # OK Button
-        ok_button = QPushButton("OK", self)
-        ok_button.clicked.connect(self.on_ok)
-        layout.addWidget(ok_button)
+        widget = QPushButton("OK", self)
+        widget.clicked.connect(self.on_ok)
+        layout.addWidget(widget)
 
         # Cancel Button
-        cancel_button = QPushButton("Cancel", self)
-        cancel_button.clicked.connect(self.on_cancel)
-        layout.addWidget(cancel_button)
+        widget = QPushButton("Cancel", self)
+        widget.clicked.connect(self.on_cancel)
+        layout.addWidget(widget)
 
         self.setLayout(layout)
 
     def on_ok(self):
-        # Store the input data in the mutable object
+        """
+        what it says
+        """
         self.data["return_value"] = self.line_edit.text()
         self.accept()  # Close the dialog and return QDialog.Accepted
 
     def on_cancel(self):
+        """
+        what it says
+        """
         self.reject()  # Close the dialog and return QDialog.Rejected
 
-
-# class MainWindow(QMainWindow):
-#     def __init__(self):
-#         super().__init__()
-#         self.initUI()
-
-#     def initUI(self):
-#         self.setWindowTitle("Main Application")
-#         self.setGeometry(100, 100, 400, 200)
-
-#         # Button to open the dialog
-#         open_dialog_button = QPushButton("Open Input Dialog", self)
-#         open_dialog_button.clicked.connect(self.open_input_dialog)
-#         self.setCentralWidget(open_dialog_button)
-
-
-
-
-# if __name__ == "__main__":
-#     app = QApplication(sys.argv)
-#     main_window = MainWindow()
-#     main_window.show()
-#     sys.exit(app.exec_())
 
 # ---- eof

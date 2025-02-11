@@ -96,8 +96,6 @@ class QComboBoxTab( tab_base.TabBase  ) :
         # self.mutate_dict[3]    = self.mutate_3
         # self.mutate_dict[4]    = self.mutate_4
 
-
-
         self._build_gui()
 
     # ----------------------------------------------
@@ -291,6 +289,8 @@ class QComboBoxTab( tab_base.TabBase  ) :
         """
         what it says
         """
+        self.append_function_msg( "conbo_currentIndexChanged" )
+
         self.append_function_msg( "conbo_currentIndexChanged -- and get text" )
 
         self.append_msg( f"{self.combo_1.currentText( ) = }" )
@@ -309,7 +309,9 @@ class QComboBoxTab( tab_base.TabBase  ) :
         void 	textHighlighted(const QString &text)
         """
         self.append_function_msg( "combo_currentTextChanged" )
-        self.append_msg( f"combo_currentTextChanged {arg}")
+        self.append_msg( f"combo_currentTextChanged {arg = }")
+        self.append_msg( f"combo_currentTextChanged done")
+
 
     # --------------------------
     def combo_reload(self,   ):
@@ -325,7 +327,7 @@ class QComboBoxTab( tab_base.TabBase  ) :
         widget.clear()       # delete all items from Combobox
         self.append_msg( f"combo_reload end clear / next addItems", flush = True )
         widget.addItems( values )
-
+        self.append_msg( f"combo_reload done")
 
     # --------------------------
     def inspect_old( self, arg  ):
@@ -384,6 +386,10 @@ class QComboBoxTab( tab_base.TabBase  ) :
         self.combo_1.setCurrentIndex( 2 )
         self.combo_2.setCurrentText( "2" )
 
+        msg     = f"{self.combo_1.currentText =}"
+        self.append_msg( msg  )
+
+        self.append_msg( "mutate_old done" )
 
     # ------------------------------------
     def mutate_0( self ):
@@ -395,6 +401,11 @@ class QComboBoxTab( tab_base.TabBase  ) :
         msg    = 'combo_2.lineEdit().setText( "mutate_0" )  '
         self.append_msg( msg, clear = False )
         self.combo_2.lineEdit().setText( "mutate_0" )
+
+        msg     = f"{self.combo_1.currentText =}"
+        self.append_msg( msg  )
+
+        self.append_msg( "mutate_0 done" )
 
     # ------------------------------------
     def mutate_1( self ):
@@ -410,6 +421,8 @@ class QComboBoxTab( tab_base.TabBase  ) :
         msg    = 'combo_1.setCurrentIndex( 2 )'
         self.append_msg( msg, clear = False )
         self.combo_1.setCurrentIndex( 2 )
+
+        self.append_msg( "mutate_1 done" )
 
     # ------------------------
     def inspect(self):
@@ -427,6 +440,8 @@ class QComboBoxTab( tab_base.TabBase  ) :
              a_locals       = locals(),
              a_globals      = globals(), )
 
+        self.append_msg( "-- done" )
+
     # ------------------------
     def breakpoint(self):
         """
@@ -436,3 +451,6 @@ class QComboBoxTab( tab_base.TabBase  ) :
         self.append_function_msg( "breakpoint" )
 
         breakpoint()
+
+        self.append_msg( "-- done" )
+# ---- eof

@@ -270,7 +270,7 @@ class InfoAbout(   ):
 
     def _search( self ):
         """ """
-        print ( ia_parameters.PARAMETERS )
+        print ( f"InfoAbout._search {ia_parameters.PARAMETERS}" )
         search                  = ia_search.IaSearch( )
         self.file_data_list     = search.file_data_list
             # sorted list is returned
@@ -510,7 +510,7 @@ class InfoAboutBase(   ):
 
         #msg       = f"directory (non standard items) for object of type {type( a_obj ) = }"
         #msg       = f"directory (non standard items):"
-        #print( msg )
+        #rint( msg )
 
         the_dir         = self.inspect_me.__dir__()
         reduced_dir     = [ i_dir  for   i_dir in the_dir if i_dir not in common_dir_items ]
@@ -519,14 +519,14 @@ class InfoAboutBase(   ):
         for i_dir in reduced_dir:
 
             # clean it up a bit ??
-            #print( i_dir )
+            #rint( i_dir )
             a_atter     =   getattr( self.inspect_me, i_dir, None )
             # if a_atter.startswith( "<built-in method" ):
             #     a_atter  = "method"
             # if a_atter.startswith( "<built-in method" ):
             #     a_atter  = "method"
 
-            #print( f"{i_dir= } .... {a_atter = }", flush = True )
+            #rint( f"{i_dir= } .... {a_atter = }", flush = True )
             # to_columns( current_str, item_list, format_list = ( "{: <30}", "{:<30}" ), indent = "    "  ):
 
             current_str = to_columns(  [ str( i_dir ), str( a_atter) ] )

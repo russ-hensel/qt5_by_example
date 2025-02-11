@@ -72,15 +72,18 @@ class ComboSync3(  ):
         """
         widget              = QComboBox()
         self.ddl_0          = widget
+        widget.setEditable( True )
         #rint( f"a_combo_sync.ddl_0 {id(self.ddl_0)  = }")
         self.ddl_widgets.append( widget )
 
         widget              = QComboBox()
         self.ddl_1          = widget
+        widget.setEditable( True )
         self.ddl_widgets.append( widget )
 
         widget              = QComboBox()
         self.ddl_2          = widget
+        widget.setEditable( True )
         self.ddl_widgets.append( widget )
 
         # if self.dup:

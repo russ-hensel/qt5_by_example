@@ -6,19 +6,20 @@
 tab_q_table_widget.py
 self.help_file_name     =  "q_table_widget_tab.txt"
 
-KEY_WORDS:      table widget tabular data display  headers pp tablewidget qtable
+KEY_WORDS:      table widget tabular data display click select headers pp tablewidget qtable
 CLASS_NAME:     QTableWidgetTab
 WIDGETS:        QTableWidget
-STATUS:         works
+STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
 TAB_TITLE:      QTableWidget
 
 """
 
 # --------------------
+# --------------------
 if __name__ == "__main__":
     #----- run the full app
-    import qt_sql_widgets
-    qt_sql_widgets.main()
+    import main
+    #main.main()
 # --------------------
 
 
@@ -81,7 +82,7 @@ from PyQt5.QtWidgets import (QAbstractItemView,
 
 import utils_for_tabs as uft
 import wat_inspector
-
+import tab_base
 
 
 # ---- end imports
@@ -92,11 +93,11 @@ INDENT          = uft.BEGIN_MARK_1
 INDENT          = uft.BEGIN_MARK_2
 #INDENT          = qt_sql_widgets.
 
-print_func_header =  uft.print_func_header
+
 
 
 #-----------------------------------------------
-class QTableWidgetTab( QWidget ):
+class QTableWidgetTab( tab_base.TabBase  ):
     """
     here build a tab in its own class to hide its variables
     """
@@ -104,25 +105,26 @@ class QTableWidgetTab( QWidget ):
         """
         """
         super().__init__( )
-        self.build_tab()
-        self.mutation_ix        = 0
-        self.mutation_max       = 4  # inclusive
-        self.mutation_dispatch  = { 0: self.mutate_0,
-                                    1: self.mutate_1,
-                                    2: self.mutate_2,
-                                    3: self.mutate_3,
-                                    4: self.mutate_4,
-                                    }
+
+        self.mutate_dict[0]     = self.mutate_0
+        self.mutate_dict[1]     = self.mutate_1
+        self.mutate_dict[2]     = self.mutate_2
+        self.mutate_dict[3]     = self.mutate_3
+        self.mutate_dict[4]     = self.mutate_4
 
         self.help_file_name     =  "q_table_widget_tab.txt"
+        self._build_gui()
 
-    #-----------------------------------------------
-    def build_tab(self,   ):
+    #----------------------------
+    def _build_gui_widgets(self, main_layout  ):
         """
-        the usual
+        the usual, build the gui with the widgets of interest
+        and the buttons for examples
         """
-        tab_page            = self
-        layout              = QVBoxLayout( tab_page )
+        layout              = QVBoxLayout(   )
+
+        main_layout.addLayout( layout )
+        button_layout        = QHBoxLayout(   )
 
         table_widget        = QTableWidget(4, 5)  # row, column ??third arg parent
         self.table_widget   = table_widget
@@ -200,9 +202,10 @@ class QTableWidgetTab( QWidget ):
         # button_layout.addWidget(a_widget)
 
         # ---- mutate
-        a_widget           = QPushButton( "mutate\n ( 0, 1,)" )
-        a_widget.clicked.connect( self.mutate )
-        button_layout.addWidget(a_widget)
+        widget = QPushButton("mutate\n")
+        self.button_ex_1         = widget
+        widget.clicked.connect( lambda: self.mutate( ) )
+        button_layout.addWidget( widget )
 
         # ---- PB inspect
         widget              = QPushButton("inspect\n")
@@ -215,24 +218,6 @@ class QTableWidgetTab( QWidget ):
         connect_to          = self.breakpoint
         widget.clicked.connect( connect_to )
         button_layout.addWidget( widget )
-
-        # # Create the table widget with 3 rows and 3 columns
-        # self.table_widget = QTableWidget(3, 3)
-
-        # # Set up column headers
-        # self.table_widget.setHorizontalHeaderLabels(['Column 1', 'Column 2', 'Column 3'])
-
-        # # Add some sample data to the table
-        # self.populate_table()
-
-        # # Set selection behavior and mode
-        # self.table_widget.setSelectionBehavior( QAbstractItemView.SelectRows)  # Can be SelectRows, SelectColumns, or SelectItems
-        # self.table_widget.setSelectionMode(QAbstractItemView.MultiSelection)   # Can be SingleSelection or MultiSelection
-
-        # # Pro grammatically select a row and a column
-        # self.select_row(1)  # Select the second row (index 1)
-        # self.select_column(2)  # Select the third column (index 2)
-
 
     # -------------------------------------
     def populate_table(self):
@@ -249,7 +234,7 @@ class QTableWidgetTab( QWidget ):
         """
         what it says
         """
-        print_func_header( "select_row_3" )
+        self.append_function_msg( "select_row_3" )
 
         self.select_row( 3 )
 
@@ -259,7 +244,7 @@ class QTableWidgetTab( QWidget ):
         Select a specific row.
         may depend on selection mode
         """
-        print_func_header( "select_row" )
+        self.append_function_msg( "select_row" )
 
         print( f"select_row {row_index = }")
         self.table_widget.selectRow( row_index )
@@ -270,7 +255,7 @@ class QTableWidgetTab( QWidget ):
         """
         Select a specific column.
         """
-        print_func_header( "select_column" )
+        self.append_function_msg( "select_column" )
 
         self.table_widget.selectColumn(col_index)
 
@@ -280,7 +265,7 @@ class QTableWidgetTab( QWidget ):
         read it
 
         """
-        print_func_header( "on_cell_clicked" )
+        self.append_function_msg( "on_cell_clicked" )
 
         table      = self.table_widget
 
@@ -297,7 +282,7 @@ class QTableWidgetTab( QWidget ):
     # -------------------------------------
     def add_row_at_end(self):
         """ """
-        print_func_header( "add_row_at_end" )
+        self.append_function_msg( "add_row_at_end" )
 
         row_position = self.table_widget.rowCount()
         self.table_widget.insertRow( row_position )
@@ -307,7 +292,7 @@ class QTableWidgetTab( QWidget ):
         """
         what it says
         """
-        print_func_header( "remove_row_current" )
+        self.append_function_msg( "remove_row_current" )
 
         row_position = self.table_widget.currentRow()
         self.table_widget.removeRow( row_position )
@@ -317,34 +302,49 @@ class QTableWidgetTab( QWidget ):
         """
         what it says
         """
-        print_func_header( "remove_row_current" )
+        self.append_function_msg( "remove_row_current" )
         # ---- insert data --- now a mess, parameterize this
-        print( "this adds cell 'upside down' and cell cords are ng ")
+        msg     = ( "this adds cell 'upside down' and cell cords are ng ")
+        self.append_msg( msg,  )
+        table_widget   = self.table_widget
         for i in range( 4, 0,   -1 ):  # better match table
             for j in range( 5,  0, -1 ):  # col
                 # these items arguments must be strings
                 item     = QTableWidgetItem( "Cell ({}, {})".format( i, j) )
                 table_widget.setItem(i, j, item)
 
+    # -------------------------------------
+    def select_column(self, col_index):
+        """Select a specific column."""
+        self.table_widget.selectColumn(col_index)
+
+
     # ------------------------------
     def set_size(self):
         """
         read it
         """
+        self.append_function_msg( "set_size")
+
+
+
         table   = self.table_widget
         table.horizontalHeader().setStretchLastSection(True)
         table.horizontalHeader().setSectionResizeMode(
             QHeaderView.Stretch)
+        self.append_msg( "set_size done" )
 
     # ------------------------------
     def sort(self):
         """
         read it
         """
-        print_func_header( "sort")
+        self.append_function_msg( "sort")
 
         # !! more research on args
         self.table_widget.sortItems ( 1, Qt.AscendingOrder  )
+
+        self.append_msg( "sort done" )
 
     # ------------------------------
     def search(self, search_for   = "1," ):
@@ -352,18 +352,18 @@ class QTableWidgetTab( QWidget ):
         read it
         passing of argument unclear ????
         """
-        print_func_header( "search")
+        self.append_function_msg( "search")
 
         search_for   = "1,"
         msg          = f"search {search_for = }"
-        print( msg )
+        self.append_msg( msg,  )
         a_widget    =    self.table_widget
         # Clear current selection.
         a_widget.setCurrentItem( None )
 
         if not search_for:
             msg      =  "Empty string, don't search."
-            print( msg )
+            self.append_msg( msg,  )
             return
 
         matching_items = a_widget.findItems(search_for,  Qt.MatchContains )
@@ -371,58 +371,75 @@ class QTableWidgetTab( QWidget ):
             # We have found something.
             item       = matching_items[0]  # Take the first.
             msg        = f"found {item = }"
-            print( msg )
+            self.append_msg( msg,  )
             a_widget.setCurrentItem(item)
         else:
             msg        = f"nothing found {search_for = }"
-            print( msg )
+            self.append_msg( msg,  )
 
-    #----------------------------
-    def mutate( self  ):
-        """
-        read it
-        """
-        print_func_header( "mutate" )
-        self.mutation_ix   += 1
-        if self.mutation_ix > self.mutation_max:
-            self.mutation_ix = 0
-        self.mutation_dispatch[ self.mutation_ix ]()
 
-    #----------------------------
-    def mutate_0( self  ):
+    # ------------------------------------
+    def mutate_x( self ):
         """
-        read it
-        getText get text
+        read it -- mutate the widgets
         """
-        print_func_header( "mutate_0" )
+        self.append_function_msg( "mutate_0" )
+
+        msg    = "so far not implemented "
+        self.append_msg( msg,  )
+
+        self.append_msg( "mutate_0 done" )
+
+    # ------------------------------------
+    def mutate_0( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_0" )
+
+        msg    = "hide some stuff"
+        self.append_msg( msg, clear = False )
+
         table   = self.table_widget
         table.hideRow( 1 )
         table.hideColumn( 1 )
 
-    #----------------------------
-    def mutate_1( self  ):
+        self.append_msg( "mutate_0 done" )
+
+
+
+    # ------------------------------------
+    def mutate_1( self ):
         """
-        read it
+        read it -- mutate the widgets
         """
-        print_func_header( "mutate_1" )
+        self.append_function_msg( "mutate_1" )
+
+        msg    = "show some stuff"
+        self.append_msg( msg, )
         table   = self.table_widget
         table.showRow( 1 )
         table.showColumn( 1 )
+
+        self.append_msg( "mutate_1 done" )
+
+
 
     #----------------------------
     def mutate_2( self  ):
         """
         read it
         """
-        print_func_header( "mutate_2" )
-        table   = self.table_widget
-        table.showRow( 1 )
-        table.showColumn( 1 )
+        self.append_function_msg( "mutate_2" )
+        self.append_msg( "was copy of mutat_1 now nothing " )
 
+        self.append_msg( "mutate_2 done" )
 
-    #----------------------------
-    def mutate_3( self  ):
+    # ------------------------------------
+    def mutate_3( self ):
         """
+        read it -- mutate the widgets
+
 
 
         def horizontalHeader(…) # horizontalHeader(self) -> Optional[QHeaderView]
@@ -443,29 +460,38 @@ class QTableWidgetTab( QWidget ):
 
 
         """
-        print_func_header( "mutate_3 -- change headers all together set a column width " )
+        self.append_function_msg( "mutate_3" )
+
+        msg    = "mess with column headers and col width "
+        self.append_msg( msg, clear = False )
+
         table       = self.table_widget
-
-        # Set horizontal headers --- all at once
-        #table.setHorizontalHeaderLabels( [ "xxxx", "yyy", ])
-
 
         # Set horizontal headers --- all at once
         headers = ["Name", "Age", "City"]
         table.setHorizontalHeaderLabels( headers )
 
-
         table.setColumnWidth(2, 100)  # Set specific width for a column
 
-    #----------------------------
-    def mutate_4( self  ):
-        """
-        read it --
 
+        self.append_msg( "mutate_3 done" )
+
+    # ------------------------------------
+    def mutate_4( self ):
         """
-        print_func_header( "mutate_4 -- change headers one at a time a bit of a mess " )
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_4" )
+
+
+        #self.append_msg( msg,  )
+
+
+
+        msg    = ( "mutate_4 -- change headers one at a time a bit of a mess " )
+        self.append_msg( msg,  )
+
         table            = self.table_widget
-
 
         for ix_col, i_header_text in enumerate(  [ "XXX", "AAA", ] ):
             table.setHorizontalHeaderItem( ix_col, QTableWidgetItem( i_header_text )  )
@@ -521,7 +547,7 @@ class QTableWidgetTab( QWidget ):
     # vertical_header = table_widget.verticalHeader()
     # vertical_header.setSectionResizeMode(QHeaderView.Stretch)  # Stretch rows
 
-
+        self.append_msg( "mutate_4 done" )
 
 
     #----------------------------
@@ -533,7 +559,10 @@ class QTableWidgetTab( QWidget ):
         from chat
         may be ok not yet tested
         """
-        print_func_header( "find_row_with_text_in_column" )
+        self.append_function_msg( "find_row_with_text_in_column broken comment out fix me " )
+
+
+        return
 
         table               = self.table_widget
 
@@ -550,24 +579,14 @@ class QTableWidgetTab( QWidget ):
 
         return ix_found
 
-    # ------------------------
-    def breakpoint(self):
-        """
-        the usual
-        """
-        print_func_header( "breakpoint" )
 
-        "ex_h.__file__",
-
-
-        breakpoint()
 
     # ------------------------
     def inspect(self):
         """
         the usual
         """
-        print_func_header( "inspect" )
+        self.append_function_msg( "inspect" )
         # make some locals for inspection
         self_table_widget   = self.table_widget
 
@@ -576,24 +595,28 @@ class QTableWidgetTab( QWidget ):
              a_locals       = locals(),
              a_globals      = globals(), )
 
+        self.append_msg( "inspect done" )
+
     # ------------------------
     def breakpoint(self):
         """
         the usual
         """
-        print_func_header( "breakpoint" )
+        self.append_function_msg( "breakpoint" )
 
 
-        #__file__
+        # #__file__
 
-        print( f"{__file__ = }" )
+        # print( f"{__file__ = }" )
 
-        clipboard = QApplication.clipboard()
+        # clipboard = QApplication.clipboard()
 
-        clipboard.setText( str( __file__ ) )
+        # clipboard.setText( str( __file__ ) )
 
         # print("Text added to clipboard:", clipboard.text())
 
         breakpoint()
+
+        self.append_msg( "breakpoint done" )
 
 # ---- eof

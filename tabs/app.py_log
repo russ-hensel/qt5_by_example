@@ -1,250 +1,57 @@
-2025-01-22 09:30:32,352 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 09:30:32,353 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 09:30:32,354 - INFO - call was: logging.info
-2025-01-22 09:49:05,429 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 09:49:05,431 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 09:49:05,432 - INFO - call was: logging.info
-2025-01-22 09:50:20,729 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 09:50:20,729 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 09:50:20,730 - INFO - call was: logging.info
-2025-01-22 11:48:16,347 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 11:48:16,347 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 11:48:16,348 - INFO - call was: logging.info
-2025-01-22 11:48:16,349 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 11:49:15,368 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 11:49:15,369 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 11:49:15,370 - INFO - call was: logging.info
-2025-01-22 11:49:15,370 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 11:51:53,610 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 11:51:53,611 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 11:51:53,611 - INFO - call was: logging.info
-2025-01-22 11:51:53,612 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 11:53:56,220 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 11:53:56,220 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 11:53:56,221 - INFO - call was: logging.info
-2025-01-22 11:53:56,222 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 11:56:04,133 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 11:56:04,134 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 11:56:04,134 - INFO - call was: logging.info
-2025-01-22 11:56:04,135 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 12:01:15,666 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 12:01:15,666 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 12:01:15,667 - INFO - call was: logging.info
-2025-01-22 12:01:15,668 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 12:01:53,904 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 12:01:53,905 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 12:01:53,905 - INFO - call was: logging.info
-2025-01-22 12:01:53,906 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 12:02:52,277 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 12:02:52,277 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 12:02:52,278 - INFO - call was: logging.info
-2025-01-22 12:02:52,279 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 12:02:54,928 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 12:02:54,929 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 12:02:54,929 - INFO - call was: logging.info
-2025-01-22 12:02:54,930 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 12:07:03,466 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 12:07:03,467 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 12:07:03,468 - INFO - call was: logging.info
-2025-01-22 12:07:03,469 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 12:07:06,138 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 12:07:06,138 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 12:07:06,139 - INFO - call was: logging.info
-2025-01-22 12:07:06,140 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 12:09:53,268 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 12:09:53,271 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 12:09:53,273 - INFO - call was: logging.info
-2025-01-22 12:09:53,275 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 12:11:11,839 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 12:11:11,840 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 12:11:11,840 - INFO - call was: logging.info
-2025-01-22 12:11:11,841 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 12:24:18,137 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 12:24:18,138 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 12:24:18,138 - INFO - call was: logging.info
-2025-01-22 12:24:18,139 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 12:38:40,406 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 12:38:40,407 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 12:38:40,408 - INFO - call was: logging.info
-2025-01-22 12:38:40,408 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 16:35:22,928 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 16:35:22,929 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 16:35:22,930 - INFO - call was: logging.info
-2025-01-22 16:35:22,931 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 16:48:28,335 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 16:48:28,336 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 16:48:28,336 - INFO - call was: logging.info
-2025-01-22 16:48:28,337 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 16:48:33,423 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 16:48:33,424 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 16:48:33,424 - INFO - call was: logging.info
-2025-01-22 16:48:33,425 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 16:54:23,140 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 16:54:23,141 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 16:54:23,141 - INFO - call was: logging.info
-2025-01-22 16:54:23,142 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 17:01:41,754 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 17:01:41,755 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 17:01:41,756 - INFO - call was: logging.info
-2025-01-22 17:01:41,757 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 17:03:42,108 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 17:03:42,109 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 17:03:42,110 - INFO - call was: logging.info
-2025-01-22 17:03:42,110 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 17:03:44,813 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 17:03:44,814 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 17:03:44,815 - INFO - call was: logging.info
-2025-01-22 17:03:44,816 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 17:06:58,281 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 17:06:58,281 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 17:06:58,282 - INFO - call was: logging.info
-2025-01-22 17:06:58,282 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 17:14:32,004 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 17:14:32,004 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 17:14:32,005 - INFO - call was: logging.info
-2025-01-22 17:14:32,006 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 17:14:42,561 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 17:14:42,562 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 17:14:42,562 - INFO - call was: logging.info
-2025-01-22 17:14:42,563 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 17:25:35,159 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 17:25:35,160 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 17:25:35,160 - INFO - call was: logging.info
-2025-01-22 17:25:35,161 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 17:25:38,547 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 17:25:38,547 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 17:25:38,548 - INFO - call was: logging.info
-2025-01-22 17:25:38,549 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 17:28:31,552 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 17:28:31,552 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 17:28:31,553 - INFO - call was: logging.info
-2025-01-22 17:28:31,553 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 18:26:04,377 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 18:26:04,378 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 18:26:04,378 - INFO - call was: logging.info
-2025-01-22 18:26:04,379 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 18:29:15,660 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 18:29:15,660 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 18:29:15,661 - INFO - call was: logging.info
-2025-01-22 18:29:15,662 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 18:31:35,631 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 18:31:35,632 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 18:31:35,632 - INFO - call was: logging.info
-2025-01-22 18:31:35,633 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 18:32:17,957 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 18:32:17,957 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 18:32:17,958 - INFO - call was: logging.info
-2025-01-22 18:32:17,958 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 18:33:39,865 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 18:33:39,865 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 18:33:39,866 - INFO - call was: logging.info
-2025-01-22 18:33:39,867 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 18:36:11,508 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 18:36:11,508 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 18:36:11,509 - INFO - call was: logging.info
-2025-01-22 18:36:11,510 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 18:38:34,646 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 18:38:34,647 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 18:38:34,647 - INFO - call was: logging.info
-2025-01-22 18:38:34,648 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 18:44:29,137 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 18:44:29,138 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 18:44:29,139 - INFO - call was: logging.info
-2025-01-22 18:44:29,139 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 18:45:37,280 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 18:45:37,281 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 18:45:37,282 - INFO - call was: logging.info
-2025-01-22 18:45:37,282 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-22 18:47:32,556 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-22 18:47:32,556 - Level 22 - This is a 22 message from my_logger.
-2025-01-22 18:47:32,557 - INFO - call was: logging.info
-2025-01-22 18:47:32,557 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-23 08:34:36,299 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-23 08:34:36,300 - Level 22 - This is a 22 message from my_logger.
-2025-01-23 08:34:36,300 - INFO - call was: logging.info
-2025-01-23 08:34:36,301 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-01-24 09:35:54,561 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-01-24 09:35:54,571 - Level 22 - This is a 22 message from my_logger.
-2025-01-24 09:35:54,572 - INFO - call was: logging.info
-2025-01-24 09:35:54,572 - ERROR - /tmp/ramdisk/tab.db exists True
-2025-02-04 12:09:07,226 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-04 12:09:07,227 - Level 22 - This is a 22 message from my_logger.
-2025-02-04 12:09:07,228 - INFO - call was: logging.info
-2025-02-04 14:23:25,505 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-04 14:23:25,506 - Level 22 - This is a 22 message from my_logger.
-2025-02-04 14:23:25,506 - INFO - call was: logging.info
-2025-02-04 14:24:43,512 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-04 14:24:43,513 - Level 22 - This is a 22 message from my_logger.
-2025-02-04 14:24:43,514 - INFO - call was: logging.info
-2025-02-04 14:25:28,036 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-04 14:25:28,037 - Level 22 - This is a 22 message from my_logger.
-2025-02-04 14:25:28,038 - INFO - call was: logging.info
-2025-02-04 14:26:01,498 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-04 14:26:01,498 - Level 22 - This is a 22 message from my_logger.
-2025-02-04 14:26:01,499 - INFO - call was: logging.info
-2025-02-04 14:32:45,776 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-04 14:32:45,777 - Level 22 - This is a 22 message from my_logger.
-2025-02-04 14:32:45,777 - INFO - call was: logging.info
-2025-02-04 14:33:14,284 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-04 14:33:14,284 - Level 22 - This is a 22 message from my_logger.
-2025-02-04 14:33:14,285 - INFO - call was: logging.info
-2025-02-04 14:33:42,988 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-04 14:33:42,989 - Level 22 - This is a 22 message from my_logger.
-2025-02-04 14:33:42,990 - INFO - call was: logging.info
-2025-02-04 14:54:10,271 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-04 14:54:10,272 - Level 22 - This is a 22 message from my_logger.
-2025-02-04 14:54:10,273 - INFO - call was: logging.info
-2025-02-04 15:12:01,755 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-04 15:12:01,755 - Level 22 - This is a 22 message from my_logger.
-2025-02-04 15:12:01,756 - INFO - call was: logging.info
-2025-02-05 08:24:30,064 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-05 08:24:30,076 - Level 22 - This is a 22 message from my_logger.
-2025-02-05 08:24:30,077 - INFO - call was: logging.info
-2025-02-05 08:24:57,813 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-05 08:24:57,814 - Level 22 - This is a 22 message from my_logger.
-2025-02-05 08:24:57,814 - INFO - call was: logging.info
-2025-02-05 08:32:59,409 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-05 08:32:59,409 - Level 22 - This is a 22 message from my_logger.
-2025-02-05 08:32:59,410 - INFO - call was: logging.info
-2025-02-05 08:33:04,126 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-05 08:33:04,127 - Level 22 - This is a 22 message from my_logger.
-2025-02-05 08:33:04,127 - INFO - call was: logging.info
-2025-02-05 08:35:21,400 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-05 08:35:21,424 - Level 22 - This is a 22 message from my_logger.
-2025-02-05 08:35:21,426 - INFO - call was: logging.info
-2025-02-05 08:38:47,592 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-05 08:38:47,593 - Level 22 - This is a 22 message from my_logger.
-2025-02-05 08:38:47,593 - INFO - call was: logging.info
-2025-02-05 08:46:59,906 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-05 08:46:59,916 - Level 22 - This is a 22 message from my_logger.
-2025-02-05 08:46:59,918 - INFO - call was: logging.info
-2025-02-05 08:49:11,983 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-05 08:49:11,983 - Level 22 - This is a 22 message from my_logger.
-2025-02-05 08:49:11,984 - INFO - call was: logging.info
-2025-02-06 07:36:35,751 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-06 07:36:35,763 - Level 22 - This is a 22 message from my_logger.
-2025-02-06 07:36:35,764 - INFO - call was: logging.info
-2025-02-06 07:44:42,618 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-06 07:44:42,619 - Level 22 - This is a 22 message from my_logger.
-2025-02-06 07:44:42,619 - INFO - call was: logging.info
-2025-02-06 07:46:57,399 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-06 07:46:57,400 - Level 22 - This is a 22 message from my_logger.
-2025-02-06 07:46:57,401 - INFO - call was: logging.info
-2025-02-06 08:48:06,662 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-06 08:48:06,662 - Level 22 - This is a 22 message from my_logger.
-2025-02-06 08:48:06,663 - INFO - call was: logging.info
-2025-02-06 09:00:20,151 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-06 09:00:20,152 - Level 22 - This is a 22 message from my_logger.
-2025-02-06 09:00:20,152 - INFO - call was: logging.info
-2025-02-06 09:18:50,252 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-06 09:18:50,253 - Level 22 - This is a 22 message from my_logger.
-2025-02-06 09:18:50,261 - INFO - call was: logging.info
-2025-02-06 09:19:48,477 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-06 09:19:48,478 - Level 22 - This is a 22 message from my_logger.
-2025-02-06 09:19:48,478 - INFO - call was: logging.info
-2025-02-06 11:16:37,056 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-06 11:16:37,057 - Level 22 - This is a 22 message from my_logger.
-2025-02-06 11:16:37,058 - INFO - call was: logging.info
-2025-02-06 11:17:29,889 - CRITICAL - call was logger.log( logging.CRITICAL,
-2025-02-06 11:17:29,890 - Level 22 - This is a 22 message from my_logger.
-2025-02-06 11:17:29,891 - INFO - call was: logging.info
+2025-02-09 18:13:09,696 - CRITICAL - call was logger.log( logging.CRITICAL,
+2025-02-09 18:13:09,697 - Level 22 - This is a 22 message from my_logger.
+2025-02-09 18:13:09,697 - INFO - call was: logging.info
+2025-02-09 18:19:22,917 - CRITICAL - call was logger.log( logging.CRITICAL,
+2025-02-09 18:19:22,917 - Level 22 - This is a 22 message from my_logger.
+2025-02-09 18:19:22,918 - INFO - call was: logging.info
+2025-02-09 18:22:16,091 - CRITICAL - call was logger.log( logging.CRITICAL,
+2025-02-09 18:22:16,092 - Level 22 - This is a 22 message from my_logger.
+2025-02-09 18:22:16,092 - INFO - call was: logging.info
+2025-02-09 18:26:05,474 - CRITICAL - call was logger.log( logging.CRITICAL,
+2025-02-09 18:26:05,475 - Level 22 - This is a 22 message from my_logger.
+2025-02-09 18:26:05,475 - INFO - call was: logging.info
+2025-02-09 18:27:41,132 - CRITICAL - call was logger.log( logging.CRITICAL,
+2025-02-09 18:27:41,133 - Level 22 - This is a 22 message from my_logger.
+2025-02-09 18:27:41,134 - INFO - call was: logging.info
+2025-02-09 18:44:44,162 - CRITICAL - call was logger.log( logging.CRITICAL,
+2025-02-09 18:44:44,162 - Level 22 - This is a 22 message from my_logger.
+2025-02-09 18:44:44,163 - INFO - call was: logging.info
+2025-02-09 18:45:16,045 - CRITICAL - call was logger.log( logging.CRITICAL,
+2025-02-09 18:45:16,046 - Level 22 - This is a 22 message from my_logger.
+2025-02-09 18:45:16,047 - INFO - call was: logging.info
+2025-02-09 18:45:43,303 - CRITICAL - call was logger.log( logging.CRITICAL,
+2025-02-09 18:45:43,304 - Level 22 - This is a 22 message from my_logger.
+2025-02-09 18:45:43,304 - INFO - call was: logging.info
+2025-02-09 18:46:03,629 - CRITICAL - call was logger.log( logging.CRITICAL,
+2025-02-09 18:46:03,629 - Level 22 - This is a 22 message from my_logger.
+2025-02-09 18:46:03,630 - INFO - call was: logging.info
+2025-02-10 10:03:39,709 - CRITICAL - call was logger.log( logging.CRITICAL,
+2025-02-10 10:03:39,710 - Level 22 - This is a 22 message from my_logger.
+2025-02-10 10:03:39,710 - INFO - call was: logging.info
+2025-02-10 10:06:21,319 - CRITICAL - call was logger.log( logging.CRITICAL,
+2025-02-10 10:06:21,320 - Level 22 - This is a 22 message from my_logger.
+2025-02-10 10:06:21,321 - INFO - call was: logging.info
+2025-02-10 10:07:05,400 - CRITICAL - call was logger.log( logging.CRITICAL,
+2025-02-10 10:07:05,401 - Level 22 - This is a 22 message from my_logger.
+2025-02-10 10:07:05,401 - INFO - call was: logging.info
+2025-02-10 10:10:55,397 - CRITICAL - call was logger.log( logging.CRITICAL,
+2025-02-10 10:10:55,398 - Level 22 - This is a 22 message from my_logger.
+2025-02-10 10:10:55,398 - INFO - call was: logging.info
+2025-02-10 10:20:10,198 - CRITICAL - call was logger.log( logging.CRITICAL,
+2025-02-10 10:20:10,199 - Level 22 - This is a 22 message from my_logger.
+2025-02-10 10:20:10,200 - INFO - call was: logging.info
+2025-02-10 10:20:15,948 - CRITICAL - call was logger.log( logging.CRITICAL,
+2025-02-10 10:20:15,949 - Level 22 - This is a 22 message from my_logger.
+2025-02-10 10:20:15,949 - INFO - call was: logging.info
+2025-02-10 10:39:27,352 - CRITICAL - call was logger.log( logging.CRITICAL,
+2025-02-10 10:39:27,353 - Level 22 - This is a 22 message from my_logger.
+2025-02-10 10:39:27,353 - INFO - call was: logging.info
+2025-02-10 10:39:34,952 - CRITICAL - call was logger.log( logging.CRITICAL,
+2025-02-10 10:39:34,953 - Level 22 - This is a 22 message from my_logger.
+2025-02-10 10:39:34,953 - INFO - call was: logging.info
+2025-02-10 10:40:16,861 - CRITICAL - call was logger.log( logging.CRITICAL,
+2025-02-10 10:40:16,862 - Level 22 - This is a 22 message from my_logger.
+2025-02-10 10:40:16,862 - INFO - call was: logging.info
+2025-02-10 10:44:50,309 - CRITICAL - call was logger.log( logging.CRITICAL,
+2025-02-10 10:44:50,310 - Level 22 - This is a 22 message from my_logger.
+2025-02-10 10:44:50,311 - INFO - call was: logging.info

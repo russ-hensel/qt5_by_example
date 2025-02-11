@@ -45,9 +45,13 @@ ex_root          = f"{py3_root}/_examples"
 
 # least important at top
 sys.path.insert( 1, f"./libs" )                # libs for github repo
+sys.path.insert( 1, f"./tabs" )                # tab for github repo
 sys.path.insert( 1, f"{proj_root}/rshlib" )
 sys.path.insert( 1, f"{src_root}/_projects/rshlib/test/"  )
 sys.path.insert( 1, f"{src_root}/_projects/rshlib/rshlib_qt/" )
+sys.path.insert( 1, f"{src_root}/_projects/rshlib/app_services/" )
+
+
 sys.path.insert( 1, f"{src_root}/_projects/rshlib/in_spect" )
 sys.path.insert( 1, f"{src_root}/_projects/rshlib/app_services" )
 
@@ -64,7 +68,7 @@ sys.path.insert( 1, f"{src_root}/_projects/stuffdb/data_dict_src" )
 
 sys.path.insert( 1, f"{src_root}/_projects/qt5_by_example/info_about_src" )
 sys.path.insert( 1, f"{src_root}/_projects/qt5_by_example" )
-
+#sys.path.insert( 1, f"{src_root}/_projects/qt5_by_example" )
 
 
 # print( "your path has been adjusted fron qt5_by_example on theProf Mint from qt5_by_example" )

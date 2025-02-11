@@ -145,7 +145,7 @@ class TabDBBuilder():
         widget_list   = list( self.widget_set )
         widget_list.sort()
         self.widget_list   = widget_list   # intervace
-        print( f"{widget_list = }")
+        #rint( f"reset {widget_list = }")
 
     #------------
     def create_connection( self, ):

@@ -35,7 +35,7 @@ def create_instance( module_name, class_name ):
     module_name    = module_name.replace( "\\", "." )
     # if module_name == 'tabs\\tab_grid_layout':
     #     pass
-    print( f"module name trap {module_name = }" )
+    print( f"app_services module name trap {module_name = }" )
         #module_name = '.\\tabs\\tab_grid_layout'
 
     if not is_imported( module_name, ):

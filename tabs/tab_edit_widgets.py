@@ -291,7 +291,6 @@ class EditWidgetTab( tab_base.TabBase ) :
         self.date_edit_2_widget = widget
         b_layout.addWidget( widget,  stretch = self.widget_stretch )
 
-
     # --------------------------
     def mutate_to_refactro( self, arg  ):
         """
@@ -406,6 +405,7 @@ class EditWidgetTab( tab_base.TabBase ) :
         widget.setPlaceholderText( "some placeholder text ")
         widget.setToolTip( "what is a tooltop setToolTip ")
 
+        self.append_msg( "mutate_0 done" )
 
     # ------------------------------------
     def mutate_1( self ):
@@ -428,6 +428,8 @@ class EditWidgetTab( tab_base.TabBase ) :
         widget.setEnabled( False )
         widget.setPlaceholderText( "some placeholder text mutate_1")
         widget.setToolTip( "setToolTip for mutate_1")
+
+        self.append_msg( "mutate_1 done" )
 
 
     # --------------------------

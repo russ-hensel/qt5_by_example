@@ -4,6 +4,8 @@
 tab_custom_update_manger.txt
 
 
+CQLineEdit CQDateEdit QSqlTableModel DataManager
+
 test bed and demo of 
 
     update_manager
@@ -28,8 +30,10 @@ test bed and demo of
                     
             
             
-            
+            <next> 
+                should fetch the next record in a (perhaps hardcoded ) list
+                of records
 
 
-
-
+            <prior> 
+                next in reverse 

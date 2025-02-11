@@ -8,8 +8,8 @@ self.help_file_name     =  "qsql_relational_table_model_tab_2.txt"
 
 KEY_WORDS:      table model for relational sql join crud update add insert
 CLASS_NAME:     QSqlRelationalTableModelTab_2
-WIDGETS:         QSqlRelationalTableModel QTableView
-STATUS:         works
+WIDGETS:         QSqlRelationalTableModel QTableView Broken
+STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
 TAB_TITLE:       QSqlRelationalTableModel
 
 """
@@ -21,10 +21,10 @@ tab_q_sql_relational_model_2.QSqlRelationalTableModelTab_2()
 
 """
 # --------------------
+# --------------------
 if __name__ == "__main__":
     #----- run the full app
-    import qt_sql_widgets
-    qt_sql_widgets.main( )
+    import main
 # --------------------
 
 
@@ -90,23 +90,19 @@ from PyQt5.QtWidgets import (QAbstractItemView,
                              QVBoxLayout,
                              QWidget)
 
-import parameters
+
 import utils_for_tabs as uft
 import wat_inspector
+import tab_base
+
 
 INDENT        = uft.INDENT
 BEGIN_MARK_1  = uft.BEGIN_MARK_2
 BEGIN_MARK_2  = uft.BEGIN_MARK_2
 
-def print_func_header( what ):
-    """
-    what is says
-    """
-    #what    = "fix_me"
-    print( f"{BEGIN_MARK_1}{what}{BEGIN_MARK_2}")
 
 #-----------------------------------------------
-class QSqlRelationalTableModelTab_2( QWidget ):
+class QSqlRelationalTableModelTab_2( tab_base.TabBase  ):
     """
     for widgets joining two tables
     """
@@ -115,13 +111,21 @@ class QSqlRelationalTableModelTab_2( QWidget ):
         """
         super().__init__( )
 
+        self.mutate_dict[0]     = self.mutate_0
+        self.mutate_dict[1]     = self.mutate_1
+        # self.mutate_dict[2]    = self.mutate_2
+        # self.mutate_dict[3]    = self.mutate_3
+        # self.mutate_dict[4]    = self.mutate_4
+
+
+
         self.relation      = ( "", "", "",  )
-        self.relation      = ( "people", "id", "name" )
-        self.relation      = ( "people", "id", "name, age" )
-        self.relation      = ( "people", "id", "name, age, id" ) # ng
+        self.relation      = ( "persons", "id", "name" )
+        self.relation      = ( "persons", "id", "name, age" )
+        self.relation      = ( "persons", "id", "name, age, id" ) # ng
                # try to add foreigh key now broken
 
-        self.relation      = ( "people", "id", "name, age, person_id" ) #
+        self.relation      = ( "persons", "id", "name, age, person_id" ) #
                # try to add foreigh key now broken
 
         print( f"Note option of {self.relation = }")
@@ -131,24 +135,28 @@ class QSqlRelationalTableModelTab_2( QWidget ):
 
         self.model.select()
 
-    # ------------------------------
-    def _build_gui( self,   ):
-        """
-        the usual
-        """
-        tab_page      = self
 
-        layout        = QVBoxLayout( tab_page )
-        self.layout   = layout
+
+    #----------------------------
+    def _build_gui_widgets(self, main_layout  ):
+        """
+        the usual, build the gui with the widgets of interest
+        and the buttons for examples
+        """
+        layout              = QVBoxLayout(   )
+
+        main_layout.addLayout( layout )
+        button_layout        = QHBoxLayout(   )
+
+
 
         layout.addWidget( self.view   )
 
-        # --- buttons
-        button_layout      = QHBoxLayout(   )
+
         layout.addLayout( button_layout )
 
         # ---- PB select_for\n_all
-        widget            = QPushButton( "select_for\n_all" )
+        widget            = QPushButton( "select_\n_all" )
         connect_to        = self.select_all
         widget.clicked.connect( connect_to )
         button_layout.addWidget( widget )
@@ -159,11 +167,11 @@ class QSqlRelationalTableModelTab_2( QWidget ):
         widget.clicked.connect( connect_to )
         button_layout.addWidget( widget )
 
-        # ---- PB select\n_some
-        widget            = QPushButton( "select\n_some" )
-        connect_to        = self.select_some
-        widget.clicked.connect( connect_to )
-        button_layout.addWidget( widget )
+        # # ---- PB select\n_some
+        # widget            = QPushButton( "select\n_some" )
+        # connect_to        = self.select_some
+        # widget.clicked.connect( connect_to )
+        # button_layout.addWidget( widget )
 
         # ---- PB set_heading_by_number
         widget            = QPushButton( "set_heading\n_by_number" )
@@ -222,6 +230,12 @@ class QSqlRelationalTableModelTab_2( QWidget ):
         widget.clicked.connect( connect_to )
         button_layout.addWidget( widget )
 
+        # ---- mutate
+        widget = QPushButton("mutate\n")
+        self.button_ex_1         = widget
+        widget.clicked.connect(  self.mutate  )
+        button_layout.addWidget( widget )
+
         # ---- PB inspect
         widget              = QPushButton("inspect\n")
         # widget.clicked.connect(lambda: self.print_message(widget.text()))
@@ -243,36 +257,36 @@ class QSqlRelationalTableModelTab_2( QWidget ):
         for _1
         sql behind this should be:  old
             SELECT
-                people.id,
-                people.name,
-                people.age,
-                people.family_relation,
-                people_phones.phone_number
-            FROM people
-            LEFT JOIN people_phones ON people.id = people_phones.person_id
+                persons.id,
+                persons.name,
+                persons.age,
+                persons.family_relation,
+                persons_phones.phone_number
+            FROM persons
+            LEFT JOIN persons_phones ON persons.id = persons_phones.person_id
 
         for _2  -- turn around the primary table  most of fields come from secondary table
             SELECT
-                people.id,
-                people.name,
-                people.age,
-                people.family_relation,
-                people_phones.phone_number
-            FROM people_phones
-            LEFT JOIN people ON people.id = people_phones.person_id
+                persons.id,
+                persons.name,
+                persons.age,
+                persons.family_relation,
+                persons_phones.phone_number
+            FROM persons_phones
+            LEFT JOIN persons ON persons.id = persons_phones.person_id
 
         """
         model           = QSqlRelationalTableModel( self )
         self.model      = model
 
-        model.setTable( "people_phones" )   # fields are  id  person_id  phone_number  zone
+        model.setTable( "persons_phones" )   # fields are  id  person_id  phone_number  zone
 
         self.relation      = ( "", "", "",  )
-        self.relation      = ( "people", "id", "name" )
-        self.relation      = ( "people", "id", "name, age" )
-        self.relation      = ( "people", "id", "name, age, id" ) # ng
+        self.relation      = ( "persons", "id", "name" )
+        self.relation      = ( "persons", "id", "name, age" )
+        self.relation      = ( "persons", "id", "name, age, id" ) # ng
                # try to add foreigh key now broken
-        self.relation      = ( "people", "id", "name, age, person_id" ) # this seems to work
+        self.relation      = ( "persons", "id", "name, age, person_id" ) # this seems to work
                                # pepple secondary table
                                            # id column in secondary table to join on see fieldIndex below
                                                # columns in secondary table to display  id will be surpressed
@@ -293,13 +307,13 @@ class QSqlRelationalTableModelTab_2( QWidget ):
             model.setRelation(
                 self.model.fieldIndex( "person_id" ),  # column name in first table,
 
-                QSqlRelation( "people", "id", "name, age" )
+                QSqlRelation( "persons", "id", "name, age" )
                 #             table to join to in second table
-                #                      column to join on  people_phone.person_id = people.id
-                #                             # columns from people phones to fetch.and display display
+                #                      column to join on  persons_phone.person_id = persons.id
+                #                             # columns from persons phones to fetch.and display display
                 #                                  rest of fetch is rest of columns in primay table
                 #                                        phone number zone
-                #QSqlRelation("people_phones", "person_id", "phone_number, zone")
+                #QSqlRelation("persons_phones", "person_id", "phone_number, zone")
             )
 
         # self.model.setEditStrategy(QSqlRelationalTableModel.OnFieldChange)
@@ -322,7 +336,7 @@ class QSqlRelationalTableModelTab_2( QWidget ):
     # ------------------------
     def get_selected_rows_dupe_delete(self, index,   ):
         """ """
-        print_func_header( "get_selected_rows" )
+        self.append_function_msg( "get_selected_rows" )
 
         view            = self.view   # QTableView
 
@@ -339,7 +353,7 @@ class QSqlRelationalTableModelTab_2( QWidget ):
         """
         what it says
         """
-        print_func_header( "special_inspect" )
+        self.append_function_msg( "special_inspect" )
 
         model           = self.model
         new_record      = model.record()
@@ -358,11 +372,13 @@ class QSqlRelationalTableModelTab_2( QWidget ):
             print( f"{i_name = }:   {model.fieldIndex( i_name ) = }" )
 
         print( "did this get left off ?" )
-        print( f'{ model.fieldIndex( "person_id") = }' )
+        msg      = ( f'{ model.fieldIndex( "person_id") = }' )
+        self.append_msg( msg,   )
 
         for column in range(model.columnCount()):
             header   = model.headerData(column, Qt.Horizontal)
-            print(f"Column {column}: {header}")
+            msg      = (f"Column {column}: {header}")
+            self.append_msg( msg,   )
 
     # -----------------------
     def add_via_chat( self ):
@@ -379,17 +395,17 @@ class QSqlRelationalTableModelTab_2( QWidget ):
 
         # # Set up the model
         # model = QSqlRelationalTableModel()
-        # model.setTable("people_phones")
-        # model.setRelation(model.fieldIndex("person_id"), QSqlRelation("people", "id", "name"))
+        # model.setTable("persons_phones")
+        # model.setRelation(model.fieldIndex("person_id"), QSqlRelation("persons", "id", "name"))
         # model.select()
-        print_func_header( "add_via_chat" )
+        self.append_function_msg( "add_via_chat" )
 
                 # Add a new row
         model       = self.model
         db          = model.database()
         if not db.transaction():
-            print("Failed to start transaction:", db.lastError().text())
-
+            msg     = ( f"Failed to start transaction: {db.lastError().text()}" )
+            self.append_msg( msg,   )
 
         row         = model.rowCount()  # Index for the new row
         model.insertRow(row)
@@ -402,20 +418,21 @@ class QSqlRelationalTableModelTab_2( QWidget ):
         model.setData(model.index( row, model.fieldIndex( "zone")),          "Z")
 
         # Debugging: Check if the row was inserted
-        print("New row data before submission:")
+        msg      = ("New row data before submission:")
+        self.append_msg( msg,   )
         for col in range(model.columnCount()):
-            print(f"{model.headerData(col, Qt.Horizontal)}: {model.data(model.index(row, col))}")
-
+            msg      = (f"{model.headerData(col, Qt.Horizontal)}: {model.data(model.index(row, col))}")
+            self.append_msg( msg,   )
         # update and -- do not see select
         if not model.submitAll():
-            print("add_via_chat Error saving data:", model.lastError().text())
-
+            msg      = ("add_via_chat Error saving data:", model.lastError().text())
+            self.append_msg( msg,   )
         else:
-            print("Data added successfully.")
-
+            msg      = ("Data added successfully.")
+            self.append_msg( msg,   )
         if not db.commit():
-            print("Database commit failed:", db.lastError().text())
-
+            msg      = ("Database commit failed:", db.lastError().text())
+            self.append_msg( msg,   )
         # Set up a view to display the data  --- do we need this ?? try without
         # view = QTableView()
         self.view.setModel(model)
@@ -426,21 +443,21 @@ class QSqlRelationalTableModelTab_2( QWidget ):
     def add_record(self):
         """
         what it says
-            we need to add to primary table here: people_phones
+            we need to add to primary table here: persons_phones
 
            SELECT
-               people.id,
-               people.name,
-               people.age,
-               people.family_relation,
-               people_phones.phone_number
+               persons.id,
+               persons.name,
+               persons.age,
+               persons.family_relation,
+               persons_phones.phone_number
 
-           FROM people_phones
-           LEFT JOIN people ON people.id = people_phones.person_id
+           FROM persons_phones
+           LEFT JOIN persons ON persons.id = persons_phones.person_id
 
         """
         1/0   # us add via chat
-        print_func_header( "add_record" )
+        self.append_function_msg( "add_record" )
 
         msg             = "data for id  123  name  John Doe"
         print( msg )
@@ -449,12 +466,12 @@ class QSqlRelationalTableModelTab_2( QWidget ):
         new_record      = model.record()
 
         """
-        CREATE TABLE people_phones (
+        CREATE TABLE persons_phones (
                 id              INTEGER PRIMARY KEY AUTOINCREMENT,
                 person_id       INTEGER,
                 phone_number    TEXT,
                 zone            TEXT,
-                FOREIGN KEY(person_id) REFERENCES people(id) ON DELETE CASCADE
+                FOREIGN KEY(person_id) REFERENCES persons(id) ON DELETE CASCADE
             )
         """
 
@@ -473,10 +490,11 @@ class QSqlRelationalTableModelTab_2( QWidget ):
             # else:
             #     print("Error committing changes:", model.lastError().text())
         else:
-            print("Error inserting record:", model.lastError().text())
-
-        print( "the database has not yet been updated -- "
+            msg      = ("Error inserting record:", model.lastError().text())
+            self.append_msg( msg,   )
+        msg      = ( "the database has not yet been updated -- "
                 "you may want to update_db, select_all or get_data_from_model next ")
+        self.append_msg( msg,   )
 
     # -----------------------
     def add_test_record(self):
@@ -487,10 +505,10 @@ class QSqlRelationalTableModelTab_2( QWidget ):
 
         some set data just disappears and mapping seems wrong
         """
-        print_func_header( "add_test_record" )
+        self.append_function_msg( "add_test_record" )
 
         msg             = "data is data_0 _1....."
-        print( msg )
+        self.append_msg( msg,   )
 
         model           = self.model
         new_record      = model.record()
@@ -500,7 +518,7 @@ class QSqlRelationalTableModelTab_2( QWidget ):
         for ix in range( 7 ):
             i_name     = new_record.fieldName( ix )
             c_names.append( i_name )
-            print( f"{ix = }: {new_record.fieldName( ix ) = } " )
+            msg      = ( f"{ix = }: {new_record.fieldName( ix ) = } " )
             if i_name:
                 new_record.setValue( i_name, f"data_{ix}")
 
@@ -508,38 +526,41 @@ class QSqlRelationalTableModelTab_2( QWidget ):
             pass
 
         else:
-            print("Error inserting record:", model.lastError().text())
+            msg      = ("Error inserting record:", model.lastError().text())
+            self.append_msg( msg,   )
 
-
-        print( "the database has not yet been updated -- you may want to update_db, select_all or get_data_from_model next ")
-
+        msg      = ( "the database has not yet been updated -- you may want to update_db, select_all or get_data_from_model next ")
+        self.append_msg( msg,   )
 
     # -----------------------
     def update_db(self):
         """
         what it says
         """
-        print_func_header( "update_db" )
+        self.append_function_msg( "update_db" )
 
         model           = self.model
 
         if model.submitAll():
-            print("Changes committed no error detected ")
+            msg      = ("Changes committed no error detected ")
+            self.append_msg( msg,   )
+
         else:
-            print("Error committing changes:", model.lastError().text())
+            msg      = ("Error committing changes:", model.lastError().text())
+            self.append_msg( msg,   )
 
-        print( "you may want to select_all or get_data_from_model next ")
-
+        msg      = ( "you may want to select_all or get_data_from_model next ")
+        self.append_msg( msg,   )
 
     # ------------------------
     def set_heading_by_number( self ):
         """
         what it says
         """
-        print_func_header( "set_heading_by_number" )
+        self.append_function_msg( "set_heading_by_number" )
 
         msg        = "The lables are in numeric order ."
-        print( msg )
+        self.append_msg( msg,   )
 
         model      = self.model
         model.setHeaderData(0, Qt.Horizontal, "c0")
@@ -555,18 +576,18 @@ class QSqlRelationalTableModelTab_2( QWidget ):
         """
         what it says
         """
-        print_func_header( "set_heading_by_name" )
+        self.append_function_msg( "set_heading_by_name" )
 
         msg        = "I have tried to get the qualified database names in here."
-        print( msg )
+        self.append_msg( msg,   )
         msg        = "Note that headers can span lines."
-        print( msg )
+        self.append_msg( msg,   )
         model      = self.model
-        model.setHeaderData(0, Qt.Horizontal, "people_phone\n.id" )
-        model.setHeaderData(1, Qt.Horizontal, "people\n.name")
-        model.setHeaderData(2, Qt.Horizontal, "people\n.age")
-        model.setHeaderData(3, Qt.Horizontal, "people_phone\n.phone_number")
-        model.setHeaderData(4, Qt.Horizontal, "people_phone\n.zone")
+        model.setHeaderData(0, Qt.Horizontal, "persons_phone\n.id" )
+        model.setHeaderData(1, Qt.Horizontal, "persons\n.name")
+        model.setHeaderData(2, Qt.Horizontal, "persons\n.age")
+        model.setHeaderData(3, Qt.Horizontal, "persons_phone\n.phone_number")
+        model.setHeaderData(4, Qt.Horizontal, "persons_phone\n.zone")
         model.setHeaderData(5, Qt.Horizontal, "c5")
         model.setHeaderData(6, Qt.Horizontal, "c6")
 
@@ -576,7 +597,7 @@ class QSqlRelationalTableModelTab_2( QWidget ):
         """
         select with a sort
         """
-        print_func_header( "select_all" )
+        # self.append_function_msg( "select_all" )
 
         model        = self.model
 
@@ -594,9 +615,9 @@ class QSqlRelationalTableModelTab_2( QWidget ):
         """
         select base on some criteria, read the code for details
         """
-        print_func_header( "select_some" )
+        self.append_function_msg( "select_some" )
 
-        self.model.setFilter('age >  26 '   )
+        self.model.setFilter( 'age >  26'   )
         self.model.select()
 
     # -----------------------
@@ -609,7 +630,7 @@ class QSqlRelationalTableModelTab_2( QWidget ):
             can we get column names
             note we also have a view
         """
-        print_func_header( "select_some" )
+        self.append_function_msg( "get_data_from_model" )
 
         model           = self.model
 
@@ -621,20 +642,20 @@ class QSqlRelationalTableModelTab_2( QWidget ):
                 index     = model.index( ix_row,   ix_col   )
                 data      = model.data( index )
                 msg       = f"for {ix_row = } {ix_col = }  {data = }"
-                print( msg )
+                self.append_msg( msg,   )
 
     # ------------------------
     def do_selections(self):
         """
         not sure ... is dead?
         """
-        print_func_header( "do_selections" )
+        self.append_function_msg( "do_selections" )
 
 
     # ------------------------
     def get_selected_rows(self, index,   ):
         """ """
-        print_func_header( "get_selected_rows" )
+        self.append_function_msg( "get_selected_rows" )
 
         # from PyQt5.QtWidgets import QTableView, QAbstractItemView
         # from PyQt5.QtCore import Qt
@@ -648,20 +669,22 @@ class QSqlRelationalTableModelTab_2( QWidget ):
             # Iterate over the selected rows
             for index in selected_indexes:
                 row = index.row()  # Get the row number
-                print( f"Selected row: {row = }" )
+                msg      = ( f"Selected row: {row = }" )
+                self.append_msg( msg,   )
 
     # ------------------------
     def delete_selected_row(self):
         """
         or even rows
         """
-        print_func_header( "delete_selected_row" )
+        self.append_function_msg( "delete_selected_row" )
 
         #from PyQt5.QtSql import QSqlRelationalTableModel
 
         view            = self.view
 
         msg     = "for now just get first seleectd row if any "
+        self.append_msg( msg,   )
 
         selection_model = view.selectionModel()
         if selection_model:
@@ -670,7 +693,8 @@ class QSqlRelationalTableModelTab_2( QWidget ):
             # Iterate over the selected rows
             for index in selected_indexes:
                 row = index.row()  # Get the row number
-                print( f"Selected row: {row = }" )
+                msg      = ( f"Selected row: {row = }" )
+                self.append_msg( msg,   )
                 break
 
         if row >= 0:
@@ -680,12 +704,15 @@ class QSqlRelationalTableModelTab_2( QWidget ):
             # Deleting a single row
             #row_to_delete = 2  # Replace with the row number you want to delete
             if model.removeRow( row ):
-                print(f"Row {row = } marked for deletion. But may still show in view")
+               msg      = (f"Row {row = } marked for deletion. But may still show in view")
+               self.append_msg( msg,   )
+
             else:
-                print("Failed to mark row for deletion.")
+               msg      = ( "Failed to mark row for deletion.")
+               self.append_msg( msg,  )
 
-            print( "for things to continue to work you should probably update the db ")
-
+            msg      =( "for things to continue to work you should probably update the db ")
+            self.append_msg( msg,   )
         # # Committing the changes to the database
         # if model.submitAll():
         #     print("Changes committed to the database.")
@@ -695,13 +722,37 @@ class QSqlRelationalTableModelTab_2( QWidget ):
         # # If you want to refresh the view after deletion
         # model.select()
 
+    # ------------------------------------
+    def mutate_0( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_0" )
+
+        msg    = "so far not implemented "
+        self.append_msg( msg,   )
+
+        self.append_msg( "mutate_0 done" )
+
+    # ------------------------------------
+    def mutate_1( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_1" )
+
+        msg    = "so far not implemented "
+        self.append_msg( msg,  )
+
+        self.append_msg( "mutate_1 done" )
+
 
     # ------------------------
     def inspect(self):
         """
         the usual
         """
-        print_func_header( "inspect" )
+        self.append_function_msg( "inspect" )
 
         # make some locals for inspection
         my_self                 = self
@@ -717,14 +768,17 @@ class QSqlRelationalTableModelTab_2( QWidget ):
              a_locals       = locals(),
              a_globals      = globals(), )
 
+        self.append_msg( "inspect done" )
+
+
     # ------------------------
     def breakpoint(self):
         """
         the usual
         """
-        print_func_header( "breakpoint" )
+        self.append_function_msg( "breakpoint" )
 
         breakpoint()
 
-
+        self.append_msg( "breakpoint done" )
 # ---- eof

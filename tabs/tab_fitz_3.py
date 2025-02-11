@@ -118,19 +118,9 @@ class Fitz_3_Tab( tab_base.TabBase  ) :
 
 
 
-
         self._build_gui()
 
 
-    # -------------------------------
-    def _build_guixxx(self,   ):
-        """
-        layouts
-            a vbox for main layout
-            h_box for or each row of buttons
-        """
-        tab_page      = self
-        layout        = QVBoxLayout( tab_page )
 
     def _build_gui_widgets(self, main_layout  ):
         """
@@ -164,9 +154,11 @@ class Fitz_3_Tab( tab_base.TabBase  ) :
         button_layout = QHBoxLayout(   )
         layout.addLayout( button_layout,  )
 
-
-
-
+        # ---- mutate
+        widget = QPushButton("mutate\n")
+        self.button_ex_1         = widget
+        widget.clicked.connect( lambda: self.mutate( ) )
+        button_layout.addWidget( widget )
 
         # ---- PB inspect
         widget = QPushButton("inspect\n")
@@ -180,6 +172,7 @@ class Fitz_3_Tab( tab_base.TabBase  ) :
 
 
     def contextMenuEvent( self, e):
+        """ """
         context = QMenu(self)
         context.addAction(QAction("test 1", self))
         context.addAction(QAction("test 2", self))
@@ -239,7 +232,6 @@ class Fitz_3_Tab( tab_base.TabBase  ) :
         elif e.button() == Qt.RightButton:
             self.label_2.setText("mouseDoubleClickEvent RIGHT")
 
-
     # ------------------------------------
     def mutate_0( self ):
         """
@@ -249,6 +241,8 @@ class Fitz_3_Tab( tab_base.TabBase  ) :
 
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
+        self.append_msg( "mutate_0 done" )
+
 
     # ------------------------------------
     def mutate_1( self ):
@@ -258,7 +252,7 @@ class Fitz_3_Tab( tab_base.TabBase  ) :
         self.append_function_msg( "mutate_1" )
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
-
+        self.append_msg( "mutate_1 done" )
 
     # ------------------------
     def inspect(self):
@@ -282,3 +276,6 @@ class Fitz_3_Tab( tab_base.TabBase  ) :
         self.append_function_msg( "breakpoint" )
 
         breakpoint()
+
+
+# ---- eof

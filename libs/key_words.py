@@ -5,7 +5,7 @@ Created on Sun Jun 30 16:13:31 2024
 
 @author: russ
 """
-
+# ----tof
 # ---- imports
 
 
@@ -99,8 +99,8 @@ class KeyWords(   ):
         self.add_key_words          = None   # will be a set
         self.delete_key_words       = None   # will be a set
 
-        self.key_words_for_delete   = None     # see:
-        self.key_words_for_add      = None     # see:
+        self.key_words_for_delete   = None   # see:
+        self.key_words_for_add      = None   # see:
 
     #----------------------------------
     def string_to_key_words( self,  a_string, caps_split = True ):
@@ -114,11 +114,14 @@ class KeyWords(   ):
         set   of key words
 
         split up camel case
-        remove and split on dirt   !! durt might remain
+        remove and split on dirt   !! dirt might remain
         lower case
         remove terminal s on over 2 characters
         make list
         lower
+        numbers   ?? survive
+        ?? eliminat a an the .... or not
+        ?? single letters ?
         return
             a set of the key words
 
@@ -128,7 +131,6 @@ class KeyWords(   ):
             a_string = a_string + " " + a_string.lower() # suppress cap split
         else:
             a_string = a_string.lower() # suppress cap split
-
 
         key_word_list    = self.split_on_caps_and_whitespace( a_string )
         key_word_list    = [ a_word.lower( ) for a_word in key_word_list ]
@@ -156,7 +158,7 @@ class KeyWords(   ):
         self.old_key_words      = self.string_to_key_words( a_string )
         debug_key_words         = self.old_key_words
 
-    def move_new_to_old():
+    def move_new_to_oldxxx():
         """for use at end of compute and delete """
         1/0
 
@@ -168,7 +170,7 @@ class KeyWords(   ):
         self.is_done            = False
         self.new_string         = a_string
         self.new_key_words      = self.string_to_key_words( a_string )
-        debug_key_words         = self.new_key_words
+        #debug_key_words         = self.new_key_words
 
     #----------------------------------
     def compute_add_delete( self, table_id  ):
@@ -218,6 +220,7 @@ class KeyWords(   ):
             if not query.exec_():
                 error = query.lastError()
                 print(f"Error deleting word {word}: {error.text()}")
+
             else:
                 if VERBOSE:
                     print(f"Successfully deleted rows where word = {word}")
@@ -279,14 +282,12 @@ class KeyWords(   ):
         is_ok       = True
         query       = QSqlQuery( self.db )
 
-
         sql    = f"""
         SELECT id, key_word, COUNT(*) AS count
         FROM {self.table_name}
         WHERE id = {id}
         GROUP BY id, key_word
         HAVING COUNT(*) > 1  ; """
-
 
         qsql_utils.query_exec_error_check(  query = query, sql = sql, raise_except = True )
 
@@ -300,8 +301,6 @@ class KeyWords(   ):
 
         if not is_ok:
             1/0
-
-
 
     # --------------------------------------
     def __str__( self,   ):

@@ -4,7 +4,7 @@
 # ---- tof
 """
 
-KEY_WORDS:      some stuff from the m fitz book many simple widgets ddl    new tab stagetwo
+KEY_WORDS:      some stuff from the m fitz book many misc simple widgets ddl    new tab stagetwo
 CLASS_NAME:     Fitz_1_Tab
 WIDGETS:        QCheckBox, QComboBox, QDateEdit, QDateTimeEdit, QDial, QDoubleSpinBox, QFontComboBox, QLCDNumber, QLineEdit,
 STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
@@ -25,16 +25,16 @@ if __name__ == "__main__":
     #main.main()
 # --------------------
 
-
-import inspect
-import subprocess
-import sys
-import time
-from datetime import datetime
+# ---- imports
+#import inspect
+#import subprocess
+#import sys
+#import time
+#from datetime import datetime
 from functools import partial
 from subprocess import PIPE, STDOUT, Popen, run
 
-import wat
+
 from PyQt5 import QtGui
 from PyQt5.QtCore import (QDate,
                           QDateTime,
@@ -85,17 +85,16 @@ from PyQt5.QtWidgets import (QAction,
                              QVBoxLayout,
                              QWidget)
 
+import wat
+
+# ---- local imports
 import parameters
 #import qt_widgets
 import utils_for_tabs as uft
 import wat_inspector
 import tab_base
 
-# ---- imports neq qt
-
-
 # ---- end imports
-
 
 
 #  --------
@@ -116,8 +115,6 @@ class Fitz_1_Tab( tab_base.TabBase ) :
         # self.mutate_dict[4]    = self.mutate_4
         self._build_gui()
 
-
-
     def _build_gui_widgets(self, main_layout  ):
         """
         the usual, build the gui with the widgets of interest
@@ -127,9 +124,6 @@ class Fitz_1_Tab( tab_base.TabBase ) :
 
         main_layout.addLayout( layout )
         button_layout        = QHBoxLayout(   )
-
-
-
 
         widgets = [
             QCheckBox,
@@ -164,7 +158,6 @@ class Fitz_1_Tab( tab_base.TabBase ) :
         widget.clicked.connect( lambda: self.mutate( ) )
         button_layout.addWidget( widget )
 
-
         # ---- PB inspect
         widget = QPushButton("inspect\n")
         widget.clicked.connect( self.inspect    )
@@ -185,6 +178,7 @@ class Fitz_1_Tab( tab_base.TabBase ) :
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
 
+        self.append_msg( "mutate_0 done" )
     # ------------------------------------
     def mutate_1( self ):
         """
@@ -193,6 +187,8 @@ class Fitz_1_Tab( tab_base.TabBase ) :
         self.append_function_msg( "mutate_1" )
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
+
+        self.append_msg( "mutate_1 done" )
 
     # ------------------------
     def inspect(self):
@@ -207,6 +203,8 @@ class Fitz_1_Tab( tab_base.TabBase ) :
              a_locals       = locals(),
              a_globals      = globals(), )
 
+        self.append_msg( "inspect done" )
+
     # ------------------------
     def breakpoint(self):
         """
@@ -216,3 +214,7 @@ class Fitz_1_Tab( tab_base.TabBase ) :
         self.append_function_msg( "breakpoint" )
 
         breakpoint()
+
+        self.append_msg( "breakpoint done" )
+
+# ---- eof

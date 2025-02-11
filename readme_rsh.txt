@@ -18,6 +18,10 @@ Table of Contents
 Change list newest at bottom
 
 
+
+
+        !! bad display on auto select
+        !* removed most prints, select still chatty quited it down
         ** report if self.dir_for_tabs is not found
         ** display widgets across top of tab
         ** sort search results
@@ -36,6 +40,8 @@ Change list newest at bottom
         !! list widget needs lots of work
         *! have version in title and in about
         ** add open parameters
+
+        !! add check that db ( both ) opened and seem ok
 
 
     ver_08

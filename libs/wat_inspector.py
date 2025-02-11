@@ -64,8 +64,6 @@ import info_about
 
 #print( f"{info_about.INFO_ABOUT =}")
 
-
-
 FIF       = info_about.INFO_ABOUT.find_info_for
 
 
@@ -129,7 +127,6 @@ except:
     print( "import of parameters in wat_inspector failed -------------------------------------- ")
 
 if my_parameters is None:
-
     TEXT_EDITOR    = "gedit"
 
 else:
@@ -138,7 +135,6 @@ else:
 # !! need implementation
 HELP_FILE          = "help.txt"
 OUTPUT_FILE        = "output.txt"
-
 
 # -----------------------
 def get_traceback_list( msg = "get_traceback_list", print_it = True ):
@@ -151,7 +147,7 @@ def get_traceback_list( msg = "get_traceback_list", print_it = True ):
     #stop_text  File "/mnt/WIN_D/Russ/0000/python00/python3/_projects/rshlib/debug_util.py", line 171, in call_tbl
 
     keep = True
-    short_list  = [">>>>>>>>>>>>>see what inspector instead get_traceback_list<<<<<<<<<<<<<<<<<<<<<<"]
+    short_list  = [">>>>>>>>>>>>>see what inspector get_traceback_list<<<<<<<<<<<<<<<<<<<<<<"]
     for i_item in reversed( traceback.format_stack() ):
 
         if keep:
@@ -541,21 +537,6 @@ widget.lineEdit().returnPressed.connect(your_function)
     def do_get_super( self ):
         """
         get superclasses
-        print([cls.__name__ for cls in C.__mro__])
-        # Output: ['C', 'B', 'A', 'object']
-
-        class A:
-            pass
-
-        class B(A):
-            pass
-
-        class C(B):
-            pass
-
-        # List all superclasses of C
-        print(C.__mro__)
-        # Output: (<class '__main__.C'>, <class '__main__.B'>, <class '__main__.A'>, <class 'object'>)
 
         """
         # List all superclasses of C
@@ -625,9 +606,9 @@ widget.lineEdit().returnPressed.connect(your_function)
         self.setup( None,  a_locals, a_globals   )
         #self.do_inspect( inspect_me )
         self.show()
-        # print( "next app exec can we see if already running?")
+        #rint( "next app exec can we see if already running?")
         # self.app.exec_()
-        # print( "after  app exec can we see if already running?")
+        #rint( "after  app exec can we see if already running?")
 
     # ------------------------------------------
     def setup( self, inspect_me = None,  a_locals = None,  a_globals = None ):
@@ -701,7 +682,7 @@ widget.lineEdit().returnPressed.connect(your_function)
             ignore blank space
             case insensitive
         """
-        #print( self.filter_widget_sil.currentText() )
+        #rint( self.filter_widget_sil.currentText() )
 
         filter_text = self.filter_widget_sil.currentText().casefold()
         all_text    = self.text_edit.toPlainText()
@@ -787,7 +768,7 @@ widget.lineEdit().returnPressed.connect(your_function)
         output result to text_edit widget
         """
         #rint( "inspect_object >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-        #print( f"i_object { self.inspect_me = }   {type( self.inspect_me ) = }")
+        #rint( f"i_object { self.inspect_me = }   {type( self.inspect_me ) = }")
         widget              = self.text_edit
         widget.clear()
         #self.inspect_me     = inspect_me

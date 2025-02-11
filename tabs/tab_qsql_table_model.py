@@ -23,7 +23,6 @@ Search
 if __name__ == "__main__":
     #----- run the full app
     import main
-    #main.main()
 # -------------------
 
 
@@ -78,21 +77,19 @@ from PyQt5.QtWidgets import (QAction,
                              QWidget)
 
 import parameters
-
-
 import info_about
 import utils_for_tabs as uft
 import wat_inspector
 import global_vars
-
+import tab_base
 # ---- end imports
 
 
 INDENT              = uft.INDENT
-print_func_header   =  uft.print_func_header
+# print_func_header   =  uft.print_func_header
 
 #-----------------------------------------------
-class QSqlTableModelTab( QWidget ):
+class QSqlTableModelTab( tab_base.TabBase   ):
     """
     QSqlTableModel
         and  QTableView
@@ -104,21 +101,28 @@ class QSqlTableModelTab( QWidget ):
         self.help_file_name     =  "qsql_table_model_tab.txt"
         self._build_model()
         self._build_gui()
-        self.ix_id_list         = 0
 
+        self.ix_id_list         = 0
         self.id_list            = [ 1000, 1001, 1002, 1003, 1004, 3 ]
-            # use for prior next
+
+        self.mutate_dict[0]     = self.mutate_0
+        self.mutate_dict[1]     = self.mutate_1
+        # self.mutate_dict[2]    = self.mutate_2
+        # self.mutate_dict[3]    = self.mutate_3
+        # self.mutate_dict[4]    = self.mutate_4
+
         self.select_all()
 
-    # ------------------------------
-    def _build_gui( self,   ):
+    #----------------------------
+    def _build_gui_widgets(self, main_layout  ):
         """
-        What it says
+        the usual, build the gui with the widgets of interest
+        and the buttons for examples
         """
-        tab_page       = self
+        layout              = QVBoxLayout(   )
 
-        layout        = QVBoxLayout( tab_page )
-        self.layout   = layout
+        main_layout.addLayout( layout )
+        button_layout        = QHBoxLayout(   )
 
         layout.addWidget( self.persons_view   )
 
@@ -162,6 +166,13 @@ class QSqlTableModelTab( QWidget ):
         # ---- PB get_data_values
         widget              = QPushButton("get_data_values\n")
         widget.clicked.connect( self.get_data_values )
+        row_layout.addWidget( widget )
+
+
+        # ---- mutate
+        widget = QPushButton("mutate\n")
+        self.button_ex_1         = widget
+        widget.clicked.connect( lambda: self.mutate( ) )
         row_layout.addWidget( widget )
 
         # ---- PB inspect
@@ -227,7 +238,7 @@ class QSqlTableModelTab( QWidget ):
     # ------------------------
     def get_selected_rows(self, index,   ):
         """ """
-        print_func_header( "get_selected_rows" )
+        self.append_function_msg( "get_selected_rows" )
 
         print( "looking at the persons view ")
         view            = self.persons_view
@@ -237,17 +248,18 @@ class QSqlTableModelTab( QWidget ):
             selected_indexes = selection_model.selectedRows()  # Get the selected rows
 
             for index in selected_indexes:
-                row = index.row()  # Get the row number
-                print(f"Selected row: {row = }")
-
+                row     = index.row()  # Get the row number
+                msg     = ( f"Selected row: {row = }" )
+                self.append_msg( msg, )
     # ------------------------
     def get_data_values(self,    ):
         """ """
-        print_func_header( "get_data_values" )
+        self.append_function_msg( "get_data_values" )
 
         row             = 1
         column          = 1
-        print( "for now not selectd by by x,y {x = } {y = }")
+        msg    = ( f"for now not selectd by by {row = } {column = }" )
+        self.append_msg( msg, )
 
         model           = self.persons_model
 
@@ -257,8 +269,8 @@ class QSqlTableModelTab( QWidget ):
 
         # Get the data from the model at the specified index
         value = model.data(index)
-        print( f"Value at row {row },  {column = }: {value = }" )
-
+        msg    =  ( f"Value at row {row },  {column = }: {value = }" )
+        self.append_msg( msg, )
         # using column name
         column_name = "name"
 
@@ -266,35 +278,38 @@ class QSqlTableModelTab( QWidget ):
         column = model.fieldIndex( column_name )
 
         if column == -1:
-            print(f"Column '{column_name}' not found in the model.")
+            msg = ( f"Column '{column_name}' not found in the model." )
+            self.append_msg( msg, )
         else:
             # Retrieve the QModelIndex for the specified cell
             index = model.index(row, column)
 
             # Get the data from the model at the specified index
             value = model.data(index)
-            print( f"Value at row {row}, column '{column_name}': {value}")
+            msg     = ( f"Value at   {row = },   '{column_name =}': {value}" )
+            self.append_msg( msg, )
+
 
     # ------------------------
     def _persons_view_clicked(self, index,   ):
         """ """
-        print_func_header( "_persons_view_clicked" )
+        self.append_function_msg( "_persons_view_clicked" )
 
         view    = self.persons_view
         msg     = f"_view_clicked {index} "
-        print( msg )
+        self.append_msg( msg, )
         msg     = f"{INDENT}{view = } there is much to explore here, row, column, values"
-        print( msg )
+        self.append_msg( msg, )
 
         msg     = f"{INDENT}{index} {index.row() = } {index.column() = } "
-        print( msg )
+        self.append_msg( msg, )
 
         model           = self.persons_model
         persons_model    = model
         no_rows         = model.rowCount()
 
         msg     = f"{INDENT}{model.rowCount() = }   "
-        print( msg )
+        self.append_msg( msg, )
 
         # extract some data
         row_ix       = index.row()
@@ -302,7 +317,7 @@ class QSqlTableModelTab( QWidget ):
         age          = model.data( model.index( row_ix, age_ix ) )
 
         msg     = f"{INDENT}extracted data {age = }   "
-        print( msg )
+        self.append_msg( msg, )
 
         # extract some data
         row_ix       = index.row()
@@ -310,10 +325,10 @@ class QSqlTableModelTab( QWidget ):
         key          = model.data( model.index( row_ix, key_ix ) )
 
         msg     = f"{INDENT}extracted data {key = }   "
-        print( msg )
+        self.append_msg( msg, )
 
         msg     = f"{INDENT}phones are now displayed for for the persons clicked on"
-        print( msg )
+        self.append_msg( msg, )
 
         # ---- sync up second model with row clicked in first
         phone_model     = self.phone_model
@@ -325,8 +340,7 @@ class QSqlTableModelTab( QWidget ):
         """
         !!What it says
         """
-        print_func_header( "delete_selected_record" )
-
+        self.append_function_msg( "delete_selected_record" )
 
     # --------------------------
     def prior_next( self, delta  ):
@@ -334,7 +348,7 @@ class QSqlTableModelTab( QWidget ):
         What it says
         delta may be positive or negative
         """
-        print_func_header( f"prior_next {delta = }" )
+        self.append_function_msg( f"prior_next {delta = }" )
 
         ix                     = self.ix_id_list
         our_list               = self.id_list
@@ -343,11 +357,13 @@ class QSqlTableModelTab( QWidget ):
         new_ix                 = ix + delta
 
         if   new_ix < 0:
-            print( "wrap to max ix")
+            msg     = ( "wrap to max ix")
+            self.append_msg( msg, )
             new_ix  = max - 1
 
         elif new_ix >= max:
-            print( "wrap to ix = 0")
+            msg     = ( "wrap to ix = 0")
+            self.append_msg( msg, )
             new_ix  = 0
 
         self.ix_id_list   = new_ix
@@ -362,7 +378,7 @@ class QSqlTableModelTab( QWidget ):
         What it says
         taken from stuff and simplifed
         """
-        print_func_header( f"select_by_id for persons {a_id = }" )
+        self.append_function_msg( f"select_by_id for persons {a_id = }" )
 
         record   = None
         model    = self.persons_model
@@ -372,10 +388,15 @@ class QSqlTableModelTab( QWidget ):
         model.select()
         #ia_qt.q_sql_query_model( model, "select_record 2" )
 
-        print( f"{INDENT}select_by_id{model.rowCount() = }  ")
+        msg     = ( f"{INDENT}select_by_id{model.rowCount() = }  ")
+        self.append_msg( msg, )
+
 
         #print( info_about.get( model, msg = "select_by_id post filter and select " ) )
-        print(  info_about.INFO_ABOUT.find_info_for(  model, msg = "select_by_id post filter and select " ) )
+        msg     = (  info_about.INFO_ABOUT.find_info_for(  model,
+                                msg = "select_by_id post filter and select " ) )
+        self.append_msg( msg, )
+
 
         if model.rowCount() > 0:
             record                  = model.record(0)
@@ -384,11 +405,12 @@ class QSqlTableModelTab( QWidget ):
             #self.textField.setText(record.value("text_data"))
             #self.record_state       = RECORD_FETCHED
             self.current_id         = a_id
-            print( f"persons id = {a_id}")
+            msg     = ( f"persons id = {a_id}")
+            self.append_msg( msg, )
 
         else:
-            msg    = f"Record not found! {a_id = }"
-            print( msg )
+            msg    = ( f"Record not found! {a_id = }" )
+            self.append_msg( msg, )
 
 
     # -----------------------
@@ -408,7 +430,7 @@ class QSqlTableModelTab( QWidget ):
 
 
         """
-        print_func_header( "clear experimenting with methods persons_model" )
+        self.append_function_msg( "clear experimenting with methods persons_model" )
         # like this the best
         # try a know bad select
         model       = self.persons_model
@@ -421,7 +443,7 @@ class QSqlTableModelTab( QWidget ):
         """
         !!What it says
         """
-        print_func_header( "save" )
+        self.append_function_msg( "save" )
 
     # # ------------------------
     # def print_data(self):
@@ -440,7 +462,7 @@ class QSqlTableModelTab( QWidget ):
     # ------------------------
     def select_all(self):
         """ """
-        print_func_header( "select_all" )
+        self.append_function_msg( "select_all" )
 
         self.persons_model.setFilter( "" )
         self.persons_model.select()  # Load the data into the model
@@ -448,10 +470,37 @@ class QSqlTableModelTab( QWidget ):
         self.phone_model.setFilter( "" )
         self.phone_model.select()
 
+
+
+    # ------------------------------------
+    def mutate_0( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_0" )
+
+        msg    = "so far not implemented "
+        self.append_msg( msg, clear = False )
+
+        self.append_msg( "mutate_0 done" )
+
+    # ------------------------------------
+    def mutate_1( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_1" )
+
+        msg    = "so far not implemented "
+        self.append_msg( msg, clear = False )
+
+        self.append_msg( "mutate_1 done" )
+
+
     # ------------------------
     def inspect(self):
         """ """
-        print_func_header( "inspect" )
+        self.append_function_msg( "inspect" )
 
         # locals for inspection
         my_tab_widget       = self
@@ -470,7 +519,7 @@ class QSqlTableModelTab( QWidget ):
         """
         keep this in each object so user breaks into that object
         """
-        print_func_header( "breakpoint" )
+        self.append_function_msg( "breakpoint" )
 
         breakpoint()
 

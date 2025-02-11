@@ -169,7 +169,6 @@ def show_parameters( ):
     """
     what it says,
     """
-
        # display_parms   = DisplayParameters( None ) # parent = self
     dialog     = DisplayParameters( parent = main_window  )
     if dialog.exec_() == QDialog.Accepted:

@@ -163,47 +163,6 @@ class TabBase( QWidget ) :
         row_layout.addWidget( widget,   )
 
     # -------------------------------
-    def _build_gui_widgetsssss(self, layout  ):
-        """
-        layouts
-            a vbox for main layout
-            h_box for or each row of widgets
-        """
-        # ---- new row
-        row_layout    = QHBoxLayout(   )
-        layout.addLayout( row_layout,  )
-
-        # widget    =  self.view
-        # row_layout.addWidget( widget,   )
-
-        # # ---- new row,
-        # row_layout = QHBoxLayout(   )
-        # layout.addLayout( row_layout,  )
-
-        # ---- PB
-        widget = QPushButton("select_all\n")
-        #widget.clicked.connect( self.select_all  )
-        row_layout.addWidget( widget,   )
-
-
-        # ---- "
-        widget = QPushButton("select_with_where\n" )
-        #widget.clicked.connect( self.select_with_where   )
-        row_layout.addWidget( widget,   )
-
-
-
-        # ---- self.inspect
-        widget = QPushButton("inspect\n")
-        #widget.clicked.connect( self.inspect    )
-        row_layout.addWidget( widget,   )
-
-        # ---- PB self.breakpoint
-        widget = QPushButton("breakpoint\n")
-        #widget.clicked.connect( self.breakpoint    )
-        row_layout.addWidget( widget,   )
-
-    # -------------------------------
     def _build_gui_bot(self, layout  ):
         """
         make the bottom of the gui, mostly the large
@@ -221,24 +180,17 @@ class TabBase( QWidget ) :
         #widget.clicked.connect( self.load    )
         row_layout.addWidget( widget,   )
 
-
     # ------------------------------------
     def mutate( self ):
         """
         read it
 
         """
-        # print_func_header( "mutate" )
-
-        # self.append_function_msg( "mutate" )
-
         max_ix          = len( self.mutate_dict)
         self.mutate_dict[ self.mutate_ix ]()
         self.mutate_ix   += 1
         if self.mutate_ix >= max_ix:
             self.mutate_ix = 0
-
-
 
     #----------------------------
     def clear_msg( self,  ):
@@ -262,7 +214,6 @@ class TabBase( QWidget ) :
         self.msg_widget.append( msg )
         print( msg )
 
-
     #----------------------------
     def append_msg( self, msg, clear = False ):
         """
@@ -274,27 +225,4 @@ class TabBase( QWidget ) :
         self.msg_widget.append( msg )
         print( msg )
 
-    # # ------------------------
-    # def inspect(self):
-    #     """
-    #     the usual
-    #     """
-    #     print_func_header( "inspect" )
-
-    #     self_model         = self.model
-    #     self_view     = self.view
-
-    #     wat_inspector.go(
-    #          msg            = "locals for model and view",
-    #          a_locals       = locals(),
-    #          a_globals      = globals(), )
-
-    # # ------------------------
-    # def breakpoint(self):
-    #     """
-    #     each tab gets its own function so we break in that
-    #     tabs code
-    #     """
-    #     print_func_header( "breakpoint" )
-
-    #     breakpoint()
+# ---- eof

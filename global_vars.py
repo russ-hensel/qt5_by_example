@@ -58,7 +58,6 @@ def set_sample_db_obj( obj ):
     print_vars()
 
 
-
 def set_tab_db( db ):
     """
     global_vars.TAB_DB  =
@@ -100,7 +99,7 @@ def print_vars(    ):
 
     return     # to silence this use return
 
-    print( "qt_by_example   vars now")
+    print( "qt_by_example  global_vars  vars now")
     print( f"{TAB_DB = }")
     print( f"{CONTROLLER = }")
     print( f"{TAB_DB_BUILDER = }")

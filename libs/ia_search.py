@@ -35,7 +35,7 @@ import ia_parameters
 
 #port wat_inspector
 
-VERBOSE    = True
+VERBOSE    = False
 # ---- ---- local imports
 #print_func_header  = uft.print_func_header
 
@@ -86,6 +86,8 @@ class IaSearch():
                     # not .stem or .name whic may be needed later path not string
 
             file_path_list      = file_path_list + i_file_path_list
+        msg      =  f"find_ia_files {VERBOSE = }"
+        print( msg )
         for ix, i_file_path in enumerate( file_path_list ):
             if  VERBOSE is True:
                print( ix, i_file_path)
@@ -105,7 +107,7 @@ class IaSearch():
 
         key   = item[ "sort_order:" ]
         key   = -int( key )
-        print( key )
+        print( f"IaSearch get_key {key = }" )
         return key
 
     #------------
@@ -122,7 +124,7 @@ class IaSearch():
 
         file_data_list.sort(  key = self.get_key )
 
-        print( file_data_list )
+        #rint( file_data_list )
         self.file_data_list    = file_data_list
 
     #------------
@@ -220,14 +222,11 @@ class IaSearch():
 
         a_file.close()
 
-        print( f"{file_data = }")
+        #rint( f"{file_data = }")
         if file_data[ "application:"] != "info_about":
             return None
 
         return file_data
-
-            #rint(f"ID: {a_id},  {module = },   {a_class = }")
-
 
 
 # ---- eof

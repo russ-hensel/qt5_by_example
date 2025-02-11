@@ -127,11 +127,9 @@ import tab_base
 # ---- end imports
 
 
-
 basedir = os.path.dirname(__file__)
 
 tick = QImage(os.path.join("tick.png"))
-
 
 
 # Color scale, which is taken from colorbrewer2.org.
@@ -250,7 +248,7 @@ class Fitz_23_C_Tab( tab_base.TabBase ) :
         row_layout.addWidget( widget,   )
 
     # -------------------------------
-    def _build_model(self,   ):
+    def _build_modelxx(self,   ):
         """        print_func_header(
         and the view
         """
@@ -426,7 +424,7 @@ class Fitz_23_C_Tab( tab_base.TabBase ) :
         """
         the usual
         """
-        print_func_header( "inspect" )
+        self.append_function_msg( "inspect" )
 
         self_model         = self.model
         self_view     = self.view
@@ -442,6 +440,6 @@ class Fitz_23_C_Tab( tab_base.TabBase ) :
         each tab gets its own function so we break in that
         tabs code
         """
-        print_func_header( "breakpoint" )
+        self.append_function_msg( "breakpoint" )
 
         breakpoint()

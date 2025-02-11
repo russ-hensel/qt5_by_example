@@ -119,7 +119,6 @@ class DataMapperTab( tab_base.TabBase  ):
         # self.mutate_dict[4]    = self.mutate_4
 
 
-
         self._build_gui()
 
 
@@ -152,7 +151,7 @@ class DataMapperTab( tab_base.TabBase  ):
 
         # ----
         self.submit_button = QPushButton('select')
-        self.submit_button.clicked.connect(self.submit_changes)
+        self.submit_button.clicked.connect( self.select )
         button_layout.addWidget(self.submit_button)
 
         # ----
@@ -190,6 +189,14 @@ class DataMapperTab( tab_base.TabBase  ):
         # ---- new row, standard buttons
         button_layout = QHBoxLayout(   )
         layout.addLayout( button_layout,  )
+
+
+        # ---- mutate
+        widget = QPushButton("mutate\n")
+        self.button_ex_1         = widget
+        widget.clicked.connect( lambda: self.mutate( ) )
+        button_layout.addWidget( widget )
+
 
         # ---- PB inspect
         widget = QPushButton("inspect\n")
@@ -245,6 +252,7 @@ class DataMapperTab( tab_base.TabBase  ):
             self.append_msg( "Changes submitted successfully!")
         else:
             self.append_msg( f"Error submitting changes: {self.model.lastError().text()}")
+        self.append_msg( "submit_changes done" )
 
     # -----------------------------
     def goto_next(self):
@@ -253,7 +261,7 @@ class DataMapperTab( tab_base.TabBase  ):
         """
         self.append_function_msg( "goto_next" )
         self.append_msg( "no implementation here " )
-
+        self.append_msg( "xxx_0 done" )
 
     def build_tab(self,   ):
         """
@@ -268,7 +276,7 @@ class DataMapperTab( tab_base.TabBase  ):
         self.row_index += 1
         self.mapper.setCurrentIndex( self.row_index )
         print( f"{self.row_index = }")
-
+        self.append_msg( "xxx_0 done" )
     # -----------------------------
     def goto_prior(self):
         """
@@ -278,12 +286,29 @@ class DataMapperTab( tab_base.TabBase  ):
 
         self.row_index -= 1
         self.mapper.setCurrentIndex( self.row_index )
-        print( f"{self.row_index = }")
+        msg    = ( f"{self.row_index = }")
+        self.append_msg( msg,  )
+
+        self.append_msg( "goto_prior done" )
+
+
 
     #-----------------------------------------------
     def create_tab_connection( self ):
         # Setup a connection to an SQLite database (for example)
         pass
+
+    # ------------------------------------
+    def select( self ):
+        """
+        read it
+        """
+        self.append_function_msg( "select" )
+
+        msg    = "so far not implemented "
+        self.append_msg( msg,  )
+        self.append_msg( "select done" )
+
 
     # ------------------------------------
     def mutate_0( self ):
@@ -294,6 +319,7 @@ class DataMapperTab( tab_base.TabBase  ):
 
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
+        self.append_msg( "mutate_0 done" )
 
     # ------------------------------------
     def mutate_1( self ):
@@ -304,7 +330,7 @@ class DataMapperTab( tab_base.TabBase  ):
 
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
-
+        self.append_msg( "xxx_0 done" )
     # ------------------------
     def inspect(self):
         """
@@ -317,7 +343,7 @@ class DataMapperTab( tab_base.TabBase  ):
              msg            = "tbd",
              a_locals       = locals(),
              a_globals      = globals(), )
-
+        self.append_msg( "xxx_0 done" )
     # ------------------------
     def breakpoint(self):
         """
@@ -327,6 +353,6 @@ class DataMapperTab( tab_base.TabBase  ):
         self.append_function_msg(  "breakpoint" )
 
         breakpoint()
-
+        self.append_msg( "xxx_0 done" )
 
 # ---- eof

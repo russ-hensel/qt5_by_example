@@ -123,7 +123,7 @@ import tab_base
         self.append_function_msg( "mutate_0" )
 
         msg    = "so far not implemented "
-        self.append_msg( msg, clear = False )
+        self.append_msg( msg,   )
 
         self.append_msg( "mutate_0 done" )
 
@@ -135,7 +135,7 @@ import tab_base
         self.append_function_msg( "mutate_1" )
 
         msg    = "so far not implemented "
-        self.append_msg( msg, clear = False )
+        self.append_msg( msg,  )
 
         self.append_msg( "mutate_1 done" )
 

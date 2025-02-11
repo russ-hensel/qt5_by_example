@@ -172,7 +172,9 @@ class Search_Tab( QWidget ) :
         model               = QSqlTableModel( self, db )
         self.list_model     = model
 
+
         model.setTable( "tabs" )
+        model.setFilter( "id = -99" )  # afte set table to be effiective
 
         model.setEditStrategy( QSqlTableModel.OnManualSubmit) # = never
 
@@ -183,7 +185,6 @@ class Search_Tab( QWidget ) :
         view.setSelectionBehavior( QTableView.SelectRows )
         view.setModel( model )
         view.setSortingEnabled( True )
-
         row_layout.addWidget( view )
 
         view.clicked.connect( self.open_tab_select )
@@ -227,6 +228,8 @@ class Search_Tab( QWidget ) :
         # Stretch columns to fit	QHeaderView.Stretch
 
 
+
+
     # ------------------------
     def widget_list_clicked( self, item ):
         """
@@ -262,7 +265,7 @@ class Search_Tab( QWidget ) :
         """
         model                           = self.list_model
 
-        query                           = QSqlQuery( QSqlDatabase.database( "tab_db" )  ) # ) or use the global ??
+        query                           = QSqlQuery( QSqlDatabase.database( "tab_db" ) )
         query_builder                   = qt_sql_query.QueryBuilder( query, print_it = False, )
 
         kw_table_name                   = "tabs_key_word"
@@ -272,9 +275,6 @@ class Search_Tab( QWidget ) :
         a_key_word_processor            = key_words.KeyWords( kw_table_name, global_vars.TAB_DB )
         query_builder.table_name        = "tabs"
         query_builder.column_list       = column_list
-
-        # ---- add criteria
-        #criteria_dict                   = self.get_criteria()
 
         # ---- key words
         criteria_key_words              = self.key_word_widget.text()
@@ -293,12 +293,11 @@ class Search_Tab( QWidget ) :
 
             query_builder.add_to_where( f" key_word IN {criteria_key_words}" , [] )
 
-
         query_builder.prepare_and_bind()
 
         # msg      = f"{query_builder = }"
         # print( msg )
-
+        model.setFilter( "" )
         self.query_exec_model( query,
                                model,
                                msg = "tab criteria_select" )
@@ -359,18 +358,13 @@ class Search_Tab( QWidget ) :
                 key_words       TEXT
         """
 
-        row            = index.row()
-
-        model          = self.list_model
-
-        # Get the column index for the column name
+        row         = index.row()
+        model       = self.list_model
         column      = model.fieldIndex( "tab_title" )
         model_index = model.index( row, column)
         tab_title   = model.data( model_index ).strip()  # do strip before add to db
 
         column      = model.fieldIndex( "module" )     # file name less .py
-                    # /mnt/WIN_D/Russ/0000/python00/python3/_projects/stuffdb/tab_custom_widgets
-                    # i want the stem so rsplit on /
 
         model_index = model.index( row, column)
         module      = model.data( model_index ).strip()
@@ -387,8 +381,7 @@ class Search_Tab( QWidget ) :
         column      = model.fieldIndex( "widgets" )
         model_index = model.index( row, column)
         widgets     = model.data( model_index ).strip()
-        print( f"{widgets} ====================================================")
-
+        #rint( f"open_tab_select: {widgets} ====================================================")
 
         ix          = global_vars.CONTROLLER.switch_to_tab_by_class_name( a_class )
         if ix >= 0:
