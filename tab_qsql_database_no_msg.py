@@ -10,8 +10,8 @@ self.help_file_name     =  "qsql_database_tab.txt"
 KEY_WORDS:      sql database insert define schema query create db select cursor bind error last join table zzz
 CLASS_NAME:     QSqlDatabaseTab
 WIDGETS:        QSqlDatabase QSqlQuery
-STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
-TAB_TITLE:      QSqlDatabasexxx QSqlQuery
+STATUS:         works
+TAB_TITLE:      QSqlDatabase QSqlQuery
 
 
 """
@@ -86,17 +86,18 @@ import qt_table_model
 import utils_for_tabs as uft
 import wat_inspector
 import global_vars
-import tab_base
-
 # ---- imports neq qt
 
 # ---- end imports
 
-THIS_TAB   = None  # assigned below
+
 
 INDENT          = uft.INDENT
 BEGIN_MARK_1    = uft.BEGIN_MARK_1
 BEGIN_MARK_2    = uft.BEGIN_MARK_2
+
+
+print_func_header =  uft.print_func_header
 
 
 # -----------------------------
@@ -131,10 +132,8 @@ class SampleDB():
         The usual
         """
         self.db             = None
-        self.function_clear = True
         # self.sample_db      = None  # same as above
-
-
+        self.reset()
         #global_vars.SAMPLE_DB_OBJ  = self
         global_vars.set_sample_db_obj( self )
 
@@ -157,13 +156,18 @@ class SampleDB():
 
         db_file_name    = parameters.PARAMETERS.db_file_name
         if    db_file_name !=  ':memory:':
+            # delete for a fresh start
             delete_db_file( db_file_name )
 
         # !! may need parameters particurlarry for the db type
         db              = QSqlDatabase.addDatabase( parameters.PARAMETERS.db_type, db_file_name )
         db.setDatabaseName( db_file_name )   # is this really the file name
 
+        # next kills it ?  --- now seems ok may still be issues
+        #self.db         = QSqlDatabase.database( "qt_example_db" )
         self.db         = db
+        print( "!! globalize in some way ")
+        #self.db         = db
 
         global_vars.set_ex_db( db )
 
@@ -177,7 +181,7 @@ class SampleDB():
         """
         Create  tables.and populate with a bit of data
         """
-        THIS_TAB.append_function_msg( "create_populate_tables", self.function_clear )
+        print_func_header( "create_populate_tables" )
 
         self.create_persons_table()
         self.populate_persons_table()
@@ -198,7 +202,7 @@ class SampleDB():
         """
         Create people and people_phones tables
         ."""
-        THIS_TAB.append_function_msg( "create_persons_table", self.function_clear )
+        print_func_header( "create_persons_table" )
 
         query   = QSqlQuery( self.db )
 
@@ -224,7 +228,7 @@ class SampleDB():
         query.prepare( f"INSERT INTO {self.table_name}"
                         "  (id, key_word ) VALUES ( :id, :key_word )")
         ."""
-        THIS_TAB.append_function_msg( "create_persons_key_words_table", self.function_clear )
+        print_func_header( "create_persons_key_words_table" )
 
         query   = QSqlQuery( self.db )
 
@@ -250,7 +254,7 @@ class SampleDB():
         """
         Populate the people table with sample data.
         """
-        THIS_TAB.append_function_msg( "populate_persons_table" , self.function_clear )
+        print_func_header( "populate_persons_table" )
 
         if False:
             # a bit of straight sql lite -- this does not work for in memory?
@@ -348,7 +352,7 @@ class SampleDB():
         """
         Create persons_phones table.
         """
-        THIS_TAB.append_function_msg( "create_persons_phones_table", self.function_clear )
+        print_func_header( "create_persons_phones_table" )
 
         query = QSqlQuery( self.db )
 
@@ -363,14 +367,12 @@ class SampleDB():
         """
         query.exec( sql )
 
-        THIS_TAB.append_msg( "<-- done" )
-
     #------------
     def populate_persons_phones_table( self, ):
         """
         Populate the persons_phones table.
         """
-        THIS_TAB.append_function_msg( "populate_persons_phones_table", self.function_clear )
+        print_func_header( "populate_persons_phones_table" )
 
         query = QSqlQuery( self.db )
 
@@ -400,7 +402,6 @@ class SampleDB():
             query.addBindValue( zone )
             query.exec_()
 
-        THIS_TAB.append_msg( "<-- done" )
     #------------
     def create_book_club_table( self, ):
         """
@@ -408,7 +409,7 @@ class SampleDB():
         a many to many relationship based on persons and book_club
         """
         what    = "create_book_club_table"
-        THIS_TAB.append_function_msg( what, self.function_clear )
+        print( f"{BEGIN_MARK_1}{what}{BEGIN_MARK_2}")
 
         query   = QSqlQuery( self.db )
 
@@ -421,14 +422,13 @@ class SampleDB():
 
         query.exec_( sql )
 
-        THIS_TAB.append_msg( "<-- done" )
     #------------
     def populate_book_club_table( self, ):
         """
         Populate the book_club table
         """
         what    = "populate_book_club_table"
-        THIS_TAB.append_function_msg( what, self.function_clear )
+        print( f"{BEGIN_MARK_1}{what}{BEGIN_MARK_2}")
 
         query = QSqlQuery( self.db )
 
@@ -453,13 +453,12 @@ class SampleDB():
 
             query.exec_()
 
-        THIS_TAB.append_msg( "<-- done" )
     #------------
     def create_persons_book_club_table( self, ):
         """
         Create  table -- what it says
         """
-        self.append_function_msg( "create_persons_book_club_table", self.function_clear )
+        print_func_header( "create_persons_book_club_table" )
 
         query = QSqlQuery( self.db )
 
@@ -471,8 +470,6 @@ class SampleDB():
               ) """
 
         query.exec_( sql )
-
-        THIS_TAB.append_msg( "<--- done" )
 
     #------------
     def populate_persons_book_club_data( self, ):
@@ -509,15 +506,15 @@ class SampleDB():
         """
         Print out the table
         """
-        THIS_TAB.append_function_msg( "query_print_persons", self.function_clear )
+        print_func_header( "query_print_persons" )
 
         query           = QSqlQuery( self.db )
 
-        THIS_TAB.append_msg("People:")
+        print("People:")
 
         # Execute the query
         if not query.exec_("SELECT id, name, age, family_relation FROM persons"):  # Check if execution failed
-            THIS_TAB.append_msg("Error executing query:", query.lastError().text())
+            print("Error executing query:", query.lastError().text())
         else:
             pass
             #rint("Query executed successfully.")
@@ -527,15 +524,14 @@ class SampleDB():
             name                = query.value(1)
             age                 = query.value(2)
             family_relation     = query.value(3)
-            THIS_TAB.append_msg(f"ID: {person_id}, Name: {name}, Age: {age} {family_relation = }")
+            print(f"ID: {person_id}, Name: {name}, Age: {age} {family_relation = }")
 
-        THIS_TAB.append_msg( "<-- done" )
     #------------
     def query_persons_key_words( self, ):
         """
         Print out the table
         """
-        THIS_TAB.append_function_msg( "query_persons_key_words", self.function_clear )
+        print_func_header( "query_persons_key_words" )
 
         sql     = """
             SELECT
@@ -547,23 +543,21 @@ class SampleDB():
 
         query           = QSqlQuery( self.db )
 
-        THIS_TAB.append_msg("persons_key_words table:" )
+        print("persons_key_words table:")
 
         self.query_exec_error_check( query, sql )
 
         while query.next():
             a_id        = query.value(0)
             name        = query.value(1)
-            THIS_TAB.append_msg(f"ID: {a_id = }  { name = } ")
-
-        THIS_TAB.append_msg( "<-- done" )
+            print(f"ID: {a_id = }  { name = } ")
 
     #------------
     def query_book_club( self, ):
         """
         Print out the table
         """
-        THIS_TAB.append_function_msg( "query_book_club", self.function_clear  )
+        print_func_header( "query_book_club" )
 
         sql     = """
             SELECT
@@ -575,18 +569,17 @@ class SampleDB():
 
         query           = QSqlQuery( self.db )
 
-        THIS_TAB.append_msg( "book_club table:" )
+        print("book_club table:")
 
         query.exec_( sql )
+
 
         while query.next():
             a_id        = query.value(0)
             name        = query.value(1)
             frequency   = query.value(2)
 
-            THIS_TAB.append_msg(f"ID: {a_id = }  { name = }  {frequency = }  ")
-
-        THIS_TAB.append_msg( "<-- done" )
+            print(f"ID: {a_id = }  { name = }  {frequency = }  ")
 
     #------------
     def query_print_phone( self, ):
@@ -594,7 +587,7 @@ class SampleDB():
         Print out the table
         """
         what    = "query_print_phone"
-        THIS_TAB.append_function_msg( what, self.function_clear )
+        print( f"{BEGIN_MARK_1}{what}{BEGIN_MARK_2}")
 
         query           = QSqlQuery( self.db )
 
@@ -603,14 +596,13 @@ class SampleDB():
 
         self.query_exec_error_check( query, sql )
 
+
         while query.next():
             a_id             = query.value(0)
             person_id        = query.value(1)
             phone_number     = query.value(2)
             zone             = query.value(3)
-        THIS_TAB.append_msg( f"ID: {a_id = }  { person_id = }  {phone_number = }  {zone = }")
-
-        THIS_TAB.append_msg( "<-- done" )
+            print(f"ID: {a_id = }  { person_id = }  {phone_number = }  {zone = }")
 
     #------------
     def query_print_person_phone( self, ):
@@ -618,11 +610,11 @@ class SampleDB():
         Print a join of people and people_phones
         """
         what    = "query_print_people_phone"
-        THIS_TAB.append_function_msg( what, self.function_clear )
+        print( f"{BEGIN_MARK_1}{what}{BEGIN_MARK_2}")
 
         query           = QSqlQuery( self.db )
 
-        THIS_TAB.append_msg("\nPeople and their phone numbers: join of people and people_phones")
+        print("\nPeople and their phone numbers: join of people and people_phones")
 
         sql = ("""
             SELECT persons.name, persons_phones.phone_number
@@ -636,9 +628,7 @@ class SampleDB():
         while query.next():
             name            = query.value(0)
             phone_number    = query.value(1)
-            THIS_TAB.append_msg(f"Name: {name}, Phone: {phone_number}")
-
-        THIS_TAB.append_msg( "<-- done" )
+            print(f"Name: {name}, Phone: {phone_number}")
 
     def query_exec_error_check( self, a_query, sql = None ):
         """
@@ -652,8 +642,8 @@ class SampleDB():
             result  = a_query.exec_( sql )
 
         if not result:
-            THIS_TAB.append_msg( "query_exec_error_check Error:", a_query.lastError().text())
-            THIS_TAB.append_msg( f"{sql = } ", )
+            print( "query_exec_error_check Error:", a_query.lastError().text())
+            print( f"{sql = } ", )
         else:
             pass
             #rint("Query executed successfully.")
@@ -682,7 +672,7 @@ class KeyGen():
         return self.keys[ self.ix_keys ]
 
 #-----------------------------------------------
-class QSqlDatabaseTab( tab_base.TabBase ):
+class QSqlDatabaseTab( QWidget ):
     """
     for the basic database object
     SampleDB()     QSqlDatabase    query
@@ -692,33 +682,27 @@ class QSqlDatabaseTab( tab_base.TabBase ):
         the usual
         """
         super().__init__( )
+        self.help_file_name     =  "qsql_database_tab.txt"
+        self.sample_db   = SampleDB()
+        self.build_tab()
 
-        global THIS_TAB
-        THIS_TAB            = self
 
-        self.module_file    = __file__
-        self.sample_db      = SampleDB()
-
-        self._build_gui()
-        self.sample_db.reset()
-
-    #----------------------------
-    def _build_gui_widgets(self, main_layout  ):
+    #-----------------------------------------------
+    def build_tab( self, ):
         """
-        the usual, build the gui with the widgets of interest
-        and the buttons for examples
+        what it says
         """
-        layout              = QVBoxLayout(   )
+        tab_page      = self
+        layout        = QVBoxLayout( tab_page )
 
-        main_layout.addLayout( layout )
-        button_layout       = QHBoxLayout(   )
-
+        button_layout = QHBoxLayout(   )
         layout.addLayout( button_layout )
 
         # ---- PB rebuild_db
         widget              = QPushButton( "rebuild_db\n ")
         self.button_ex_1    = widget
         widget.clicked.connect( self.rebuild_db )
+
         button_layout.addWidget( widget )
 
         # ---- PB print_db
@@ -765,34 +749,28 @@ class QSqlDatabaseTab( tab_base.TabBase ):
     # ------------------------
     def print_db(self):
         """ """
-        self.append_function_msg( "print_db" )
-        self.sample_db.function_clear   = False
+        print_func_header( "print_db" )
 
         self.sample_db.query_print_persons()
         self.sample_db.query_persons_key_words()
         self.sample_db.query_print_phone()
+
         self.sample_db.query_book_club()
         self.sample_db.query_print_person_phone()
-
-        self.sample_db.function_clear   = True
-
-        self.append_msg( "<<<<<<<-------- done" )
 
     # ------------------------
     def rebuild_db(self):
         """ """
-        self.append_function_msg( "rebuild_db",   )
+        print_func_header( "rebuild_db" )
 
         self.sample_db.reset()
-
-        self.append_msg( "<<-- done" )
 
     #-----------------------------------------------
     def insert_more_data( self ):
         """
         what it says, data with stars
         """
-        self.append_function_msg( "insert_more_data" )
+        print_func_header( "insert_more_data" )
 
         db      = self.sample_db.db
 
@@ -807,7 +785,7 @@ class QSqlDatabaseTab( tab_base.TabBase ):
 
         for name, frequency in table_data:
             # this only one way to bind
-            self.append_msg( f"insert {name} {frequency}")
+            print( f"insert {name} {frequency}")
 
             sql     = """INSERT INTO book_club (
                 name,
@@ -818,19 +796,17 @@ class QSqlDatabaseTab( tab_base.TabBase ):
             query.prepare( sql )
 
             if not query.prepare(sql):
-                self.append_msg( f"Prepare failed: {query.lastError().text()}")
+                print(f"Prepare failed: {query.lastError().text()}")
                 continue
 
             query.addBindValue( name )
             query.addBindValue( frequency )
 
             if not query.exec_():
-                self.append_function_msg(f"Execution failed: {query.lastError().text()}")
+                print(f"Execution failed: {query.lastError().text()}")
             else:
                 pass
                 #print("Insert successful.")
-
-        self.append_msg( "<<-- done" )
 
     #-----------------------------------------------
     def delete_data( self ):
@@ -844,7 +820,7 @@ class QSqlDatabaseTab( tab_base.TabBase ):
          could you give me the sql to delete all records where name begins with "*"
          give the code for running with QSqlQuery using a bind variable for the where clause
         """
-        self.append_function_msg( "delete_data" )
+        print_func_header( "delete_data" )
 
         db      = self.sample_db.db
 
@@ -854,26 +830,25 @@ class QSqlDatabaseTab( tab_base.TabBase ):
         sql     = "DELETE FROM book_club WHERE name LIKE ?"
 
         if not query.prepare(sql):
-                self.append_msg( f"Prepare failed: {query.lastError().text()}")
+            print(f"Prepare failed: {query.lastError().text()}")
 
         else:
             query.addBindValue("*%")
 
             if not query.exec_():
-                self.append_msg( f"Execution failed: {query.lastError().text()}")
+                print(f"Execution failed: {query.lastError().text()}")
             else:
-                self.append_msg( "Records deleted successfully.")
-
-        self.append_msg( "<<-- done" )
+                print("Records deleted successfully.")
 
     #-----------------------------------------------
     def update_data( self ):
         """
         what it says
         """
-        self.append_function_msg( "update_data" )
+        print_func_header( "update_data" )
 
         db      = self.sample_db.db
+
 
         print( "QSqlQuery can be used without specifying the db then it uses a default use with care " )
         query   = QSqlQuery( db )
@@ -884,32 +859,23 @@ class QSqlDatabaseTab( tab_base.TabBase ):
             WHERE name LIKE :pattern;
             """
         if not query.prepare(sql):
-                self.append_msg( f"Prepare failed: {query.lastError().text()}")
+            print(f"Prepare failed: {query.lastError().text()}")
 
         else:
             query.bindValue(":new_name", "stars")
             query.bindValue(":pattern", "*%")
 
             if not query.exec_():
-                self.append_msg( f"Execution failed: {query.lastError().text()}")
+                print(f"Execution failed: {query.lastError().text()}")
 
             else:
                 rows_affected = query.numRowsAffected()
-                self.append_msg( f"Records udated successfully. {rows_affected = } ")
-
-        self.append_msg( "<<-- done" )
-        self.mutate_0
-
-    # ------------------------
-    def mutate_0(self):
-        """ """
-        pass
-
+                print( f"Records udated successfully. {rows_affected = } ")
 
     # ------------------------
     def inspect(self):
         """ """
-        self.append_function_msg( "inspect" )
+        print_func_header( "inspect" )
         # make some locals for inspection
         the_example_db_obj    = self.sample_db
         # parent_window = self.parent( ).parent( ).parent().parent()
@@ -921,15 +887,11 @@ class QSqlDatabaseTab( tab_base.TabBase ):
              a_locals       = locals(),
              a_globals      = globals(), )
 
-        self.append_msg( "<<-- done" )
-
     # ------------------------
     def breakpoint(self):
         """ """
-        self.append_function_msg( "breakpoint" )
+        print_func_header( "breakpoint" )
 
         breakpoint()
-
-        self.append_msg( "<<-- done" )
 
 # ---- eof

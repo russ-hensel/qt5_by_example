@@ -6,7 +6,7 @@ Purpose:
     sometimes included with applications but not used
         as this make my source code management easier.
 
-
+this needs work including call to super
 
 try
 
@@ -30,8 +30,9 @@ raise app_exceptions.DBOjectException( why = msg )
 
 """
 
-import traceback
 import sys
+import traceback
+
 
 # ---- custom exceptions
 class ApplicationError( Exception ):
@@ -43,8 +44,8 @@ class ApplicationError( Exception ):
     def __init__(self, why, errors = "not given"):
 
         # Call the base class constructor with the parameters it needs
-        super( ).__init__(   )
-        self.why    = why
+        super( ).__init__( why  )
+        #self.why    = why
         # Now for your custom code...
         self.errors = errors
 
@@ -122,3 +123,74 @@ def get_execpt_traceback( print_flag = True ):
 
     return ret_string
 
+
+# ---- test move me ------------------------
+
+
+
+# import traceback
+
+
+
+
+
+try:
+
+    msg         = f"ApplicationError msg { 1 = }"
+    raise ApplicationError( 'spam', 'eggs')
+
+except ApplicationError as an_except:   #  or( E1, E2 )
+
+    msg     = f">>{str( an_except ) = }<<"
+    print( msg )
+
+    # msg     = f"a_except         >>{an_except}<<  type  >>{type( an_except)}<<"
+    # print( msg )
+
+    # msg     = f"an_except.args   >>{an_except.args}<<"
+    # print( msg )
+
+    # s_trace = traceback.format_exc()
+    # msg     = f"format-exc       >>{s_trace}<<"
+    # print( msg )
+
+
+    #raise  # to reraise same
+# finally:
+#     msg     = f"in finally  {1}"
+#     print( msg )
+
+
+
+# try:
+
+#     msg         = f"xxxxx { 1 = }"
+#     raise ReturnToGui( 'spam', 'eggs')
+
+# except Exception as an_except:   #  or( E1, E2 )
+
+#     msg     = f">>{str( an_except) =}<<"
+#     print( msg )
+
+
+#     msg     = f"a_except         >>{an_except}<<  type  >>{type( an_except)}<<"
+#     print( msg )
+
+#     msg     = f"an_except.args   >>{an_except.args}<<"
+#     print( msg )
+
+#     s_trace = traceback.format_exc()
+#     msg     = f"format-exc       >>{s_trace}<<"
+#     print( msg )
+#     # AppGlobal.logger.error( msg )   #    AppGlobal.logger.debug( msg )
+
+#     #raise  # to reraise same
+# finally:
+#     msg     = f"in finally  {1}"
+#     print( msg )
+
+
+
+
+
+# ---- eof

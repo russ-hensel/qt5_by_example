@@ -9,11 +9,12 @@ Created on Sun Jun 30 16:13:31 2024
 # ---- imports
 
 
-import re
 import logging
+import re
+import time
 
-
-
+# ---- local imports
+import string_util
 from PyQt5 import QtGui
 from PyQt5.QtCore import (QDate,
                           QModelIndex,
@@ -29,7 +30,6 @@ from PyQt5.QtSql import (QSqlDatabase,
                          QSqlRelationalDelegate,
                          QSqlRelationalTableModel,
                          QSqlTableModel)
-
 from PyQt5.QtWidgets import (QAbstractItemView,
                              QAction,
                              QApplication,
@@ -64,11 +64,11 @@ from PyQt5.QtWidgets import (QAbstractItemView,
                              QVBoxLayout,
                              QWidget)
 
-# ---- local imports
-import string_util
 import qsql_utils
 
-VERBOSE    = False
+VERBOSE    = False   # phase out
+LOG_LEVEL  = 5            # higher is more ??
+
 
 # ------------------------------------------
 class KeyWords(   ):
@@ -173,11 +173,39 @@ class KeyWords(   ):
         #debug_key_words         = self.new_key_words
 
     #----------------------------------
+    def delete_all( self, table_id  ):
+        """
+        delete all the records for a given table id
+
+        """
+        query   = QSqlQuery( self.db )
+
+        sql     = "DELETE FROM stuff_key_word WHERE id = :id_value"
+        #print(f"Executing: {sql}")
+
+        query.prepare(sql)
+        query.bindValue(":id_value", table_id )
+
+        # this may be a repeat that we want to elimiante
+        # Execute the DELETE statement
+        if not query.exec_():
+            error = query.lastError()
+            msg   = (f"Error deleting id {table_id}: {error.text()}")
+            logging.error( msg )
+
+        else:
+            if VERBOSE:
+                debug_msg   = (f"Successfully deleted rows where table_id = {table_id}")
+                logging.log( LOG_LEVEL,  debug_msg, )
+
+    #----------------------------------
     def compute_add_delete( self, table_id  ):
         """
         process a string to key words for adds and deletes
-        and run the inserts and deletes
+        and run the inserts and deletes to the db
 
+        Returns
+            mutated db
         """
         #rint( self )
         self.key_words_for_delete       = self.old_key_words - self.new_key_words
@@ -204,7 +232,7 @@ class KeyWords(   ):
         Delete rows from a table where a column matches a value in the list.
         """
         debug_msg    = f"delete_rows for key words {table_id}   {words}"
-        logging.debug( debug_msg )
+        logging.log( LOG_LEVEL,  debug_msg, )
 
         #rint( self )
         query = QSqlQuery( self.db )
@@ -219,27 +247,32 @@ class KeyWords(   ):
             # Execute the DELETE statement
             if not query.exec_():
                 error = query.lastError()
-                print(f"Error deleting word {word}: {error.text()}")
+                msg   = (f"Error deleting word {word}: {error.text()}")
+                logging.error( msg )
 
             else:
                 if VERBOSE:
-                    print(f"Successfully deleted rows where word = {word}")
+                    debug_msg   = (f"Successfully deleted rows where word = {word}")
+                    logging.log( LOG_LEVEL,  debug_msg, )
 
     # --------------------------------------
     def insert_rows( self, table_id, words ):
         """
         Insert rows into a table where a column matches a value table_id, words
         """
-        debug_msg    = f"insert_rows for key words {table_id}   {words}"
-        logging.debug( debug_msg )
+        # debug_msg    = f"insert_rows for key words {table_id}   {words}"
+        # logging.log( LOG_LEVEL,  debug_msg, )
 
         query = QSqlQuery( self.db )
 
-        sql            = ( f"INSERT INTO {self.table_name}"
+        sql         = ( f"INSERT INTO {self.table_name}"
                            f"  (id, key_word ) VALUES ( :id, :key_word )")
 
+        debug_msg   = f"insert_rows for key words {table_id} {words} {sql}"
+        logging.log( LOG_LEVEL,  debug_msg, )
+
         # msg            = f"insert_rows sql = {sql}"
-        # print( msg )
+        #rint( msg )
         query.prepare( sql )
 
         # Insert each record
@@ -248,37 +281,56 @@ class KeyWords(   ):
             query.bindValue( ":key_word",  i_key_word )
 
             if not query.exec_():
-                print( f"Error inserting record {i_key_word}: {query.lastError().text()}" )
+                msg   = ( f"Error inserting record {i_key_word}: {query.lastError().text()}" )
+                logging.error( msg )
                 1/0
             else:
                 if VERBOSE:
                     print( f"Record {i_key_word} inserted successfully!" )
 
     # --------------------------------------
-    def split_on_caps_and_whitespace( self, a_string ):
+    def split_on_caps_and_whitespace( self, s ):
         """
-        chat says
-            chat_cammel_split.py
-        Returns:
-            split_words in a list
+        a result from deep seek
+        could use a cleanup
         """
-        # Split based on whitespace
-        words = re.split( r'\s+', a_string )
+        """
+        :param s: DESCRIPTION
+        :type s: TYPE
+        :return: DESCRIPTION
+        :rtype: TYPE
 
-        # Split based on embedded capitest_string capital letters
-        split_words = []
-        for word in words:
-            split_words.extend(re.findall(r'[a-z]+|[A-Z]+(?![a-z])|[A-Z][a-z]*', word))
+        """
+        # Step 0: Preprocess the string to replace punctuation with spaces
+        s = re.sub(r'[^\w\s]', ' ', s)
 
-        return split_words
+        # Step 1: Split on whitespace
+        parts = re.split(r'\s+', s)
+
+        # Step 2: Further split each part based on embedded capitals and numbers
+        result = []
+        for part in parts:
+            if part:  # Skip empty strings caused by multiple spaces
+                # Split on embedded capitals and numbers
+                sub_parts = re.findall(r'\d+|[A-Z]{2,}(?=[A-Z][a-z]|\d|\W|$)|[A-Z]?[a-z]+|[A-Z]{2,}', part)
+                result.extend(sub_parts)
+
+        return result
 
     # --------------------------------------
     def check_id_for_error ( self, id ):
         """
         what it says, bad way to use argument id
         new jan 20 does it work ?
+        think works, may be slow, insert timing
+        turn on off with parameters
 
+        think finds duplicates in key words that should not be there
+        we can redo the key word index in bulk with....
         """
+
+        perf_start   = time.perf_counter()
+
         is_ok       = True
         query       = QSqlQuery( self.db )
 
@@ -297,10 +349,18 @@ class KeyWords(   ):
             name        = query.value(1)
             frequency   = query.value(2)
 
-            print(f"ID: {a_id = }  { name = }  {frequency = }  ")
+            msg  = (f"ID: {a_id = }  { name = }  {frequency = }  ")
+            logging.debug( msg )
 
         if not is_ok:
-            1/0
+            msg  = (f"check_id_for_error think frequency should be one ID: {a_id = }  { name = }  {frequency = }  ")
+            logging.error( msg )
+
+        perf_end   = time.perf_counter()
+        delta_perf = perf_end - perf_start
+
+        msg          = f"check_id_for_error elapsed perf_counter { delta_perf }"
+        logging.info( msg )
 
     # --------------------------------------
     def __str__( self,   ):

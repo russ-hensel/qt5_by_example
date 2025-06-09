@@ -24,8 +24,8 @@ me                    = __file__
 
 if   hostname == "russ-ThinkPad-P72":
     src_root         = "/mnt/WIN_D/russ/0000/python00/python3"
-elif hostname == "russ-ThinkPad-P72":
-    src_root         = "/mnt/WIN_D/russ/0000/python00/python3"
+elif hostname == "fattony":
+    src_root         = "/media/russ/j_sg_bigcase/sync_py_3"
 else:
     src_root         = "/mnt/WIN_D/russ/0000/python00/python3"
 
@@ -45,7 +45,6 @@ ex_root          = f"{py3_root}/_examples"
 
 # least important at top
 sys.path.insert( 1, f"./libs" )                # libs for github repo
-sys.path.insert( 1, f"./tabs" )                # tab for github repo
 sys.path.insert( 1, f"{proj_root}/rshlib" )
 sys.path.insert( 1, f"{src_root}/_projects/rshlib/test/"  )
 sys.path.insert( 1, f"{src_root}/_projects/rshlib/rshlib_qt/" )
@@ -53,12 +52,17 @@ sys.path.insert( 1, f"{src_root}/_projects/rshlib/app_services/" )
 
 
 sys.path.insert( 1, f"{src_root}/_projects/rshlib/in_spect" )
-sys.path.insert( 1, f"{src_root}/_projects/rshlib/app_services" )
+
+sys.path.insert( 1, f"./tabs/basic_widgets" )
+sys.path.insert( 1, f"./tabs/book_fitz" )
+
+#sys.path.insert( 1, f"{src_root}/_projects/rshlib/app_services" )
 
 sys.path.insert( 1, f"{src_root}/_examples" )
 
 sys.path.insert( 1, f"{src_root}/_projects/stuffdb" )
-sys.path.insert( 1, f"{src_root}/_projects/stuffdb/qt_tabs" )
+#sys.path.insert( 1, f"{src_root}/_projects/stuffdb/qt_tabs" )
+sys.path.insert( 1, f"{src_root}/_projects/stuffdb/qt_tabs_new" )
 sys.path.insert( 1, f"{src_root}/_projects/qt5_by_example/tabs"  )
 # /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/
 
@@ -70,15 +74,18 @@ sys.path.insert( 1, f"{src_root}/_projects/qt5_by_example/info_about_src" )
 sys.path.insert( 1, f"{src_root}/_projects/qt5_by_example" )
 #sys.path.insert( 1, f"{src_root}/_projects/qt5_by_example" )
 
-
 # print( "your path has been adjusted fron qt5_by_example on theProf Mint from qt5_by_example" )
 # for i_path in sys.path:
 #     print( f"{i_path = }")
 
-print( "end your path has been adjusted " )
+print( "end your path has been adjusted by qt5_by_example" )
 
 pass   # for debug
-
+# comment in out
+if True:
+    print( "    path now:" )
+    for i_path in sys.path:
+        print( "        ", i_path )
 
 
 # --- eof

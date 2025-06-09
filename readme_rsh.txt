@@ -19,6 +19,13 @@ Change list newest at bottom
 
 
 
+        fixing custom edits/widget -- just to no exception this round
+        these are a bit of a mess
+
+        **   41  42  43 45  46 47  48
+        *!
+        !!    12   seems to be a mess, custom or not ?? skip for now
+
 
         !! bad display on auto select
         !* removed most prints, select still chatty quited it down
@@ -47,8 +54,6 @@ Change list newest at bottom
     ver_08
         why
             major additions checkpoint
-
-
 
     ver_07
         why

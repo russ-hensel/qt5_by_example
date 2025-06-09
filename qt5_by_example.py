@@ -1,32 +1,31 @@
 """
-
 an app that searches for a tab with
 example, running, code for qt in python
 
 
 """
-# ---- top/search
-""""
-    Search for the following in the code below:
 
-    See Also:
 
-    Links
+# --------------------
+if __name__ == "__main__":
+    #----- run the full app
+    import main
+# --------------------
 
-"""
 
 # ---- imports
 import logging
 import psutil
-import inspect
+
 import os
-import sqlite3 as lite
+import sys
+
 import functools
 import subprocess
-import sys
+#import sys
 from functools import partial
-from platform import python_version
-from subprocess import PIPE, STDOUT, Popen, run
+#from platform import python_version
+#from subprocess import PIPE, STDOUT, Popen, run
 
 #from app_global import AppGlobal
 from PyQt5 import QtGui
@@ -81,12 +80,11 @@ from PyQt5.QtWidgets import (QAbstractItemView,
                              QWidget)
 
 #  ---- local imports
-import adjust_path
+#import adjust_path
 import app_services
 import global_vars
 import index_and_search
 import parameters
-import qt_table_model
 
 import tab_qsql_database
 import tab_select_tab
@@ -95,8 +93,7 @@ import utils_for_tabs as uft
 import wat_inspector
 import show_parameters
 import tab_base
-import logging
-import app_logging
+import app_logging    # /mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/app_services/app_logging.py
 
 #logger   = logging.getLogger()
 
@@ -108,7 +105,7 @@ BEGIN_MARK_2    = uft.BEGIN_MARK_2
 
 print_func_header  = uft.print_func_header
 
-__VERSION__  = "ver_12 - 2025 02 06.0"
+__VERSION__  = "ver_12 - 2025 06 05.01"
 
 # ---- main window ===================================================================
 class Qt5ByExample( QMainWindow ):
@@ -124,12 +121,17 @@ class Qt5ByExample( QMainWindow ):
         self.parameters     = my_parameters
         uft.parameters      = my_parameters
         uft.main_window     = self
-        #app_services_obj    = app_services
 
         qt_xpos             = my_parameters.qt_xpos
         qt_ypos             = my_parameters.qt_ypos
         qt_width            = my_parameters.qt_width
         qt_height           = my_parameters.qt_height
+
+        # ---- tweak the path
+        for i_path in my_parameters.dir_for_tabs:
+            unsafe   = f'sys.path.insert( 1, "{i_path}" ) '
+            #rint( unsafe )
+            eval( unsafe,   globals(), locals()  )
 
         uft.TEXT_EDITOR     = my_parameters.text_editor
 
@@ -139,12 +141,8 @@ class Qt5ByExample( QMainWindow ):
 
         app_logging.init()
 
-        #self.config_logger()
-
         # next builds and populates the db, or may depending on refactor
         self.index_search    =  index_and_search.IndexSearch()
-
-        #self.test_init()
 
         self.tab_dict        = {}    # key class name, contents for now just index
                                      # {'QSqlDatabaseTab': 1, 'Dock_10_Tab': 2, 'Fitz_22_Tab': 2}
@@ -156,7 +154,6 @@ class Qt5ByExample( QMainWindow ):
                            qt_height  )
 
         self.doc_dir             = my_parameters.help_path
-        #self.create_db()
 
         self.build_gui()
 
@@ -174,8 +171,8 @@ class Qt5ByExample( QMainWindow ):
         self.setWindowTitle( f"Qt5Example  {__VERSION__}" )
         self.build_menu( )
 
-        icon    = QtGui.QIcon(  "./other/broom_edit_2.png"  )
-        #/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/other/broom_edit_2.png
+        icon    = QtGui.QIcon(  "./misc/broom_edit_2.png"  )
+        #/  !! move to parameters
         self.setWindowIcon(icon)
 
         central_widget          = QWidget()
@@ -224,6 +221,7 @@ class Qt5ByExample( QMainWindow ):
     def switch_to_tab_by_class_name( self, class_name,   ):
         """
         do action
+
         return tab index or -1
         tab_dict will not work as index is not stable
         """
@@ -246,20 +244,6 @@ class Qt5ByExample( QMainWindow ):
         return tab_index
 
     # ------------------------
-    def switch_to_tab_by_class_name_old( self, class_name,   ):
-        """
-        do action
-        return tab index or -1
-        tab_dict will not work as index is not stable
-        """
-        tab_index      =  self.tab_dict.get( class_name, -1 )
-
-        if tab_index >= 0:
-            self.tab_widget.setCurrentIndex( tab_index )
-
-        return tab_index
-
-    # ------------------------
     def open_tab_select( self, module_name, class_name, title,  widgets  ):
         """
         open_tab_select( self, module_name, class_name, title  widgets = widgets  ) ):
@@ -268,13 +252,6 @@ class Qt5ByExample( QMainWindow ):
 
         text            = item.text()
         """
-        # title           = eval( "'" + title + "'" )
-
-        # something like this ??
-        # tab_title                   = doc_data[ "tab_title" ].strip()
-        # tab_title.replace( "/", "\n")
-
-        #print(f"open_tab_select: {row}, text: {text}")
         tab             = app_services.create_instance( module_name, class_name, )
 
         tab_index       = self.tab_widget.indexOf( tab  )
@@ -288,7 +265,6 @@ class Qt5ByExample( QMainWindow ):
             #rint( f"yes widgets ==================={widgets}" )
             msg       = f"Widgest of interest >> {widgets}"
             tab.class_widget.setText( msg )
-
 
     # ------------------------------------
     def build_menu( self,  ):
@@ -318,14 +294,13 @@ class Qt5ByExample( QMainWindow ):
         open_action.triggered.connect( connect_to )
         a_menu.addAction( open_action )
 
-        # #---------------
-        # open_action     = QAction( "Open Parameters", self )
-        # connect_to      = AppGlobal.controller.os_open_parmfile
-        # open_action.triggered.connect( connect_to )
-        # a_menu.addAction( open_action )
+        # ----
+        action          = QAction( "Add to Log", self )
+        connect_to      = app_logging.add_to_log
+        action.triggered.connect( connect_to )
+        a_menu.addAction(  action )
 
         a_menu.addSeparator()
-        # a_menu.addSeparator()
 
         # ---- Help
         menu_help       = menubar.addMenu( "Help" )
@@ -339,11 +314,6 @@ class Qt5ByExample( QMainWindow ):
         connect_to      = partial( self.open_txt_file, "./docs/general_help.txt" )
         action.triggered.connect( connect_to )
         menu_help.addAction( action )
-
-        # action          = QAction( "Guide to QT Book Examples...", self )
-        # connect_to      = partial( self.open_txt_file, "./docs/guide_to_qt_book_examples.txt" )
-        # action.triggered.connect( connect_to )
-        # menu_help.addAction( action )
 
         action          = QAction( "Current Tab Help...", self )
         connect_to      = self.open_tab_help
@@ -360,30 +330,18 @@ class Qt5ByExample( QMainWindow ):
         menu_help.addAction( about_action1 )   # action is added directly to menu
 
     #----------------------------
-    def test_initxxxx( self,   ):
-        """
-        what it says read:
-        """
-        db      = self.index_search.build_stuff()
-        global   DB
-        DB      = db
-
-
-    #----------------------------
     def close_tab( self, index  ):
         """
         what it says read:
-        but moving around causes index change
 
+        but moving around causes index change
+        do not close needed tabs
         """
-        #rint( "close tab ")
         tab         = self.tab_widget
         widget      = tab.widget(index)
         text        = tab.tabText(index)
         tooltip     = tab.tabToolTip(index)
         icon        = tab.tabIcon(index)
-
-        #rint( f"{type( widget )=}")
 
         if ( isinstance( widget,  tab_select_tab.Search_Tab ) or
              isinstance( widget,  tab_qsql_database.QSqlDatabaseTab )
@@ -405,7 +363,7 @@ class Qt5ByExample( QMainWindow ):
         QMessageBox.information(self, "Not Implemented", "Working on this...")
 
     #----------------------------
-    def inspect_mutate_not_conndected ( self,   ):
+    def inspect_mutate_not_conndectedxxxxxx ( self,   ):
         """
         what it says read:
         """
@@ -415,107 +373,6 @@ class Qt5ByExample( QMainWindow ):
 
         text = self.tab_widget.tabText(0)  # Get the label of the first tab
         self.tab_widget.setTabText(0, "New Label")  # Set a new label
-
-    # # ------------------------------------------
-    # def config_logger( self, ):
-    #     """
-    #     configure the python logger
-    #     return change of state
-    #     !! consider putting in app global, include close
-    #     new with print from chat
-    #     import logging
-    #     logger  = logging.get_
-    #     """
-
-    #     # Configure logging
-    #     log_filename = self.parameters.pylogging_fn  # File to log messages
-    #     logging.basicConfig(
-    #         level=self.parameters.logging_level,  # Set the logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
-    #         format='%(asctime)s - %(levelname)s - %(message)s',  # Log message format
-    #         handlers=[
-    #             logging.FileHandler(log_filename),  # Log to a file
-    #             # had to restart spyder for this to work may be wanky
-    #             logging.StreamHandler( sys.stdout )  # Log to the console (stdout)
-    #         ]
-    #     )
-
-    #     # for old setup
-    #     logger          = logging.getLogger( )
-    #     self.logger     = logger
-
-    #     # # Example usage
-    #     # logging.debug("This is a DEBUG message")
-    #     # logging.info("This is an INFO message")
-    #     # logging.warning("This is a WARNING message")
-    #     # logging.error("This is an ERROR message")
-    #     # logging.critical("This is a CRITICAL message")
-
-
-    #     # # Explicitly log with a specific level
-    #     # logging.log(logging.DEBUG, "This is a DEBUG message.")
-    #     # logging.log(logging.INFO, "This is an INFO message.")
-    #     # logging.log(logging.WARNING, "This is a WARNING message.")
-    #     # logging.log(logging.ERROR, "This is an ERROR message.")
-    #     # logging.log(logging.CRITICAL, "This is a CRITICAL message.")
-
-
-
-    #     # # Explicitly log messages at specific levels
-    #     # logger.log(logging.DEBUG, "This is a DEBUG message from my_logger.")
-    #     # logger.log(logging.INFO, "This is an INFO message from my_logger.")
-    #     # logger.log(logging.WARNING, "This is a WARNING message from my_logger.")
-    #     # logger.log(logging.ERROR, "This is an ERROR message from my_logger.")
-    #     # logger.log(logging.CRITICAL, "This is a CRITICAL message from my_logger.")
-    #     # logger.log(22, "This is a 22 message from my_logger.")
-
-
-    #     # AppGlobal.logger.log(22, "This is a 22 message from my_AppGlobal.")
-
-    #     # use these
-    #     logger.log( logging.CRITICAL, "call was logger.log( logging.CRITICAL,")
-    #     logger.log(22, "This is a 22 message from my_logger.")
-    #     logging.debug( "call was: logging.debug" )
-    #     logging.info( "call was: logging.info"  )
-
-    #     # AppGlobal.logger.log(22, "AppGlobal.logger.log(22 This is a 22 message from my_AppGlobal.")
-    #     # AppGlobal.logger.debug(" AppGlobal.logger.debug This is a DEBUG message my_AppGlobal ")
-
-
-    #     # import inspect  # for debug i
-    #     # import logging
-    #     loc        = f"{self.__class__.__name__}.{inspect.currentframe().f_code.co_name} "
-    #     debug_msg  = f"{loc} >>> this might be our standard {self = }"
-    #     logging.debug( debug_msg )
-
-
-
-    #     # AppGlobal.logger_id     = "App"
-    #     # logger                  = logging.getLogger( AppGlobal.logger_id )
-    #     # logger.handlers         = []  # get stuff to close from here
-
-    #     # logger.setLevel( self.parameters.logging_level )
-
-    #     # # create the logging file handler
-    #     # file_handler = logging.FileHandler( self.parameters.pylogging_fn )
-
-    #     # formatter    = logging.Formatter( '%(asctime)s - %(name)s - %(levelname)s - %(message)s' )
-    #     # file_handler.setFormatter( formatter )
-
-    #     # # add handler to logger object -- want only one add may be a problem
-    #     # logger.addHandler( file_handler )
-    #     # msg  = "pre logger debug -- did it work"
-    #     # AppGlobal.logger.debug( msg )
-
-    #     # logger.info( "Done config_logger .. next AppGlobal msg" )
-    #     # #rint( "configured logger", flush = True )
-    #     # self.logger      = logger   # for access in rest of class?
-    #     # AppGlobal.set_logger( logger )
-
-    #     # msg  = ( f"Message from AppGlobal.print_debug >> logger level in App = "
-    #     #          f"{self.logger.level} will show at level 10"
-    #     #         )
-    #     # AppGlobal.print_debug( msg )
-
 
     #-------
     def open_general_help( self,   ):
@@ -565,8 +422,6 @@ class Qt5ByExample( QMainWindow ):
         """
         self.showMinimized()
 
-
-
     #-------
     def open_tab_help( self,   ):
         """
@@ -578,7 +433,7 @@ class Qt5ByExample( QMainWindow ):
         # tab_index           = self.tab_widget.currentIndex()
         # tab_title           = self.tab_widget.tabText( self.tab_widget.currentIndex())
         # doc_name            = self.tab_help_dict.get( tab_title, "no_specific_help.txt")
-        doc_name            = f"{self.doc_dir}{doc_name}"
+        #doc_name            = f"{self.doc_dir}{doc_name}"
         #rint( f"open_tab_help {doc_name = }")
 
         self.open_txt_file( doc_name )
@@ -623,16 +478,6 @@ class Qt5ByExample( QMainWindow ):
             #            model,  f"StuffEventsSubTab.add_record " )
             # model.select()
             pass
-
-    #-------
-    def create_db( self,   ):
-        """
-        what it says read:
-            this is for the examples not the tab database
-        """
-        print( "moved to create tab")
-        1/0
-        self.sample_db          =  tab_qsql_database.SampleDB()
 
     # ------------------------
     def inspect(self):
@@ -685,6 +530,5 @@ def main():
 # --------------------
 if __name__ == "__main__":
     main()
-
 
 # ---- eof

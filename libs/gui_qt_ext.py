@@ -22,8 +22,6 @@ Various classes to extend qt5 functionality
      message frames
 
 
-
-
 master in rsh_lib, gui_qt_ext
 
 us sys path for development, then copy over file and edit for git hub
@@ -35,7 +33,7 @@ AppGlobal is needed to run this,
 look for links
         .parameters
         .logger
-
+gui_qt_ext.
 
 """
 # ---- tof
@@ -43,35 +41,38 @@ look for links
 
 # ---- imports
 
-# perhaps lazy import better  tk.
-import tkinter as tk
-#from   tkinter.filedialog import askopenfilename
-#from   tkinter.filedialog import askdirectory
-#from   tkinter.messagebox import showinfo
-import tkinter.ttk as ttk
 
-import PyQt5.QtWidgets as qtw    #  qt widgets avaoid so much import below
+
+#import PyQt5.QtWidgets as qtw    #  qt widgets avaoid so much import below
 from   PyQt5.QtCore import Qt, QTimer
 from   PyQt5 import QtGui
 
 from PyQt5.QtWidgets import QApplication,  QMainWindow
 from PyQt5.QtWidgets import QGridLayout,   QVBoxLayout
-from PyQt5.QtWidgets import QWidget,       QLineEdit,     QLabel,      QTextEdit, QGroupBox,  QPushButton
-
+from PyQt5.QtWidgets import QLabel,      QTextEdit, QGroupBox,  QPushButton
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QFileDialog, QMessageBox
-import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QFileDialog
-import sys
 
+
+import sys
 import os
-# import pyperclip
+
+
+import string_util
 
 from   app_global import AppGlobal
 # for above to work need to have an AppGlobal in the dir
 # where app was started, or provide another in this dir
 # seems to work
 
-STICKY_ALL          = tk.N + tk.S + tk.E + tk.W
+
+import logging
+
+logger          = logging.getLogger( )
+
+
+# for custom logging level at module
+LOG_LEVEL  = 5   # higher is more
+
 
 #---------------------
 def bring_to_top( root_frame  ):
@@ -149,7 +150,7 @@ def about(  controller  ):
     message_box.exec_()
 
 #---------------------
-def make_root( parameters  ):
+def make_rootxxxxxxxx( parameters  ):
     """
     What it says, read code
     make a root window with support for themes
@@ -262,22 +263,13 @@ class FileBrowseWidget( QWidget ):
         return self.entry_1.text()
 
 
-# if __name__ == '__main__':
-#     app = QApplication(sys.argv)
-#     widget = FileBrowseWidget()
-#     widget.show()
-#     sys.exit(app.exec_())
-
-# if __name__ == '__main__':
-#     app = QApplication(sys.argv)
-#     widget = DirBrowseWidget()
-#     widget.show()
-#     sys.exit(app.exec_())
-
-
-
 
 class DirBrowseWidget(QWidget):
+    """
+
+
+    """
+
     def __init__(self, parent=None, initialdir=None, browse_title=None):
         super().__init__(parent)
         self.setWindowTitle("Directory Browse Widget")
@@ -328,7 +320,7 @@ class MessageArea( QGroupBox  ):
     def __init__( self ):
 
         """
-
+        widget   =  gui_qt_ext.MessageArea()
     need to add or make new class to be an edit window
          get rid of buttons
          get all text programatically
@@ -415,7 +407,7 @@ class MessageArea( QGroupBox  ):
                      clear           = False,
                      update_now      = False ):
         """
-
+        this is old tk  .... fix ?? for now redirect o display_string
         msg_frame.print( a_string _  )
         print to message area, with scrolling and
         log if we are configured for it
@@ -434,6 +426,12 @@ class MessageArea( QGroupBox  ):
         !! dup with display_string ??
 
         """
+        self.display_string( a_string )
+
+        return
+
+
+
         if  AppGlobal.parameters.gui_text_log_fn:
 
             with open( AppGlobal.parameters.gui_text_log_fn, "a"  ) as a_file:
@@ -567,200 +565,167 @@ class MessageArea( QGroupBox  ):
         print(  f" copy_selected_text -> {selected_text }" )
 
 
-
-# ----------------------------------------
-class ListboxScroll( ):
+# -----------------------------------
+class CQGridLayout( QGridLayout ) :
     """
-    scrolling listbox with title and utility functions
-    master in rsh_lib, gui_ext
+    a custom grid layout from PlaceInGrid but this is a layout
+    gui_qt_ext.CQGridLayout( col_max = 10 )
 
-    consider making descandant of Frame
+    --- next two may have been fixed
+    indent is not properly handled in all the code
+        needs to be anywhere go to next row
 
-    note that self.   hold components for possible use
+    unclear what happens when columnspan will overrun the col_max
+    might experiment and offere options
 
-    so far single selection
-    How to interface
+    self.ix_row
+    self.ix_col are port of the interface, but how does
+    changing them affect last_ix_row
 
-           a_obj        = gui_ttk_ext.ListboxScroll( parent_frame, a_title = "a title", width = None, height = None )
-           place  ... a_obj.outer_frame
-
-        use functions
-            .....
-        access
-            self.listbox       to access any pure listbox attributes
-            self.outer_frame   to place the frame
-
-    used in:
 
     """
-    def __init__( self, parent_frame, a_title = "a title", width = None, height = None ):
+    def __init__( self,   *, col_max = 0, indent = 0   ):
+        super().__init__(  )
+        self.col_max    = col_max  # 0 no max
+        self.ix_row     = 0
+        self.ix_col     = 0
+        self.indent     = indent  # an idea but what idea
+        # for debug valuse just prior to addWidget
+        self.last_ix_row  = None
+        self.last_ix_col  = None
+        #self.last_stretch = None
+        # or call reset
+        self.reset
+
+    def reset( self,  *, col_max = 0, indent = 0   ):
         """
-        if title is None do not construct that part
+        for debug may become more pearmanent
+        grids my have enouth internal state that they should
+        not be reused
+        """
+        self.col_max        = col_max  # 0 no max
+        self.ix_row         = 0
+        self.ix_col         = 0
+        self.indent         = indent  # an idea but what idea no implemented
+        # for debug
+        self.last_ix_row    = None
+        self.last_ix_col    = None
+        #self.last_stretch = None
+
+        print( "CQGridLayout_reset================>", self )
+
+    # -----------------------------------
+    def addWidget( self,
+               widget,
+               ix_row       = None,
+               ix_col       = None,
+               *,
+               columnspan   = 1,
+               rowspan      = 1,
+               #stretch      = None,
+               ):
+        """
+        to work like QLayouts but do ix_row, ix_col automatically
+        this is preliminary
+        layout.addWidget( widget, ix_row, ix_col, row_span, col_span )
+
+        rowspan will be passed on but is not accounted for by
+        self.ix_row
+
 
         """
-        self.version        = "2021_08_04"
-        self.parent         = parent_frame
-        self.title          = a_title
-        self.click_function = None     # set later or externally
-        self.frame          = None     # the frame this is in use xxx.frame
-        self.listbox        = None     # the listbox
-        self.outer_frame    = None
+        if ix_row is None:
+            ix_row  = self.ix_row
 
-        if width is None:
-            width = 100
+        if ix_col is None:
+            ix_col = self.ix_col
 
-        if height is None:
-            height = 100
+        # check if it fits
 
-        self._make_titled_listbox_( width, height )
+        if self.col_max and ( self.ix_col + columnspan  > self.col_max ):
+            self.new_row()
 
-    # ----------------------------------------
-    # """
-    # functions needed
-    # set command  -- just a property ... no needs function could make a propeety @
-    # inset_row
-    # """
-    # ----------------------------------------
-    def insert_row( self, value ):
-        """
-        what is says
-        """
-        self.listbox.insert(  tk.END, value )
+        self.last_ix_row     = ix_row
+        self.last_ix_col     = ix_col
+        self.last_columnspan = columnspan
 
-     # ----------------------------------------
-    def clear_rows( self,  ):
-        """
-        what is says
-        """
-        self.listbox.delete( 0, tk.END )
+        # later check for nones and delta
+        super().addWidget( widget, self.ix_row, self.ix_col, rowspan, columnspan   )
 
-    # ----------------------------------------
-    def set_values( self, values ):
-        """
-        what is says
-        can we use to clear set list without using insert row
-        """
-        #self.listbox.configure( values )
-        # clear
-        #for
+        # if columnspan is None: not sure what is devault
+        #     # make default
+        #     columnspan = 1
 
-    # ----------------------------------------
-    def set_width( self, width ):
-        """
-        what is says -- read
-        """
-        # label seems to be the controlling thing
-        self.label_widget.configure( width = width )
+        # this computes the next -- do we need now we have precheck ?
+        self.ix_col    += columnspan
+        if self.col_max and ( self.ix_col  >= self.col_max ):
+            self.new_row()
+            # is self.new_row better here?
+            # self.ix_row    += 1
+            # self.ix_col    = 0
 
-    # ----------------------------------------
-    def set_height( self, height ):
-        """
-        what is says -- read
-        """
-        # label seems to be the controlling thing
-        self.listbox.configure( height = height )
-        print( "!! implement set_height if not working" )
+            debug_msg       = f"addWidget__increment row {self}  "
+            logging.log( LOG_LEVEL,  debug_msg, )
+        # else:  # for debug
+        #     pass
+        #     print( self )
+        # -----------------------------------
+        def place( self,
+                   a_widget,
+                   columnspan   = None,
+                   rowspan      = None,
+                   sticky       = None
+                   ):
+            """
+            for compat with PlaceInGrid so we can phase it out
+               widget,
+               ix_row       = None,
+               ix_col       = None,
+               *,
+               columnspan   = 1,
+               rowspan      = 1,
+               #stretch      = None,
+            """
+            self.addWidget( a_widget, columnspan = columnspan, rowspan = rowspan )
 
-    # ----------------------------------------
-    def set_click_function( self, a_function ):
+    # ----------------------
+    def get_add_parm_str( self, ):
         """
-        what is says -- would bind be better
-        we want an index or contents of row or both need
-        more work here
+        for debugging lable controls wit this
         """
-        self.click_function =  a_function
+        msg       = f"r{self.last_ix_row},c{self.last_ix_col} s{self.last_columnspan}"
+        return msg
+        #super().addWidget( widget, self.ix_row, self.ix_col )
 
-    # ------------------
-    def _click_function( self, event ):
+    def __str__( self, ):
+        """ """
+        a_str   = ""
+        a_str   = ">>>>>>>>>>* CQGridLayout *<<<<<<<<<<<<"
+        a_str   = string_util.to_columns( a_str, ["col_max",
+                                           f"{self.col_max}" ] )
+        a_str   = string_util.to_columns( a_str, ["indent",
+                                           f"{self.indent}" ] )
+        a_str   = string_util.to_columns( a_str, ["ix_col",
+                                           f"{self.ix_col}" ] )
+        a_str   = string_util.to_columns( a_str, ["ix_row",
+                                           f"{self.ix_row}" ] )
+        return a_str
+
+    # -----------------------------------
+    def new_row( self, delta_row = 1, indent = None ):
         """
-        what is says -- would bind be better -- on the list box?, search
-        we want an index or contents of row or both need
-        more work here
+        start a new row in col 0
+        !! also for col
         """
-        if self.click_function is None:
-            print( "ListboxScroll -- click_function not set" )
+        if indent is None:
+            indent = self.indent    # or vise versa
         else:
-            # sending the selection get, but perhaps should
-            #    send the event and let click function ....!!!
-            # a_key   = event.widget.selection_get()
-            #rint( a_key )
-            # self.click_function( a_key )
-            self.click_function( event )
+            self.indent = indent
+        self.ix_row     += delta_row
+        self.ix_col      = indent
+        debug_msg       =( f"new_row {self.ix_row = }  {self.ix_col = }")
+        logging.log( LOG_LEVEL,  debug_msg, )
 
-    # ------------------
-    def get_row_text( self, a_index ):
-        """
-        if ix not valid then ?? return None
-
-        """
-        if self.listbox.size() >= a_index:
-            a_value  = self.listbox.get( a_index )
-        else:
-            a_value  = None
-
-        return a_value
-
-    # ------------------
-    def get_selected_ix( self ):
-        """
-        return 0 based selection -1 if nothing
-        assumes in single select mode
-        """
-        selected_ix   = self.listbox.curselection()
-
-        if selected_ix == tuple(  ):
-            selected_ix  = -1
-        else:
-            selected_ix  =  selected_ix[0]   # since we allow only 1 selection
-
-        return selected_ix
-
-    # ----------------------------------------
-    def _make_titled_listbox_( self, width, height  ):
-        """
-        make a frame ( at top will become self.outer_frame )
-        in it a listbox ( self.listbox )
-        and a scrollbar
-        and a label
-
-        for snips and snippets?
-        return ( famelike_thing, listbox_thing)  ?? make a class, better access to components
-        """
-        a_frame       = tk.Frame( self.parent, width = 1000 )
-
-        a_frame.grid_rowconfigure(    0, weight = 0 )
-        a_frame.grid_rowconfigure(    1, weight = 1 )
-        a_frame.grid_rowconfigure(    1, weight = 1 )
-
-        a_frame.grid_columnconfigure( 0, weight = 1 )
-        a_frame.grid_columnconfigure( 1, weight = 0 )
-
-        a_label = ttk.Label( a_frame, text = self.title, width = width )
-        a_label.grid( column = 0, row = 0, sticky = ( tk.N, tk.E, tk.W) )
-        self.label_widget  = a_label
-
-        a_listbox       = tk.Listbox( a_frame, height = 5 )
-        self.listbox    = a_listbox
-        a_listbox.grid( column = 0, row = 1, sticky = STICKY_ALL )
-
-        a_listbox.bind( "<<ListboxSelect>>", self._click_function  )
-
-        a_scrollbar     = ttk.Scrollbar( a_frame,
-                                    orient    = tk.VERTICAL,
-                                    command   = a_listbox.yview)
-
-        a_scrollbar.grid( column=1, row=1, sticky = STICKY_ALL )   # (tk.N, tk.S)
-        a_listbox[ 'yscrollcommand'] = a_scrollbar.set
-
-        # for overall widget
-        self.set_width( width  )
-        self.set_height( height )
-
-        self.listbox     = a_listbox
-        self.frame       = a_frame
-        self.outer_frame = a_frame
-
-        return a_frame
 
 # -----------------------------------
 class PlaceInGrid( ):
@@ -783,6 +748,7 @@ class PlaceInGrid( ):
         debug_id
 
 
+      gui_qt_ext.PlaceInGrid(  a_widget )
 
     """
     def __init__( self,  central_widget, a_max = 0, by_rows = True  ):
@@ -832,19 +798,19 @@ class PlaceInGrid( ):
         else:
             self.function =  self._place_across_col_
 
-    def addWidget( self,
-               a_widget,
-               columnspan   = None,
-               rowspan      = None,
-               sticky       = None
-               ):
+    # def addWidget( self,
+    #            a_widget,
+    #            columnspan   = None,
+    #            rowspan      = None,
+    #            sticky       = None
+    #            ):
 
-        self.place(
-               a_widget,
-               columnspan   = None,
-               rowspan      = None,
-               sticky       = None
-               )
+    #     self.place(
+    #            a_widget,
+    #            columnspan   = None,
+    #            rowspan      = None,
+    #            sticky       = None
+    #            )
 
     # -----------------------------------
     def addWidget( self,
@@ -1081,360 +1047,7 @@ class PlaceInGrid( ):
         # a_str = f"{a_str}\n   xxx        {self.xxx}"
         return a_str
 
-# --------------------------------------
-class TitledFrame(  ):
-    """
-    new not tested
-    About this class.....
-    make a color coded frame ( two frames one above the other )
-    with a title in the top one and color coded
-    see ex_tk_frame.py for the master
-    """
-    #----------- init -----------
-    def __init__( self, a_parent_frame,
-                  a_title,
-                  a_title_color,
-                  button_width = 10,
-                  button_height = 2 ):
-        """
-        Usual init see class doc string
-        add to gui_ext !!
-        """
-        a_frame      = tk.Frame( a_parent_frame,
-                                 # bg ="red",
-                                 bg = "gray", )
 
-        a_frame.rowconfigure(    0, weight= 1 )
-        a_frame.rowconfigure(    1, weight= 1 )
 
-        a_frame.columnconfigure( 0, weight= 1 )
-        #master.columnconfigure( 1, weight= 1 )
-        self.frame      = a_frame
-        p_frame         = a_frame
+# ---- eof
 
-        a_frame  = tk.Frame( p_frame,   bg = a_title_color, )
-            # padx = 2, pady = 2, relief= tk.GROOVE, )
-        a_frame.grid( row = 0,  column = 0 ,sticky = tk.E + tk.W )
-        self.top_inner_frame    = a_frame
-
-        a_label             = ttk.Label( a_frame,
-                                        text    = a_title,
-                                        #bg      = a_title_color ,
-                                        )
-                                     #   relief = RAISED,  )
-        a_label.grid( row = 0, column = 0, )
-            # columnspan = 1, sticky = tk.W + tk.E )
-
-        a_frame  = ttk.Frame( p_frame,   )
-            # bg = "blue", )  # use neutral color or the title color
-            # padx = 2, pady = 2, relief= tk.GROOVE, )
-        a_frame.grid( row = 1,  column = 0,sticky = tk.E + tk.W )
-        self.bottom_inner_frame    = a_frame
-
-        self.button_width  = button_width
-        self.button_height = button_height
-        self.button_row    = 0
-        self.button_column = 0
-
-    #----------------------------------------------------------------------
-    def make_button( self, button_text = "default text", command = None ):
-        """
-        !! have function make the button with the command
-        !! may not be best way to do, may just want to return inner frame
-        """
-        a_button = ttk.Button( self.bottom_inner_frame ,
-                             width     = self.button_width,
-                             #height    = self.button_height,
-                             text      = button_text )
-        a_button.grid( row  = self.button_row, column = self.button_column )
-        self.button_column += 1
-
-        if command is not None:
-            a_button.config( command = command  )
-
-        return a_button
-
-#----------------------------------------------------------------------
-def make_titled_listbox( parent_frame, a_title ):
-    """
-    for snips and snippets?
-    return ( famelike_thing, listbox_thing)  ?? make a class, better access to components
-    widget like built in its own frame
-    """
-    a_frame      = ttk.Frame(parent_frame)
-    a_listbox    = tk.Listbox( a_frame, height = 5 )
-    a_listbox.grid( column=0, row=1, sticky = STICKY_ALL )
-
-    s = ttk.Scrollbar( a_frame, orient=tk.VERTICAL, command=a_listbox.yview)
-    s.grid( column=1, row = 1, sticky = ( tk.N, tk.S ))
-    a_listbox['yscrollcommand'] = s.set
-
-    a_label = ttk.Label( a_frame, text= a_title )
-    a_label.grid( column=0, row=0, sticky=( tk.N, tk.E, tk.W) )
-    #  ttk.Sizegrip().grid(column=1, row=1, sticky=(tk.S, tk.E)) size grip not appropriate here
-
-    a_frame.grid_columnconfigure( 0, weight=1 )
-    a_frame.grid_rowconfigure(    0, weight=0 )
-    a_frame.grid_rowconfigure(    1, weight=1 )
-    return ( a_frame, a_listbox )
-
-# both of these in use !! why or explain
-
-    #----------------------------------------------------------------------
-    def make_button( self, button_text = "default text", command = None ):
-        """
-        !! have function make the button with the command
-        or is this just unreachable
-        """
-        a_button = ttk.Button( self.bottom_inner_frame ,
-                             width      = self.button_width,
-                            # height     = self.button_height,
-                             text       = button_text )
-        a_button.grid( row  = self.button_row, column = self.button_column )
-        self.button_column += 1
-
-        if command is not None:
-            a_button.config( command = command  )
-
-        return a_button
-
-# ----------------------------------------
-class ComboboxHistory( ttk.Combobox ):
-    """
-    combo box with a ddl of its history
-        set_values        # not config( values =
-        get_text( self )  # always use this or history will not be updated
-        max_history
-
-        config(   height
-                  width
-
-    """
-
-    # ----------------------------------------
-    def __init__( self, parent, values = None, width  = None ):
-        """
-        reduced init, use config or enhance this
-
-
-
-        """
-        super().__init__( parent, values = values, width = width )
-
-        self.the_values    = values           # may already be available in widget
-        self.get_var       = tk.StringVar()   # consider drop
-        self.max_history   = 15
-
-        self.config( height = self.max_history )
-
-        self.config( textvariable  =  self.get_var )
-        self.bind("<<ComboboxSelected>>", self._cb_selected )
-        self.bind('<Return>', self.enter_event )   # return = enter key
-
-    # ----------------------------------------
-    def set_values( self,  values ):
-        """
-        use instead of the usual config ( values = )
-
-        """
-        #rint( f"set_values -> {values}")
-        self.the_values     = values
-        self.config( values = values )
-
-    # ----------------------------------------
-    def enter_event( self,  event ):
-        """
-        a function to explore events, not all may work
-
-        """
-        #rint( f"enter_event -> {event}")
-
-    # ------------------------------
-    def __str__( self ):
-
-        a_str   = f"__class__.__name__         = {self.__class__.__name__} "
-
-        a_str   = f"{a_str}\n      max_history = {self.max_history}"
-        #a_str   = f"{a_str}\n      max_history = {self.max_history}"
-        # a_str   = f"{a_str}\n      cap        value = {self._value_c}"
-        return a_str
-
-    # ------------------------------
-    def _cb_selected_2( self,  event ):
-        """
-        call back see which control attached to above
-        should be on change or any value selected in the combobox
-
-        """
-        print( "cb_selected_2() replace with your callback" )
-
-    # ------------------------------
-    def _cb_selected( self,  event ):
-        """
-        call back see which control attached to above
-        should be on change or any value selected in the combobox
-
-        """
-        msg   = f"cb_selected >{event}<"
-        print( msg )
-
-        msg = f"cb_selected value is via get >{ self.get( ) }<"
-        print( msg )
-
-        msg = f"cb_selected value is via variable get >{ self.get_var.get( ) }<"
-        print( msg )
-
-        self._cb_selected_2( event )
-
-    # --------------
-    def get_text( self ):
-        """
-        Purpose:
-            get the current text and add it to the history
-            limit history to max
-            note: strip
-
-        """
-        current_text   = self.get().strip()
-        #rint( f"get_text  current_text {current_text}" )
-
-        if current_text == self.the_values[0]:
-            return current_text
-
-        self.the_values.insert( 0, current_text)
-
-        if len( self.the_values  ) > self.max_history:
-            self.the_values   = self.the_values[ :self.max_history ]   # or mutate it
-
-        self.config( values = self.the_values )
-
-        return current_text
-
-#----------------------------------------
-# ----  class ... actually for real work, will move master to.....
-class FileTreeview( ttk.Frame ):
-    """
-    see also ex_ttk_treeview.py
-
-    Add:
-        columns for date and size
-        ability to sort
-        ability to filter
-        callbacks
-        multiple selections
-        update
-        ...
-
-    """
-
-    def __init__(self, master, path):
-        ttk.Frame.__init__( self, master)
-
-        self.config( bg = "red")
-        treeview        = ttk.Treeview(self)
-        self.treeview   = treeview
-        ysb             = ttk.Scrollbar(self, orient='vertical',    command = treeview.yview )
-        xsb             = ttk.Scrollbar(self, orient='horizontal',  command = treeview.xview )
-
-        treeview.configure( yscroll=ysb.set, xscroll=xsb.set)
-        treeview.heading('#0', text = path, anchor = 'w')    #0   = index to col heading
-
-        abspath     = os.path.abspath(path)
-        root_node   = treeview.insert( '', 'end', text=abspath, open=True )
-
-        # consider wait cursor...
-        print( f"for init call to process_dir root_node = {root_node}, abspath = {abspath} please wait a bit.....")
-        self.process_directory( root_node, abspath )
-
-        treeview.grid( row=0, column=0, sticky = "nsew" )
-        ysb.grid(row=0, column=1, sticky='ns')
-        xsb.grid(row=1, column=0, sticky='ew')
-
-        self.rowconfigure(    0, weight= 1 )
-        self.columnconfigure( 0, weight= 1 )
-
-        treeview.bind( "<<TreeviewSelect>>", self.on_select )
-
-    # ----------------------------------
-    def on_select_cb( self, full_path, full_path_list = None,   event = None ):
-        """
-        !! not written, does what
-
-        """
-        print( f"on_select_cb:")
-        print( f"full_path {full_path}, full_path_list: {full_path_list} event: {event}")
-
-    # ----------------------------------
-    def on_select( self, event ):
-        """
-        from: ex_working_from_web may be below
-
-
-        """
-        item     = self.treeview.identify( 'item', event.x, event.y )
-        cur_item = self.treeview.focus()
-        #rint( f" self.treeview.item(cur_item) =  {self.treeview.item(cur_item)}" )
-
-        #while True:
-        full_path_list   = []
-        for ix in range( 20 ): # limit on while True  do some other way
-
-            if cur_item =="":
-                #rint( "cur_item is empty string" )
-                break   # perhaps throw exception
-            else:
-                #rint( f"cur_item  = {repr(cur_item)}")
-                #rint( f" self.treeview.item(cur_item) =  {self.treeview.item(cur_item)}" )
-                this_text     = self.treeview.item(cur_item)["text"]
-                #full_path_list.append(this_text)
-                full_path_list.insert( 0, this_text)
-                #rint( f"this_text = {this_text}")
-                cur_item    = self.treeview.parent( cur_item )
-            #rint( full_path_list )
-
-        full_path  = "\\".join( full_path_list )
-        #rint( f"File Treeview on_select: this is the full_path ={full_path}" )
-        self.on_select_cb( full_path, full_path_list = full_path_list,   event = event )
-
-    # ----------------------------------
-    def filter_file_cb( self, p, path, isdir ):
-        """
-        use as callback for file filtering, try to use file_filters
-        return True for ok
-        """
-        return True
-
-    # ----------------------------------
-    def process_directory(self, parent, path ):
-        """
-        parent  -- determines the location of the insert is a node int the treevie see oid and
-        initial call
-        path -- directory, path full? to build
-        populate the directories with files and call recursivelly to get
-        all subdirectories, this can take a lot of memory and possibly
-        time
-        does not check for a refresh
-        !! bad names
-        """
-        #rint( f"process_directory path = {path}")
-
-        for p in os.listdir( path ):
-            abspath     = os.path.join( path, p )
-            isdir       = os.path.isdir( abspath )
-            include_ok  = self.filter_file_cb( p, path, isdir )
-
-            oid         = self.treeview.insert( parent, 'end', text=p, open=False )
-
-            """
-            tree.insert('', 'end',text="1",values=('1','C++'))
-            tree.insert('', 'end',text="2",values=('2', 'Java'))
-            tree.insert('', 'end',text="3",values=('3', 'Python'))
-
-            search on python ttk treeview insert text and values
-            """
-
-            if isdir:
-                self.process_directory( oid, abspath )
-
-# ---- ex_file_treeview
-# ----------------------------------------

@@ -16,52 +16,20 @@ depends on parmetes being set up first
         and appGlobal
 
 
-
 """
 
-from PyQt5.QtWidgets import (
-                             # QAction,
-                             # QActionGroup,
-                             # QApplication,
-                             # QButtonGroup,
-                             # QCheckBox,
-                             QDialog,
-                             QComboBox,
-                             # QDateEdit,
-                             # QDockWidget,
-                             # QFileDialog,
-                             # QFrame,
-                             # QGridLayout,
-                             QHBoxLayout,
-                             # QInputDialog,
-                             QLabel,
-                             QLineEdit,
-                             # QListWidget,
-                             # QMainWindow,
-                             # QMdiArea,
-                             # QMdiSubWindow,
-                             # QMenu,
-                             # QMessageBox,
-                             QPushButton,
-                             # QSpinBox,
-                             # QTableView,
-                             # QTableWidget,
-                             # QTableWidgetItem,
-                             # QTabWidget,
-                             # QTextEdit,
-                             QVBoxLayout,
-                             QWidget
-                             )
-
-
 import logging
-import traceback
 import sys
+import traceback
 
+import parameters
+from PyQt5.QtWidgets import (  # QAction,; QActionGroup,; QApplication,; QButtonGroup,; QCheckBox,; QDateEdit,; QDockWidget,; QFileDialog,; QFrame,; QGridLayout,; QInputDialog,; QListWidget,; QMainWindow,; QMdiArea,; QMdiSubWindow,; QMenu,; QMessageBox,; QSpinBox,; QTableView,; QTableWidget,; QTableWidgetItem,; QTabWidget,; QTextEdit,
+    QComboBox, QDialog, QHBoxLayout, QLabel, QLineEdit, QPushButton,
+    QVBoxLayout, QWidget)
 
 # ---- local imports
 from app_global import AppGlobal
-import parameters
+
 # ---- end imports
 #global APP_LOGGING
 APP_LOGGING     = None
@@ -88,11 +56,11 @@ class DialogAddToLog( QDialog ):
     def initUI( self,    ):
         """ data is a mutuable dict """
         self.setWindowTitle("Remark for Log ")
-        self.setGeometry( 100, 100, 200,  200)
+        self.setGeometry( 300, 300, 600,  100 )   # * * width * height
 
         layout          = QVBoxLayout()
 
-        # Label
+        #------------
         label           = QLabel("Remark:")
         layout.addWidget(label)
 
@@ -143,7 +111,6 @@ class DialogAddToLog( QDialog ):
 
     def on_cancel(self):
         self.reject()
-
 
 # ---- ----------------
 class AppLogging( ):
@@ -198,12 +165,12 @@ class AppLogging( ):
         logging.critical("Root logger is set up. Modules can now log using logging.getLogger().")
         logging.info("config_logger call was: logging.info")
 
-        # Example logs and test
-        self.logger.critical("config_logger call was logger.critical()")
-        self.logger.critical(f"config_logger {log_file_name = } ")
-        self.logger.log(22, "config_logger This is a 22 message from my_logger.")
-        self.logger.debug("config_logger call was: logging.debug")
-        self.logger.info("config_logger call was: logging.info")
+        # # Example logs and test
+        # self.logger.critical("config_logger call was logger.critical()")
+        # self.logger.critical(f"config_logger {log_file_name = } ")
+        # self.logger.log(22, "config_logger This is a 22 message from my_logger.")
+        # self.logger.debug("config_logger call was: logging.debug")
+        # self.logger.info("config_logger call was: logging.info")
 
 
     # def test_logingr(self):
@@ -238,7 +205,7 @@ def add_to_log(   ):
     """
 
     # Mutable object to pass data to and from the dialog
-    data = {"default_value": "Default Value"}
+    data = {"default_value": "Add to log ... "}
 
     # Create and show the dialog
     dialog = DialogAddToLog ( data, )
@@ -250,7 +217,7 @@ def add_to_log(   ):
         #QMessageBox.information(self, "Result", msg )
         print( msg )
         logging.error( F"USER_MSG: {msg}" )
-
+    1/0   # to test exception management
     # else:
     #     msg     = "Dialog was canceled"
     #     #QMessageBox.information(self, "Result",  msg )

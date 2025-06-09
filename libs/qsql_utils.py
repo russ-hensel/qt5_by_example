@@ -17,17 +17,11 @@ APP      = None
 
 import logging
 
-
 # ---- QtCore
 from PyQt5.QtCore import QDate, QModelIndex, Qt, QTimer, pyqtSlot
 from PyQt5.QtGui import QIntValidator, QStandardItem, QStandardItemModel
 # ---- QtSql
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery, QSqlTableModel
-# ----QtWidgets Boxs, Dialogs
-# ----QtWidgets layouts
-# ----QtWidgets big
-# ----QtWidgets
-
 from PyQt5.QtWidgets import (QAction,
                              QActionGroup,
                              QApplication,
@@ -62,6 +56,12 @@ from PyQt5.QtWidgets import (QAction,
                              QTextEdit,
                              QVBoxLayout,
                              QWidget)
+
+# ----QtWidgets Boxs, Dialogs
+# ----QtWidgets layouts
+# ----QtWidgets big
+# ----QtWidgets
+
 
 # from PyQt5.QtWidgets import (QAction,
 #                              QActionGroup,

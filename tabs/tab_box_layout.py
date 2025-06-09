@@ -265,15 +265,16 @@ class QBoxLayoutTab( tab_base.TabBase ) :
         the usual, build the gui with the widgets of interest
         and the buttons for examples
         """
-        wigets_layout        = QVBoxLayout(   )
+        widgets_layout        = QVBoxLayout( ) # the whole thin will
+                                # use two layout in it one for top one for bottom
 
-        layout.addLayout( wigets_layout )
+        layout.addLayout( widgets_layout )
         button_layout        = QHBoxLayout(   )
 
         # ---------
         row_layout      = QHBoxLayout( )
         self.row_layout_1   = row_layout
-        wigets_layout.addLayout( row_layout )
+        widgets_layout.addLayout( row_layout )
 
 
         # and some options to look into
@@ -296,14 +297,21 @@ class QBoxLayoutTab( tab_base.TabBase ) :
 
 
         stretch                     = 1
-        widget                      = QPushButton( f"{ stretch = }")
+        widget                      = QPushButton( f"{ stretch = } and spacing>>")
         self.pb_0_1                 = widget
         row_layout.addWidget( widget, stretch = stretch,  )
 
+        row_layout.addSpacing(50)
+
+
+
         stretch                     = 2
-        widget                      = QPushButton( f"{ stretch = }")
+        widget                      = QPushButton( f"{ stretch = }>>addStretch ")
         self.pb_0_2                 = widget
         row_layout.addWidget( widget, stretch = stretch,  )
+
+        row_layout.addStretch( 2 )
+
 
         row_layout      = QHBoxLayout( )
         self.row_layout_1   = row_layout
@@ -323,7 +331,7 @@ class QBoxLayoutTab( tab_base.TabBase ) :
 
 
         layout_b     = QHBoxLayout(    )
-        wigets_layout.addLayout( layout_b )
+        row_layout.addLayout( layout_b )
 
         # ---- PB inspect
         widget = QPushButton("show\n_values")
@@ -424,6 +432,7 @@ class QBoxLayoutTab( tab_base.TabBase ) :
         self.append_function_msg( "change_size_policy" )
 
         self.pb_0_0.setSizePolicy( QSizePolicy.Expanding, QSizePolicy.Expanding ) # x and y direction ?
+        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------
     def show_values(self):
@@ -454,6 +463,8 @@ class QBoxLayoutTab( tab_base.TabBase ) :
         self.append_function_msg( "mutate_1" )
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
+        self.append_msg( tab_base.DONE_MSG )
+
 
     # ------------------------
     def inspect(self):
@@ -485,6 +496,6 @@ class QBoxLayoutTab( tab_base.TabBase ) :
 
         breakpoint()
 
-
+        self.append_msg( tab_base.DONE_MSG )
 
 # ---- eof

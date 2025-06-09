@@ -18,11 +18,9 @@ if __name__ == "__main__":
 # --------------------
 
 
+#import sys
 
 
-import sys
-
-from app_global import AppGlobal
 from PyQt5.QtCore import Qt
 from PyQt5.QtSql import (QSqlDatabase,
                          QSqlDriver,
@@ -32,7 +30,8 @@ from PyQt5.QtSql import (QSqlDatabase,
                          QSqlRelationalDelegate,
                          QSqlRelationalTableModel,
                          QSqlTableModel)
-# ----QtWidgets layouts
+from PyQt5.QtGui import QFont
+
 from PyQt5.QtWidgets import (QApplication,
                              QComboBox,
                              QDialog,
@@ -53,21 +52,17 @@ from PyQt5.QtWidgets import (QApplication,
 # import  tracked_qsql_relational_table_model
 
 import parameters
-
-# ---- end imports
-
-
+from   app_global import AppGlobal
 
 class DisplayParameters( QDialog ):
     """
-
+    dialog to display parameters
 
     """
     # ------------------------------------------
     def __init__(self,  parent ):
         """
         Args:
-
 
         Returns:
             None.
@@ -83,7 +78,7 @@ class DisplayParameters( QDialog ):
         qt_xpos     = 10
         qt_ypos     = 10
         qt_width    = 1000
-        qt_height   = 500
+        qt_height   = 600
         self.tab_help_dict   = { }
         self.setGeometry(  qt_xpos,
                            qt_ypos ,
@@ -100,52 +95,30 @@ class DisplayParameters( QDialog ):
         layout              = QVBoxLayout( self )
         self.layout         = layout
 
-
-        # ---- code_gen: edit_fields_for_form  -- end table entries
-
-        # Create QTextEdit widget
         text_edit           = QTextEdit()
         # layout.addWidget(text_edit, 4, 0, 1, 3)  # Row 4, Column 0, RowSpan 1, ColumnSpan 3
         self.text_edit  = text_edit
+        font = QFont( "Courier New" )  # Set a monospaced font "Courier New"
+        font.setPointSize( 10 )
+        text_edit.setFont(font)
+
         layout.addWidget( text_edit )
-
-
-
-        # ex_text   = (
-
-        # """
-        # widget = QPushButton( "Delete Text" )
-        # widget.clicked.connect(lambda: self.delete_text(text_edit))
-        # widget.setMaximumWidth(150)
-        # button_layout.addWidget( widget,   )
-
-        # widget = QPushButton( "inspect_widget" )
-        # widget.clicked.connect(lambda: self.inspect_widget(text_edit))
-        # widget.setMaximumWidth(150)
-        # button_layout.addWidget( widget,   )
-        # """ )
 
         parm_text      = str( parameters.PARAMETERS )
 
         cursor = text_edit.textCursor()
         cursor.insertText( parm_text )
 
+        cursor.movePosition(cursor.Start)
+        text_edit.setTextCursor(cursor)
+        text_edit.ensureCursorVisible()
 
-
-        # # ---- buttons
-        # self.setLayout( self.layout )
-        #self.button_layout      = QVBoxLayout()
+        #  ---- buttons
         button_layout           = layout
-
 
         a_widget                = QPushButton("OK")
         self.save_button        = a_widget
-        a_widget.clicked.connect(         self.accept )
+        a_widget.clicked.connect( self.accept )
         button_layout.addWidget( a_widget )
 
-        # # ----
-        # self.buttons.setLayout( self.button_layout )
-
-        # self.layout.addRow(self.buttons)
-
-
+# ---- eof

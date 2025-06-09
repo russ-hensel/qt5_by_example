@@ -20,15 +20,16 @@ Status: fine
 
 # ---- imports
 
-import sys
 import os
-import socket
-import platform
-
-from   platform import python_version
 import pathlib
+import platform
+import socket
+import sys
+from platform import python_version
+
 import psutil
 import string_util
+
 
 # --------------------------------------
 class RunningOn(  ):

@@ -227,9 +227,6 @@ class Search_Tab( QWidget ) :
         # Auto-size columns	table_view.horizontalHeader().setSectionResizeMode()
         # Stretch columns to fit	QHeaderView.Stretch
 
-
-
-
     # ------------------------
     def widget_list_clicked( self, item ):
         """
@@ -247,15 +244,7 @@ class Search_Tab( QWidget ) :
         what it says
         """
         widget = self.key_word_widget
-
         widget.clear()
-
-        # values    =  [ "oneish", "twoish", "threeish"]
-        # for value in values:
-        #     item = QListWidgetItem( value )
-        #     widget.addItem( item )
-        #     index_to_select = 2
-        #     widget.setCurrentRow(index_to_select)
 
     # -------------
     def criteria_select( self,     ):

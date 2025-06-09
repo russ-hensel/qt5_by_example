@@ -30,18 +30,18 @@ from platform import python_version
 from subprocess import PIPE, STDOUT, Popen, run
 
 #import global_vars
-import ia_parameters
+import in_spect_parameters
 
 #port wat_inspector
 
-VERBOSE    = False
+VERBOSE    = True
 # ---- ---- local imports
 #print_func_header  = uft.print_func_header
 
 LINE_LIMIT   = 25   # or move to parameters
 
 # -------------------------------------
-class IaSearch():
+class Search():
     """
     this will create
     """
@@ -57,7 +57,7 @@ class IaSearch():
         # global_vars.set_tab_db_builder( self  )
 
         if  VERBOSE is True:
-            print( "ia_search.IaSearch find_ia_files now know as info_about, not yet updated ")
+            print( "in_spect_search.earch find_ia_files now know as info_about, not yet updated ")
 
             print( "loop thru files")
 
@@ -75,13 +75,13 @@ class IaSearch():
             these are file_paths, not file_names
             may later need to use .name or .stem
         """
-        directory_list      = ia_parameters.PARAMETERS.dir_for_search
+        directory_list      = in_spect_parameters.PARAMETERS.dir_for_search
         file_path_list      = []
         #i_directory    = Path( "./" )
         for i_directory in directory_list:
             i_directory = Path( i_directory )
 
-            i_file_path_list    = [file  for file in i_directory.glob('info_about*.py')  ]
+            i_file_path_list    = [file  for file in i_directory.glob('in_spect*.py')  ]
                     # not .stem or .name whic may be needed later path not string
 
             file_path_list      = file_path_list + i_file_path_list
@@ -222,7 +222,7 @@ class IaSearch():
         a_file.close()
 
         #rint( f"{file_data = }")
-        if file_data[ "application:"] != "info_about":
+        if file_data[ "application:"] != "in_spect":
             return None
 
         return file_data

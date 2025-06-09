@@ -10,16 +10,24 @@ the main file for info_about
 --
 --
 """
-# ----
+
 
 # ---- search
 """
 Use
         think this is call but check
 
-import info_about
+import in_spect_obj
+print( in_spect_obj.IN_SPECT_OBJ )
 
-info_about.INFO_ABOUT.find_info_for(
+
+use
+or
+in_spect_it    = in_spect_obj.IN_SPECT_OBJ.in_spect_it
+
+
+
+in_spect_obj.IN_SPECT_OBJ.in_spect_it(
                     an_object,
                     # *,
                     msg      = None,
@@ -63,8 +71,8 @@ import importlib
 import sys
 import logging
 
-import ia_parameters
-import ia_search
+import in_spect_parameters
+import in_spect_search
 
     # ia_parameters.PARAMETERS
 
@@ -72,7 +80,7 @@ import ia_search
 # ---- end imports
 
 
-INFO_ABOUT      = None   # after import is an infoabout object
+IN_SPECT_OBJ    = None   # after import is an infoabout object
 
 
 DEBUGGING       = False  # in testing may be changed externally
@@ -88,7 +96,7 @@ MAX_LIST_ITEMS  = 8
 NEW_LINE        = "\n"
 MSG_PREFIX      = "\nInfo About >>>> "
 
-LOG_LEVEL  = 20 # level form much debug       logging.log( LOG_LEVEL,  debug_msg, )
+LOG_LEVEL       = 20 # level form much debug       logging.log( LOG_LEVEL,  debug_msg, )
 
 if DEBUGGING:
     pass
@@ -194,29 +202,7 @@ def to_columns( item_list, format_list = ( "{: <30}", "{:<30}" ), indent = "    
 
     return line_out
 
-# ---------------------
-def to_columns_oldxxxx( current_str, item_list, format_list = ( "{: <30}", "{:<30}" ), indent = "    "  ):
-    """
-    for __str__  probably always default format_list
-    see ColunmFormatter which is supposed to be more elaborate version
-    see its __str__
-    ex:
-        import string_util
-        a_str     = string_util.to_columns( a_str, ["column_data",    f"{self.column_data}"  ] )
-        a_str     = string_util.to_columns( a_str,
-                                            ["column_data",    f"{self.column_data}"  ],
-                                            format_list = ( "{: <30}", "{:<30}" )
-    """
-    #rint ( f"item_list {item_list}.............................................................. " )
-    line_out  = ""
-    for i_item, i_format in zip( item_list, format_list ):
-        a_col  = i_format.format( i_item )
-        line_out   = f"{indent}{line_out}{a_col}"
-    if current_str == "":
-        ret_str  = f"{line_out}"
-    else:
-        ret_str  = f"{current_str}\n{line_out}"
-    return ret_str
+
 
 #----------------
 def short_repr( a_obj, max_len = MAX_REPR_LEN ):
@@ -249,7 +235,7 @@ def short_str( a_obj, max_len = MAX_STR_LEN ):
     return a_str
 
 # ----------------------------------------
-class InfoAbout(   ):
+class InSpectObj(   ):
     """
     About this class.....
     """
@@ -266,18 +252,18 @@ class InfoAbout(   ):
         self.info_provider_list    = []
         #self.add_defined_inspectors()
 
-        self.info_about_base       = InfoAboutBase()
+        self.info_about_base       = InSpectObjBase()
         self._search()
-        INFO_ABOUT                 = self
+        #INFO_ABOUT                 = self
 
         # now have file data list
     #--------------------
     def _search( self ):
         """ """
-        debug_msg =  ( f"InfoAbout._search {ia_parameters.PARAMETERS}" )
+        debug_msg =  ( f"InfoAbout._search {in_spect_parameters.PARAMETERS}" )
         logging.log( LOG_LEVEL,  debug_msg, )
 
-        search                  = ia_search.IaSearch( )
+        search                  = in_spect_search.Search( )
         self.file_data_list     = search.file_data_list
             # sorted list is returned
 
@@ -296,7 +282,7 @@ class InfoAbout(   ):
                 self.info_provider_list.append( i_inspector )
 
     #-------------------------
-    def find_info_for( self,
+    def in_spect_it( self,
                     inspect_me,
                     *,
                     msg             = None,
@@ -361,7 +347,7 @@ class InfoAbout(   ):
         return a_str
 
 #----------------------
-class InfoAboutBase(   ):
+class InSpectObjBase(   ):
     """
     lots may be implemented as utations
     """
@@ -534,8 +520,8 @@ class InfoAboutBase(   ):
         info       = "\n".join( self.line_list )
 
 
-if INFO_ABOUT is None:
-    INFO_ABOUT = InfoAbout()
+if IN_SPECT_OBJ is None:
+    IN_SPECT_OBJ = InSpectObj()
 
 
 # ---- eof

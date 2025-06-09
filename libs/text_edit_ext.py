@@ -4,6 +4,7 @@
 
 # ---- tof
 """
+/mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/rshlib_qt/text_edit_ext.py
 Created on Fri Jan 10 16:32:00 2025
 text edit extensions
 
@@ -12,11 +13,11 @@ text edit extensions
             have it created the edit need method
                  for it and change the inti
                  _obj   = TextEditExt( parameters )
-                  self.text_edit = TextEcitExt.build_text_edit()
+                  self.text_edit = TextEditExt.build_text_edit()
 
                   then build other stuff
 
-            block indent and outdent
+            block indent and out-dent
 
         widget                  = QLineEdit()
         self.line_edit          = widget
@@ -38,17 +39,17 @@ text_edit_ext.    ( )
 
 
 """
+# ---- imports
+
+import os
+#from   subprocess import Popen
 
 # ---- Qt
 from PyQt5.QtGui import QIntValidator, QStandardItem, QStandardItemModel, QTextCursor
 from PyQt5.QtCore import QDate, QModelIndex, Qt, QTimer, pyqtSlot
-from PyQt5.QtGui import QTextCursor, QTextDocument
-
-# ---- begin pyqt from import_qt.py
-#from PyQt5.QtGui import QIntValidator, QStandardItem, QStandardItemModel, QTextCursor
+from PyQt5.QtGui import  QTextDocument
 
 
-# ---- QtSql
 
 
 from PyQt5.QtWidgets import (QAction,
@@ -81,17 +82,33 @@ from PyQt5.QtWidgets import (QAction,
                              QWidget)
 
 import webbrowser
+import logging
+
+import platform
+import subprocess
+
+
 # ---- local imports
 from app_global import AppGlobal
 import exec_qt      #
 
+STUFF_DB            = None  # may be monkey patched in
+                            # this wold be the app
+                            # STUFF_DB.main_window may be what you want
+                            # go_active_sub_window_func
+
+logger              = logging.getLogger( )
+LOG_LEVEL           = 10   # higher is more
 
 MARKER              = ">>"
 EXEC_RUNNER         = None  # setup below
 # TEXT_EXT            = None
+SCAN_LINES          = 100
+
+TEXT_EDIT_EXT       = None
 
 
-class TextEditExt( object ):
+class TextEditExt( ):
     """
     About this class.....
     self.text_edit_ext_obj         = text_edit_ext.TextEditExt( AppGlobal.parameters, entry_widget)
@@ -105,11 +122,27 @@ class TextEditExt( object ):
         # like  app = AppClass( 55 )
         self.parameters       = parameters
         self.text_edit        = text_edit
+        self.shell_ext        = ShellExe()  # or change to run by import
+        self.prior_text       = ""
+        self.last_position    = 0
+        self.idle_exe         = IdleExe()
+
+        msg   = ( "------------------------ monkey_patch_here reexamine this--------------------------" )
+        logging.error( msg )
+
+        text_edit.text_edit_ext_obj  = self
+            # create on first use?
+        global    TEXT_EDIT_EXT
+        if TEXT_EDIT_EXT is None:
+            TEXT_EDIT_EXT = self
+        else:
+            msg   = ( f"second instance of TextEditExt created move all methods in this object ?  {1  = }  ")
+            logging.error( msg )
 
     # ------------------------------------------
     def get_template_ddl_values(self):
         """
-        get the list of dropdown value from the
+        get the list of drop-down value from the
         parameter templates
 
         """
@@ -124,10 +157,9 @@ class TextEditExt( object ):
     def get_template_by_key( self, key ):
         """
         what it says
-            when a dropdown needs a text item
+            when a drop-down needs a text item
 
         """
-
         text_templates      = self.parameters.text_templates
         text                = text_templates[ key ]
 
@@ -137,9 +169,9 @@ class TextEditExt( object ):
     def build_up_template_widgets( self,   ):
         """
         what it says
-            perhap we should change to create
+            perhaps we should change to create
             and even return its button ??
-            ddl_widget,  ddl_button_widget  =    self.tex_....build_up_template_widgets
+            ddl_widget,  ddl_button_widget  =    self.txt_....build_up_template_widgets
         """
 
         #self.text_edit_ext_obj.set_up_widget( widget )
@@ -153,7 +185,7 @@ class TextEditExt( object ):
         widget.setMinimumWidth( 200 )
 
         # # these work but in some case seem only to work with a lambda
-        # widget.currentIndexChanged.connect( self.conbo_currentIndexChanged )
+        # widget.currentIndexChanged.connect( self.combo_currentIndexChanged )
         # widget.currentTextChanged.connect(  self.combo_currentTextChanged  )
         #widget.currentTextChanged.connect(self.current_text_changed)
 
@@ -184,8 +216,7 @@ class TextEditExt( object ):
         what it says
         """
         text    = QApplication.clipboard().text( )
-        print( "this is the text we need to paste from clipboard")
-        print( text )
+
         self.insert_text_at_cursor( text )
 
     # ------------------------
@@ -197,6 +228,411 @@ class TextEditExt( object ):
         cursor          = text_edit.textCursor()
         cursor.insertText( text )
 
+
+    def run_shell( self, code_lines ):
+        """ """
+        # self.shell_ext        = ShellExe()
+
+        self.shell_ext.run_code_lines( code_lines )
+
+    def cache_current( self ):
+        """
+        save contents of the text in one level deep buffer
+        probably trigger before select or add
+        this code would go
+        """
+        text_edit   = self.text_edit
+        cursor      = text_edit.textCursor()  # Save the current cursor position
+
+        self.prior_text     = text_edit.toPlainText()  # Get all text as a string
+
+        text_edit.setTextCursor(cursor)
+
+    def paste_cache( self ):
+        """
+        save contents of the text in one level deep buffer
+        """
+        self.insert_text_at_cursor( self.prior_text )
+        pass # debug
+
+    # ---------------------
+    def search_down( self, search_line_edit ):
+        """
+        search for text see search up
+            case insensitive
+        """
+        text_edit   = self.text_edit
+        search_text = search_line_edit.text()
+        if search_text:
+            cursor = text_edit.textCursor()
+            cursor.setPosition( self.last_position )
+            found = text_edit.find( search_text )
+
+            if found:
+                self.last_position = text_edit.textCursor().position()
+                text_edit.ensureCursorVisible()  # Scroll to the found text
+
+            else:
+                # grok code
+                self.last_position = 0
+                cursor.setPosition(self.last_position)
+                text_edit.setTextCursor(cursor)
+                text_edit.ensureCursorVisible()  # Optional: Scroll to top if reset
+
+    # ---------------------
+    def search_up( self, search_line_edit ):
+        """case insensitive
+        for an text edit search for a string
+        the line_edit contains the string that is the target
+        direction of search is up
+        case insensitive
+        may need to protect against trying to start beyond end !!
+        as user may have deleted some text
+
+        """
+        text_edit   = self.text_edit
+        search_text = search_line_edit.text()
+        if search_text:
+            cursor = text_edit.textCursor()
+            cursor.setPosition( self.last_position )
+
+            found = text_edit.find( search_text, QTextDocument.FindBackward )
+
+            if found:
+                self.last_position = text_edit.textCursor().position()
+                text_edit.ensureCursorVisible()  # Scroll to the found text
+
+            else:
+                self.last_position = text_edit.document().characterCount()
+                cursor.setPosition( self.last_position )
+                text_edit.setTextCursor(cursor)
+                text_edit.ensureCursorVisible()  # Optional: Scroll to top if reset
+
+
+
+    def strip_lines_in_selection(self, ):
+        """
+        Claude says
+        Gets selected text from a QTextEdit, strips leading and trailing spaces from each line,
+        and replaces the original selection with the processed text.
+
+        Args:
+            text_edit: A QTextEdit widget instance
+
+        Returns:
+            The processed text (also replaces the selection in the widget)
+        """
+        text_edit    = self.text_edit
+        # Get the selected text
+        cursor = text_edit.textCursor()
+        selected_text = cursor.selectedText()
+
+        # Check if there's any selected text
+        if not selected_text:
+            return None
+
+        # Split into lines and strip each line
+        # Note: QTextEdit uses Unicode paragraph separators (U+2029) for line breaks in selectedText()
+        lines           = selected_text.split('\u2029')
+        stripped_lines  = [line.strip() for line in lines]
+
+        # Join the lines back together
+        processed_text = '\n'.join(stripped_lines)
+
+        # Replace the selected text with the processed text
+        cursor.insertText(processed_text)
+
+        return processed_text
+
+
+    # # ----- cmd_ext, migrate to this !! todo
+    # def cmd_ext( self ):
+    #     """ """
+    #     cmd_ext( self, ) # other things make this call more directly
+
+
+    # ------------------------
+    def cmd_exec( self   ):
+        """
+        execute command parsed out of text
+
+        py
+        sh
+        url
+        shell
+        text
+        idle
+        copy
+
+        """
+        text_edit        = self.text_edit
+        # ---- do some parsing
+        code_lines       = get_snippet_lines( text_edit  )
+        debug_msg        = ( code_lines )
+        logging.debug( debug_msg )
+
+        code_lines       = undent_lines(code_lines)
+        splits           = code_lines[0].split()
+        splits_1         = code_lines[0].split( " ", 1 )
+        if len( splits_1 ) > 1:
+            arg_1 = splits_1[1].strip()   # ?? follow by remove of nl
+
+        if len( splits) == 0:
+            return
+
+        if splits[0] == ">>":
+            splits = splits[1:]        # toss the >>
+
+        if splits[0].startswith( ">>" ):
+            splits[0]  = splits[0][ 2: ]  # again toss the >>
+
+        cmd         = splits[0].lower()
+        cmd_args    = splits[ 1:]
+
+        debug_msg   = ( f"cmd_exec {cmd = } \n {cmd_args = }")
+        logging.log( LOG_LEVEL,  debug_msg, )
+
+        # ---- py
+        if   cmd == "py":
+            code    = "\n".join( code_lines[ 1:] )  # title in line 0 !!
+            msg     = " ".join( cmd_args )
+            if msg == "":
+                msg  = "execute some python code"
+            #rint( code )
+            global   EXEC_RUNNER
+            if EXEC_RUNNER is None:
+                EXEC_RUNNER      = exec_qt.ExecRunner( AppGlobal.q_app  )
+
+            EXEC_RUNNER.create_window(
+                        code       = code,
+                        a_locals   = locals(),
+                        a_globals  = globals(),
+                        msg        = msg,
+                        autorun    = True )
+
+        elif cmd == "copy":
+            #rint( "you need to implement >>idle")
+            QApplication.clipboard().setText( " ".join( cmd_args )   )
+
+        # ---- snippet  !! missing from docs ??
+        elif cmd == "snippet":
+            #rint( "you need to implement >>idle")
+            # QApplication.clipboard().setText( " ".join( cmd_args )   )
+            code    = "\n".join( code_lines[ 1:] )  # title in line 0 !!
+            msg     = " ".join( cmd_args )
+
+            QApplication.clipboard().setText( code   )
+
+        # ---- idle and idle file
+        elif cmd == "idle":   # want a one line and may line
+            msg     = ( "  >>idle in process ................................")
+            logging.debug( msg, )
+
+            self.idle_exe.idle_on_temp_file( code_lines )
+
+        elif cmd == "idle_file":   # want a one line and may line
+
+            file_name     = cmd_args[0]
+            self.idle_exe.idle_file( file_name  )
+            pass  # debug
+
+        # ---- text
+        elif cmd == "text":
+            file_name     = cmd_args[0]
+            AppGlobal.os_open_txt_file( file_name )
+
+        elif cmd == "url":
+            filename     = cmd_args[0]
+            webbrowser.open( filename, new = 0, autoraise = True )
+
+        # ---- bash
+        elif cmd == "bash":
+            #rint( f"you need to implement >>shell {code_lines}")
+            TEXT_EDIT_EXT.run_shell( code_lines )
+
+        # ---- shell
+        elif cmd == "shell":
+            #file_name     = cmd_args[0]  # older change to next t
+            file_name     = arg_1
+            shell_file( file_name )
+    \
+        # ---- search
+        elif cmd == "search":
+            # msg   = ( "implementing >>search")
+            # logging.debug( msg )
+
+            if  STUFF_DB  is None:
+                msg   = ( f"cannot do search as {STUFF_DB  = }  ")
+                logging.error( msg )
+                return
+
+            else:
+                # msg   = ( f"you need to implement >>search {STUFF_DB  = }  ")
+                # logging.debug( msg )
+                STUFF_DB.main_window.search_me( " ".join( cmd_args ) )  # cmd_args rest of line
+            # = None  # may be monkey patched in
+            #                     # this wold be the app
+            #                     # STUFF_DB.main_window may be what you want
+            #                     # go_active_sub_window_func
+
+
+        elif cmd == "xxx":
+            pass
+
+        else:
+            msg   = ( f"{cmd = } \n {cmd_args = }" )
+            logging.error( msg )
+        # next case based on command cmd
+
+
+
+class ShellExe( object ):
+    """
+    for executing shell commands that begin as a list
+    this may need refactoring
+    based on cmd_assist perhaps should go back there
+    should be a singleton for now built by TextEditExt
+    """
+    #----------- init -----------
+    def __init__(self,   ):
+        pass
+
+    #---------------------------
+    def run_code_lines( self, code_lines, ):
+        """ """
+
+        code_lines_new     = [i_code_line.strip()
+                               for i_code_line in code_lines
+                                   if i_code_line.strip() != "" ]
+
+        #rint( f"run_code_lines in shellext    >>shell {code_lines_new =}")
+        # line one == 0 is a comment add echo in front and quote
+        code_lines_new[ 0 ]    = f"echo '{code_lines_new[ 0 ]}'   "
+
+        #rint( f"run_code_lines in shellext    >>shell {code_lines_new =}")
+        code_lines_new      = self.add_echo( code_lines_new )
+        debug_msg    = ( f""""run_code_lines in shellext    >>shell {code_lines_new =}""")
+        logging.log( LOG_LEVEL,  debug_msg, )
+
+        cmd_str     = ";".join( code_lines_new )
+        cmd_str     = f"""gnome-terminal -- bash -c "{cmd_str}; echo 'exec bash' ;exec bash" """
+
+        debug_msg   = ( f"about to os.system {cmd_str = }" )
+        logging.log( LOG_LEVEL,  debug_msg, )
+
+        result = os.system( cmd_str  )
+        #rint( f"result = os.system >>{result}<<\n\n")
+
+    # ----------------------------------
+    def add_echo(self, code_lines ):
+        """
+        add echo commands except to echo commands
+        and for now remove comments from the command part
+
+        """
+        new_list      = []
+        for i_item in code_lines:
+            if i_item.startswith( "echo" ):
+                new_list.append( i_item )
+            else:
+                new_list.append( f"echo '{i_item}'")
+                # now look for command part comment
+                splits     = i_item.split( "#" )
+                i_item     = splits[0]     # combine lines for clean
+                new_list.append( i_item )
+
+        return new_list
+
+    # ----------------------------------
+    def build_command_1_2xxx( self, add_echo = True, add_newline = False ):
+        """
+        from command_0 suck dry and delete
+        build command from arg1 and arg2
+        self.build_command_1_2
+        ex:
+        return self.build_command_1_2( add_echo = add_echo, add_newline = add_newline )
+
+        ! need a 0 1 2 version and a generalized one see commands 3 for vert which seems to do it
+        """
+        print( "build_command_1_2" )
+        args        = self.get_ddl_args()
+
+        cmd_prefix  = self.build_prefix()
+
+        cmd_list    = cmd_prefix + [ f"{args[1]} {args[2]}",
+                                     "exec bash",
+                                     ]
+
+        if add_echo:
+            cmd_list    = self.build_echo( cmd_list )
+
+        if add_newline:
+            cmd_str     = "\n".join( cmd_list )   # may still want to strip exec bash  !!
+
+        else:
+            cmd_str     = ";".join( cmd_list )
+            cmd_str     = f'gnome-terminal -- bash -c "{cmd_str}"'
+
+        #rint( cmd_str )
+        #rint( cmd_list )
+
+        return cmd_str
+
+class IdleExe( ):
+    """
+    for executing shell commands that begin as a list
+    this may need refactoring
+    based on cmd_assist perhaps should go back there
+    should be a singleton for now built by TextEditExt
+    """
+    def __init__( self ):
+        """ """
+        self.venv               = "py_12_misc"  # !! change to parameter
+        self.file_name_temp_py  = "temp_py.py"
+        self.file_name_temp_sh  = "temp_sh.sh"
+
+    #--------
+    def write_file_py( self, code_lines, file_name = None ):
+        """ """
+        file_name    = self.file_name_temp_py
+
+        with open( file_name, 'w' ) as a_file:
+                # wa will append so file should be deleted time to time w will overwrite
+            a_file.writelines(f"{line}\n" if not line.endswith("\n") else line for line in code_lines )
+
+    #--------
+    def write_file_sh( self, sh_lines, file_name = None ):
+        """ """
+        file_name    = self.file_name_temp_sh
+
+        with open( file_name, 'w' ) as a_file:    # wa will append so file should be deleted time to time w will overwrite
+            a_file.writelines(f"{line}\n" if not line.endswith("\n") else line for line in sh_lines )
+
+
+    def idle_on_temp_file( self, code_lines ):
+        """ """
+        code_lines[0]   =  f"# -- {code_lines[0]}"
+        self.write_file_py( code_lines, )
+        sh_lines        = [ f"conda activate {self.venv}", f"idle  {self.file_name_temp_py}" ]
+        self.write_file_sh( sh_lines )
+
+        #subprocess.run(  ["bash", self.file_name_temp_sh ] )
+        #    # blocking
+        subprocess.Popen(["bash", self.file_name_temp_sh] )
+            # non blocking --- see help
+
+
+    def idle_file( self, file_name ):
+        """
+        open idle in a conda venv for file_name
+        """
+
+        sh_lines        = [ f"conda activate {self.venv}", f"idle  {file_name}" ]
+        self.write_file_sh( sh_lines )
+
+        subprocess.run(["bash", self.file_name_temp_sh ])  # !! define check
+        # next is wrong because we need the environment set up
+        #subprocess.run([ "idle", file_name ])
 
 # ------------------------
 def get_snippet_lines( text_edit, do_undent = True  ):
@@ -235,7 +671,7 @@ def get_snippet_lines( text_edit, do_undent = True  ):
     prior_start_of_line     = cursor.position()
 
     # ---- upward scan
-    for ix in range( 20 ):
+    for ix in range( SCAN_LINES ):
 
         cursor.movePosition( QTextCursor.StartOfLine )
         cursor.movePosition(cursor.EndOfLine, cursor.KeepAnchor )
@@ -246,7 +682,7 @@ def get_snippet_lines( text_edit, do_undent = True  ):
             consective_blank_lines  += 1
 
         else:
-             consective_blank_lines  = 0
+            consective_blank_lines  = 0
 
         if selected_text.strip().lower().startswith( MARKER ):
             #rint( f"hit the top of marked text {ix =}")
@@ -258,7 +694,8 @@ def get_snippet_lines( text_edit, do_undent = True  ):
         cursor.movePosition( QTextCursor.StartOfLine )
         position       = cursor.position()
         if position == prior_start_of_line:
-            print( f"is error !! hit the top of all text {ix =}")
+            debug_msg = ( f"is error !! hit the top of all text {ix =}")
+            logging.log( LOG_LEVEL,  debug_msg, )
             break
         else:
             prior_start_of_line  = position
@@ -269,7 +706,7 @@ def get_snippet_lines( text_edit, do_undent = True  ):
     # ---- start down collecting lines
     consective_blank_lines  = 0
     on_top_line             = True
-    for ix in range( 20 ):
+    for ix in range( SCAN_LINES ):
         cursor.movePosition( cursor.EndOfLine, cursor.KeepAnchor )
         selected_text   = cursor.selectedText()
         selected_text   = selected_text.rstrip()
@@ -281,7 +718,7 @@ def get_snippet_lines( text_edit, do_undent = True  ):
              consective_blank_lines  = 0
 
         if consective_blank_lines  > 3:
-            msg = f"scan down blank line limit {consective_blank_lines}"
+            #msg = f"scan down blank line limit {consective_blank_lines}"
             #rint( msg )
             break
 
@@ -310,69 +747,6 @@ def get_snippet_lines( text_edit, do_undent = True  ):
         lines   = undent_lines( lines )
 
     return lines
-
-# ---------------------
-def search_downxxxx( line_edit, text_edit ):
-    """
-    search for text
-        case insensitive
-    """
-    search_text = line_edit.text()
-    if search_text:
-        cursor = text_edit.textCursor()
-        #cursor.setPosition( self.last_position )
-            # this last position stuff did not seem to do anything
-        found = text_edit.find(search_text)
-
-        if found:
-            pass
-            # self.last_position = self.text_edit.textCursor().position()
-
-        else:
-            pass
-            # Reset position if end is reached and no match
-            # self.last_position = 0
-
-# ---------------------
-def search_down(self):
-    """
-    search for text see search up
-        case insensitive
-    """
-    search_text = self.line_edit.text()
-    if search_text:
-        cursor = self.text_edit.textCursor()
-        cursor.setPosition( self.last_position )
-        found = self.text_edit.find(search_text)
-
-        if found:
-            self.last_position = self.text_edit.textCursor().position()
-
-        else:
-            # Reset position if end is reached and no match
-            self.last_position = 0
-
-
-# ---------------------
-def search_up( line_edit, text_edit ):
-    """case insensitive
-    for an text edit search for a string
-    the line_edit contains the string that is the target
-    direction of search is up
-    case insensitive
-    """
-    search_text = line_edit.text()
-    if search_text:
-        cursor = text_edit.textCursor()
-        #cursor.setPosition( self.last_position )
-        # Use QTextDocument.FindBackward for backward search
-        found = text_edit.find(search_text, QTextDocument.FindBackward )
-
-        # if found:
-        #     self.last_position = self.text_edit.textCursor().position()
-        # else:
-        #     # Reset position if start is reached and no match
-        #     self.last_position = self.text_edit.document().characterCount()
 
 #  --------
 def copy_all_text( self, text_edit ):
@@ -424,17 +798,10 @@ def qt_exec( text_edit ):
     this is like the wat inspector but is not it
     >>
 
-    for ix in range( 1, 5):
-        print( ix )
-
-    >>
-
-    print( "hi there" )
-
-
     """
-    code_lines       = get_snippet_lines( text_edit  )
-    print( code_lines )
+    code_lines      = get_snippet_lines( text_edit  )
+    debug_msg       = ( code_lines )
+    logging.log( LOG_LEVEL,  debug_msg, )
     code_lines       = undent_lines(code_lines)
     #rint( f"{code_lines = }")
     code    = "\n".join( code_lines[ 1:] )  # title in line 0 !!
@@ -450,67 +817,16 @@ def qt_exec( text_edit ):
                 msg        = "my code message" )
 
 
-# ------------------------
-def cmd_exec( text_edit ):
-    """
-    execute command parsed out of text
+def shell_file( file_name ):
+    """ """
+    if platform.system() == 'Windows':
+        os.startfile(file_name)
+    elif platform.system() == 'Darwin':  # macOS
+        subprocess.call(('open', file_name))
+    else:  # Linux
+        subprocess.call(('xdg-open', file_name ) )
 
-    py
-    sh
-    url
-    shell
-    text
-    idle
-
-    """
-    code_lines       = get_snippet_lines( text_edit  )
-    print( code_lines )
-    code_lines       = undent_lines(code_lines)
-    splits           = code_lines[0].split()
-    if splits[0] == ">>":
-        splits = splits[1:]        # toss the >>
-    if splits[0].startswith( ">>" ):
-        splits[0]  = splits[0][ 2: ]  # again toss the >>
-
-    cmd         = splits[0].lower()
-    cmd_args    = splits[ 1:]
-
-    print( f"{cmd = } \n {cmd_args = }")
-
-    if   cmd == "py":
-        code    = "\n".join( code_lines[ 1:] )  # title in line 0 !!
-        msg     = " ".join( cmd_args )
-        if msg == "":
-            msg  = "execute some python code"
-        #rint( code )
-        global   EXEC_RUNNER
-        if EXEC_RUNNER is None:
-            EXEC_RUNNER      = exec_qt.ExecRunner( AppGlobal.q_app  )
-
-        EXEC_RUNNER.create_window(
-                    code       = code,
-                    a_locals   = locals(),
-                    a_globals  = globals(),
-                    msg        = msg,
-                    autorun    = True )
-
-    elif cmd == "idle":
-        pass
-    elif cmd == "text":
-         filename     = cmd_args[0]
-         AppGlobal.os_open_txt_file( filename )
-
-    elif cmd == "url":
-        filename     = cmd_args[0]
-        webbrowser.open( filename, new = 0, autoraise = True )
-
-    elif cmd == "idle":
-        pass
-    elif cmd == "idle":
-        pass
-    else:
-        print( f"{cmd = } \n {cmd_args = }")
-    # next case based on command cmd
+# Usage
 
 # # ------------------------
 # def cmd_exec( text_edit ):
@@ -518,10 +834,6 @@ def cmd_exec( text_edit ):
 #     execute command parsed out of text
 
 
-#     """
+#     """/mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/rshlib_qt/text_edit_ext.py
 
 # ---- eof
-
-
-
-

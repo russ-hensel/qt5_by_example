@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# ---- TOF
+# ---- tof
 
 """
     parameters    for  qt examples
@@ -10,7 +10,6 @@
 if __name__ == "__main__":
     #----- run the full app
     import main
-
 # --------------------
 
 import logging
@@ -22,9 +21,6 @@ import sys
 #from   app_global import AppGlobal
 #import running_on  parameters.PARAMETERSdir_for_tabs
 import in_spect_env
-
-
-
 
 global PARAMETERS
 PARAMETERS   = None
@@ -43,8 +39,8 @@ class Parameters( ):
             if you comment all out all modes you get the default mode which should
             run, perhaps not in the way you want
         """
-        #self.mode_russ_on_theprof()
-        self.new_user_mode()
+        self.mode_russ_on_theprof()
+        #self.new_user_mode()
         #self.millhouse_1_mode()
 
         # two of my computers
@@ -102,6 +98,7 @@ class Parameters( ):
                                     "/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs",
                                     "/mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/rshlib_qt",
                                     ]
+        self.dir_for_tabs.append( "./tabs/basic_widgets" )
 
         # ---- for sample database
         self.db_file_name        = "/tmp/ramdisk/qt_sql.db"
@@ -112,15 +109,17 @@ class Parameters( ):
 
         # next will blow program if dir does not exist
         self.tab_db_file_name    = "/tmp/ramdisk/tab.db"
-        self.tab_db_file_name    = ":memory:"
+        self.tab_db_file_name    = ":memory:"    # ok no disk location needed
 
 
-        self.default_search     = "xxx"
+        self.default_search     = "qq"
         self.do_search_on_init  = True
+
+        self.logging_level      = logging.DEBUG
 
     # -------
     def new_user_mode( self ):
-        """ ['/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb', '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs', '/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs', '/mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/rshlib_qt']
+        """
         a mode for the new user, pretty much empty,
         a new user may experiment here.
         """
@@ -233,9 +232,6 @@ class Parameters( ):
             pass
             # print( "os_tweaks for not windows " )
 
-    #
-
-
     # ------->> default mode, always call
     def mode_default( self ):
         """
@@ -305,9 +301,10 @@ class Parameters( ):
 
         self.minimun_useful    =  10
 
-
         self.icon               = r"./images/icon_red.png"    # icon for running app
         self.icon               = r"./icons/icons/binocular.png"
+        self.icon               = r"./misc/computer.ico"
+
 
         self.text_editor        = "gedit"
 #        self.text_editor        = "xed"
@@ -337,9 +334,12 @@ class Parameters( ):
             # the type of database, so far we only support sqllite
 
         # ---- for sample database
-        self.db_file_name        = "/tmp/ramdisk/qt_sql.db"
-        self.db_file_name        = ":memory:"     #  = "sample.db"   =  ":memory:"
+        self.db_file_name       = "/tmp/ramdisk/qt_sql.db"
+        self.db_file_name       = ":memory:"     #  = "sample.db"   =  ":memory:"
         #self.db_file_name        = "./qt_sql.db"    #  real files are very slow
+
+        self.auto_run           = True
+
 
         # ---- for qt tabs
         self.tab_db_type         = "QSQLITE"
@@ -367,10 +367,36 @@ class Parameters( ):
         self.dir_for_tabs       = [    ]
         self.dir_for_tabs       = [ "/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs" ]
         #may need to be on path sys.path.insert( 1, f"{src_root}/_projects/stuffdb/qt_tabs" )
+        self.dir_for_tabs.append( "./tabs/basic_widgets" )
+
 
         # ---- search
-        self.default_search     = "zzzz"
+        self.default_search     = "qq"
         self.do_search_on_init  = True
+
+        # probably not used ??
+        # ---- systems for helpdb ??alpha  to sort make all quotes the same
+        self.systems_list      =  [    '',
+                            'Bash',
+                            'CAD/Print',
+                            'Delete',
+                            'Electronics',
+                            'House',
+                            'Linux',
+                            'Powerbuilder',
+                            'Programming',
+                            'Python',
+                            'RasPi',
+                            'RshPy',              # subsystem the project
+                            'Russ',
+                            'StuffDB',
+                            'TBD',
+                            'Tools',
+
+                        ]
+
+
+
 
     # -------
     def __init__( self, ):
@@ -463,9 +489,6 @@ class Parameters( ):
 
         a_str   = self.to_columns( a_str, ["pylogging_fn",
                                            f"{self.pylogging_fn}" ] )
-
-
-
 
 
         a_str   = self.to_columns( a_str, ["qt_height",

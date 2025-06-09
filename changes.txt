@@ -54,7 +54,6 @@ STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_word
 if __name__ == "__main__":
     #----- run the full app
     import main
-    #qt_fitz_book.main()
 # --------------------
 
 
@@ -103,7 +102,6 @@ import tab_base
 ------------------------------
 
 
-
         # ---- mutate
         widget = QPushButton("mutate\n")
         self.button_ex_1         = widget
@@ -125,7 +123,7 @@ import tab_base
         msg    = "so far not implemented "
         self.append_msg( msg,   )
 
-        self.append_msg( "mutate_0 done" )
+        self.append_msg( "<<-- done" )
 
     # ------------------------------------
     def mutate_1( self ):

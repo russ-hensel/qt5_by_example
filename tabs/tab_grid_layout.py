@@ -144,9 +144,11 @@ class GridLayoutTab( tab_base.TabBase  ) :
                 layout.addWidget( widget, ix_row, ix_col, row_span, col_span )
 
         for ix_row  in range( 0, 6, 2 ):
+            row_span      = 2   # using None seems ok to get default
+            col_span      = 1   # using None seems ok to get default
+
             for ix_col in range( 4, 6 ):
-                row_span      = 2
-                col_span      = 1
+
                 widget = QPushButton(f"r{ix_row} c{ix_col}")
                 widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
                 layout.addWidget( widget, ix_row, ix_col, row_span, col_span )
@@ -188,14 +190,19 @@ class GridLayoutTab( tab_base.TabBase  ) :
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
 
+        self.append_msg( tab_base.DONE_MSG )
+
     # ------------------------------------
     def mutate_1( self ):
         """
         read it -- mutate the widgets
         """
         self.append_function_msg( "mutate_1" )
+
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
+
+        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------
     def inspect(self):
@@ -210,6 +217,8 @@ class GridLayoutTab( tab_base.TabBase  ) :
              a_locals       = locals(),
              a_globals      = globals(), )
 
+        self.append_msg( tab_base.DONE_MSG )
+
     # ------------------------
     def breakpoint(self):
         """
@@ -219,5 +228,6 @@ class GridLayoutTab( tab_base.TabBase  ) :
 
         breakpoint()
 
+        self.append_msg( tab_base.DONE_MSG )
 
 # ---- eof

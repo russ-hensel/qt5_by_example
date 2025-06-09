@@ -8,14 +8,10 @@ Created on Thu Jan 23 08:36:02 2025
 """
 
 
-
-
 # ---- imports
 #from   collections.abc import Sequence
 import collections
 import time
-
-
 
 # ---- end imports
 
@@ -126,15 +122,17 @@ class CodeTimer():
         Return:
             prints output
         """
-        print( "\nTimings:")
+        print( "\nRelative Timings:")
+        # make base timing the last one
+        base_timing    = self.records[ -1 ].timing
 
-        base_timing = None
+        #base_timing = None
         for a_record in self.records:
             a_msg       = a_record.msg
             a_timing    = a_record.timing
-            if base_timing is None:
-                # will happen on first timing
-                base_timing = a_timing
+            # if base_timing is None:
+            #     # will happen on first timing
+            #     base_timing = a_timing
 
             #timing_msg   =  f"{a_msg}  perf_time = {a_timing} relative time = {relative_timing}"
             relative_timing  = a_timing / base_timing
