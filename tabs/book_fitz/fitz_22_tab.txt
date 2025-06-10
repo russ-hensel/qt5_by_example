@@ -1,0 +1,20 @@
+
+
+
+Not sure how much of this is true 
+
+based on fitz chapt 22 so far little more than adapt to my
+standard tab format
+
+
+data is hard coded in a list but could have come from any
+source, need only change TableModel
+
+
+
+
+
+
+
+
+

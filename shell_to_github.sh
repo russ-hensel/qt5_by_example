@@ -22,8 +22,11 @@ read RESPONSE
 
 rsync -u -t -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/*.*       /mnt/WIN_D/for_github/qt5_by_example
 rsync -u -t -vv -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/docs/*.*  /mnt/WIN_D/for_github/qt5_by_example/docs
-rsync -u -t -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/*.*  /mnt/WIN_D/for_github/qt5_by_example/tabs
-
+# ---- tabs
+rsync -u -t -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/*.*                  /mnt/WIN_D/for_github/qt5_by_example/tabs
+rsync -u -t -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/basic_widgets/*.*    /mnt/WIN_D/for_github/qt5_by_example/tabs/basic_widgets
+rsync -u -t -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/basic_sql/*.*        /mnt/WIN_D/for_github/qt5_by_example/tabs/sql_widgets
+rsync -u -t -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/book_fitz/*.*        /mnt/WIN_D/for_github/qt5_by_example/tabs/book_fitz
 
 # to libs ----------------------------------------------
 rsync -u -t -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/rshlib_qt/*.*     /mnt/WIN_D/for_github/qt5_by_example/libs
