@@ -93,6 +93,7 @@ class QTextEditTab( tab_base.TabBase ) :
         tab_text_edit.py
         """
         super().__init__()
+        self.module_file       = __file__
         self.mutate_dict[0]     = self.mutate_0
         self.mutate_dict[1]     = self.mutate_1
         # self.mutate_dict[2]    = self.mutate_2
@@ -269,21 +270,24 @@ Undo/Redo:
         widget.clicked.connect( self.copy_selected_text )
         button_layout.addWidget( widget,   )
 
-        # ---- mutate
-        widget = QPushButton("mutate\n")
-        self.button_ex_1         = widget
-        widget.clicked.connect( lambda: self.mutate( ) )
-        button_layout.addWidget( widget )
+        self.build_gui_last_buttons( button_layout )
 
-        # ---- PB inspect
-        widget = QPushButton("inspect\n")
-        widget.clicked.connect( self.inspect    )
-        button_layout.addWidget( widget,   )
 
-        # ---- PB breakpoint
-        widget = QPushButton("breakpoint\n")
-        widget.clicked.connect( self.breakpoint    )
-        button_layout.addWidget( widget,   )
+        # # ---- mutate
+        # widget = QPushButton("mutate\n")
+        # self.button_ex_1         = widget
+        # widget.clicked.connect( lambda: self.mutate( ) )
+        # button_layout.addWidget( widget )
+
+        # # ---- PB inspect
+        # widget = QPushButton("inspect\n")
+        # widget.clicked.connect( self.inspect    )
+        # button_layout.addWidget( widget,   )
+
+        # # ---- PB breakpoint
+        # widget = QPushButton("breakpoint\n")
+        # widget.clicked.connect( self.breakpoint    )
+        # button_layout.addWidget( widget,   )
 
     # ---------------  end of button actions and class
     # ---------------------------------------
@@ -696,7 +700,7 @@ at the cursor ----<<""")
         """
         the usual
         """
-        self.append_function_msg( "inspect" )
+        self.append_function_msg( tab_base.INSPECT_MSG )
 
         # make some locals for inspection
         local_self            = self
@@ -715,7 +719,7 @@ at the cursor ----<<""")
         each tab gets its own function so we break in that
         tabs code
         """
-        self.append_function_msg( "breakpoint" )
+        self.append_function_msg( tab_base.BREAK_MSG )
 
         breakpoint()
 

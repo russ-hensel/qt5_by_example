@@ -3,13 +3,13 @@
 # ---- tof
 """
 
-tab_buttons.py
+tab_context_menu.py
 
-KEY_WORDS:      pressed press push button click connect qq
-CLASS_NAME:     ButtonTab
-WIDGETS:        QPushButton
+KEY_WORDS:      context menu connect qq
+CLASS_NAME:     ContextMenuTab
+WIDGETS:        QContextMenu
 STATUS:
-TAB_TITLE:      QPushButton
+TAB_TITLE:      QContextMenu
 
 
 """
@@ -30,6 +30,8 @@ from functools import partial
 from subprocess import PIPE, STDOUT, Popen, run
 
 import wat
+
+from PyQt5 import QtCore
 from PyQt5 import QtGui
 from PyQt5.QtCore import (QDate,
                           QDateTime,
@@ -84,7 +86,7 @@ import tab_base
 print_func_header   = uft.print_func_header
 
 #  --------
-class ButtonTab( tab_base.TabBase ):
+class ContextMenuTab( tab_base.TabBase ):
     """
     Now i have a doc string.
 
@@ -128,24 +130,21 @@ class ButtonTab( tab_base.TabBase ):
         row_layout          = QHBoxLayout(   )
         layout.addLayout( row_layout )
 
-        widget          = QLabel( "q_pbutton_1 -> " )
-        self.qlabel_1   = widget
-        row_layout.addWidget( widget )
 
-        widget              = QPushButton( "q_pbutton_1" )
-        self.q_push_button_1    = widget
-        connect_to          = self.pb_1_clicked
-        widget.clicked.connect( connect_to )
-        row_layout.addWidget( widget )
 
-        widget              = QLabel("q_pbutton_2 -> ")
-        row_layout.addWidget( widget )
+        # ---- the QTextEdit
+        widget       = QTextEdit()
+        # layout.addWidget(text_edit, 4, 0, 1, 3)  # Row 4, Column 0, RowSpan 1, ColumnSpan 3
+        self.text_edit  = widget
 
-        widget              = QPushButton( "q_pbutton_2" )
-        self.q_push_pbutton_2    = widget
-        connect_to          = self.pb_2_clicked
-        widget.clicked.connect( connect_to    )
+        print( f"{widget.minimumSize( ) =} ")
+        widget.setMinimumHeight( 100 )
+        # print(  ia_qt.q_text_edit( text_edit, msg = "QTextEditTab.text_edit" ) )
+        self.set_custom_context_menu( widget )
+
+
         row_layout.addWidget( widget,  )
+
 
         # ---- new row, standard buttons
         button_layout = QHBoxLayout(   )
@@ -154,6 +153,73 @@ class ButtonTab( tab_base.TabBase ):
         self.button_ex_1         = widget
 
         self.build_gui_last_buttons( button_layout )
+
+    def clear_context_menu(self, widget ):
+        # Option 1: Revert to default context menu
+        widget.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
+        # Option 2: Disable context menu entirely
+        # self.setContextMenuPolicy(QtCore.Qt.NoContextMenu)
+
+
+    #----------------------------
+    def set_custom_context_menu( self, widget ):
+        """
+        what it says
+        """
+        widget.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        widget.customContextMenuRequested.connect(self.show_context_menu)
+        self.context_widget   = widget # for later use in menu
+
+    #----------------------------
+    def foo(self):
+            # Example function to be called from context menu
+            msg   = ("Foo action triggered!")
+            self.append_msg( msg )
+
+
+    def show_context_menu( self, pos):
+        """
+        refactor to action instead of all the named ones
+
+        """
+        widget = self.context_widget
+        menu   = QMenu( widget )   # maybe widget ??
+
+        # Add standard actions
+        undo_action = menu.addAction("Undo")
+        undo_action.triggered.connect(widget.undo)
+        menu.addSeparator()
+
+        cut_action = menu.addAction("Cut")
+        cut_action.triggered.connect(widget.cut)
+        copy_action = menu.addAction("Copy")
+        copy_action.triggered.connect(widget.copy)
+        paste_action = menu.addAction("Paste")
+        paste_action.triggered.connect(widget.paste)
+        menu.addSeparator()
+
+        select_all_action = menu.addAction("Select All")
+        select_all_action.triggered.connect(widget.selectAll)
+        menu.addSeparator()
+
+        # Add custom action
+        foo_action = menu.addAction("Foo")
+        foo_action.triggered.connect(self.foo)
+
+        # Enable/disable actions based on context
+        cursor = widget.textCursor()
+        has_selection = cursor.hasSelection()
+        can_undo = widget.document().isUndoAvailable()
+        can_paste = QApplication.clipboard().text() != ""
+
+        undo_action.setEnabled(can_undo)
+        cut_action.setEnabled(has_selection)
+        copy_action.setEnabled(has_selection)
+        paste_action.setEnabled(can_paste)
+
+        # Show the context menu
+        menu.exec_(widget.mapToGlobal(pos))
+
 
     #----------------------------
     def get_button_style_sheet( self ):
@@ -210,7 +276,7 @@ class ButtonTab( tab_base.TabBase ):
         """
         There is much more info to show
         """
-        self.append_function_msg( "clear_values" )
+        self.append_msg( "clear_values" )
 
         self.append_msg(  "\n\nclear_values")
         self.append_msg(  "clear_values self.line_edit_1 " )  # setText()   ??
@@ -231,6 +297,7 @@ class ButtonTab( tab_base.TabBase ):
         # print( f"{self.little_widget_line_edit_1.isEnabled() = }" )  # setEnabled()
         # print( f"{self.little_widget_qlabel_1.text() = }" )  # setText() ??
         self.append_msg( "<<-- done" )
+
     # ------------------------------------
     def pb_1_clicked( self ):
         """
@@ -257,11 +324,15 @@ class ButtonTab( tab_base.TabBase ):
         """
         self.append_function_msg( "mutate_0" )
 
-        # msg    = "initial mutate"
-        # self.append_msg( msg, clear = False )
+        widget    = self.text_edit
 
-        # self.q_push_button_1.setDisabled( True )
-        # self.q_push_button_2.setDisabled( False )
+        msg       = "clear custom context menu"
+        self.append_msg( msg, )
+        self.clear_context_menu( widget )
+
+        msg    = "use setMinimumHeight() "
+        self.append_msg( msg )
+        widget.setMinimumHeight( 100 )
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -273,23 +344,17 @@ class ButtonTab( tab_base.TabBase ):
         self.append_function_msg( "mutate_1" )
         # msg    = "begin implementation"
         # self.append_msg( msg, clear     = False )
-        widget        = self.q_push_button_1
-        widget.setText( "two\nlines")
-        widget.width     = 200
 
-        self.q_push_button_1.setText( "two\nlines")
-        self.q_push_button_1.width     = 200
-        self.q_push_button_1.setDisabled( True )
-        self.q_push_button_1.setToolTip( "this is a tool tip" )
-        self.q_push_button_1.setVisible( True )
+        widget    = self.text_edit
 
-        msg    = "setChecked(True )"
-        self.append_msg( msg, )
-        self.q_push_button_1.setCheckable( True )
-        self.q_push_button_1.setChecked(True )
+        msg       = "set custom context menu"
+        self.append_msg( msg, clear = False )
+        self.set_custom_context_menu( widget )
 
-        msg        = f"{self.q_push_button_1.isChecked() = } "
-        self.append_msg( msg, )
+
+        msg    = "use setMinimumHeight() "
+        self.append_msg( msg )
+        widget.setMinimumHeight( 200 )
 
 
         self.append_msg( tab_base.DONE_MSG )
@@ -300,17 +365,7 @@ class ButtonTab( tab_base.TabBase ):
         read it -- mutate the widgets
         """
         self.append_function_msg( "mutate_2" )
-        msg    = "change some attributes..."
-        self.append_msg( msg, clear = False )
 
-        self.q_push_button_1.setText( "one line")
-        self.q_push_button_1.width     = 500
-        self.q_push_button_1.setVisible( False )
-
-        # next does not seem to work
-        self.q_push_button_1.setCheckable( True )
-            # does not seem to work
-        self.q_push_button_1.toggle()
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -321,22 +376,10 @@ class ButtonTab( tab_base.TabBase ):
         """
         self.append_function_msg( "mutate_3" )
 
-        msg    = "re-enable some stuff -- change attributes"
+        msg    = "...."
         self.append_msg( msg, clear = False )
 
-        self.q_push_button_1.setText( "one line")
-        self.q_push_button_1.width     = 500
-        self.q_push_button_1.setDisabled( False )
-        self.q_push_button_1.setVisible( True )
-        self.q_push_button_1.setCheckable( True )
-        self.q_push_button_1.toggle()
 
-        msg    = "add menu to q_push_button_1"
-        self.append_msg( msg, clear = False )
-        menu                = QMenu(self)
-        menu.addAction("Option 1")
-        menu.addAction("Option 2")
-        self.q_push_button_1.setMenu( menu )
 
 
         self.append_msg( tab_base.DONE_MSG )
@@ -352,16 +395,6 @@ class ButtonTab( tab_base.TabBase ):
         self.append_msg( "\n" )
 
 
-    # ------------------------
-    def show_values(self):
-        """
-        the usual sort of thing, just read it
-        """
-        self.append_function_msg( tab_base.BREAK_MSG  )
-
-        #self.append_msg( f"{self.qwidget_1 = }")
-
-        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------
     def inspect(self):
@@ -374,7 +407,7 @@ class ButtonTab( tab_base.TabBase ):
         self_q_push_pbutton_2   = self.q_push_pbutton_2
 
         wat_inspector.go(
-             msg            = "some locals for inspection ",
+             msg            = "variables for inspection ",
              a_locals       = locals(),
              a_globals      = globals(), )
 

@@ -1,130 +1,134 @@
-2025-06-09 14:55:57,846 - CRITICAL - Root logger is set up. Modules can now log using logging.getLogger().
-2025-06-09 14:55:57,846 - INFO - config_logger call was: logging.info
-2025-06-09 14:55:57,849 - DEBUG - index_and_search.py find_doc_files this is the file list
-2025-06-09 14:55:57,849 - DEBUG -  0ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/table_model.py 
-2025-06-09 14:55:57,850 - DEBUG -  1ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/tab_info.py 
-2025-06-09 14:55:57,850 - DEBUG -  2ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_experimalt_qtl.py 
-2025-06-09 14:55:57,851 - DEBUG -  3ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_main_window.py 
-2025-06-09 14:55:57,851 - DEBUG -  4ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_book_chapt_10.py 
-2025-06-09 14:55:57,852 - DEBUG -  5ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_box_layout.py 
-2025-06-09 14:55:57,852 - DEBUG -  6ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_cgrid_layout_window.py 
-2025-06-09 14:55:57,853 - DEBUG -  7ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_cqgrid_layout_window.py 
-2025-06-09 14:55:57,853 - DEBUG -  8ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_data_mapper.py 
-2025-06-09 14:55:57,853 - DEBUG -  9ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_date_edit_new.py 
-2025-06-09 14:55:57,854 - DEBUG -  10ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_dialog_etc.py 
-2025-06-09 14:55:57,854 - DEBUG -  11ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_matplotlib.py 
-2025-06-09 14:55:57,854 - DEBUG -  12ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_model_index.py 
-2025-06-09 14:55:57,855 - DEBUG -  13ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_q_table_widget.py 
-2025-06-09 14:55:57,855 - DEBUG -  14ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_summer_1.py 
-2025-06-09 14:55:57,856 - DEBUG -  15ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_table_model.py 
-2025-06-09 14:55:57,856 - DEBUG -  16ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_test.py 
-2025-06-09 14:55:57,857 - DEBUG -  17ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_grid_layout.py 
-2025-06-09 14:55:57,857 - DEBUG -  18ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_grid_layout_window.py 
-2025-06-09 14:55:57,857 - DEBUG -  19ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_groupbox.py 
-2025-06-09 14:55:57,858 - DEBUG -  20ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_criteria_widgets.py 
-2025-06-09 14:55:57,858 - DEBUG -  21ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_edit_widgets.py 
-2025-06-09 14:55:57,858 - DEBUG -  22ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_edit_widgets_1.py 
-2025-06-09 14:55:57,859 - DEBUG -  23ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_edit_widgets_2.py 
-2025-06-09 14:55:57,859 - DEBUG -  24ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_edit_widget_sql.py 
-2025-06-09 14:55:57,859 - DEBUG -  25ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_update_manager.py 
-2025-06-09 14:55:57,860 - DEBUG -  26ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_widgets.py 
-2025-06-09 14:55:57,860 - DEBUG -  27ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custon_text_edit.py 
-2025-06-09 14:55:57,860 - DEBUG -  28ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_picture_view.py 
-2025-06-09 14:55:57,861 - DEBUG -  29ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_picture_view_plus.py 
-2025-06-09 14:55:57,861 - DEBUG -  30ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/rshlib_qt/tab_combo_sync.py 
-2025-06-09 14:55:57,861 - DEBUG -  31ix, tabs/basic_widgets/tab_buttons.py 
-2025-06-09 14:55:57,862 - DEBUG -  32ix, tabs/basic_widgets/tab_checkbox.py 
-2025-06-09 14:55:57,862 - DEBUG -  33ix, tabs/basic_widgets/tab_combo_box.py 
-2025-06-09 14:55:57,862 - DEBUG -  34ix, tabs/basic_widgets/tab_date_edit.py 
-2025-06-09 14:55:57,863 - DEBUG -  35ix, tabs/basic_widgets/tab_date_edit_new.py 
-2025-06-09 14:55:57,863 - DEBUG -  36ix, tabs/basic_widgets/tab_edit_widgets.py 
-2025-06-09 14:55:57,863 - DEBUG -  37ix, tabs/basic_widgets/tab_label.py 
-2025-06-09 14:55:57,864 - DEBUG -  38ix, tabs/basic_widgets/tab_line_editl.py 
-2025-06-09 14:55:57,864 - DEBUG -  39ix, tabs/basic_widgets/tab_misc_widgets.py 
-2025-06-09 14:55:57,864 - DEBUG -  40ix, tabs/basic_widgets/tab_qlist.py 
-2025-06-09 14:55:57,865 - DEBUG -  41ix, tabs/basic_widgets/tab_text_edit.py 
-2025-06-09 14:55:57,865 - DEBUG - TabDBBuilder dropping {module = }
-2025-06-09 14:55:57,866 - DEBUG - TabDBBuilder dropping {module = }
-2025-06-09 14:55:57,869 - DEBUG - TabDBBuilder dropping {module = }
-2025-06-09 14:55:57,875 - INFO - KeyWordIndexer.loop_thru()
-2025-06-09 14:55:57,875 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_experimalt_qtl.py  XPeriments  QLabel  label widget experiments test ideas'
-2025-06-09 14:55:57,876 - INFO - check_id_for_error elapsed perf_counter 5.438295193016529e-05
-2025-06-09 14:55:57,877 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_main_window.py  QMainWindow  QMainWindow QIcon QTabWidget QAction QMessageBox  main window, links back to gui for app'
-2025-06-09 14:55:57,878 - INFO - check_id_for_error elapsed perf_counter 5.522603169083595e-05
-2025-06-09 14:55:57,879 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_book_chapt_10.py  Dock Widget  QDockWidget  Some book chapter 10 dock widgets    new_base'
-2025-06-09 14:55:57,880 - INFO - check_id_for_error elapsed perf_counter 4.972401075065136e-05
-2025-06-09 14:55:57,880 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_box_layout.py  Box\\nLayouts  QHBoxLayout QVBoxLayout  examples of box layouts stretch new_base'
-2025-06-09 14:55:57,881 - INFO - check_id_for_error elapsed perf_counter 4.9578957259655e-05
-2025-06-09 14:55:57,881 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_cgrid_layout_window.py  GridLayoutWindows  GridLayout  column columnspan span  zzz'
-2025-06-09 14:55:57,882 - INFO - check_id_for_error elapsed perf_counter 5.986203905194998e-05
-2025-06-09 14:55:57,883 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_cqgrid_layout_window.py  CQGridLayoutWindows  CQGridLayout  column columnspan span  z'
-2025-06-09 14:55:57,884 - INFO - check_id_for_error elapsed perf_counter 6.314099300652742e-05
-2025-06-09 14:55:57,885 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_data_mapper.py  DataMapper  QSqlTableModel QDataWidgetMapper  data mapper moves data from a model to a form crud sql     new_base'
-2025-06-09 14:55:57,886 - INFO - check_id_for_error elapsed perf_counter 5.7041062973439693e-05
-2025-06-09 14:55:57,886 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_date_edit_new.py  QDateEditTabNew  QDateEdit  CalendarPopup QDateTimeEdit  on a form a date edit can be used for user input/output context menu new tab base stagetwo'
-2025-06-09 14:55:57,887 - INFO - check_id_for_error elapsed perf_counter 5.8383913710713387e-05
-2025-06-09 14:55:57,888 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_dialog_etc.py  Dialog Boxes  QMessageBox  QFileDialog  dialog boxes of various forms modal browse for file or directory path   new_base'
-2025-06-09 14:55:57,889 - INFO - check_id_for_error elapsed perf_counter 9.781599510461092e-05
-2025-06-09 14:55:57,889 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_matplotlib.py  QMatplotlib  we will see  Example of a matplotlib in QT5 mat plot lib graph'
-2025-06-09 14:55:57,890 - INFO - check_id_for_error elapsed perf_counter 5.1892013289034367e-05
-2025-06-09 14:55:57,891 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_model_index.py  Model/ModelIndex  QAbstractTableModel QTableView.  model table with an index rsh custom maybe with headers select rows columns'
-2025-06-09 14:55:57,892 - INFO - check_id_for_error elapsed perf_counter 0.00010739790741354227
-2025-06-09 14:55:57,893 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_q_table_widget.py  QTableWidget  QTableWidget  table widget tabular data display click select headers pp tablewidget qtable'
-2025-06-09 14:55:57,894 - INFO - check_id_for_error elapsed perf_counter 9.635696187615395e-05
-2025-06-09 14:55:57,895 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_summer_1.py  QSplitter  QSplitter  spliter inspired by summer news reader new_base split'
-2025-06-09 14:55:57,896 - INFO - check_id_for_error elapsed perf_counter 9.608699474483728e-05
-2025-06-09 14:55:57,896 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_table_model.py  TableModel with Proxy  QAbstractTableModel QTableView QSortFilterProxyModel  programatically populated tabe for data add remove select'
-2025-06-09 14:55:57,898 - INFO - check_id_for_error elapsed perf_counter 0.00011230201926082373
-2025-06-09 14:55:57,898 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_grid_layout.py  GridLayout  GridLayout  grid layout table new   new_base'
-2025-06-09 14:55:57,899 - INFO - check_id_for_error elapsed perf_counter 5.486502777785063e-05
-2025-06-09 14:55:57,900 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_grid_layout_window.py  GridLayoutWindows  GridLayout  column columnspan span  zzz'
-2025-06-09 14:55:57,900 - INFO - check_id_for_error elapsed perf_counter 5.642091855406761e-05
-2025-06-09 14:55:57,901 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_groupbox.py  QGroupBox  QGroupBox  StyleSheet  group collect widgets   new_base'
-2025-06-09 14:55:57,902 - INFO - check_id_for_error elapsed perf_counter 5.7589029893279076e-05
-2025-06-09 14:55:57,902 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_criteria_widgets.py  RSHCustomCriteriaWidgets  CQLineEditCriteria CQDateCriteria  some stuff rsh custom for stuffdb edit and criteria  new tab  stagetwo'
-2025-06-09 14:55:57,904 - INFO - check_id_for_error elapsed perf_counter 6.164307706058025e-05
-2025-06-09 14:55:57,904 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_edit_widgets.py  RSHCustomEditWidgets  CQLineEdit CQTextEdit  CQDateEdit  some stuff rsh custom for stuffdb edit qq text line'
-2025-06-09 14:55:57,905 - INFO - check_id_for_error elapsed perf_counter 6.242003291845322e-05
-2025-06-09 14:55:57,905 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_edit_widgets_1.py  RSHCustom_EditWidgets  CQLineEdit CQDateEdit QSqlTableModel QRecord  some stuff rsh custom  edit with sql model for forms and fields record stagetwo'
-2025-06-09 14:55:57,907 - INFO - check_id_for_error elapsed perf_counter 7.876800373196602e-05
-2025-06-09 14:55:57,907 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_edit_widgets_2.py  RSHCustom_EditWidgets_2  CQLineEdit CQDateEdit QSqlTableModel  some stuff rsh custom  edit with sql model for forms and fields'
-2025-06-09 14:55:57,908 - INFO - check_id_for_error elapsed perf_counter 0.00010586099233478308
-2025-06-09 14:55:57,908 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_edit_widget_sql.py  RSHCustom_EditWidgetsSql  CQLineEdit CQDateEdit QSqlTableModel  some stuff rsh custom  edit with sql model for forms and fields zzzz'
-2025-06-09 14:55:57,909 - INFO - check_id_for_error elapsed perf_counter 6.890203803777695e-05
-2025-06-09 14:55:57,910 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_update_manager.py  RSHCustom_DataManager  CQLineEdit CQDateEdit QSqlTableModel DataManager  some stuff rsh custom widgets update maager with sql model for forms and fields   new tab stagetwo'
-2025-06-09 14:55:57,911 - INFO - check_id_for_error elapsed perf_counter 7.025792729109526e-05
-2025-06-09 14:55:57,911 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_widgets.py  RSHCustomWidgets  CQLineEdit CQDateEdit CQLineEditCriteria CQDateCriteria  some stuff rsh custom for stuffdb edit and criteria new tab stagetwo'
-2025-06-09 14:55:57,912 - INFO - check_id_for_error elapsed perf_counter 0.00010799395386129618
-2025-06-09 14:55:57,913 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custon_text_edit.py  CQTextEditWidget  CQTextEdit  custom text edit tab rsh  TextEdit new_base'
-2025-06-09 14:55:57,914 - INFO - check_id_for_error elapsed perf_counter 9.941798634827137e-05
-2025-06-09 14:55:57,915 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_picture_view.py  PictureViewer  PictureViewer  custom picture viewer rsh'
-2025-06-09 14:55:57,915 - INFO - check_id_for_error elapsed perf_counter 6.384705193340778e-05
-2025-06-09 14:55:57,916 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_picture_view_plus.py  PictureViewerPlus  PictureViewerPlus  custom picture viewer plus rsh    stagetwo'
-2025-06-09 14:55:57,917 - INFO - check_id_for_error elapsed perf_counter 6.445508915930986e-05
-2025-06-09 14:55:57,917 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/rshlib_qt/tab_combo_sync.py  ComboSync  ComboSync3  ComboSync2  comboBox sync ddl syncronized list custom'
-2025-06-09 14:55:57,918 - INFO - check_id_for_error elapsed perf_counter 6.929202936589718e-05
-2025-06-09 14:55:57,919 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_buttons.py  QPushButton  QPushButton  pressed press push button click connect qq'
-2025-06-09 14:55:57,920 - INFO - check_id_for_error elapsed perf_counter 6.310699973255396e-05
-2025-06-09 14:55:57,920 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_checkbox.py  QCheckBox  QHBoxLayout QVBoxLayout QLabel QPushButton QCheckBox QLineEdit QLineEdit QRadioButton  QCheckBox  checkbox check box qq'
-2025-06-09 14:55:57,921 - INFO - check_id_for_error elapsed perf_counter 7.020006887614727e-05
-2025-06-09 14:55:57,921 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_combo_box.py  QComboBox  QComboBox  combo box or drop down list box return pressed editable press ddl   new tab'
-2025-06-09 14:55:57,922 - INFO - check_id_for_error elapsed perf_counter 7.481896318495274e-05
-2025-06-09 14:55:57,923 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_date_edit.py  QDateEdit  QDateEdit  CalendarPopup QDateTimeEdit  on a form a date edit can be used for user input/output context menu'
-2025-06-09 14:55:57,924 - INFO - check_id_for_error elapsed perf_counter 7.278902921825647e-05
-2025-06-09 14:55:57,924 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_date_edit_new.py  QDateEditTabNew  QDateEdit  CalendarPopup QDateTimeEdit  on a form a date edit can be used for user input/output context menu new tab base stagetwo'
-2025-06-09 14:55:57,925 - INFO - check_id_for_error elapsed perf_counter 0.0001138090156018734
-2025-06-09 14:55:57,926 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_edit_widgets.py  EditWidgets  LineEdit TextEdit  DateEdit  basic edits often used for forms seems to be some confusion 2 versions custom or not'
-2025-06-09 14:55:57,927 - INFO - check_id_for_error elapsed perf_counter 7.327995263040066e-05
-2025-06-09 14:55:57,927 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_label.py  QLabel  QLabel  label widget'
-2025-06-09 14:55:57,928 - INFO - check_id_for_error elapsed perf_counter 9.99670010060072e-05
-2025-06-09 14:55:57,929 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_line_editl.py  QLineEdit  QLineEdit  QLineEdit line edit lineedit'
-2025-06-09 14:55:57,930 - INFO - check_id_for_error elapsed perf_counter 6.479397416114807e-05
-2025-06-09 14:55:57,930 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_misc_widgets.py  MiscWidget  QHBoxLayout QVBoxLayout QLabel QPushButton QCheckBox QLineEdit QLineEdit QRadioButton  lots multiple misc widgets many return pressed push button'
-2025-06-09 14:55:57,931 - INFO - check_id_for_error elapsed perf_counter 0.00011915992945432663
-2025-06-09 14:55:57,932 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_qlist.py  QListWidgetTab  QListWidget  list widget  new_base qq'
-2025-06-09 14:55:57,933 - INFO - check_id_for_error elapsed perf_counter 0.00013051205314695835
-2025-06-09 14:55:57,933 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_text_edit.py  QTextEdit  QTextEdit  Example of a text edit for string input fix'
-2025-06-09 14:55:57,934 - INFO - check_id_for_error elapsed perf_counter 0.00010721990838646889
-2025-06-09 14:55:57,961 - DEBUG - tab_checkbox.set_help_file_name() we have a help file self.help_file_name = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tab_qsql_database.txt' 
-2025-06-09 14:56:11,966 - DEBUG - tab_checkbox.set_help_file_name() we have a help file self.help_file_name = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/basic_widgets/tab_qlist.txt' 
-2025-06-09 15:02:29,870 - DEBUG - handle_close[59f07a50456311f0a462e86a64b5e1f0]({'header': {'msg_id': '0e81dff8-a49dc8208093a766f94b72f0_2759749_16', 'msg_type': 'comm_close', 'username': 'russ', 'session': '0e81dff8-a49dc8208093a766f94b72f0', 'date': datetime.datetime(2025, 6, 9, 19, 2, 29, 869341, tzinfo=tzutc()), 'version': '5.3'}, 'msg_id': '0e81dff8-a49dc8208093a766f94b72f0_2759749_16', 'msg_type': 'comm_close', 'parent_header': {}, 'metadata': {}, 'content': {'comm_id': '59f07a50456311f0a462e86a64b5e1f0', 'data': {}}, 'buffers': []})
+2025-06-10 16:27:59,350 - CRITICAL - Root logger is set up. Modules can now log using logging.getLogger().
+2025-06-10 16:27:59,351 - INFO - config_logger call was: logging.info
+2025-06-10 16:27:59,353 - DEBUG - index_and_search.py find_doc_files this is the file list
+2025-06-10 16:27:59,354 - DEBUG -  0ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/table_model.py 
+2025-06-10 16:27:59,354 - DEBUG -  1ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/tab_info.py 
+2025-06-10 16:27:59,355 - DEBUG -  2ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_experimalt_qtl.py 
+2025-06-10 16:27:59,355 - DEBUG -  3ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_main_window.py 
+2025-06-10 16:27:59,356 - DEBUG -  4ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_book_chapt_10.py 
+2025-06-10 16:27:59,356 - DEBUG -  5ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_box_layout.py 
+2025-06-10 16:27:59,357 - DEBUG -  6ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_cgrid_layout_window.py 
+2025-06-10 16:27:59,358 - DEBUG -  7ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_cqgrid_layout_window.py 
+2025-06-10 16:27:59,358 - DEBUG -  8ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_data_mapper.py 
+2025-06-10 16:27:59,359 - DEBUG -  9ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_date_edit_new.py 
+2025-06-10 16:27:59,359 - DEBUG -  10ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_dialog_etc.py 
+2025-06-10 16:27:59,360 - DEBUG -  11ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_matplotlib.py 
+2025-06-10 16:27:59,360 - DEBUG -  12ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_model_index.py 
+2025-06-10 16:27:59,361 - DEBUG -  13ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_q_table_widget.py 
+2025-06-10 16:27:59,361 - DEBUG -  14ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_summer_1.py 
+2025-06-10 16:27:59,362 - DEBUG -  15ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_table_model.py 
+2025-06-10 16:27:59,362 - DEBUG -  16ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_test.py 
+2025-06-10 16:27:59,363 - DEBUG -  17ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_grid_layout.py 
+2025-06-10 16:27:59,363 - DEBUG -  18ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_grid_layout_window.py 
+2025-06-10 16:27:59,364 - DEBUG -  19ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_groupbox.py 
+2025-06-10 16:27:59,364 - DEBUG -  20ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_criteria_widgets.py 
+2025-06-10 16:27:59,365 - DEBUG -  21ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_edit_widgets.py 
+2025-06-10 16:27:59,365 - DEBUG -  22ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_edit_widgets_1.py 
+2025-06-10 16:27:59,366 - DEBUG -  23ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_edit_widgets_2.py 
+2025-06-10 16:27:59,366 - DEBUG -  24ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_edit_widget_sql.py 
+2025-06-10 16:27:59,367 - DEBUG -  25ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_update_manager.py 
+2025-06-10 16:27:59,367 - DEBUG -  26ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_widgets.py 
+2025-06-10 16:27:59,368 - DEBUG -  27ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custon_text_edit.py 
+2025-06-10 16:27:59,369 - DEBUG -  28ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_picture_view.py 
+2025-06-10 16:27:59,369 - DEBUG -  29ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_picture_view_plus.py 
+2025-06-10 16:27:59,370 - DEBUG -  30ix, /mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/rshlib_qt/tab_combo_sync.py 
+2025-06-10 16:27:59,370 - DEBUG -  31ix, tabs/basic_widgets/tab_buttons.py 
+2025-06-10 16:27:59,371 - DEBUG -  32ix, tabs/basic_widgets/tab_checkbox.py 
+2025-06-10 16:27:59,371 - DEBUG -  33ix, tabs/basic_widgets/tab_combo_box.py 
+2025-06-10 16:27:59,372 - DEBUG -  34ix, tabs/basic_widgets/tab_context_menu.py 
+2025-06-10 16:27:59,372 - DEBUG -  35ix, tabs/basic_widgets/tab_date_edit.py 
+2025-06-10 16:27:59,373 - DEBUG -  36ix, tabs/basic_widgets/tab_date_edit_new.py 
+2025-06-10 16:27:59,373 - DEBUG -  37ix, tabs/basic_widgets/tab_edit_widgets.py 
+2025-06-10 16:27:59,374 - DEBUG -  38ix, tabs/basic_widgets/tab_label.py 
+2025-06-10 16:27:59,374 - DEBUG -  39ix, tabs/basic_widgets/tab_line_editl.py 
+2025-06-10 16:27:59,375 - DEBUG -  40ix, tabs/basic_widgets/tab_misc_widgets.py 
+2025-06-10 16:27:59,375 - DEBUG -  41ix, tabs/basic_widgets/tab_qlist.py 
+2025-06-10 16:27:59,376 - DEBUG -  42ix, tabs/basic_widgets/tab_text_edit.py 
+2025-06-10 16:27:59,376 - DEBUG - TabDBBuilder dropping {module = }
+2025-06-10 16:27:59,377 - DEBUG - TabDBBuilder dropping {module = }
+2025-06-10 16:27:59,380 - DEBUG - TabDBBuilder dropping {module = }
+2025-06-10 16:27:59,385 - INFO - KeyWordIndexer.loop_thru()
+2025-06-10 16:27:59,386 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_experimalt_qtl.py  XPeriments  QLabel  label widget experiments test ideas'
+2025-06-10 16:27:59,387 - INFO - check_id_for_error elapsed perf_counter 6.616899918299168e-05
+2025-06-10 16:27:59,387 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_main_window.py  QMainWindow  QMainWindow QIcon QTabWidget QAction QMessageBox  main window, links back to gui for app'
+2025-06-10 16:27:59,389 - INFO - check_id_for_error elapsed perf_counter 8.464900020044297e-05
+2025-06-10 16:27:59,389 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_book_chapt_10.py  Dock Widget  QDockWidget  Some book chapter 10 dock widgets    new_base'
+2025-06-10 16:27:59,390 - INFO - check_id_for_error elapsed perf_counter 5.646299905492924e-05
+2025-06-10 16:27:59,391 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_box_layout.py  Box\\nLayouts  QHBoxLayout QVBoxLayout  examples of box layouts stretch new_base'
+2025-06-10 16:27:59,392 - INFO - check_id_for_error elapsed perf_counter 5.529799818759784e-05
+2025-06-10 16:27:59,392 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_cgrid_layout_window.py  GridLayoutWindows  GridLayout  column columnspan span  zzz'
+2025-06-10 16:27:59,393 - INFO - check_id_for_error elapsed perf_counter 5.1555998652474955e-05
+2025-06-10 16:27:59,394 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_cqgrid_layout_window.py  CQGridLayoutWindows  CQGridLayout  column columnspan span  z'
+2025-06-10 16:27:59,395 - INFO - check_id_for_error elapsed perf_counter 6.18679987383075e-05
+2025-06-10 16:27:59,395 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_data_mapper.py  DataMapper  QSqlTableModel QDataWidgetMapper  data mapper moves data from a model to a form crud sql     new_base'
+2025-06-10 16:27:59,396 - INFO - check_id_for_error elapsed perf_counter 6.586399831576273e-05
+2025-06-10 16:27:59,397 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_date_edit_new.py  QDateEditTabNew  QDateEdit  CalendarPopup QDateTimeEdit  on a form a date edit can be used for user input/output context menu new tab base stagetwo'
+2025-06-10 16:27:59,398 - INFO - check_id_for_error elapsed perf_counter 0.00010100099825649522
+2025-06-10 16:27:59,399 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_dialog_etc.py  Dialog Boxes  QMessageBox  QFileDialog  dialog boxes of various forms modal browse for file or directory path   new_base'
+2025-06-10 16:27:59,401 - INFO - check_id_for_error elapsed perf_counter 0.00011978100155829452
+2025-06-10 16:27:59,402 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_matplotlib.py  QMatplotlib  we will see  Example of a matplotlib in QT5 mat plot lib graph'
+2025-06-10 16:27:59,403 - INFO - check_id_for_error elapsed perf_counter 6.614800076931715e-05
+2025-06-10 16:27:59,404 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_model_index.py  Model/ModelIndex  QAbstractTableModel QTableView.  model table with an index rsh custom maybe with headers select rows columns'
+2025-06-10 16:27:59,405 - INFO - check_id_for_error elapsed perf_counter 7.461799759767018e-05
+2025-06-10 16:27:59,405 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_q_table_widget.py  QTableWidget  QTableWidget  table widget tabular data display click select headers pp tablewidget qtable'
+2025-06-10 16:27:59,406 - INFO - check_id_for_error elapsed perf_counter 6.537399895023555e-05
+2025-06-10 16:27:59,407 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_summer_1.py  QSplitter  QSplitter  spliter inspired by summer news reader new_base split'
+2025-06-10 16:27:59,408 - INFO - check_id_for_error elapsed perf_counter 6.422099977498874e-05
+2025-06-10 16:27:59,409 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_table_model.py  TableModel with Proxy  QAbstractTableModel QTableView QSortFilterProxyModel  programatically populated tabe for data add remove select'
+2025-06-10 16:27:59,410 - INFO - check_id_for_error elapsed perf_counter 6.126999869593419e-05
+2025-06-10 16:27:59,410 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_grid_layout.py  GridLayout  GridLayout  grid layout table new   new_base'
+2025-06-10 16:27:59,411 - INFO - check_id_for_error elapsed perf_counter 0.00011810899741249159
+2025-06-10 16:27:59,412 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_grid_layout_window.py  GridLayoutWindows  GridLayout  column columnspan span  zzz'
+2025-06-10 16:27:59,413 - INFO - check_id_for_error elapsed perf_counter 6.281699825194664e-05
+2025-06-10 16:27:59,413 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_groupbox.py  QGroupBox  QGroupBox  StyleSheet  group collect widgets   new_base'
+2025-06-10 16:27:59,414 - INFO - check_id_for_error elapsed perf_counter 5.779400089522824e-05
+2025-06-10 16:27:59,415 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_criteria_widgets.py  RSHCustomCriteriaWidgets  CQLineEditCriteria CQDateCriteria  some stuff rsh custom for stuffdb edit and criteria  new tab  stagetwo'
+2025-06-10 16:27:59,416 - INFO - check_id_for_error elapsed perf_counter 6.095299977459945e-05
+2025-06-10 16:27:59,416 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_edit_widgets.py  RSHCustomEditWidgets  CQLineEdit CQTextEdit  CQDateEdit  some stuff rsh custom for stuffdb edit qq text line'
+2025-06-10 16:27:59,417 - INFO - check_id_for_error elapsed perf_counter 0.0001170249997812789
+2025-06-10 16:27:59,418 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_edit_widgets_1.py  RSHCustom_EditWidgets  CQLineEdit CQDateEdit QSqlTableModel QRecord  some stuff rsh custom  edit with sql model for forms and fields record stagetwo'
+2025-06-10 16:27:59,419 - INFO - check_id_for_error elapsed perf_counter 7.189400275819935e-05
+2025-06-10 16:27:59,420 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_edit_widgets_2.py  RSHCustom_EditWidgets_2  CQLineEdit CQDateEdit QSqlTableModel  some stuff rsh custom  edit with sql model for forms and fields'
+2025-06-10 16:27:59,421 - INFO - check_id_for_error elapsed perf_counter 6.889900032547303e-05
+2025-06-10 16:27:59,421 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_edit_widget_sql.py  RSHCustom_EditWidgetsSql  CQLineEdit CQDateEdit QSqlTableModel  some stuff rsh custom  edit with sql model for forms and fields zzzz'
+2025-06-10 16:27:59,422 - INFO - check_id_for_error elapsed perf_counter 6.59889992675744e-05
+2025-06-10 16:27:59,423 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_update_manager.py  RSHCustom_DataManager  CQLineEdit CQDateEdit QSqlTableModel DataManager  some stuff rsh custom widgets update maager with sql model for forms and fields   new tab stagetwo'
+2025-06-10 16:27:59,424 - INFO - check_id_for_error elapsed perf_counter 6.936099816812202e-05
+2025-06-10 16:27:59,424 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custom_widgets.py  RSHCustomWidgets  CQLineEdit CQDateEdit CQLineEditCriteria CQDateCriteria  some stuff rsh custom for stuffdb edit and criteria new tab stagetwo'
+2025-06-10 16:27:59,425 - INFO - check_id_for_error elapsed perf_counter 6.472800305346027e-05
+2025-06-10 16:27:59,425 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_custon_text_edit.py  CQTextEditWidget  CQTextEdit  custom text edit tab rsh  TextEdit new_base'
+2025-06-10 16:27:59,427 - INFO - check_id_for_error elapsed perf_counter 0.0001603479977347888
+2025-06-10 16:27:59,428 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_picture_view.py  PictureViewer  PictureViewer  custom picture viewer rsh'
+2025-06-10 16:27:59,429 - INFO - check_id_for_error elapsed perf_counter 0.00012186399908387102
+2025-06-10 16:27:59,429 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs/tab_picture_view_plus.py  PictureViewerPlus  PictureViewerPlus  custom picture viewer plus rsh    stagetwo'
+2025-06-10 16:27:59,430 - INFO - check_id_for_error elapsed perf_counter 6.55270014249254e-05
+2025-06-10 16:27:59,431 - INFO - get_key_words just got key words key_words = '/mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/rshlib_qt/tab_combo_sync.py  ComboSync  ComboSync3  ComboSync2  comboBox sync ddl syncronized list custom'
+2025-06-10 16:27:59,432 - INFO - check_id_for_error elapsed perf_counter 6.407500040950254e-05
+2025-06-10 16:27:59,432 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_buttons.py  QPushButton  QPushButton  pressed press push button click connect qq'
+2025-06-10 16:27:59,433 - INFO - check_id_for_error elapsed perf_counter 6.388899782905355e-05
+2025-06-10 16:27:59,433 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_checkbox.py  QCheckBox  QHBoxLayout QVBoxLayout QLabel QPushButton QCheckBox QLineEdit QLineEdit QRadioButton  QCheckBox  checkbox check box qq'
+2025-06-10 16:27:59,434 - INFO - check_id_for_error elapsed perf_counter 7.544199979747646e-05
+2025-06-10 16:27:59,435 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_combo_box.py  QComboBox  QComboBox  combo box or drop down list box return pressed editable press ddl   new tab'
+2025-06-10 16:27:59,436 - INFO - check_id_for_error elapsed perf_counter 7.021300189080648e-05
+2025-06-10 16:27:59,436 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_context_menu.py  QContextMenu  QContextMenu  context menu connect qq'
+2025-06-10 16:27:59,437 - INFO - check_id_for_error elapsed perf_counter 6.027900235494599e-05
+2025-06-10 16:27:59,437 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_date_edit.py  QDateEdit  QDateEdit  CalendarPopup QDateTimeEdit  on a form a date edit can be used for user input/output context menu'
+2025-06-10 16:27:59,438 - INFO - check_id_for_error elapsed perf_counter 6.697500066366047e-05
+2025-06-10 16:27:59,439 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_date_edit_new.py  QDateEditTabNew  QDateEdit  CalendarPopup QDateTimeEdit  on a form a date edit can be used for user input/output context menu new tab base stagetwo'
+2025-06-10 16:27:59,440 - INFO - check_id_for_error elapsed perf_counter 6.918700091773644e-05
+2025-06-10 16:27:59,440 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_edit_widgets.py  EditWidgets  LineEdit TextEdit  DateEdit  basic edits often used for forms seems to be some confusion 2 versions custom or not'
+2025-06-10 16:27:59,441 - INFO - check_id_for_error elapsed perf_counter 7.128200013539754e-05
+2025-06-10 16:27:59,442 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_label.py  QLabel  QLabel  label widget'
+2025-06-10 16:27:59,442 - INFO - check_id_for_error elapsed perf_counter 6.539199966937304e-05
+2025-06-10 16:27:59,443 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_line_editl.py  QLineEdit  QLineEdit  QLineEdit line edit lineedit'
+2025-06-10 16:27:59,444 - INFO - check_id_for_error elapsed perf_counter 6.375700104399584e-05
+2025-06-10 16:27:59,444 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_misc_widgets.py  MiscWidget  QHBoxLayout QVBoxLayout QLabel QPushButton QCheckBox QLineEdit QLineEdit QRadioButton  lots multiple misc widgets many return pressed push button'
+2025-06-10 16:27:59,445 - INFO - check_id_for_error elapsed perf_counter 7.369299783022143e-05
+2025-06-10 16:27:59,446 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_qlist.py  QListWidgetTab  QListWidget  list widget  new_base qq'
+2025-06-10 16:27:59,447 - INFO - check_id_for_error elapsed perf_counter 6.424000093829818e-05
+2025-06-10 16:27:59,447 - INFO - get_key_words just got key words key_words = 'tabs/basic_widgets/tab_text_edit.py  QTextEdit  QTextEdit  Example of a text edit for string input fix'
+2025-06-10 16:27:59,448 - INFO - check_id_for_error elapsed perf_counter 6.632500299019739e-05
+2025-06-10 16:27:59,478 - DEBUG - tab_checkbox.set_help_file_name() we have a help file self.help_file_name = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tab_qsql_database.txt' 
+2025-06-10 16:28:03,458 - DEBUG - tab_checkbox.set_help_file_name() we have a help file self.help_file_name = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/basic_widgets/tab_context_menu.txt' 
+2025-06-10 16:28:28,865 - DEBUG - tab_checkbox.set_help_file_name() we have a help file self.help_file_name = '/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/basic_widgets/tab_buttons.txt' 
+2025-06-10 16:37:44,876 - DEBUG - handle_close[393e4e1e463911f0b07ae86a64b5e1f0]({'header': {'msg_id': 'e881949d-a33181a2345d051cf9402473_44908_15', 'msg_type': 'comm_close', 'username': 'russ', 'session': 'e881949d-a33181a2345d051cf9402473', 'date': datetime.datetime(2025, 6, 10, 20, 37, 44, 875595, tzinfo=tzutc()), 'version': '5.3'}, 'msg_id': 'e881949d-a33181a2345d051cf9402473_44908_15', 'msg_type': 'comm_close', 'parent_header': {}, 'metadata': {}, 'content': {'comm_id': '393e4e1e463911f0b07ae86a64b5e1f0', 'data': {}}, 'buffers': []})

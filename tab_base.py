@@ -113,7 +113,10 @@ COLORS = [
     "#67001f",
 ]
 
-DONE_MSG   = ( "<<-- done\n" )
+DONE_MSG        = ( "<<-- done\n" )
+INSPECT_MSG     = ( "inspect"  )
+BREAK_MSG       = ( "breakpoint" )
+
 # tab_base.DONE_MSG
 
 #  --------

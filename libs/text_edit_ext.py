@@ -43,13 +43,13 @@ text_edit_ext.    ( )
 
 import os
 #from   subprocess import Popen
+from collections import defaultdict
 
 # ---- Qt
+from PyQt5 import QtCore
 from PyQt5.QtGui import QIntValidator, QStandardItem, QStandardItemModel, QTextCursor
 from PyQt5.QtCore import QDate, QModelIndex, Qt, QTimer, pyqtSlot
 from PyQt5.QtGui import  QTextDocument
-
-
 
 
 from PyQt5.QtWidgets import (QAction,
@@ -86,6 +86,7 @@ import logging
 
 import platform
 import subprocess
+import string_util
 
 
 # ---- local imports
@@ -107,6 +108,16 @@ SCAN_LINES          = 100
 
 TEXT_EDIT_EXT       = None
 
+KEY_DICT    = { "sys":      "system",
+                "system":      "system",
+                "subsys":   "sub_system",
+                "name": "name",
+                "id": "id",
+
+
+                }
+
+
 
 class TextEditExt( ):
     """
@@ -114,7 +125,7 @@ class TextEditExt( ):
     self.text_edit_ext_obj         = text_edit_ext.TextEditExt( AppGlobal.parameters, entry_widget)
     """
     #----------- init -----------
-    def __init__(self, parameters, text_edit  ):
+    def __init__( self, parameters, text_edit ):
         """
         Usual init see class doc string
         """
@@ -138,6 +149,15 @@ class TextEditExt( ):
         else:
             msg   = ( f"second instance of TextEditExt created move all methods in this object ?  {1  = }  ")
             logging.error( msg )
+
+        self.set_custom_context_menu( text_edit )
+
+    #----------------------------
+    def foo( self ):
+            # Example function to be called from context menu
+            msg   = ("Foo action triggered!")
+            print( msg )
+
 
     # ------------------------------------------
     def get_template_ddl_values(self):
@@ -210,13 +230,55 @@ class TextEditExt( ):
         #rint( text )
         self.insert_text_at_cursor( text )
 
+
+    #-----------------------------------
+    def smart_paste_clipboard( self, ):
+        """
+        what it says
+
+        consider strip out tabs....
+        detect line contentns and prefix with >> ...
+        string_util.begins_with_url( a_string )
+
+        may want to make more advanced, look at file extension
+        .txt  .py????
+
+        /home/russ/anaconda.sh
+
+         ~/russ/anaconda.sh
+
+    Google Calendar - June 2025
+    https://calendar.google.com/calendar/u/0/r
+
+
+        """
+        text            = QApplication.clipboard().text( )
+        splits          = text.split( "\n" )
+        new_lines       = []
+
+        for i_line in splits:
+            ii_line      = i_line
+
+            if string_util.begins_with_url( i_line ):
+                ii_line  = f">>url {i_line}"
+
+            elif string_util.begins_with_file_name( i_line ):
+                ii_line  = f">>text {i_line}"
+
+            new_lines.append( ii_line )
+
+        new_lines.append( "the end")
+        new_text = "\n".join( new_lines )
+
+
+        self.insert_text_at_cursor( new_text )
+
     #-----------------------------------
     def paste_clipboard( self, ):
         """
         what it says
         """
         text    = QApplication.clipboard().text( )
-
         self.insert_text_at_cursor( text )
 
     # ------------------------
@@ -308,8 +370,117 @@ class TextEditExt( ):
                 text_edit.setTextCursor(cursor)
                 text_edit.ensureCursorVisible()  # Optional: Scroll to top if reset
 
+    #----------------------------
+    def set_custom_context_menu( self, widget ):
+        """
+        what it says
+        """
+        widget.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        widget.customContextMenuRequested.connect( self.show_context_menu )
+        self.context_widget   = widget # for later use in menu
+
+    # ---------------------------------------
+    def show_context_menu( self, pos ):
+        """ """
+        widget = self.context_widget
+        menu   = QMenu( widget )
+
+        # Add standard actions
+        undo_action = menu.addAction("Undo")
+        undo_action.triggered.connect(widget.undo)
+        menu.addSeparator()
+
+        cut_action = menu.addAction("Cut")
+        cut_action.triggered.connect(widget.cut)
+        copy_action = menu.addAction("Copy")
+        copy_action.triggered.connect(widget.copy)
+        paste_action = menu.addAction("Paste")
+        paste_action.triggered.connect(widget.paste)
+        menu.addSeparator()
+
+        select_all_action = menu.addAction("Select All")
+        select_all_action.triggered.connect(widget.selectAll)
+        menu.addSeparator()
+
+        # Add custom action
+        foo_action = menu.addAction("Smart Paste")
+        foo_action.triggered.connect(self.smart_paste_clipboard )
+
+        # Enable/disable actions based on context
+        cursor = widget.textCursor()
+        has_selection = cursor.hasSelection()
+        can_undo = widget.document().isUndoAvailable()
+        can_paste = QApplication.clipboard().text() != ""
+
+        undo_action.setEnabled(can_undo)
+        cut_action.setEnabled(has_selection)
+        copy_action.setEnabled(has_selection)
+        paste_action.setEnabled(can_paste)
+
+        # Show the context menu
+        menu.exec_(widget.mapToGlobal(pos))
+
+    # ----------------------------------
+    def parse_search_part( self, criteria, part ):
+        """
+
+        still needs error check
+        """
+        splits    = part.split( "=" )
+        key       = (splits[0].strip()).lower()
+        value     = splits[1].strip()
+        # may need type conversion when get to dates
+        key       = KEY_DICT[key]
+        criteria[key] = value
 
 
+    # ----------------------------------
+    def parse_search_stuffdb( self, a_string ):
+        """
+        >>search jeoe sue   /sys=python /subsys=qt
+        change to a dict
+
+        cirteria = {key_words: "joe" "sue" }
+
+        """
+        criteria    = defaultdict( None )
+        parts       = a_string.split( "/" )
+        key_words   = parts[0].strip()
+        criteria[ "key_words" ] = key_words
+
+        for i_part in parts[ 1: ]:
+            try:
+                self.parse_search_part( criteria, i_part  )
+            except ValueError as error:
+                # Access the error message
+                error_message = str(error)
+                msg  = (f"Parse >>search Caught an error: {error_message}")
+                msg_box             = QMessageBox()
+                msg_box.setIcon( QMessageBox.Information )
+                msg_box.setText( msg )
+                msg_box.setWindowTitle( "Sorry that is a No Go " )
+                msg_box.setStandardButtons( QMessageBox.Ok )
+
+        print( criteria )
+
+        return criteria
+
+    #------------------------------------
+    def search_stuffdb(self, cmd, args ):
+        """
+        first just for window we are in then others later
+        """
+
+        criteria    = self.parse_search_stuffdb( args )
+
+
+
+
+        STUFF_DB.main_window.search_me( criteria )  # cmd_args rest of line
+
+
+
+    #------------------------------------
     def strip_lines_in_selection(self, ):
         """
         Claude says
@@ -431,7 +602,6 @@ class TextEditExt( ):
             self.idle_exe.idle_on_temp_file( code_lines )
 
         elif cmd == "idle_file":   # want a one line and may line
-
             file_name     = cmd_args[0]
             self.idle_exe.idle_file( file_name  )
             pass  # debug
@@ -469,7 +639,14 @@ class TextEditExt( ):
             else:
                 # msg   = ( f"you need to implement >>search {STUFF_DB  = }  ")
                 # logging.debug( msg )
-                STUFF_DB.main_window.search_me( " ".join( cmd_args ) )  # cmd_args rest of line
+                new_args =  []  # drop after #
+                for i_arg in cmd_args:
+                    if i_arg.startswith( "#" ):
+                        break
+                    new_args.append( i_arg )
+                    key_words   = " ".join( new_args )
+                self.search_stuffdb( cmd, " ".join( new_args ))
+                #STUFF_DB.main_window.search_me( " ".join( new_args ) )  # cmd_args rest of line
             # = None  # may be monkey patched in
             #                     # this wold be the app
             #                     # STUFF_DB.main_window may be what you want
