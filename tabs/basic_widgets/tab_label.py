@@ -1,27 +1,25 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# ---- tof
 """
-KEY_WORDS:      label widget
+
+tab_label.py
+
+KEY_WORDS:      pressed press push button click connect qq
 CLASS_NAME:     QLabelTab
 WIDGETS:        QLabel
-STATUS:         ??
+STATUS:
 TAB_TITLE:      QLabel
 
 
-
-TAB_HELPxx:       combo_box_widget_tab.txt
-
-
-self.help_file_name     =  "combo_box_widget_tab.txt"
-/mnt/WIN_D/Russ/0000/python00/python3/_projects/qt_by_example/docs/combo_box_widget_tab.txt
 """
-# ---- tof
 # --------------------
 if __name__ == "__main__":
     #----- run the full app
     import main
     #main.main()
-# --------------------
+# --------------------------------
+
 
 import inspect
 import subprocess
@@ -42,7 +40,7 @@ from PyQt5.QtCore import (QDate,
                           QTimer)
 from PyQt5.QtGui import QColor, QPalette, QTextCursor, QTextDocument
 # sql
-from PyQt5.QtSql import QSqlDatabase, QSqlQuery, QSqlTableMoqqdel
+from PyQt5.QtSql import QSqlDatabase, QSqlQuery, QSqlTableModel
 # widgets biger
 # widgets -- small
 # layouts
@@ -75,233 +73,195 @@ from PyQt5.QtWidgets import (QAction,
                              QVBoxLayout,
                              QWidget)
 
-import parameters
+#import parameters
+
 import utils_for_tabs as uft
 import wat_inspector
 import tab_base
 
-
 # ---- end imports
 
+print_func_header   = uft.print_func_header
 
 #  --------
-class QLabelTab( tab_base.TabBase  ) :
+class QLabelTab( tab_base.TabBase ):
+    """
+    Now i have a doc string.
+
+
+    see
+    """
     def __init__(self):
         """
+        mostly for buttons
         """
         super().__init__()
-        self.help_file_name     =  "lable_widget_tab.txt"
-        self.module_file       = __file__
+        self.module_file       = __file__      # save for help file usage
         self.mutate_dict[0]    = self.mutate_0
         self.mutate_dict[1]    = self.mutate_1
         self.mutate_dict[2]    = self.mutate_2
-        # self.mutate_dict[3]    = self.mutate_3
+        self.mutate_dict[3]    = self.mutate_3
         # self.mutate_dict[4]    = self.mutate_4
-
         self._build_gui()
 
-    # ----------------------------------------------
-    def _build_gui_widgets(self, main_layout  ):
+    def _build_gui_widgets( self, main_layout ):
         """
-        all build on a local QWidget
-        count : const int
-        currentData : const QVariant
-        currentIndex : int
-        currentText : QString
-        duplicatesEnabled : bool
-        editable : bool
+        the usual, build the gui with the widgets of interest
+
         """
-        # ----
-        layout        = QVBoxLayout(   )
+        layout              = QVBoxLayout()
         main_layout.addLayout( layout )
 
-        row_layout    = QHBoxLayout(   )
+        # too clever ??
+        main_layout.addLayout( layout := QVBoxLayout() )
+
+        #button_layout        = QHBoxLayout(   )
+
+        # main_layout.addLayout( layout )
+        # button_layout        = QHBoxLayout(   )
+
+        # ---- new row c
+        row_layout          = QHBoxLayout(   )
         layout.addLayout( row_layout )
 
-
-        # ---- label_1
-        widget        = QLabel( "label_1 ")
-        self.label_1  = widget
-
-        # these work but in some case seem only to work with a lambda
-        # widget.currentIndexChanged.connect( self.conbo_currentIndexChanged )
-        # widget.currentTextChanged.connect(  self.combo_currentTextChanged  )
-
-        #widget.currentTextChanged.connect(self.current_text_changed)
-        widget.setMinimumWidth( 200 )
-
-        row_layout.addWidget( widget )
-
-        # ---- label_1
-        widget        = QLabel( "label_2 ")
-        self.label_2  = widget
-
-        # these work but in some case seem only to work with a lambda
-        # widget.currentIndexChanged.connect( self.conbo_currentIndexChanged )
-        # widget.currentTextChanged.connect(  self.combo_currentTextChanged  )
-
-        #widget.currentTextChanged.connect(self.current_text_changed)
-        widget.setMinimumWidth( 200 )
-
-        row_layout.addWidget( widget )
-
-
-        # ---- buttons
-        # button_layout = QHBoxLayout(   )
-        # layout.addLayout ( button_layout )
-        # # --- buttons
-        # label       = "combo\n_reload"
-        # widget = QPushButton( label )
-        # widget.clicked.connect( self.combo_reload )
-
-        # button_layout.addWidget( widget )
-
-        row_layout    = QHBoxLayout(   )
+        # ---- New Row button_1 and _2
+        row_layout          = QHBoxLayout(   )
         layout.addLayout( row_layout )
 
-        # ---- PB mutate
-        label       = "mutate\n"
-        widget = QPushButton( label )
-        widget.clicked.connect( self.mutate )
-
+        widget          = QLabel( "q_pbutton_1 -> " )
+        self.qlabel_1   = widget
         row_layout.addWidget( widget )
 
-        # ---- PB inspect
-        widget = QPushButton( "inspect\n" )
-        widget.clicked.connect( self.inspect    )
-        clear_button = widget
-        row_layout.addWidget( widget,   )
+        widget              = QPushButton( "q_pbutton_1" )
+        self.q_push_button_1    = widget
+        connect_to          = self.pb_1_clicked
+        widget.clicked.connect( connect_to )
+        row_layout.addWidget( widget )
 
-        # ---- PB breakpoint
-        widget = QPushButton( "breakpoint\n" )
-        widget.clicked.connect( self.breakpoint    )
-        clear_button = widget
-        row_layout.addWidget( widget,   )
+        widget              = QLabel("q_pbutton_2 -> ")
+        row_layout.addWidget( widget )
 
+        widget              = QPushButton( "q_pbutton_2" )
+        self.q_push_pbutton_2    = widget
+        connect_to          = self.pb_2_clicked
+        widget.clicked.connect( connect_to    )
+        row_layout.addWidget( widget,  )
 
-    # -----------------------
-    def conbo_return(self, arg ):
-        """
+        # ---- new row, standard buttons
+        button_layout = QHBoxLayout(   )
+        layout.addLayout( button_layout,  )
 
-        """
-        self.append_function_msg( "conbo_signal" )
+        self.button_ex_1         = widget
 
-        #print( f"conbo_signal {arg}")
+        self.build_gui_last_buttons( button_layout )
 
-    # -----------------------
-    def conbo_signal(self, arg ):
-        """
-                activated(int index)
-        void 	currentIndexChanged(int index)
-        void 	currentTextChanged(const QString &text)
-        void 	editTextChanged(const QString &text)
-        void 	highlighted(int index)
-        void 	textActivated(const QString &text)
-        void 	textHighlighted(const QString &text)
-        """
-        self.append_function_msg( "conbo_signal" )
-
-        print( f"conbo_signal {arg}")
-
-    # -----------------------
-    def conbo_currentIndexChanged(self, arg ):
+    #----------------------------
+    def get_button_style_sheet( self ):
         """
         what it says
         """
-        self.append_function_msg( "conbo_currentIndexChanged" )
-
-        self.append_function_msg( "conbo_currentIndexChanged -- and get text" )
-
-        self.append_msg( f"{self.combo_1.currentText( ) = }" )
-
-        self.append_msg( tab_base.DONE_MSG )
-
-
-
-    # --------------------------
-    def combo_reload(self,   ):
+        return """
+            QPushButton {
+                background-color: #4CAF50;
+                color: white;
+                border: 2px solid #4CAF50;
+                border-radius: 8px;
+                padding: 8px;
+            }
+            QPushButton:hover {
+                background-color: #45a049;
+            }
+            QPushButton:pressed {
+                background-color: #3e8e41;
+            }
         """
-        notice order of events
+
+    # ------------------------------------
+    def signal_sent( self, msg ):
         """
-        self.append_function_msg( "combo_reload" )
-
-        self.append_msg( f"combo_reload { '' }clear next --------", flush = True )
-        values         =  [ "1_reload", "2", "3", "4", ]
-            # what do i get I get a dict of lists, I need all the keys
-        widget         = self.combo_1
-        widget.clear()       # delete all items from Combobox
-        self.append_msg( f"combo_reload end clear / next addItems", flush = True )
-        widget.addItems( values )
-
-
-        self.append_msg( tab_base.DONE_MSG )
-    # --------------------------
-    def inspect_old( self, arg  ):
+        when a signal is sent, use find
         """
-        count : const int
-        currentData : const QVariant
-        currentIndex : int
-        currentText : QString
-        duplicatesEnabled : bool
-        editable : bool
-        """
-        self.append_function_msg( "inspect_old" )
-        self.append_msg( f"combo_info { '' }  --------", flush = True )
-
-        widget         = self.combo_1
-
-        info           = widget.count()
-        msg            = f"widget.count() {info}"
-        self.append_msg( msg )
-
-        info           = widget.currentData()    # seem to always get None
-        msg            = f"widget.currentData() {info}"
-        self.append_msg( msg )
-
-        # qt5 not working for me
-        # info           = widget.editable
-        # msg            = f".editable {info}"
+        self.append_function_msg( "signal_sent" )
+        # msg   = f"{function_nl}signal_sent"
         # print( msg )
+        self.append_msg( f"signal_sent {msg}" )
 
-        info           = widget.currentText()  # is good
-        msg            = f".currentText() {info}"
-        self.append_msg( msg )
+        self.append_msg( "<<-- done" )
 
-        info           = widget.currentIndex()
-        msg            = f".currentIndex() {info}"
-        self.append_msg( msg )
+    # ------------------------------------
+    def put_in_clipboard( self, a_string ):
+        """
+        what it says:
+        """
+        self.append_function_msg( "put_in_clipboard" )
 
-        info           = widget.placeholderText()
-        msg            = f".placeholderText() {info}"
-        self.append_msg( msg )
+        clipboard = QApplication.clipboard()
 
-        self.show_combo_values()   # move this code here
+        # Set a string into the clipboard
+        clipboard.setText( a_string )
+        self.append_msg(  f"put_in_clipboard { a_string = }" )
 
-        self.append_msg( f"combo_info end { '' } --------", flush = True )
+        get_text_out   =   clipboard.text()
 
+        self.append_msg( "<<-- done" )
+
+    # ------------------------------------
+    def clear_values( self ):
+        """
+        There is much more info to show
+        """
+        self.append_function_msg( "clear_values" )
+
+        self.append_msg(  "\n\nclear_values")
+        self.append_msg(  "clear_values self.line_edit_1 " )  # setText()   ??
+        self.line_edit_1.setText( "" )
+        # print( f"{self.little_widget_line_edit_1.isEnabled() = }" )  # setEnabled()
+        # print( f"{self.little_widget_qlabel_1.text() = }" )  # setText() ??
+        self.append_msg( "<<-- done" )
+
+    # ------------------------------------
+    def set_values( self ):
+        """
+        What it says
+        """
+        self.append_function_msg( "set_values" )
+
+        self.append_msg(  "set_values  self.line_edit_1 " )  # setText()   ??
+        self.line_edit_1.setText( "xxxxx" )
+        # print( f"{self.little_widget_line_edit_1.isEnabled() = }" )  # setEnabled()
+        # print( f"{self.little_widget_qlabel_1.text() = }" )  # setText() ??
+        self.append_msg( "<<-- done" )
+    # ------------------------------------
+    def pb_1_clicked( self ):
+        """
+        What it says
+        """
+        self.append_msg( "pb_1_clicked" )
         self.append_msg( tab_base.DONE_MSG )
+
+    # ------------------------------------
+    def pb_2_clicked( self ):
+        """
+        What it says
+        """
+        self.append_msg( "pb_2_clicked" )
+
+        self.append_msg( "<<-- done" )
 
     # ------------------------------------
     def mutate_0( self ):
         """
         read it -- mutate the widgets
+
+
         """
         self.append_function_msg( "mutate_0" )
-        # print( f"{self.little_widget_qlabel_1.text() = }" )  # setText() ??
-        self.append_msg( f"{self.label_2.text() = }" )
 
-
-        msg      = "set text for lable_1"
-        self.append_msg( msg )
-        self.label_1.setText( "mutate_0 self.label_1.setText" )
-
-
-        # msg    = 'combo_2.lineEdit().setText( "mutate_0" )  '
+        # msg    = "initial mutate"
         # self.append_msg( msg, clear = False )
-        # self.combo_2.lineEdit().setText( "mutate_0" )  # for line edit
 
-        # msg     = f"{self.combo_1.currentText =}"
-        # self.append_msg( msg  )
+        # self.q_push_button_1.setDisabled( True )
+        # self.q_push_button_2.setDisabled( False )
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -311,23 +271,26 @@ class QLabelTab( tab_base.TabBase  ) :
         read it -- mutate the widgets
         """
         self.append_function_msg( "mutate_1" )
+        # msg    = "begin implementation"
+        # self.append_msg( msg, clear     = False )
+        widget        = self.q_push_button_1
+        widget.setText( "two\nlines")
+        widget.width     = 200
 
-        self.append_msg( f"{self.label_2.text() = }" )
+        self.q_push_button_1.setText( "two\nlines")
+        self.q_push_button_1.width     = 200
+        self.q_push_button_1.setDisabled( True )
+        self.q_push_button_1.setToolTip( "this is a tool tip" )
+        self.q_push_button_1.setVisible( True )
 
+        msg    = "setChecked(True )"
+        self.append_msg( msg, )
+        self.q_push_button_1.setCheckable( True )
+        self.q_push_button_1.setChecked(True )
 
-        msg      = "set text for lable_1"
-        self.append_msg( msg )
-        self.label_1.setText( "mutate_1 self.label_1.setText" )
+        msg        = f"{self.q_push_button_1.isChecked() = } "
+        self.append_msg( msg, )
 
-
-
-        # msg    = 'combo_2.setCurrentText( "2" )'
-        # self.append_msg( msg, clear = False )
-        # self.combo_2.setCurrentText( "2" )
-
-        # msg    = 'combo_1.setCurrentIndex( 2 )'
-        # self.append_msg( msg, clear = False )
-        # self.combo_1.setCurrentIndex( 2 )
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -337,14 +300,66 @@ class QLabelTab( tab_base.TabBase  ) :
         read it -- mutate the widgets
         """
         self.append_function_msg( "mutate_2" )
+        msg    = "change some attributes..."
+        self.append_msg( msg, clear = False )
 
-        # msg    = 'combo_2.setCurrentText( "2" )'
-        # self.append_msg( msg, clear = False )
-        # self.combo_2.setCurrentText( "2" )
+        self.q_push_button_1.setText( "one line")
+        self.q_push_button_1.width     = 500
+        self.q_push_button_1.setVisible( False )
 
-        # msg    = 'combo_1.setCurrentIndex( 2 )'
-        # self.append_msg( msg, clear = False )
-        # self.combo_1.setCurrentIndex( 2 )
+        # next does not seem to work
+        self.q_push_button_1.setCheckable( True )
+            # does not seem to work
+        self.q_push_button_1.toggle()
+
+        self.append_msg( tab_base.DONE_MSG )
+
+    # ------------------------------------
+    def mutate_3( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_3" )
+
+        msg    = "re-enable some stuff -- change attributes"
+        self.append_msg( msg, clear = False )
+
+        self.q_push_button_1.setText( "one line")
+        self.q_push_button_1.width     = 500
+        self.q_push_button_1.setDisabled( False )
+        self.q_push_button_1.setVisible( True )
+        self.q_push_button_1.setCheckable( True )
+        self.q_push_button_1.toggle()
+
+        msg    = "add menu to q_push_button_1"
+        self.append_msg( msg, clear = False )
+        menu                = QMenu(self)
+        menu.addAction("Option 1")
+        menu.addAction("Option 2")
+        self.q_push_button_1.setMenu( menu )
+
+
+        self.append_msg( tab_base.DONE_MSG )
+
+    # ---- connects -----------------------
+    # --------------------------
+    def return_pressed( self ):
+        """
+        what is says
+        """
+        self.append_function_msg( "return_pressed" )
+
+        self.append_msg( "\n" )
+
+
+    # ------------------------
+    def show_values(self):
+        """
+        the usual sort of thing, just read it
+        """
+        self.append_function_msg( tab_base.BREAK_MSG  )
+
+        #self.append_msg( f"{self.qwidget_1 = }")
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -353,15 +368,13 @@ class QLabelTab( tab_base.TabBase  ) :
         """
         the usual
         """
-        self.append_function_msg( "inspect" )
+        self.append_function_msg( tab_base.INSPECT_MSG )
 
-        # make some locals for inspection
-        my_tab_widget   = self
-        self_qlabel_1   = self.label_1
-        self_qlabel_2   = self.label_2
+        self_q_push_button_1    = self.q_push_button_1
+        self_q_push_pbutton_2   = self.q_push_pbutton_2
 
         wat_inspector.go(
-             msg            = "self.text_edit from inspect method",
+             msg            = "some locals for inspection ",
              a_locals       = locals(),
              a_globals      = globals(), )
 
@@ -373,11 +386,10 @@ class QLabelTab( tab_base.TabBase  ) :
         each tab gets its own function so we break in that
         tabs code
         """
-        self.append_function_msg( "breakpoint" )
+        self.append_function_msg( tab_base.BREAK_MSG )
 
         breakpoint()
 
         self.append_msg( tab_base.DONE_MSG )
-
 
 # ---- eof

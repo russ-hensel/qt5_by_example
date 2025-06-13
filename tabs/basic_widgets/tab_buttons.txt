@@ -1,6 +1,6 @@
 
 
-  
+
 
 ----------------------- Table of Contents -----------------
 
@@ -21,8 +21,9 @@
 ........Widget included:
 
             QPushButton
-            
----- User interaction            
+
+---- User interaction
+        now writen
 
 ---- Discussion
 
@@ -34,7 +35,7 @@
 
 ---- Ask a ChatBot --------------------------------------------------------------------------
 
-            I have a QPushButton...... 
+            I have a QPushButton......
 
 ---- Work still to do --------------------------------------------------------------------------
 
