@@ -99,6 +99,7 @@ class Parameters( ):
                                     "/mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/rshlib_qt",
                                     ]
         self.dir_for_tabs.append( "./tabs/basic_widgets" )
+        self.dir_for_tabs.append( "./tabs/sql_widgets" )
 
         # ---- for sample database
         self.db_file_name        = "/tmp/ramdisk/qt_sql.db"
@@ -363,12 +364,13 @@ class Parameters( ):
         self.help_path      =  "/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/docs/"
             # path leading to all docs and help
 
+        # ---- dir_for_tabs
         self.dir_for_tabs       = [ "./",  ]
         self.dir_for_tabs       = [    ]
         self.dir_for_tabs       = [ "/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs" ]
         #may need to be on path sys.path.insert( 1, f"{src_root}/_projects/stuffdb/qt_tabs" )
         self.dir_for_tabs.append( "./tabs/basic_widgets" )
-
+        self.dir_for_tabs.append( "./tabs/sql_widgets" )
 
         # ---- search
         self.default_search     = "qq"

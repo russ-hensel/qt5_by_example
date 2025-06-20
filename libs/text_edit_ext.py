@@ -108,14 +108,15 @@ SCAN_LINES          = 100
 
 TEXT_EDIT_EXT       = None
 
-KEY_DICT    = { "sys":      "system",
-                "system":      "system",
-                "subsys":   "sub_system",
-                "name": "name",
-                "id": "id",
+# # !! delete
+# KEY_DICT    = { "sys":      "system",
+#                 "system":    "system",
+#                 "subsys":    "sub_system",
+#                 "name": "name",
+#                 "id": "id",
 
+#                 }
 
-                }
 
 
 
@@ -267,7 +268,8 @@ class TextEditExt( ):
 
             new_lines.append( ii_line )
 
-        new_lines.append( "the end")
+        # !! integrate the next if a multiline
+        #new_lines.append( "the end")
         new_text = "\n".join( new_lines )
 
 
@@ -381,9 +383,13 @@ class TextEditExt( ):
 
     # ---------------------------------------
     def show_context_menu( self, pos ):
-        """ """
-        widget = self.context_widget
-        menu   = QMenu( widget )
+        """
+        from chat, refactor please !!
+        !! needs extension
+
+        """
+        widget      = self.context_widget
+        menu        = QMenu( widget )
 
         # Add standard actions
         undo_action = menu.addAction("Undo")
@@ -394,34 +400,43 @@ class TextEditExt( ):
         cut_action.triggered.connect(widget.cut)
         copy_action = menu.addAction("Copy")
         copy_action.triggered.connect(widget.copy)
+
         paste_action = menu.addAction("Paste")
         paste_action.triggered.connect(widget.paste)
+        #menu.addSeparator()
+
+        # ---- "Smart Paste"
+        foo_action = menu.addAction("Smart Paste")
+        foo_action.triggered.connect(self.smart_paste_clipboard )
         menu.addSeparator()
+
 
         select_all_action = menu.addAction("Select All")
         select_all_action.triggered.connect(widget.selectAll)
+
+        # ---- >>   go
+        menu_action = menu.addAction(">>   go ...")
+        menu_action.triggered.connect( self.cmd_exec )
         menu.addSeparator()
 
-        # Add custom action
-        foo_action = menu.addAction("Smart Paste")
-        foo_action.triggered.connect(self.smart_paste_clipboard )
 
         # Enable/disable actions based on context
         cursor = widget.textCursor()
-        has_selection = cursor.hasSelection()
-        can_undo = widget.document().isUndoAvailable()
-        can_paste = QApplication.clipboard().text() != ""
+        has_selection   = cursor.hasSelection()
+        can_undo        = widget.document().isUndoAvailable()
+        can_paste       = QApplication.clipboard().text() != ""
 
         undo_action.setEnabled(can_undo)
         cut_action.setEnabled(has_selection)
         copy_action.setEnabled(has_selection)
         paste_action.setEnabled(can_paste)
+        foo_action.setEnabled(can_paste)
 
         # Show the context menu
         menu.exec_(widget.mapToGlobal(pos))
 
     # ----------------------------------
-    def parse_search_part( self, criteria, part ):
+    def parse_search_partxxxx( self, criteria, part ):
         """
 
         still needs error check
@@ -435,7 +450,7 @@ class TextEditExt( ):
 
 
     # ----------------------------------
-    def parse_search_stuffdb( self, a_string ):
+    def parse_search_stuffdbxxxx( self, a_string ):
         """
         >>search jeoe sue   /sys=python /subsys=qt
         change to a dict
@@ -466,18 +481,16 @@ class TextEditExt( ):
         return criteria
 
     #------------------------------------
-    def search_stuffdb(self, cmd, args ):
+    def search_stuffdbxxxx(self, cmd, args ):
         """
         first just for window we are in then others later
         """
 
         criteria    = self.parse_search_stuffdb( args )
 
-
-
+        # if command is search need to search window w
 
         STUFF_DB.main_window.search_me( criteria )  # cmd_args rest of line
-
 
 
     #------------------------------------
@@ -527,6 +540,7 @@ class TextEditExt( ):
         """
         execute command parsed out of text
 
+        !! change to use marker
         py
         sh
         url
@@ -626,31 +640,37 @@ class TextEditExt( ):
             file_name     = arg_1
             shell_file( file_name )
     \
-        # ---- search
-        elif cmd == "search":
+        # ---- search  !! should not have in this object move to stuff db
+        # as a plugin of some source
+        elif cmd.startswith( "search" ):
             # msg   = ( "implementing >>search")
             # logging.debug( msg )
-
+            #breakpoint( )
             if  STUFF_DB  is None:
                 msg   = ( f"cannot do search as {STUFF_DB  = }  ")
                 logging.error( msg )
+                # !! put up dialog
                 return
 
             else:
-                # msg   = ( f"you need to implement >>search {STUFF_DB  = }  ")
-                # logging.debug( msg )
-                new_args =  []  # drop after #
-                for i_arg in cmd_args:
-                    if i_arg.startswith( "#" ):
-                        break
-                    new_args.append( i_arg )
-                    key_words   = " ".join( new_args )
-                self.search_stuffdb( cmd, " ".join( new_args ))
-                #STUFF_DB.main_window.search_me( " ".join( new_args ) )  # cmd_args rest of line
-            # = None  # may be monkey patched in
-            #                     # this wold be the app
-            #                     # STUFF_DB.main_window may be what you want
-            #                     # go_active_sub_window_func
+                AppGlobal.mdi_management.do_db_search( cmd,  cmd_args )
+
+
+            #     # msg   = ( f"you need to implement >>search {STUFF_DB  = }  ")
+            #     # logging.debug( msg )
+            #     new_args =  []  # drop after #
+            #     for i_arg in cmd_args:
+            #         if i_arg.startswith( "#" ):
+            #             break
+            #         new_args.append( i_arg )
+            #         key_words   = " ".join( new_args )
+            #     self.search_stuffdb( cmd,do_db_search
+            # " ".join( new_args ))
+            #     #STUFF_DB.main_window.search_me( " ".join( new_args ) )  # cmd_args rest of line
+            # # = None  # may be monkey patched in
+            # #                     # this wold be the app
+            # #                     # STUFF_DB.main_window may be what you want
+            # #                     # go_active_sub_window_func
 
 
         elif cmd == "xxx":

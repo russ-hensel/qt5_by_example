@@ -93,7 +93,7 @@ class QComboBoxTab( tab_base.TabBase  ) :
         self.mutate_dict[0]    = self.mutate_0
         self.mutate_dict[1]    = self.mutate_1
         self.mutate_dict[2]    = self.mutate_2
-        # self.mutate_dict[3]    = self.mutate_3
+        self.mutate_dict[3]    = self.mutate_3
         # self.mutate_dict[4]    = self.mutate_4
 
         self._build_gui()
@@ -117,7 +117,7 @@ class QComboBoxTab( tab_base.TabBase  ) :
 
         layout.addLayout( sub_layout )
 
-        widget          = QLabel("combo_1 -> ( non-editable ) -> ")
+        widget          = QLabel("combo_1 ->  ")
         sub_layout.addWidget( widget )
 
         # ---- combo_1
@@ -138,7 +138,8 @@ class QComboBoxTab( tab_base.TabBase  ) :
         # widget.addItem('Three')
         # widget.addItem('Four')
 
-        widget.setCurrentIndex( 2 )   # set index
+        widget.setCurrentIndex( 2 )   # set index -- combo will display this
+            # index from 0
 
         # these work but in some case seem only to work with a lambda
         widget.currentIndexChanged.connect( self.conbo_currentIndexChanged )
@@ -153,7 +154,7 @@ class QComboBoxTab( tab_base.TabBase  ) :
         sub_layout    = QHBoxLayout(   )
         layout.addLayout( sub_layout )
 
-        widget          = QLabel("combo_2 -> (editable) ->")
+        widget          = QLabel("combo_2   ->")
         sub_layout.addWidget( widget )
 
         widget        = QComboBox()
@@ -194,7 +195,7 @@ class QComboBoxTab( tab_base.TabBase  ) :
         """
         what it says
         """
-        self.append_function_msg( "show_combo_values" )
+
 
         self.append_msg( "show_combo_values")
         # ia_qt.q_combo_box( self.combo_1, "this is the first combobox from 1" )
@@ -295,7 +296,7 @@ class QComboBoxTab( tab_base.TabBase  ) :
         """
         notice order of events
         """
-        self.append_function_msg( "combo_reload" )
+        self.append_msg( "combo_reload" )
 
         self.append_msg( f"combo_reload { '' }clear next --------", flush = True )
         values         =  [ "1_reload", "2", "3", "4", ]
@@ -307,7 +308,7 @@ class QComboBoxTab( tab_base.TabBase  ) :
         self.append_msg( f"combo_reload done")
 
     # --------------------------
-    def inspect_old( self, arg  ):
+    def inspect_oldxxx( self, arg  ):
         """
         count : const int
         currentData : const QVariant
@@ -319,34 +320,6 @@ class QComboBoxTab( tab_base.TabBase  ) :
         self.append_function_msg( "inspect_old" )
         self.append_msg( f"combo_info { '' }  --------", flush = True )
 
-        widget         = self.combo_1
-
-        info           = widget.count()
-        msg            = f"widget.count() {info}"
-        self.append_msg( msg )
-
-        info           = widget.currentData()    # seem to always get None
-        msg            = f"widget.currentData() {info}"
-        self.append_msg( msg )
-
-        # qt5 not working for me
-        # info           = widget.editable
-        # msg            = f".editable {info}"
-        # print( msg )
-
-        info           = widget.currentText()  # is good
-        msg            = f".currentText() {info}"
-        self.append_msg( msg )
-
-        info           = widget.currentIndex()
-        msg            = f".currentIndex() {info}"
-        self.append_msg( msg )
-
-        info           = widget.placeholderText()
-        msg            = f".placeholderText() {info}"
-        self.append_msg( msg )
-
-        self.show_combo_values()   # move this code here
 
         self.append_msg( f"combo_info end { '' } --------", flush = True )
 
@@ -405,7 +378,7 @@ class QComboBoxTab( tab_base.TabBase  ) :
         """
         read it -- mutate the widgets
         """
-        self.append_function_msg( "mutate_1" )
+        self.append_function_msg( "mutate_2" )
 
         msg    = 'combo_2.setCurrentText( "2" )'
         self.append_msg( msg, clear = False )
@@ -414,6 +387,50 @@ class QComboBoxTab( tab_base.TabBase  ) :
         msg    = 'combo_1.setCurrentIndex( 2 )'
         self.append_msg( msg, clear = False )
         self.combo_1.setCurrentIndex( 2 )
+
+        self.append_msg( tab_base.DONE_MSG )
+
+    # ------------------------------------
+    def mutate_3( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_3" )
+
+
+        widget         = self.combo_1
+
+        info           = widget.count()
+        msg            = f"widget.count() {info}"
+        self.append_msg( msg )
+
+        info           = widget.currentData()    # seem to always get None
+        msg            = f"widget.currentData() {info}"
+        self.append_msg( msg )
+
+        # qt5 not working for me
+        # info           = widget.editable
+        # msg            = f".editable {info}"
+        # print( msg )
+
+        info           = widget.currentText()  # is good
+        msg            = f".currentText() {info}"
+        self.append_msg( msg )
+
+        info           = widget.currentIndex()
+        msg            = f".currentIndex() {info}"
+        self.append_msg( msg )
+
+        info           = widget.placeholderText()
+        msg            = f".placeholderText() {info}"
+        self.append_msg( msg )
+
+        # ---- editable
+        info           = widget.setEditable( True )
+        msg            = "widget.setEditable( True )"
+        self.append_msg( msg )
+
+        self.show_combo_values()
 
         self.append_msg( tab_base.DONE_MSG )
 
