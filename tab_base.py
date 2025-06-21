@@ -7,6 +7,9 @@
 """
 Base class for demo tabs
 
+this is pretty much infrastructure for the application
+not part of the widget examples
+
 """
 
 # --------------------
@@ -17,10 +20,10 @@ if __name__ == "__main__":
 # --------------------
 
 
-import inspect
-import json
+#import inspect
+#import json
 import os
-import subprocess
+#import subprocess
 import sys
 import time
 from datetime import datetime
