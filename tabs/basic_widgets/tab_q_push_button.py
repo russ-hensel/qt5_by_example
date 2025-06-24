@@ -6,7 +6,7 @@
 tab_button.py
 
 KEY_WORDS:      pressed press PushBtton click connect qq
-CLASS_NAME:     QButtonTab
+CLASS_NAME:     QPushButtonTab
 WIDGETS:        QPushButton
 STATUS:
 TAB_TITLE:      QPushButton
@@ -84,7 +84,7 @@ import tab_base
 print_func_header   = uft.print_func_header
 
 #  --------
-class QButtonTab( tab_base.TabBase ):
+class QPushButtonTab( tab_base.TabBase ):
     """
     Reference examples for QPushButton
 
