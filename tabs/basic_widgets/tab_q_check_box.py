@@ -3,15 +3,12 @@
 # ---- tof
 """
 
-tab_groupbox.py
 
-
-
-KEY_WORDS:      QCheckBox  checkbox check box qq
+KEY_WORDS:      QCheckBox  checkbox check box dc
 CLASS_NAME:     QCheckBoxTab
-WIDGETS:        QHBoxLayout QVBoxLayout QLabel QPushButton QCheckBox QLineEdit QLineEdit QRadioButton
+WIDGETS:        QCheckBox
 STATUS:         new
-TAB_TITLE:      QCheckBox
+TAB_TITLE:      QCheckBox Reference
 
 
 """
@@ -152,39 +149,11 @@ class QCheckBoxTab(  tab_base.TabBase  ):
         button_layout = QHBoxLayout(   )
         layout.addLayout( button_layout,  )
 
-        self.button_ex_1         = widget
-
-        # widget = QPushButton("show_\nvalues")
-        # self.button_ex_1         = widget
-        # widget.clicked.connect(  self.show_values )
-        # button_layout.addWidget( widget )
-
         self.build_gui_last_buttons( button_layout )
-
-    # ------------------------------
-    def get_button_style_sheet( self ):
-        """
-        what it says
-        """
-        return ("""
-            QPushButton {
-                background-color: #4CAF50;
-                color: white;
-                border: 2px solid #4CAF50;
-                border-radius: 8px;
-                padding: 8px;
-            }
-            QPushButton:hover {
-                background-color: #45a049;
-            }
-            QPushButton:pressed {
-                background-color: #3e8e41;
-            }
-        """)
 
 
     # ------------------------------------
-    def signal_sent( self, msg ):
+    def signal_sent_xxx( self, msg ):
         """
         when a signal is sent, use find
         """
@@ -193,50 +162,7 @@ class QCheckBoxTab(  tab_base.TabBase  ):
         # print( msg )
         self.append_msg(  f"signal_sent {msg}" )
 
-    # ------------------------------------
-    def put_in_clipboard( self, a_string ):
-        """
-        what it says:
-        """
-        self.append_function_msg( "put_in_clipboard" )
 
-        clipboard = QApplication.clipboard()
-
-        # Set a string into the clipboard
-        clipboard.setText( a_string )
-        self.append_msg(  f"put_in_clipboard { a_string = }" )
-
-        get_text_out   =   clipboard.text()
-
-        self.append_msg( "<<-- done" )
-
-    # ------------------------------------
-    def clear_values( self ):
-        """
-        There is much more info to show
-        """
-        self.append_function_msg( "clear_values" )
-
-        self.append_msg(  "\n\nclear_values")
-        self.append_msg(  "clear_values self.line_edit_1 " )  # setText()   ??
-        self.line_edit_1.setText( "" )
-        # print( f"{self.little_widget_line_edit_1.isEnabled() = }" )  # setEnabled()
-        # print( f"{self.little_widget_qlabel_1.text() = }" )  # setText() ??
-        self.append_msg( "<<-- done" )
-
-    # ------------------------------------
-    def set_values( self ):
-        """
-        What it says
-        """
-        self.append_function_msg( "set_values" )
-
-        self.append_msg(  "set_values  self.line_edit_1 " )  # setText()   ??
-        self.line_edit_1.setText( "xxxxx" )
-        # print( f"{self.little_widget_line_edit_1.isEnabled() = }" )  # setEnabled()
-        # print( f"{self.little_widget_qlabel_1.text() = }" )  # setText() ??
-
-        self.append_msg( "<<-- done" )
 
     # ------------------------------------
     def mutate_0( self ):
@@ -254,7 +180,11 @@ class QCheckBoxTab(  tab_base.TabBase  ):
         self.cbox_2.setChecked( state )
 
         self.cbox_2.setLayoutDirection( Qt.LeftToRight )
-        self.show_values()
+        
+        
+        self.append_msg( f"{str(self.cbox_1.isChecked()) = }" )
+        self.append_msg( f"{str(self.cbox_2.isChecked()) = }" )
+
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -273,7 +203,12 @@ class QCheckBoxTab(  tab_base.TabBase  ):
         msg    = "un- check everything "
         self.append_msg( msg, clear = False )
 
-        self.show_values()
+        
+        
+        self.append_msg( f"{str(self.cbox_1.isChecked()) = }" )
+        self.append_msg( f"{str(self.cbox_2.isChecked()) = }" )
+
+
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -297,7 +232,12 @@ class QCheckBoxTab(  tab_base.TabBase  ):
         msg    = "mess with setLayoutDirection "
         self.append_msg( msg,  )
 
-        self.show_values()
+
+
+        self.append_msg( f"{str(self.cbox_1.isChecked()) = }" )
+        self.append_msg( f"{str(self.cbox_2.isChecked()) = }" )
+
+
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -319,39 +259,15 @@ class QCheckBoxTab(  tab_base.TabBase  ):
         msg    = "mess with setLayoutDirection "
         self.append_msg( msg,  )
 
-        self.show_values()
-
-        self.append_msg( tab_base.DONE_MSG )
-
-    # ------------------------
-    def show_values(self):
-        """
-        the usual sort of thing, just read it
-        """
-        #self.append_function_msg( "show_values" )
-
-
-        # self.append_msg( f"{self.line_edit_1.text() = }" )  # setText()   ??
-        # self.append_msg( f"{self.line_edit_1.isEnabled() = }" )  # setEnabled() no focus
-        # self.append_msg( f"{self.line_edit_1.isReadOnly() = }" )
-
-        # self.append_msg( f"{self.qlabel_1.text() = }" )  # setText() ??
-        # self.append_msg( f"{self.qlabel_2.text() = }" )
 
         self.append_msg( f"{str(self.cbox_1.isChecked()) = }" )
         self.append_msg( f"{str(self.cbox_2.isChecked()) = }" )
 
 
-    # --------
-    def clip( self ):
-        """
-        """
-        self.append_function_msg( "clip" )
 
-        a_string    = self.line_edit_1.text()
-        self.put_in_clipboard( a_string )
+        self.append_msg( tab_base.DONE_MSG )
 
-        self.append_msg( "<<-- done" )
+
 
 
     def checkbox_state_changed( self, state ):
@@ -381,7 +297,7 @@ class QCheckBoxTab(  tab_base.TabBase  ):
         """
         self.checkbox.stateChanged.connect(self.checkbox_state_changed)
         """
-        self.append_msg( "cbox_clicked" )
+        self.append_msg( "cbox_clicked()" )
 
         cbox = self.sender()   # look into self.sender() looks like it might be standard !!
 
@@ -390,56 +306,22 @@ class QCheckBoxTab(  tab_base.TabBase  ):
         #self.append_msg( "<<-- done" )
 
     # ---- signals sent -----------------------
-    # --------------------------
-    def on_editing_finished(self):
-        """
-        what is says
-        """
-        self.append_function_msg( "on_editing_finished\n" )
-
-        #print("Editing finished")
 
     # --------------------------
-    def return_pressed( self ):
+    def return_pressed_xxx( self ):
         """
         what is says
         """
         self.append_function_msg( "return_pressed\n" )
 
-
-    # ------------------------------------
-    def on_text_changed( self, new_text):
-        """
-        what is says
-        """
-        self.append_function_msg( "on_text_changed" )
-
-        self.append_msg( f"Text changed: {new_text}")
-        self.append_msg( "\n")
-    # ------------------------------------
-    def on_text_edited(self, new_text):
-        """
-        what is says
-        """
-        self.append_function_msg( "on_text_edited" )
-
-        self.append_msg( f"User edited text: {new_text}")
-
-        self.append_msg( "\n")
-
-
+\
     # ------------------------
     def inspect(self):
         """
         the usual
         """
-        self.append_function_msg( "inspect" )
+        self.append_function_msg( "inspect()" )
 
-        # self_q_pbutton_1    = self.q_pbutton_1
-        # self_q_pbutton_2    = self.q_pbutton_2
-
-        # self_qlabel_1       = self.qlabel_1
-        # self_qlabel_2       = self.qlabel_2
 
         self_cbox_0  = self.cbox_0
         self_cbox_1  = self.cbox_1
@@ -449,7 +331,7 @@ class QCheckBoxTab(  tab_base.TabBase  ):
         #parent_window = self.parent( ).parent( ).parent().parent()
 
         wat_inspector.go(
-             msg            = "tbd add more locals",
+             msg            = "for your inspection, inc. locals and globals",
              a_locals       = locals(),
              a_globals      = globals(), )
 
@@ -461,7 +343,7 @@ class QCheckBoxTab(  tab_base.TabBase  ):
         each tab gets its own function so we break in that
         tabs code
         """
-        self.append_function_msg( "breakpoint" )
+        self.append_function_msg( "breakpoint()" )
 
         breakpoint()
 
