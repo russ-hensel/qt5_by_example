@@ -193,7 +193,7 @@ class Search_Tab( QWidget ) :
         i have a QTableView how do i control the titles of the columns and their width ?
         """
         model.setHeaderData( 0, Qt.Horizontal, "Seq.")
-        model.setHeaderData( 1, Qt.Horizontal, "Obj Name"  )
+        model.setHeaderData( 1, Qt.Horizontal, "Tab Name"  )
         view.setColumnWidth( 0, 50   )
         ix   = 1
         view.setColumnWidth( ix, 200  )

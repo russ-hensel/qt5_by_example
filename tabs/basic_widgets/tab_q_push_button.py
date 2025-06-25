@@ -9,7 +9,7 @@ KEY_WORDS:      pressed press PushBtton click connect qq
 CLASS_NAME:     QPushButtonTab
 WIDGETS:        QPushButton
 STATUS:
-TAB_TITLE:      QPushButton
+TAB_TITLE:      QPushButton Reference
 
 
 """

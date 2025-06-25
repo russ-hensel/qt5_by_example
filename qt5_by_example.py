@@ -45,6 +45,8 @@ from PyQt5.QtSql import (QSqlDatabase,
                          QSqlRelationalDelegate,
                          QSqlRelationalTableModel,
                          QSqlTableModel)
+
+
 from PyQt5.QtWidgets import (QAbstractItemView,
                              QAction,
                              QApplication,

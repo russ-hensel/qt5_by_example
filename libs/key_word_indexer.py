@@ -121,7 +121,7 @@ class KeyWordIndexer(   ):
 
 
     # ---------------------------
-    def get_sql( self, table_name  ):
+    def get_sql_new( self, table_name  ):
         """
         !! change this so column names passe in as part of setup
         sql select to get the key word string, then
@@ -142,7 +142,7 @@ class KeyWordIndexer(   ):
         return sql
 
     # ---------------------------
-    def get_sql_old( self, table_name  ):
+    def get_sql( self, table_name  ):
         """
         !! change this so column names passe in as part of setup
         sql select to get the key word string, then
