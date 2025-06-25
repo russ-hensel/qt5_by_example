@@ -245,19 +245,25 @@ class QPushButtonTab( tab_base.TabBase ):
     def mutate_0( self ):
         """
         read it -- mutate the widgets
+            these mutations will try to mimic a typical default state
+            of a widget for the first push button the
+            second will not be modified by mutate_0
 
-       this is important content for the widgets reference on this tab
+        this is important content for the widgets reference on this tab
         """
         self.append_function_msg( "mutate_0" )
 
         widget          = self.q_push_button_1
         widget.setText( "text set in mutate_0" )
         widget.width     = 300
-        widget.setToolTip( "this is a tool tip" )
+        widget.setToolTip( None )
+        widget.setStyleSheet("")
 
-        # msg    = "initial mutate"
-        # self.append_msg( msg, clear = False )
+        # ---- change widget
+        msg    = "for q_push_button_2 no mutations"
+        self.append_msg( msg, clear = False )
 
+        widget          = self.q_push_button_1
         # self.q_push_button_1.setDisabled( True )
         # self.q_push_button_2.setDisabled( False )
 
@@ -283,11 +289,14 @@ class QPushButtonTab( tab_base.TabBase ):
             # you will see this a lot in our code, it does not seem to
             # be typical but we think it should be
 
-
+        widget.setToolTip( "this is a tool tip" )
         widget.setText( "text set in \nmutate_1" )
             # note \n
         widget.width     = 200
 
+        # ---- change widget
+        msg    = "some changes to q_push_button_2"
+        self.append_msg( msg, clear = False )
 
         # ---- self.q_push_button_2
         widget        = self.q_push_button_2
@@ -328,11 +337,15 @@ class QPushButtonTab( tab_base.TabBase ):
         # next does not seem to work
         self.q_push_button_1.setCheckable( True )
 
+        # ---- change widget
+        msg    = "some changes to q_push_button_2"
+        self.append_msg( msg, clear = False )
+
+
         widget     = self.q_push_button_2
         widget.setCheckable( True )
 
-            # does not seem to work
-        #self.q_push_button_1.toggle()
+
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -364,8 +377,13 @@ class QPushButtonTab( tab_base.TabBase ):
         menu.addAction("Option 2")
         widget.setMenu( menu )
 
+
         # ---- change widget
-        widget     = self.q_push_button_2
+        widget      = self.q_push_button_2
+        msg         = "some changes to q_push_button_2"
+        self.append_msg( msg, clear = False )
+
+
         widget.setCheckable( False )
         widget.setStyleSheet( self.get_button_style_sheet() )
 
@@ -401,7 +419,12 @@ class QPushButtonTab( tab_base.TabBase ):
         # try to clear the menu
         widget.setMenu( None )
 
-        widget     = self.q_push_button_2
+        # ---- change widget
+        widget      = self.q_push_button_2
+        msg         = "some changes to q_push_button_2"
+        self.append_msg( msg, clear = False )
+
+
         widget.setStyleSheet("")
 
         self.append_msg( tab_base.DONE_MSG )

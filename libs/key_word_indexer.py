@@ -61,9 +61,20 @@ from PyQt5.QtWidgets import (QAbstractItemView,
                              QVBoxLayout,
                              QWidget)
 
+from collections import defaultdict
+
 #import adjust_path
 #import db_create
 import key_words
+# import data_dict
+
+# data_dict   = data_dict.build_it( db_name = None )
+
+
+
+KEY_WORD_SQL  = defaultdict( lambda: None )
+# DATA_DICT   = data_dict.DATA_DICT
+
 
 # ---- end imports
 LOG_LEVEL  = 20
@@ -103,6 +114,12 @@ class KeyWordIndexer(   ):
         """
         self.sql   = sql
 
+# import data_dict
+
+# data_dict   = data_dict.build_it( db_name = None )
+# DATA_DICT   = data_dict.DATA_DICT
+
+
     # ---------------------------
     def get_sql( self, table_name  ):
         """
@@ -112,9 +129,30 @@ class KeyWordIndexer(   ):
         id needs to be first
         others strings
         """
-        # next for compat with old code before ripped out
-        if not self.sql == "":
-            return self.sql
+        sql     = KEY_WORD_SQL[ table_name ]
+        if sql is None:
+             from data_dict import DATA_DICT
+             table_dict    = DATA_DICT.get_table( table_name  )
+             key_word_column_list   = table_dict.get_key_word_columns()
+             key_word_column_list.insert( 0, "id" )
+                 # noe a key word but a needed part of the query
+             columns                = ", ".join( key_word_column_list )
+             sql                    =  f"""SELECT {columns}  FROM    {table_name}  """
+
+        return sql
+
+    # ---------------------------
+    def get_sql_old( self, table_name  ):
+        """
+        !! change this so column names passe in as part of setup
+        sql select to get the key word string, then
+        made into key words
+        id needs to be first
+        others strings
+        """
+        # # next for compat with old code before ripped out
+        # if not self.sql == "":
+        #     return self.sql
 
         # ---- stuff
         if   table_name == "stuff":
