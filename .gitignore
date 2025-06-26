@@ -5,6 +5,7 @@ __pycache__/
 
 # russ beware
 *.sh
+*.log
 
 
 # C extensions
