@@ -4,6 +4,8 @@ This is a single GUI application with many tabs.  Each tab illustrates the
 use of some of of qt5's widgets. ( this replaces my app/repository "qt_by_example" which will
 be deleted real soon )
 
+It is also part of a book in progress: What We Know About QT5 -- see the Wiki -- join in!
+
 Also included is a GUI version of wat-inspector a great little introspection
 utility.
 
