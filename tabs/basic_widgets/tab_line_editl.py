@@ -4,16 +4,11 @@
 KEY_WORDS:      QLineEdit line edit lineedit
 CLASS_NAME:     QLineEditTab
 WIDGETS:        QLineEdit
-STATUS:         look at misc widget.... and see what we can extract
+
 TAB_TITLE:      QLineEdit
+DESCRIPTION:    A depricated tab will be deleted
 
 
-
-TAB_HELPxx:       combo_box_widget_tab.txt
-
-
-self.help_file_name     =  "combo_box_widget_tab.txt"
-/mnt/WIN_D/Russ/0000/python00/python3/_projects/qt_by_example/docs/combo_box_widget_tab.txt
 """
 # ---- tof
 # --------------------

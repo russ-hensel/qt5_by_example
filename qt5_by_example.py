@@ -1,6 +1,12 @@
 """
-an app that searches for a tab with
-example, running, code for qt in python
+
+an app that demonstrates the uses
+of qt5 in python
+see the wiki at
+
+Home · russ-hensel/qt5_by_example Wiki
+https://github.com/russ-hensel/qt5_by_example/wiki
+
 
 
 """
@@ -138,7 +144,6 @@ class Qt5ByExample( QMainWindow ):
         uft.TEXT_EDITOR     = my_parameters.text_editor
 
         global DB_FILE
-
         DB_FILE             = my_parameters.db_file_name
 
         app_logging.init()
@@ -451,6 +456,9 @@ class Qt5ByExample( QMainWindow ):
     def show_about_box(self):
         """
         what it says, but !! more inf
+        russ-hensel/qt5_by_example: examples of qt5 code ready for copy and paste
+        https://github.com/russ-hensel/qt5_by_example/tree/main
+
         """
         mode        = parameters.PARAMETERS.mode
         version     = f"Version = {__VERSION__}"
@@ -460,10 +468,11 @@ class Qt5ByExample( QMainWindow ):
         msg      =  "get the size this process thru its pid "
         memory   = process_pid.memory_info().rss/1_000_000
         memory   = f"Memory = {memory} Mbytes"
-        repo     = " coming soon... more stuff          "
+        repo     = "Repo: https://github.com/russ-hensel/qt5_by_example/tree/main"
         msg      = ( f"Stuff DB {version} {mode}"
                      f"\n{memory}"
                      f"\n{repo}"
+                     "\nSee the book at the repo wiki!"
                      )
 
         QMessageBox.about(self, "About", msg )

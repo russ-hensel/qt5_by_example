@@ -3,18 +3,23 @@
 
 # ---- tof
 """
-KEY_WORDS:      on a form a date edit can be used for user input/output context menu depricated
-CLASS_NAME:     QDateEditTab
+KEY_WORDS:      on a form a date edit can be used for user input/output context menu new tab base stagetwo
+CLASS_NAME:     QDateEditTabNew
 WIDGETS:        QDateEdit  CalendarPopup QDateTimeEdit
-TAB_TITLE:      QDateEdit QDateTimeEdit Reference
-DESCRIPTION:    depricated
+STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
+TAB_TITLE:      QDateEditTabNew
+TAB_HELP:       use  self.help_file_name     =  "date_edit_widget_tab.txt"
 
+/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/tab_date_edit_new.py
+ /mnt/WIN_D/Russ/0000/python00/python3/_projects/qt_by_example/docs/date_edit_widget_tab.txt
+
+/mnt/WIN_D/Russ/0000/python00/python3/_projects/qt_by_example/docs/date_edit_widget_tab.txtper_tab.txt
 """
 # --------------------
 if __name__ == "__main__":
     #----- run the full app
     import main
-    #qt_fitz_book.main()
+
 # --------------------
 
 
@@ -86,7 +91,7 @@ INDENT          = uft.BEGIN_MARK_1
 INDENT          = uft.BEGIN_MARK_2
 #INDENT          = qt_sql_widgets.
 
-
+print_func_header =  uft.print_func_header
 
 # ----------------------------
 class CustomDateEdit( QDateEdit ):
@@ -124,39 +129,38 @@ class CustomDateEdit( QDateEdit ):
         self.setDate(QDate.currentDate())
 
 #  --------
-class QDateEditTab( tab_base.TabBase  ):
+class QDateEditTabNew( tab_base.TabBase ) :
     def __init__(self):
         """
         date_edit_tab.QDateEditTab
         """
         super().__init__()
 
-        self.date_format       = "dd/MM/yyyy"
-        self.module_file       = __file__      # save for help file usage
+        self.date_format   = "dd/MM/yyyy"
+
         self.mutate_dict[0]    = self.mutate_0
         self.mutate_dict[1]    = self.mutate_1
         # self.mutate_dict[2]    = self.mutate_2
         # self.mutate_dict[3]    = self.mutate_3
         # self.mutate_dict[4]    = self.mutate_4
-
         self._build_gui()
 
-    def _build_gui_widgets(self, main_layout  ):
-        """
-        the usual, build the gui with the widgets of interest
-        and the buttons for examples
-        """
-        layout              = QGridLayout(   )
 
-        main_layout.addLayout( layout )
+    def _build_gui_widgets(self, layout  ):
+        """
+        the usual, build the gui
+        """
+        # tab_page      = self
+        wigets_layout        = QGridLayout(  )
+
+        layout.addLayout( wigets_layout )
         button_layout        = QHBoxLayout(   )
-
 
         ix_row        = 0
         ix_col        = 0
 
         widget  = QLabel( "start_date_widget w/o popup" )
-        layout.addWidget( widget, ix_row, ix_col )   # row column alignment
+        wigets_layout.addWidget( widget, ix_row, ix_col )   # row column alignment
 
         ix_col                  += 1
         #widget                  = QDateEdit()
@@ -166,12 +170,12 @@ class QDateEditTab( tab_base.TabBase  ):
         # widget.editingFinished.connect( lambda: self.date_changed( ) )
         #widget.setCalendarPopup( True )
         widget.setDate(QDate( 2022, 1, 1 ))
-        layout.addWidget( widget, ix_row, ix_col )
+        wigets_layout.addWidget( widget, ix_row, ix_col )
 
         # ----
         ix_col    += 1
         widget  = QLabel( "end_date_widget -> (see _build_gui) ->" )
-        layout.addWidget( widget, ix_row, ix_col )
+        wigets_layout.addWidget( widget, ix_row, ix_col )
 
         """
            dateEdit->setSpecialValueText( " " );
@@ -191,7 +195,7 @@ class QDateEditTab( tab_base.TabBase  ):
         #widget.setDate(QDate( None, None, None, )) not ok
         widget.editingFinished.connect( lambda: self.date_changed(   ) )
         #placer.place( a_widget )
-        layout.addWidget( widget, ix_row, ix_col )
+        wigets_layout.addWidget( widget, ix_row, ix_col )
 
         # ----- QDateTimeEdit
         ix_row                  += 1
@@ -209,7 +213,7 @@ class QDateEditTab( tab_base.TabBase  ):
 
         self.dateTimeEdit.setGeometry(50, 50, 200, 30)
 
-        layout.addWidget( widget, ix_row, ix_col )
+        wigets_layout.addWidget( widget, ix_row, ix_col )
 
         # ---- QTimeEdit
         ix_row                  += 1
@@ -250,12 +254,12 @@ class QDateEditTab( tab_base.TabBase  ):
         # Clear the time edit field
         widget.clear()
 
-        layout.addWidget( widget, ix_row, ix_col )
+        wigets_layout.addWidget( widget, ix_row, ix_col )
 
         # ---- buttons ---------------------------------
         ix_row    += 1
         ix_col    = 0
-        layout.addLayout( button_layout, ix_row, ix_col )
+        wigets_layout.addLayout( button_layout, ix_row, ix_col )
 
         # # ---- Inspect
         # widget = QPushButton("inspect")
@@ -264,20 +268,37 @@ class QDateEditTab( tab_base.TabBase  ):
         # widget.clicked.connect( lambda: self.inspect( ) )
         # button_layout.addWidget( widget )
 
+        # ---- mutate
+        widget = QPushButton("mutate\n")
+        # widget.clicked.connect(lambda: self.print_message(widget.text()))
+        a_widget        = widget
+        widget.clicked.connect( self.mutate )
+        button_layout.addWidget( widget )
+
         # ----set_empty
         widget = QPushButton("set_empty\n")
         widget.clicked.connect(lambda: self.set_empty( ))
         a_widget        = widget
         button_layout.addWidget( widget )
 
-        self.build_gui_last_buttons( button_layout )
+        # ---- PB inspect
+        widget = QPushButton("inspect\n")
+        widget.clicked.connect( self.inspect    )
+        clear_button = widget
+        button_layout.addWidget( widget,   )
+
+        # ---- PB breakpoint
+        widget = QPushButton("breakpoint\n")
+        widget.clicked.connect( self.breakpoint    )
+        clear_button = widget
+        button_layout.addWidget( widget,   )
 
     # ------------------------------------
     def set_empty( self ):
         """
         what is says
         """
-        self.append_function_msg(  "set_empty" )
+        print_func_header( "set_empty" )
 
         invalid_date     = QDate().fromString( "01/01/0001", "dd/MM/yyyy" )
         self.end_date_widget.setDate( invalid_date )
@@ -292,7 +313,7 @@ class QDateEditTab( tab_base.TabBase  ):
         """
         what is says
         """
-        self.append_function_msg(  "to_unix" )
+        print_func_header( "to_unix" )
 
         # # Example QDate object
         # qdate = QDate(2024, 9, 16)
@@ -307,31 +328,39 @@ class QDateEditTab( tab_base.TabBase  ):
 
         return unix_timestamp
 
+
     # ------------------------------------
-    def mutate_extract( self ):
+    def mutate_0( self ):
         """
         read it
-        some conversions from chat
 
-        I have a QDateEdit i get the qdate from it.
-        I want to convert the qdate to a unit time, the last
-        second of the date,
-
-        and second I want to convert the date to
-        the first second of the date,
-
-        and finally i want to convert
-        the date to the last second of the day before the date.
-
-        Assume the date and times are GMT
 
         """
-        self.append_function_msg(  "mutate" )
+
+
+        self.append_function_msg( "mutate_0" )
+
 
         qdatetime       = QDateTime.fromSecsSinceEpoch( int( time.time() ) )
         qdate           = qdatetime.date()
 
         self.start_date_widget.setDate( qdate  )
+
+
+    # ------------------------------------
+    def mutate_1( self ):
+        """
+        read it
+
+
+        """
+
+
+        self.append_function_msg( "mutate_1" )
+
+        pass
+
+
 
     # ------------------------------------
     def inspect_old( self ):
@@ -388,38 +417,16 @@ class QDateEditTab( tab_base.TabBase  ):
         """
         what is says
         """
-        self.append_function_msg(  "date_changed()" )
+        print_func_header( "date_changed" )
 
         print( f"{arg = }")
 
-
-
-    # ------------------------------------
-    def mutate_0( self ):
-        """
-        read it -- mutate the widgets
-        """
-        self.append_function_msg( "mutate_0()" )
-
-        msg    = "so far not implemented "
-        self.append_msg( msg, clear = False )
-
-    # ------------------------------------
-    def mutate_1( self ):
-        """
-        read it -- mutate the widgets
-        """
-        self.append_function_msg( "mutate_1()" )
-
-        msg    = "so far not implemented "
-        self.append_msg( msg, clear = False )
-        self.append_msg( tab_base.DONE_MSG )
     # ------------------------
     def inspect(self):
         """
         the usual
         """
-        self.append_function_msg( "inspect()" )
+        print_func_header( "inspect" )
 
         my_tab_widget               = self
         self_start_date_widget      = self.start_date_widget
@@ -435,8 +442,8 @@ class QDateEditTab( tab_base.TabBase  ):
         each tab gets its own function so we break in that
         tabs code
         """
-        self.append_function_msg( "breakpoint()" )
+        print_func_header( "breakpoint" )
 
         breakpoint()
-        self.append_msg( tab_base.DONE_MSG )
+
         # ---- eof

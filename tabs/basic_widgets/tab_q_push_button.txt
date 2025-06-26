@@ -23,12 +23,12 @@
             QPushButton
 
 ---- User interaction
-        now writen
+        now written
 
 ---- Discussion
 
 
-    Out of date...... This shows loops being used to layout lables which indicate their own row column position.
+    Out of date...... This shows loops being used to layout labels which indicate their own row column position.
 
     The last row of buttons is a box layout inside the larger grid layout
 

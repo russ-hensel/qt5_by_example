@@ -65,7 +65,8 @@ def set_tab_db( db ):
     global TAB_DB
     print( "set_tab_db" )
     if TAB_DB:
-        1/0
+        # 1/0
+        return
     TAB_DB  = db
     print_vars()
 
@@ -73,7 +74,9 @@ def set_controller( controller ):
     global CONTROLLER
     print( "set_controller" )
     if CONTROLLER:
-        1/0
+        #1/0
+        # might be or not an error
+        return
     CONTROLLER  = controller
     print_vars()
 

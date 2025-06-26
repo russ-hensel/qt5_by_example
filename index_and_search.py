@@ -204,7 +204,8 @@ class TabDBBuilder():
                 module          TEXT,
                 class           TEXT,
                 widgets         TEXT,
-                key_words       TEXT
+                key_words       TEXT,
+                description     TEXT
             )
         """
 
@@ -303,6 +304,7 @@ class TabDBBuilder():
 
         query           = QSqlQuery( self.db )
 
+        # think we can just unpack the dict, did a chatbot tell me to do this
         table_data = [
             ( str( doc_data[ "doc_file_name"] ),
               "name??",
@@ -311,10 +313,11 @@ class TabDBBuilder():
               doc_data[ "class_name"],
               doc_data[ "widgets"],
               doc_data[ "key_words"],
+              doc_data[ "description"],
             ),
         ]
 
-        for doc_file_name, name,  tab_title, module, class_name, widgets, key_words in table_data:
+        for doc_file_name, name,  tab_title, module, class_name, widgets, key_words, description  in table_data:
             # this only one way to bind
             sql     = """INSERT INTO tabs (
                 doc_file_name,
@@ -323,9 +326,10 @@ class TabDBBuilder():
                 module ,
                 class,
                 widgets,
-                key_words
+                key_words,
+                description
                 )
-            VALUES ( ?, ?, ?, ?, ?, ?, ? )
+            VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )
             """
             query.prepare( sql )
             query.addBindValue( doc_file_name )
@@ -335,6 +339,8 @@ class TabDBBuilder():
             query.addBindValue( class_name )
             query.addBindValue( widgets )
             query.addBindValue( key_words )
+            query.addBindValue( description )
+
 
             result   = query.exec_()
             if not result:
@@ -357,8 +363,11 @@ class TabDBBuilder():
         #rint( "could make a loop to do this maybe a comp !!")
 
         doc_data_items       = [ "doc_file_name",
-                                  "class_name",    "tab_title",
-                                  "key_words",     "widgets" ] # omit doc_file_name
+                                  "class_name",
+                                  "tab_title",
+                                  "key_words",
+                                  "widgets",
+                                  "description" ] # omit doc_file_name??
 
         doc_data    = {}
         doc_data[ "module"  ]    = str( file_name )[ :-3 ]
@@ -366,6 +375,7 @@ class TabDBBuilder():
             doc_data[ i_doc_item ] = ""
 
         doc_data[ "doc_file_name" ] = file_name
+        doc_data[ "description" ] = "Description comming soon"
 
         a_file  = open( file_name, 'r', encoding = "utf8", errors = 'ignore' )
 
@@ -399,7 +409,13 @@ class TabDBBuilder():
                     i_line    = i_line[ len(key) + 1 : ].strip()
                     doc_data[ key ] = doc_data[ key ] + " " + i_line
 
-            if ix > 20:   # line limit
+            key         = "description"
+            if i_line.startswith(  f"{key.upper()}:"):
+                    i_line    = i_line[ len(key) + 1 : ].strip()
+                    #doc_data[ key ] = doc_data[ key ] + " " + i_line
+                    doc_data[ key ] = i_line  # needs to be on one line
+
+            if ix > 25:   # line limit
                 #rint( "break on ix .....")
                 break
 

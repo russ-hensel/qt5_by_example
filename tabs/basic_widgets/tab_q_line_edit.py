@@ -3,15 +3,14 @@
 # ---- tof
 """
 
-KEY_WORDS:      lineEdit rh input text
+KEY_WORDS:      lineEdit   input text rh
 CLASS_NAME:     QLineEditTab
 WIDGETS:        QLineEdit
 STATUS:
 TAB_TITLE:      QLineEdit Reference
-
+DESCRIPTION:    A reference for the QLineEdit widget
 
 """
-
 
 
 # --------------------
@@ -21,13 +20,6 @@ if __name__ == "__main__":
     #main.main()
 # --------------------
 
-
-# # --------------------
-# if __name__ == "__main__":
-#     #----- run the full app
-#     import qt_fitz_book
-#     qt_fitz_book.main()
-# # --------------------
 
 import traceback
 import glob
@@ -108,24 +100,6 @@ import tab_base
 
 
 
-# --------------------------------
-def set_groupbox_style( groupbox ):
-    """ """
-    groupbox.setStyleSheet("""
-        QGroupBox {
-            border: 2px solid blue;
-            border-radius: 10px;
-            margin-top: 15px;
-        }
-
-        QGroupBox::title {
-            subcontrol-origin: margin;
-            subcontrol-position: top center;
-            padding: 0 3px;
-            background-color: white;
-        }
-    """)
-
 #  --------
 class QLineEditTab( tab_base.TabBase ) :
     def __init__(self):
@@ -137,10 +111,9 @@ class QLineEditTab( tab_base.TabBase ) :
 
         self.mutate_dict[0]    = self.mutate_0
         self.mutate_dict[1]    = self.mutate_1
-        # self.mutate_dict[2]    = self.mutate_2
+        self.mutate_dict[2]    = self.mutate_2
         # self.mutate_dict[3]    = self.mutate_3
         # self.mutate_dict[4]    = self.mutate_4
-
 
         self._build_gui()
 
@@ -153,201 +126,49 @@ class QLineEditTab( tab_base.TabBase ) :
         layout              = QVBoxLayout(   )
 
         main_layout.addLayout( layout )
-        button_layout        = QHBoxLayout(   )
+        #button_layout        = QHBoxLayout(   )
 
-        lbl_stretch     = 0
-        widget_stretch  = 3
+        # lbl_stretch     = 0
+        # widget_stretch  = 3
 
-        self.lbl_stretch     = lbl_stretch
-        self.widget_stretch  = widget_stretch
+        # self.lbl_stretch     = lbl_stretch
+        # self.widget_stretch  = widget_stretch
+        # ---- new row
+        row_layout       = QHBoxLayout( )
+        layout.addLayout( row_layout )
 
-
-        # groupbox_criteria   = QGroupBox( "Criteria" )
-        # set_groupbox_style( groupbox_criteria )
-
-        groupbox_edits      = QGroupBox( "Edits" )
-        set_groupbox_style( groupbox_edits )
-
-        button_layout       = QHBoxLayout( )
-
-        layout.addWidget( groupbox_edits )
-        g_layout            = QVBoxLayout( groupbox_edits  )
 
         # # ---- edits --------------------------------
         # layout.addWidget( groupbox_edits )
         # g_layout            = QVBoxLayout( groupbox_edits  )
-        self._build_gui_in_gb_edit( g_layout )
-
-        # # ---- criteria --------------------------------
-        # layout.addWidget( groupbox_criteria )
-        # g_layout            = QVBoxLayout( groupbox_criteria  )
-        # self._build_gui_in_gb_criteria( g_layout )
-
-        # ---- buttons
-        layout.addLayout( button_layout )
-
-        # our anscestor finishes off the tab with some
-        # standard buttons
-        self.build_gui_last_buttons( button_layout )
-
-
-    # ------------------------
-    def _build_gui_in_gb_edit(self, layout  ):
-        """
-        build some of the gui in a groupbox
-        """
-        lbl_stretch         = self.lbl_stretch
-        widget_stretch      = self.widget_stretch
-
-        # ---- CQLineEdit
-        b_layout        = QHBoxLayout( )
-        layout.addLayout( b_layout )
-
         widget            = QLabel( "QLineEdit_1")
-        b_layout.addWidget( widget,  stretch = lbl_stretch )
+        row_layout.addWidget( widget,  ) # stretch = lbl_stretch )
 
         widget            = QLineEdit(  self,   )
         widget.setReadOnly( False )
         self.line_edit_1_widget = widget
-        b_layout.addWidget( widget,  stretch = widget_stretch )
+        row_layout.addWidget( widget,  ) # stretch = lbl_stretch )
 
-        # ---- CQLineEdit_2
-        b_layout        = QHBoxLayout( )
-        layout.addLayout( b_layout )
+        # ---- new row
+        row_layout        = QHBoxLayout( )
+        layout.addLayout( row_layout )
 
         widget            = QLabel( "QLineEdit_2")
-        b_layout.addWidget( widget,  stretch = lbl_stretch )
+        row_layout.addWidget( widget,  ) # stretch = lbl_stretch )
 
         widget            = QLineEdit(  self,   )
         self.line_edit_2_widget = widget
-        b_layout.addWidget( widget,  stretch = widget_stretch )
-
-        # ---- CQTextEdit
-        b_layout        = QHBoxLayout( )
-        layout.addLayout( b_layout )
-
-        # widget            = QLabel( "QTextEdit")
-        # b_layout.addWidget( widget,  stretch = lbl_stretch )
-
-        # widget              = custom_widgets.QTextEdit(  self,  )
-        # self.text_edit_widget = widget
-        # b_layout.addWidget( widget,  stretch = widget_stretch )
+        row_layout.addWidget( widget,  ) # stretch = lbl_stretch )
 
 
-        # ---- CQDateEdit_1
-        b_layout        = QHBoxLayout( )
-        layout.addLayout( b_layout )
+        # ---- new row
+        row_layout        = QHBoxLayout( )
+        layout.addLayout( row_layout )
 
-        widget            = QLabel( "QDateEdit_1")
-        b_layout.addWidget( widget,  stretch = lbl_stretch )
+        # our ancestor finishes off the tab with some
+        # standard buttons
+        self.build_gui_last_buttons( row_layout )
 
-        # widget              = custom_widgets.CQDateEdit(  self,   )
-        # self.date_edit_1_widget = widget
-        # b_layout.addWidget( widget,  stretch = widget_stretch )
-
-        # ---- CQDateEdit_n
-        b_layout        = QHBoxLayout( )
-        layout.addLayout( b_layout )
-
-        widget            = QLabel( "QDateEdit_n:")
-        b_layout.addWidget( widget,  stretch = lbl_stretch )
-
-        # widget            = custom_widgets.QDateEdit(  self,   )
-        # self.date_edit_2_widget = widget
-        # b_layout.addWidget( widget,  stretch = self.widget_stretch )
-
-    # --------------------------
-    def mutate_to_refactro( self, arg  ):
-        """
-        What it says
-        """
-        self.append_function_msg( f"mutate { self.mutate_ix = }" )
-
-        max_mutate   = 3   # match to if.......
-        mutate_ix    = self.mutate_ix
-
-        if   mutate_ix == 0:
-
-            self.text_edit_widget.setText( f"{mutate_ix=}" )
-            data   = self.text_edit_widget.toPlainText()
-            msg         = f"set then get from self.text_edit_widget {data = }"
-            print( msg )
-
-            self.line_edit_1_widget.setText(  f"{mutate_ix=}" )  #
-            rdata    = self.line_edit_1_widget.text(  )
-            msg         = f"set then get from line_edit_1 {data = }"
-            self.append_msg( msg )
-
-            # # this is the general method
-            # in_data      = f"some string data {mutate_ix =}"
-            # in_type      = "string"             # a list includes  string  "integer", "timestamp" ):
-            # self.text_edit_widget.set_data(   in_data, in_type )
-
-        elif mutate_ix == 1:
-
-            self.text_edit_widget.setText( f"{mutate_ix=}" )
-
-            data   = self.text_edit_widget.toPlainText()
-            msg         = f"set then get from self.text_edit_widget {data = }"
-            self.append_msg( msg )
-
-            self.line_edit_1_widget.setText(  f"{mutate_ix=}" )  #
-            rdata    = self.line_edit_1_widget.text(  )
-            msg         = f"set then get from line_edit_1 {data = }"
-            print( msg )
-
-
-            # # this is the general method
-            # in_data      = f"some string data {mutate_ix =}"
-            # in_type      = "string"             # a list includes  string  "integer", "timestamp" ):
-            # self.text_edit_widget.set_data(   in_data, in_type )
-
-        elif self.mutate_ix == 2:
-            msg      = "set to none and like"
-            self.append_msg( msg )
-
-            self.text_edit_widget.setText( f"{mutate_ix=} for set to None" )
-
-            try:
-                self.line_edit_1_widget.setText( None )
-
-            except Exception as an_except:
-                self.append_msg( " " )
-                msg     = f"a_except    >>{an_except}<<  type  >>{type( an_except)}<<"
-                self.append_msg( msg )
-
-                msg     = "self.line_edit_1_widget.setText( None ) raised this "
-                self.append_msg( msg )
-
-
-
-        elif self.mutate_ix == 3:
-            self.text_edit_widget.set_preped_data( f"{mutate_ix=} set -> xxx -> None" )
-
-            self.text_edit_widget.set_preped_data( "xxx" )
-            self.line_edit_1_widget.set_preped_data( None )
-            raw_data    = self.line_edit_1_widget.get_raw_data(  )
-            msg         = f"set then get from text_edit_widget {raw_data = }"
-            self.append_msg(  msg )
-
-
-            self.line_edit_1_widget.set_preped_data( "xxx" )
-            self.line_edit_1_widget.set_preped_data( None )
-            #self.line_edit_1_widget.setText( None  )   #
-            raw_data    = self.line_edit_1_widget.get_raw_data(  )
-            msg         = f"set then get from line_edit_1 {raw_data = }"
-            self.append_msg( msg )
-
-            # this is the general method
-            in_data      = f"some string data {mutate_ix =}"
-            in_type      = "string"             # a list includes  string  "integer", "timestamp" ):
-            self.text_edit_widget.set_data(   in_data, in_type )
-
-        self.mutate_ix         += 1
-        if self.mutate_ix >= max_mutate:
-            msg   = f"hit {max_mutate = } wrap to 0 *******"
-            self.append_msg(  msg )
-            self.mutate_ix  = 0
 
 
 
@@ -361,6 +182,7 @@ class QLineEditTab( tab_base.TabBase ) :
         msg    = "so far just a little implemented "
         self.append_msg( msg, clear = False )
 
+        # ---- change widget
         msg    = "mess with first line edit "
         self.append_msg( msg, clear = False )
 
@@ -370,6 +192,11 @@ class QLineEditTab( tab_base.TabBase ) :
         widget.setPlaceholderText( "some placeholder text ")
         widget.setToolTip( "what is a tooltop setToolTip ")
 
+        # ---- change widget
+        widget     = self.line_edit_2_widget
+        msg     = "leave line_edit_2_widget in this mutation  "
+        self.append_msg( msg,  )
+
         self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------------------
@@ -378,84 +205,68 @@ class QLineEditTab( tab_base.TabBase ) :
         read it -- mutate the widgets
         """
         self.append_function_msg( "mutate_1()" )
+
         msg    = "so far a bit  implemented "
         self.append_msg( msg, clear = False )
 
-        msg    = "mess with QLineEdit_1 different than mutate_0()"
-        self.append_msg( msg, clear = False )
 
+        # ---- new widget
         widget     = self.line_edit_1_widget
-        widget.setText( "some text from setText in mutatate_1()" )
+        widget.setText( "some text from setText in mutate_1()" )False
 
         msg    = "disable line edit 1"
         self.append_msg( msg, clear = False )
 
         widget.setEnabled( False )
+
         widget.setPlaceholderText( "some placeholder text mutate_1()")
         widget.setToolTip( "setToolTip for mutate_1()")
 
+        # ---- new widget
         self.append_msg( tab_base.DONE_MSG )
 
-    # --------------------------
-    def set_to_nonexxx( self, arg  ):
+
+
+
+    # ------------------------------------
+    def mutate_2( self ):
         """
-        !!What it says
+        read it -- mutate the widgets
         """
-        self.append_function_msg( "set_to_none" )
+        self.append_function_msg( "mutate_2()" )
+        msg    = "so far a bit  implemented "
+        self.append_msg( msg, clear = False )
 
-        self.line_edit_1_widget.set_preped_data( "xxx" )
-        self.line_edit_1_widget.set_preped_data( None )
-        self.line_edit_1_widget.setText( None  )   #
-        raw_data    = self.line_edit_1_widget.get_raw_data(  )
-        msg         = f"set then get from line_edit_1 {raw_data = }"
-        self.append_msg( msg )
+        msg    = "mess with QLineEdit_1 different than mutate_0()"
+        self.append_msg( msg, clear = False )
+        # ---- new widget
+        widget     = self.line_edit_1_widget
+        widget.setText( "some text from setText in mutate_1()" )
 
-        print()
-        self.line_edit_2_widget.set_preped_data( "xxx" )
-        self.line_edit_2_widget.set_preped_data( None )
-        self.line_edit_2_widget.setText( None  )
-        msg         = f"{self.line_edit_2_widget.get_raw_data(  ) = }"
-        self.append_msg( msg )
+        msg    = "enable line edit 1"
+        self.append_msg( msg, clear = False )
 
-        try:
-            self.date_edit_1_widget.set_preped_data( None )
+        widget.setEnabled( True )
 
-        except Exception as an_except:
-            print()
-            msg     = f"a_except    >>{an_except}<<  type  >>{type( an_except)}<<"
-            self.append_msg( msg )
 
-            msg     = "self.date_edit_1_widget.set_preped_data( None ) raised this "
-            self.append_msg( msg )
-
-        try:
-            self.date_edit_2_widget.set_preped_data( None )
-
-        except Exception as an_except:
-            print()
-            msg     = f"a_except    >>{an_except}<<  type  >>{type( an_except)}<<"
-            self.append_msg( msg )
-
-            msg     = "self.date_edit_1_widget.set_preped_data( None ) raised this "
-            self.append_msg( msg )
+        # ---- new widget
+        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------
     def inspect(self):
         """
         the usual
         """
-        self.append_function_msg( "inspect" )
+        self.append_function_msg( "inspect()" )
 
         # make some locals for inspection
-        my_tab_widget = self
+
         parent_window = self.parent( ).parent( ).parent().parent()
 
         self_line_edit_1_widget = self.line_edit_1_widget
+        self_line_edit_2_widget = self.line_edit_2_widget
 
-        self_text_edit_1_widget = self.text_edit_widget
 
-        # self_date_edit_1_widget = self.date_edit_1_widget
-        # self_date_edit_2_widget = self.date_edit_2_widget
 
         wat_inspector.go(
              msg            = "for your inspection, inc. locals and globals",
@@ -468,7 +279,7 @@ class QLineEditTab( tab_base.TabBase ) :
         """
         keep this in each object so user breaks into that object
         """
-        self.append_function_msg( "breakpoint" )
+        self.append_function_msg( "breakpoint()" )
         breakpoint()
 
 

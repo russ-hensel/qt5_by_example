@@ -3,11 +3,11 @@
 
 # ---- tof
 """
-KEY_WORDS:      on a form a date edit can be used for user input/output context menu depricated
+KEY_WORDS:      on a form a date edit can be used for user input/output context menu rh todo
 CLASS_NAME:     QDateEditTab
 WIDGETS:        QDateEdit  CalendarPopup QDateTimeEdit
 TAB_TITLE:      QDateEdit QDateTimeEdit Reference
-DESCRIPTION:    depricated
+DESCRIPTION:    A reference for the QDateEdit and closely related widgets
 
 """
 # --------------------

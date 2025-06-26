@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-KEY_WORDS:      combo box or drop down list box  rsh
+KEY_WORDS:      combo box or drop down list box ddl   rh
 CLASS_NAME:     QComboBoxTab
 WIDGETS:        QComboBox
-TAB_TITLE:      QComboBox
-DESCRIPTION:    A depricated tab will be deleted
-
+STATUS:         works  5/10
+TAB_TITLE:      QComboBox Reference
+NOTES:          replaces tab_combo_box.py which should be deleted
+DESCRIPTION:    A reference for the QComboBox widget
 
 """
 # ---- tof
@@ -85,7 +86,7 @@ class QComboBoxTab( tab_base.TabBase  ) :
         """
         """
         super().__init__()
-        #self.help_file_name     =  "combo_box_widget_tab.txt"
+
         self.module_file       = __file__
         self.mutate_dict[0]    = self.mutate_0
         self.mutate_dict[1]    = self.mutate_1
@@ -194,7 +195,7 @@ class QComboBoxTab( tab_base.TabBase  ) :
         """
 
 
-        self.append_msg( "show_combo_values")
+        self.append_msg( "show_combo_values()")
         # ia_qt.q_combo_box( self.combo_1, "this is the first combobox from 1" )
         # current_text         = self.combo_1.currentText()
         # index                = self.combo_1.currentIndex()
@@ -239,7 +240,7 @@ class QComboBoxTab( tab_base.TabBase  ) :
         """
 
         """
-        self.append_function_msg( "conbo_return" )
+        self.append_function_msg( "conbo_return()" )
         self.append_msg( "\n" )
         #print( f"conbo_signal {arg}")
 
@@ -254,7 +255,7 @@ class QComboBoxTab( tab_base.TabBase  ) :
         void 	textActivated(const QString &text)
         void 	textHighlighted(const QString &text)
         """
-        self.append_msg(  "conbo_signal" )
+        self.append_msg(  "conbo_signal()" )
 
         print( f"conbo_signal {arg = }")
         self.append_msg( "\n" )
@@ -283,7 +284,7 @@ class QComboBoxTab( tab_base.TabBase  ) :
         void 	textActivated(const QString &text)
         void 	textHighlighted(const QString &text)
         """
-        self.append_msg(  "combo_currentTextChanged" )
+        self.append_msg(  "combo_currentTextChanged()" )
         self.append_msg( f"combo_currentTextChanged {arg = }")
         self.append_msg( f"combo_currentTextChanged done")
         self.append_msg( "\n" )
@@ -293,7 +294,7 @@ class QComboBoxTab( tab_base.TabBase  ) :
         """
         notice order of events
         """
-        self.append_msg( "combo_reload" )
+        self.append_msg( "combo_reload()" )
 
         self.append_msg( f"combo_reload { '' }clear next --------", flush = True )
         values         =  [ "1_reload", "2", "3", "4", ]
@@ -314,7 +315,7 @@ class QComboBoxTab( tab_base.TabBase  ) :
         duplicatesEnabled : bool
         editable : bool
         """
-        self.append_function_msg( "inspect_old" )
+        self.append_function_msg( "inspect_old()" )
         self.append_msg( f"combo_info { '' }  --------", flush = True )
 
 
@@ -326,7 +327,7 @@ class QComboBoxTab( tab_base.TabBase  ) :
         what it says
         new mutate may be in base class
         """
-        self.append_function_msg( "mutate old" )
+        self.append_function_msg( "mutate old"() )
 
         self.append_msg( "\n>>>>mutate   -- to do more "   )
         self.combo_1.setCurrentIndex( 2 )
@@ -342,9 +343,9 @@ class QComboBoxTab( tab_base.TabBase  ) :
         """
         read it -- mutate the widgets
         """
-        self.append_function_msg( "mutate_0" )
+        self.append_function_msg( "mutate_0()" )
 
-        msg    = 'combo_2.lineEdit().setText( "mutate_0" )  '
+        msg    = 'combo_2.lineEdit().setText( "mutate_0()" )  '
         self.append_msg( msg, clear = False )
         self.combo_2.lineEdit().setText( "mutate_0" )  # for line edit
 
@@ -358,7 +359,7 @@ class QComboBoxTab( tab_base.TabBase  ) :
         """
         read it -- mutate the widgets
         """
-        self.append_function_msg( "mutate_1" )
+        self.append_function_msg( "mutate_1()" )
 
         msg    = 'combo_2.setCurrentText( "2" )'
         self.append_msg( msg, clear = False )
@@ -375,7 +376,7 @@ class QComboBoxTab( tab_base.TabBase  ) :
         """
         read it -- mutate the widgets
         """
-        self.append_function_msg( "mutate_2" )
+        self.append_function_msg( "mutate_2()" )
 
         msg    = 'combo_2.setCurrentText( "2" )'
         self.append_msg( msg, clear = False )
@@ -392,7 +393,7 @@ class QComboBoxTab( tab_base.TabBase  ) :
         """
         read it -- mutate the widgets
         """
-        self.append_function_msg( "mutate_3" )
+        self.append_function_msg( "mutate_3()" )
 
 
         widget         = self.combo_1
@@ -436,7 +437,7 @@ class QComboBoxTab( tab_base.TabBase  ) :
         """
         the usual
         """
-        self.append_function_msg( "inspect" )
+        self.append_function_msg( "inspect()" )
 
         # make some locals for inspection
         my_tab_widget = self
@@ -455,7 +456,7 @@ class QComboBoxTab( tab_base.TabBase  ) :
         each tab gets its own function so we break in that
         tabs code no an ancestors code
         """
-        self.append_function_msg( "breakpoint" )
+        self.append_function_msg( "breakpoint()" )
 
         breakpoint()
 

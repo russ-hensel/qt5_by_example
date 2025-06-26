@@ -189,36 +189,42 @@ class Search_Tab( QWidget ) :
 
         view.clicked.connect( self.open_tab_select )
 
+        # ---- headings
         """
         i have a QTableView how do i control the titles of the columns and their width ?
         """
         model.setHeaderData( 0, Qt.Horizontal, "Seq.")
-        model.setHeaderData( 1, Qt.Horizontal, "Tab Name"  )
-        view.setColumnWidth( 0, 50   )
+        view.setColumnWidth( 0,  50   )
+
         ix   = 1
-        view.setColumnWidth( ix, 200  )
+        model.setHeaderData( ix, Qt.Horizontal, "Tab Name"  )
+        view.setColumnWidth( ix, 300  )
 
         ix   += 1
         model.setHeaderData( ix, Qt.Horizontal, "Widgets")
+        view.setColumnWidth( ix, 500  )
+
+        ix   += 1
+        model.setHeaderData( ix, Qt.Horizontal, "Description")
         view.setColumnWidth( ix, 700  )
 
         ix   += 1
         model.setHeaderData( ix, Qt.Horizontal, "Module")
-        view.setColumnWidth( ix, 150  )
+        view.setColumnWidth( ix, 300 )
 
         ix   += 1
         model.setHeaderData( ix, Qt.Horizontal, "Class")
         view.setColumnWidth( ix, 150  )
 
-        # suppress excess columns
-        ix   += 1
-        view.setColumnHidden( ix, True)
+        # # suppress excess columns
+        # ix   += 1
+        # view.setColumnHidden( ix, True)
 
-        ix   += 1
-        view.setColumnHidden( ix, True)
+        # ix   += 1
+        # view.setColumnHidden( ix, True)
 
-        ix   += 1
-        view.setColumnHidden( ix, True)
+        # ix   += 1
+        # view.setColumnHidden( ix, True)
         #view.setModel( model )
 
         #model.setTable( "tabs" )  # suppresse above
@@ -259,7 +265,8 @@ class Search_Tab( QWidget ) :
 
         kw_table_name                   = "tabs_key_word"
 
-        column_list                     = [ "id", "tab_title", "widgets", "module", "class"     ]
+        column_list                     = [ "id", "tab_title", "widgets",
+                                           "description", "module", "class"     ]
 
         a_key_word_processor            = key_words.KeyWords( kw_table_name, global_vars.TAB_DB )
         query_builder.table_name        = "tabs"

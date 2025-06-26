@@ -2,15 +2,14 @@
 # -*- coding: utf-8 -*-
 # ---- tof
 """
-
-tab_button.py
-
+# this material is used for selection access to the tab which must
+# be named tab_...python among other things
 KEY_WORDS:      pressed press PushBtton click connect rh
 CLASS_NAME:     QPushButtonTab
 WIDGETS:        QPushButton
-STATUS:
+STATUS:         June 2025 ok: but more content would be nice
 TAB_TITLE:      QPushButton Reference
-
+DESCRIPTION:    A reference for the QPushButton widget
 
 """
 # --------------------
@@ -134,13 +133,17 @@ class QPushButtonTab( tab_base.TabBase ):
         row_layout          = QHBoxLayout(   )
         layout.addLayout( row_layout )
 
-        # a lable that points to q_pbutton_1
+        # a label that points to q_pbutton_1
         widget          = QLabel( "q_pbutton_1 -> " )
             # no instance variable as we will not use after __init__
 
-        # layout ( add to the windoos ) the widget
+        # layout ( add to the windows ) the widget
         row_layout.addWidget( widget )
 
+        # we use a local variable because it reduces the amount of code
+        # and does not run any slower
+        # we use this local variable idea in many places
+        # because we will refer to the bu
         widget              = QPushButton( "q_pbutton_1" )
         self.q_push_button_1    = widget
 
@@ -164,7 +167,7 @@ class QPushButtonTab( tab_base.TabBase ):
         button_layout = QHBoxLayout(   )
         layout.addLayout( button_layout,  )
 
-        # our anscestor finishes off the tab with some
+        # our ancestor finishes off the tab with some
         # standard buttons
         self.build_gui_last_buttons( button_layout )
 
@@ -261,6 +264,10 @@ class QPushButtonTab( tab_base.TabBase ):
         """
         self.append_function_msg( "mutate_0()" )
 
+        # ---- change widget
+            # we use a local variable because it reduces the amount of code
+            # and does not run any slower
+            # we use this local variable idea in many places
         widget          = self.q_push_button_1
         widget.setText( "text set in mutate_0" )
         widget.width     = 300
@@ -294,7 +301,7 @@ class QPushButtonTab( tab_base.TabBase ):
         self.append_msg( msg, )
 
         widget        = self.q_push_button_1
-            # it is often convienten to use a local variable,
+            # it is often convenient to use a local variable,
             # you will see this a lot in our code, it does not seem to
             # be typical but we think it should be
 
@@ -447,7 +454,7 @@ class QPushButtonTab( tab_base.TabBase ):
         """
         self.append_function_msg( tab_base.INSPECT_MSG )
 
-        # we set local varriables to make it handy to inspect them
+        # we set local variables to make it handy to inspect them
         self_q_push_button_1    = self.q_push_button_1
         self_q_push_button_2    = self.q_push_pbutton_2
 
