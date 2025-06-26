@@ -7,10 +7,10 @@ tab_qlist.py
 
 
 KEY_WORDS:      list widget  new_base qq
-CLASS_NAME:     QListWidgetTab
+CLASS_NAME:     QListWidgetTabX
 WIDGETS:        QListWidget
 STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
-TAB_TITLE:      QListWidgetTab
+TAB_TITLE:      QListWidgetTabX
 
 
 """
@@ -88,7 +88,7 @@ INDENT          = uft.BEGIN_MARK_2
 
 
 #  --------
-class QListWidgetTab( tab_base.TabBase ) :
+class QListWidgetTabX( tab_base.TabBase ) :
     def __init__(self):
         """
         the usual

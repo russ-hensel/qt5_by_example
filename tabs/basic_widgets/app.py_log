@@ -1,5 +1,0 @@
-2025-06-25 13:14:50,740 - CRITICAL - Root logger is set up. Modules can now log using logging.getLogger().
-2025-06-25 13:14:50,743 - INFO - config_logger call was: logging.info
-2025-06-25 13:14:50,746 - DEBUG - index_and_search.py find_doc_files this is the file list
-2025-06-25 13:14:50,747 - INFO - KeyWordIndexer.loop_thru()
-2025-06-25 13:14:50,755 - DEBUG - tab_checkbox.set_help_file_name() we have a help file self.help_file_name = '/home/david/Documents/GitHub/qt5_by_example/tab_qsql_database.txt' 
