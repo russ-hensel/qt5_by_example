@@ -5,7 +5,7 @@
 
 tab_button.py
 
-KEY_WORDS:      pressed press PushBtton click connect qq
+KEY_WORDS:      pressed press PushBtton click connect rh
 CLASS_NAME:     QPushButtonTab
 WIDGETS:        QPushButton
 STATUS:
@@ -89,7 +89,10 @@ class QPushButtonTab( tab_base.TabBase ):
     Reference examples for QPushButton
 
 
-    see
+    this is also the place for documentation on the methods normally found
+    in a tab_.... file and should display its naming and other coding conventions
+    other tab_xxx files may not be as well commented, you should be familiar with
+    the conventions and be able to read the code.
     """
     def __init__(self):
         """
@@ -99,6 +102,7 @@ class QPushButtonTab( tab_base.TabBase ):
         """
         super().__init__()
         self.module_file       = __file__      # save for help file usage
+        # modify to match the number of mutate methods in this module
         self.mutate_dict[0]    = self.mutate_0
         self.mutate_dict[1]    = self.mutate_1
         self.mutate_dict[2]    = self.mutate_2
@@ -110,7 +114,10 @@ class QPushButtonTab( tab_base.TabBase ):
         """
         the usual, build the gui with the widgets of interest
 
-        this is important content for the widgets reference on this tab
+        this just does a basic build -- the framework will then automatically
+        call mutate_0()
+
+        this is important content for the widgets referenced on this tab
         """
         layout              = QVBoxLayout()
         main_layout.addLayout( layout )
@@ -156,6 +163,7 @@ class QPushButtonTab( tab_base.TabBase ):
         # ---- new row, standard buttons
         button_layout = QHBoxLayout(   )
         layout.addLayout( button_layout,  )
+
         # our anscestor finishes off the tab with some
         # standard buttons
         self.build_gui_last_buttons( button_layout )
@@ -167,7 +175,7 @@ class QPushButtonTab( tab_base.TabBase ):
 
         when applied to a button changes a bit of its appearance
 
-        this is important content for the widgets reference on this tab
+        this is important content for the widgets referenced on this tab
         """
         return """
             QPushButton {
@@ -190,27 +198,26 @@ class QPushButtonTab( tab_base.TabBase ):
         """
         when a signal is sent, use find ???
 
-        this is important content for the widgets reference on this tab
+        this is important content for the widgets referenced on this tab
         """
-        self.append_function_msg( "signal_sent" )
+        self.append_function_msg( "signal_sent()" )
         # msg   = f"{function_nl}signal_sent"
         # print( msg )
         self.append_msg( f"signal_sent {msg}" )
 
-        self.append_msg( "<<-- done" )
+        self.append_msg( tab_base.DONE_MSG )
 
-
-    # ---- connects --------
+    # ---- connects signals...   --------
     # --------------------------
     def return_pressed( self ):
         """
         what is says  -- not connected, delete?
 
-        this is important content for the widgets reference on this tab
+        this is important content for the widgets referenced on this tab
         """
-        self.append_function_msg( "return_pressed" )
+        self.append_function_msg( "return_pressed()" )
 
-        self.append_msg( "\n" )
+        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------------------
     def pb_1_clicked( self ):
@@ -220,9 +227,9 @@ class QPushButtonTab( tab_base.TabBase ):
             this function may be connected to a button normally
             q_push_button_1
 
-        this is important content for the widgets
+        this is important content for the widgets referenced on this tab
         """
-        self.append_msg( "pb_1_clicked" )
+        self.append_msg( "pb_1_clicked()" )
         self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------------------
@@ -233,9 +240,9 @@ class QPushButtonTab( tab_base.TabBase ):
             this function may be connected to a button normally
             q_push_button_1
 
-        this is important content for the widgets
+        this is important content for the widgets referenced on this tab
         """
-        self.append_msg( "pb_2_clicked" )
+        self.append_msg( "pb_2_clicked()" )
 
         self.append_msg( tab_base.DONE_MSG  )
 
@@ -249,9 +256,10 @@ class QPushButtonTab( tab_base.TabBase ):
             of a widget for the first push button the
             second will not be modified by mutate_0
 
-        this is important content for the widgets reference on this tab
+        this is important content for the widgets referenced on this tab
+        read the code for more insight, note messages to app and comments
         """
-        self.append_function_msg( "mutate_0" )
+        self.append_function_msg( "mutate_0()" )
 
         widget          = self.q_push_button_1
         widget.setText( "text set in mutate_0" )
@@ -263,7 +271,7 @@ class QPushButtonTab( tab_base.TabBase ):
         msg    = "for q_push_button_2 no mutations"
         self.append_msg( msg, clear = False )
 
-        widget          = self.q_push_button_1
+        widget          = self.q_push_button_2
         # self.q_push_button_1.setDisabled( True )
         # self.q_push_button_2.setDisabled( False )
 
@@ -274,9 +282,10 @@ class QPushButtonTab( tab_base.TabBase ):
         """
         read it -- mutate the widgets
 
-        this is important content for the widgets reference on this tab
+        this is important content for the widgets referenced on this tab
+        read the code for more insight, note messages to app and comments
         """
-        self.append_function_msg( "mutate_1" )
+        self.append_function_msg( "mutate_1()" )
         # msg    = "begin implementation"
         # self.append_msg( msg, clear     = False )
         # for self.q_push_button_1
@@ -290,7 +299,7 @@ class QPushButtonTab( tab_base.TabBase ):
             # be typical but we think it should be
 
         widget.setToolTip( "this is a tool tip" )
-        widget.setText( "text set in \nmutate_1" )
+        widget.setText( "text set in \nmutate_1()" )
             # note \n
         widget.width     = 200
 
@@ -315,9 +324,10 @@ class QPushButtonTab( tab_base.TabBase ):
         """
         read it -- mutate the widgets
 
-        this is important content for the widgets reference on this tab
+        this is important content for the widgets referenced on this tab
+        read the code for more insight, note messages to app and comments
         """
-        self.append_function_msg( "mutate_2" )
+        self.append_function_msg( "mutate_2()" )
 
         msg    = "change some attributes..."
         self.append_msg( msg, clear = False )
@@ -341,11 +351,8 @@ class QPushButtonTab( tab_base.TabBase ):
         msg    = "some changes to q_push_button_2"
         self.append_msg( msg, clear = False )
 
-
         widget     = self.q_push_button_2
         widget.setCheckable( True )
-
-
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -354,9 +361,10 @@ class QPushButtonTab( tab_base.TabBase ):
         """
         read it -- mutate the widgets
 
-        this is important content for the widgets reference on this tab
+        this is important content for the widgets referenced on this tab
+        read the code for more insight, note messages to app and comments
         """
-        self.append_function_msg( "mutate_3" )
+        self.append_function_msg( "mutate_3()" )
 
         msg    = "re-enable some stuff -- change attributes"
         self.append_msg( msg, clear = False )
@@ -377,12 +385,10 @@ class QPushButtonTab( tab_base.TabBase ):
         menu.addAction("Option 2")
         widget.setMenu( menu )
 
-
         # ---- change widget
         widget      = self.q_push_button_2
         msg         = "some changes to q_push_button_2"
         self.append_msg( msg, clear = False )
-
 
         widget.setCheckable( False )
         widget.setStyleSheet( self.get_button_style_sheet() )
@@ -394,9 +400,9 @@ class QPushButtonTab( tab_base.TabBase ):
         """
         read it -- mutate the widgets
 
-        this is important content for the widgets reference on this tab
+        this is important content for the widgets referenced on this tab
         """
-        self.append_function_msg( "mutate_4" )
+        self.append_function_msg( "mutate_4()" )
 
         msg    = "undo many of earlier mutations"
         self.append_msg( msg, clear = False )
@@ -424,16 +430,18 @@ class QPushButtonTab( tab_base.TabBase ):
         msg         = "some changes to q_push_button_2"
         self.append_msg( msg, clear = False )
 
-
         widget.setStyleSheet("")
+            # no style sheet
 
         self.append_msg( tab_base.DONE_MSG )
-
 
     # ------------------------
     def inspect(self):
         """
         the usual
+
+        Allows the user to inspect local and global variables using
+        the wat_inspector
 
         this is pretty much boiler plate for a tab
         """
@@ -454,7 +462,7 @@ class QPushButtonTab( tab_base.TabBase ):
     def breakpoint(self):
         """
         each tab gets its own function so we break in that
-        tabs code
+        tab's code
 
         this is pretty much boiler plate for a tab
         """

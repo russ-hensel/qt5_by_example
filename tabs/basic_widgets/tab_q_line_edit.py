@@ -2,27 +2,16 @@
 # -*- coding: utf-8 -*-
 # ---- tof
 """
-Created on Sun Dec 15 12:41:16 2024
-no it is one listed twice
 
-
-KEY_WORDS:      basic edits often used for forms seems to be some confusion 2 versions custom or not
+KEY_WORDS:      lineEdit rh input text
 CLASS_NAME:     QLineEditTab
 WIDGETS:        QLineEdit
-STATUS:         !! runs    runs_correctly  demo_partial   demo_complete
-TAB_TITLE:      EditWidgets
+STATUS:
+TAB_TITLE:      QLineEdit Reference
 
-         self.help_file_name     =  "find_this_file.txt"
 
 """
 
-# ---- search
-"""
-    Search for
-        QLineEdit
-        QTextEdit
-        readOnly
-"""
 
 
 # --------------------
@@ -112,7 +101,7 @@ import parameters
 
 import utils_for_tabs as uft
 import wat_inspector
-import custom_widgets
+#import custom_widgets
 import tab_base
 
 # ---- end imports
@@ -144,7 +133,7 @@ class QLineEditTab( tab_base.TabBase ) :
 
         """
         super().__init__()
-        self.help_file_name     =  uft.to_help_file_name( __name__ )
+        self.module_file       = __file__      # save for help file usage
 
         self.mutate_dict[0]    = self.mutate_0
         self.mutate_dict[1]    = self.mutate_1
@@ -197,34 +186,10 @@ class QLineEditTab( tab_base.TabBase ) :
         # ---- buttons
         layout.addLayout( button_layout )
 
-        label       = "mutate\n"
-        widget      = QPushButton( label )
-        widget.clicked.connect( self.mutate )
-        button_layout.addWidget( widget )
+        # our anscestor finishes off the tab with some
+        # standard buttons
+        self.build_gui_last_buttons( button_layout )
 
-        # label       = "validate\n"
-        # widget      = QPushButton( label )
-        # widget.clicked.connect( self.validate )
-        # button_layout.addWidget( widget )
-
-
-
-        # label       = "examine_0\n"
-        # widget      = QPushButton( label )
-        # widget.clicked.connect( self.examine_0 )
-        # button_layout.addWidget( widget )
-
-        # ---- PB inspect
-        widget              = QPushButton("inspect\n")
-        connect_to        = self.inspect
-        widget.clicked.connect( connect_to )
-        button_layout.addWidget( widget )
-
-        # ---- PB breakpoint
-        widget              = QPushButton("breakpoint\n ")
-        connect_to          = self.breakpoint
-        widget.clicked.connect( connect_to )
-        button_layout.addWidget( widget )
 
     # ------------------------
     def _build_gui_in_gb_edit(self, layout  ):
@@ -253,7 +218,7 @@ class QLineEditTab( tab_base.TabBase ) :
         widget            = QLabel( "QLineEdit_2")
         b_layout.addWidget( widget,  stretch = lbl_stretch )
 
-        widget            = custom_widgets.QLineEdit(  self,   )
+        widget            = QLineEdit(  self,   )
         self.line_edit_2_widget = widget
         b_layout.addWidget( widget,  stretch = widget_stretch )
 
@@ -261,12 +226,12 @@ class QLineEditTab( tab_base.TabBase ) :
         b_layout        = QHBoxLayout( )
         layout.addLayout( b_layout )
 
-        widget            = QLabel( "QTextEdit")
-        b_layout.addWidget( widget,  stretch = lbl_stretch )
+        # widget            = QLabel( "QTextEdit")
+        # b_layout.addWidget( widget,  stretch = lbl_stretch )
 
-        widget              = custom_widgets.QTextEdit(  self,  )
-        self.text_edit_widget = widget
-        b_layout.addWidget( widget,  stretch = widget_stretch )
+        # widget              = custom_widgets.QTextEdit(  self,  )
+        # self.text_edit_widget = widget
+        # b_layout.addWidget( widget,  stretch = widget_stretch )
 
 
         # ---- CQDateEdit_1
@@ -276,9 +241,9 @@ class QLineEditTab( tab_base.TabBase ) :
         widget            = QLabel( "QDateEdit_1")
         b_layout.addWidget( widget,  stretch = lbl_stretch )
 
-        widget              = custom_widgets.CQDateEdit(  self,   )
-        self.date_edit_1_widget = widget
-        b_layout.addWidget( widget,  stretch = widget_stretch )
+        # widget              = custom_widgets.CQDateEdit(  self,   )
+        # self.date_edit_1_widget = widget
+        # b_layout.addWidget( widget,  stretch = widget_stretch )
 
         # ---- CQDateEdit_n
         b_layout        = QHBoxLayout( )
@@ -287,9 +252,9 @@ class QLineEditTab( tab_base.TabBase ) :
         widget            = QLabel( "QDateEdit_n:")
         b_layout.addWidget( widget,  stretch = lbl_stretch )
 
-        widget            = custom_widgets.QDateEdit(  self,   )
-        self.date_edit_2_widget = widget
-        b_layout.addWidget( widget,  stretch = self.widget_stretch )
+        # widget            = custom_widgets.QDateEdit(  self,   )
+        # self.date_edit_2_widget = widget
+        # b_layout.addWidget( widget,  stretch = self.widget_stretch )
 
     # --------------------------
     def mutate_to_refactro( self, arg  ):
@@ -391,7 +356,7 @@ class QLineEditTab( tab_base.TabBase ) :
         """
         read it -- mutate the widgets
         """
-        self.append_function_msg( "mutate_0" )
+        self.append_function_msg( "mutate_0()" )
 
         msg    = "so far just a little implemented "
         self.append_msg( msg, clear = False )
@@ -405,32 +370,31 @@ class QLineEditTab( tab_base.TabBase ) :
         widget.setPlaceholderText( "some placeholder text ")
         widget.setToolTip( "what is a tooltop setToolTip ")
 
-        self.append_msg( "mutate_0 done" )
+        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------------------
     def mutate_1( self ):
         """
         read it -- mutate the widgets
         """
-        self.append_function_msg( "mutate_1" )
+        self.append_function_msg( "mutate_1()" )
         msg    = "so far a bit  implemented "
         self.append_msg( msg, clear = False )
 
-        msg    = "mess with QLineEdit_1 different than mutate_0"
+        msg    = "mess with QLineEdit_1 different than mutate_0()"
         self.append_msg( msg, clear = False )
 
         widget     = self.line_edit_1_widget
-        widget.setText( "some text from setText in mutatate_1" )
+        widget.setText( "some text from setText in mutatate_1()" )
 
         msg    = "disable line edit 1"
         self.append_msg( msg, clear = False )
 
         widget.setEnabled( False )
-        widget.setPlaceholderText( "some placeholder text mutate_1")
-        widget.setToolTip( "setToolTip for mutate_1")
+        widget.setPlaceholderText( "some placeholder text mutate_1()")
+        widget.setToolTip( "setToolTip for mutate_1()")
 
-        self.append_msg( "mutate_1 done" )
-
+        self.append_msg( tab_base.DONE_MSG )
 
     # --------------------------
     def set_to_nonexxx( self, arg  ):
@@ -475,7 +439,6 @@ class QLineEditTab( tab_base.TabBase ) :
             msg     = "self.date_edit_1_widget.set_preped_data( None ) raised this "
             self.append_msg( msg )
 
-
     # ------------------------
     def inspect(self):
         """
@@ -491,12 +454,11 @@ class QLineEditTab( tab_base.TabBase ) :
 
         self_text_edit_1_widget = self.text_edit_widget
 
-        self_date_edit_1_widget = self.date_edit_1_widget
-        self_date_edit_2_widget = self.date_edit_2_widget
-
+        # self_date_edit_1_widget = self.date_edit_1_widget
+        # self_date_edit_2_widget = self.date_edit_2_widget
 
         wat_inspector.go(
-             msg            = "inspect !! more locals would be nice ",
+             msg            = "for your inspection, inc. locals and globals",
              # inspect_me     = self.people_model,
              a_locals       = locals(),
              a_globals      = globals(), )
