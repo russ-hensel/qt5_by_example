@@ -245,6 +245,8 @@ class QCheckBoxTab(  tab_base.TabBase  ):
     def mutate_3( self ):
         """
         read it -- mutate the widgets
+        
+        FIXME: how else can I change checkboxes?
         """
         self.append_function_msg( "mutate_3" )
 

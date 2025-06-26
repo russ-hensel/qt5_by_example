@@ -3,14 +3,12 @@
 
 # ---- tof
 """
-tab_qlist.py
 
-
-KEY_WORDS:      list widget  new_base
+KEY_WORDS:      list widget  dc
 CLASS_NAME:     QListWidgetTab
 WIDGETS:        QListWidget
-STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
-TAB_TITLE:      QListWidgetTab
+STATUS:         
+TAB_TITLE:      QListWidget Reference
 
 
 """
@@ -95,6 +93,7 @@ class QListWidgetTab( tab_base.TabBase ) :
         tab_list_widget.py
         """
         super().__init__()
+        self.module_file       = __file__      # save for help file usage
         self.mutate_dict[0]     = self.mutate_0
         self.mutate_dict[1]     = self.mutate_1
         # self.mutate_dict[2]    = self.mutate_2
