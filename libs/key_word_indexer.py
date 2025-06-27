@@ -311,7 +311,6 @@ class KeyWordIndexer(   ):
 
             akwp.compute_add_delete( table_id  )
 
-
 # --------------------
 if __name__ == "__main__":
     #run_indexer_on_help()

@@ -5,14 +5,14 @@
 # ---- tof
 
 """
-KEY_WORDS:      some stuff from the m fitz book mouse events click context meny new tab
+KEY_WORDS:      some stuff from the m fitz book mouse events click context fitzz
 
 CLASS_NAME:     Fitz_3_Tab
 WIDGETS:        QMenu Qt.LeftButton
-STATUS:         !! runs    runs_correctly      demo_complete_2_10   !! review_key_words   !! review_help
+STATUS:         2025  06 27 wip   contents needs review
 
-TAB_TITLE:      MouseEvents
-
+TAB_TITLE:      Fitz_3_Tab MouseEvents
+DESCRIPTION:    Book adaptation of .....
 
 
 "/mnt/WIN_D/Russ/0000/python00/python3/_examples/python_book_code/book_pyqt5_src/basic/events_1.py",
@@ -107,7 +107,7 @@ class Fitz_3_Tab( tab_base.TabBase  ) :
 
         """
         super().__init__()
-        self.help_file_name     =   "fitz_3_tab.txt"
+        self.module_file       = __file__      # save for help file usage
 
 
         self.mutate_dict[0]    = self.mutate_0
@@ -154,21 +154,9 @@ class Fitz_3_Tab( tab_base.TabBase  ) :
         button_layout = QHBoxLayout(   )
         layout.addLayout( button_layout,  )
 
-        # ---- mutate
-        widget = QPushButton("mutate\n")
-        self.button_ex_1         = widget
-        widget.clicked.connect( lambda: self.mutate( ) )
-        button_layout.addWidget( widget )
-
-        # ---- PB inspect
-        widget = QPushButton("inspect\n")
-        widget.clicked.connect( self.inspect    )
-        button_layout.addWidget( widget,   )
-
-        # ---- PB breakpoint
-        widget = QPushButton("breakpoint\n")
-        widget.clicked.connect( self.breakpoint    )
-        button_layout.addWidget( widget,   )
+        # our ancestor finishes off the tab with some
+        # standard buttons
+        self.build_gui_last_buttons( button_layout )
 
 
     def contextMenuEvent( self, e):
@@ -237,29 +225,30 @@ class Fitz_3_Tab( tab_base.TabBase  ) :
         """
         read it -- mutate the widgets
         """
-        self.append_function_msg( "mutate_0" )
+        self.append_function_msg( "mutate_0()" )
 
         msg    = "so far not implemented "
-        self.append_msg( msg, clear = False )
-        self.append_msg( "mutate_0 done" )
+        self.append_msg( msg,  )
 
+        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------------------
     def mutate_1( self ):
         """
         read it -- mutate the widgets
         """
-        self.append_function_msg( "mutate_1" )
+        self.append_function_msg( "mutate_1()" )
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
-        self.append_msg( "mutate_1 done" )
+
+        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------
     def inspect(self):
         """
         the usual
         """
-        self.append_function_msg( "inspect" )
+        self.append_function_msg( "inspect()" )
 
         self_widgets_list   = self.widgets_list
         wat_inspector.go(
@@ -267,15 +256,17 @@ class Fitz_3_Tab( tab_base.TabBase  ) :
              a_locals       = locals(),
              a_globals      = globals(), )
 
+        self.append_msg( tab_base.DONE_MSG )
     # ------------------------
     def breakpoint(self):
         """
         each tab gets its own function so we break in that
         tabs code
         """
-        self.append_function_msg( "breakpoint" )
+        self.append_function_msg( "breakpoint()" )
 
         breakpoint()
 
+        self.append_msg( tab_base.DONE_MSG )
 
 # ---- eof

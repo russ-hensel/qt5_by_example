@@ -5,12 +5,12 @@
 
 
 """
-KEY_WORDS:  Fitz chapter 23.  23. Querying SQL databases with Qt models   fitzz
+KEY_WORDS:  Fitz chapter 23.  23. Querying SQL databases with Qt models
 CLASS_NAME: Fitz_23_A_Tab
 WIDGETS:    QTableView() QSqlTableModel
-STATUS:     june 2025 runs_functionally not in good shape
-TAB_TITLE:  Fitz_23_A_Tab Chapt 23 A
-DESCRIPTION:   This needs review
+STATUS:     just started
+TAB_TITLE:  Fitz SqlModel Chapt 23 A
+
 
 looked at
 
@@ -112,23 +112,19 @@ import parameters
 import utils_for_tabs as uft
 import wat_inspector
 import global_vars
-import tab_base
 # ---- imports neq qt
 
 
 
 # ---- end imports
 
-print_func_header       = uft.print_func_header
+print_func_header   = uft.print_func_header
 
-basedir                 = os.path.dirname(__file__)
+basedir = os.path.dirname(__file__)
 
-tick                    = QImage(os.path.join("tick.png"))
+tick = QImage(os.path.join("tick.png"))
 
-# append_msg              = global_vars.CONTROLLER.append_msg        #( self.msg_widget, msg )
-# append_function_msg     = global_vars.CONTROLLER.append_function_msg          #( self, msg_widget, msg, clear = True ):
-
-WIDTH_MULP              = 10   # change to donctant
+WIDTH_MULP    = 10   # change to donctant
 
 # Color scale, which is taken from colorbrewer2.org.
 # Color range -5 to +5; 0 = light gray
@@ -149,50 +145,36 @@ COLORS = [
 
 
 #  --------
-class Fitz_23_A_Tab( tab_base.TabBase ) :
+class Fitz_23_A_Tab( QWidget ) :
     def __init__(self):
         """
 
         """
         super().__init__()
-        self.module_file       = __file__      # save for help file usage
-        # self._build_model()
-        #self._build_gui()
+        self.help_file_name     =  "fitz_23_tab.txt"
+        self._build_model()
+        self._build_gui()
         # self.mutate_ix   = 0
         self.ix_sort     = 0   # for sorting
+        self.mutation_ix        = 0
 
-        # modify to match the number of mutate methods in this module
-        self.mutate_dict[0]    = self.mutate_0
-        self.mutate_dict[1]    = self.mutate_1
-        self.mutate_dict[2]    = self.mutate_2
-        self.mutate_dict[3]    = self.mutate_3
-        self.mutate_dict[4]    = self.mutate_4
+        self.mutation_dispatch  = { 0: self.mutate_0,
+                                    1: self.mutate_1,
+                                    # 2: self.mutate_2,
+                                    # 3: self.mutate_3,
+                                    # 4: self.mutate_4,
+                                    }
+        self.mutation_max       = len( self.mutation_dispatch )
 
-        self._build_model()
-        # self._pre_gui()
-        self._build_gui()
-
-
-    #------------------------------------------
-    def _build_gui_widgets(self, main_layout  ):
+    # -------------------------------
+    def _build_gui(self,   ):
         """
-        the usual, build the gui with the widgets of interest
-        and the buttons for examples
+        layouts
+            a vbox for main layout
+            h_box for or each row of widgets
         """
-        layout              = QVBoxLayout(   )
-
-        main_layout.addLayout( layout )
-        button_layout        = QHBoxLayout(   )
-
-
-
-        # # ---- new row
-        # row_layout    = QHBoxLayout(   )
-        # layout.addLayout( row_layout,  )
-
-        # widget              = QLabel( "classes...... on this tab" )
-        # self.class_widget   = widget
-        # row_layout.addWidget( widget,   )
+        tab_page      = self
+        layout        = QVBoxLayout( tab_page )
 
         # ---- new row
         row_layout    = QHBoxLayout(   )
@@ -201,13 +183,8 @@ class Fitz_23_A_Tab( tab_base.TabBase ) :
         widget    =  self.view
         row_layout.addWidget( widget,   )
 
-        # ---- new row
-        row_layout      = QHBoxLayout(   )
-        layout.addLayout( row_layout,  )
-
         # ----
-        widget              = QTextEdit("load\nthis should be new row ")
-        self.msg_widget     = widget
+        widget = QTextEdit("load\n")
         #widget.clicked.connect( self.load    )
         row_layout.addWidget( widget,   )
 
@@ -230,21 +207,41 @@ class Fitz_23_A_Tab( tab_base.TabBase ) :
         widget.clicked.connect( self.remove_columns    )
         row_layout.addWidget( widget,   )
 
+        # ----remove_columns
+        widget = QPushButton("mutate\n")
+        widget.clicked.connect( self.mutate    )
+        row_layout.addWidget( widget,   )
 
+
+        # # ---- new row,
+        # row_layout = QHBoxLayout(   )
+        # layout.addLayout( row_layout,  )
 
         # ---- "
         widget = QPushButton("select_with_filter\n" )
         widget.clicked.connect( self.select_with_filter   )
         row_layout.addWidget( widget,   )
 
-        # ---- new row,
-        row_layout = QHBoxLayout(   )
-        layout.addLayout( row_layout,  )
+        # # ---- new row,
+        # row_layout = QHBoxLayout(   )
+        # layout.addLayout( row_layout,  )
 
 
-        # our ancestor finishes off the tab with some
-        # standard buttons
-        self.build_gui_last_buttons( row_layout )
+
+        # # ---- PB self.save
+        # widget = QPushButton("save\n")
+        # widget.clicked.connect( self.save    )
+        # row_layout.addWidget( widget,   )
+
+        # ---- self.inspect
+        widget = QPushButton("inspect\n")
+        widget.clicked.connect( self.inspect    )
+        row_layout.addWidget( widget,   )
+
+        # ---- PB self.breakpoint
+        widget = QPushButton("breakpoint\n")
+        widget.clicked.connect( self.breakpoint    )
+        row_layout.addWidget( widget,   )
 
     # -------------------------------
     def _build_model(self,   ):
@@ -255,14 +252,15 @@ class Fitz_23_A_Tab( tab_base.TabBase ) :
 
         model                   = QSqlTableModel( self, global_vars.EX_DB   )
         self.model              = model
-        self.persons_model      = model
-        model.setTable('persons')
+        self.people_model      = model
+        model.setTable('people')
 
 
         self.view.setModel( self.model )
 
-        # #query       = QSqlQuery( "SELECT Name,   FROM persons ", db = global_vars.EX_DB )
-        # self.model.setTable( "persons" )
+        # #query       = QSqlQuery( "SELECT Name,   FROM people ", db = global_vars.EX_DB )
+        # self.model.setTable( "People" )
+
 
 
     print( "button code from other example may reacivate some ")
@@ -272,7 +270,7 @@ class Fitz_23_A_Tab( tab_base.TabBase ) :
         Add an item to our todo list, getting the text from the QLineEdit .todoEdit
         and then clearing it.
         """
-        self.append_function_msg( "add()" )
+        print_func_header( "add" )
 
         text = self.todoEdit.text()
         # Remove whitespace from the ends of the string.
@@ -287,7 +285,7 @@ class Fitz_23_A_Tab( tab_base.TabBase ) :
 
     def delete(self):
         """ """
-        self.append_function_msg( "delete()" )
+        print_func_header( "delete" )
 
         indexes = self.todoView.selectedIndexes()
         if indexes:
@@ -303,14 +301,14 @@ class Fitz_23_A_Tab( tab_base.TabBase ) :
         """
         mark selected row as complete
         """
-        self.append_function_msg( "complete()" )
+        print_func_header( "complete" )
 
         indexes = self.todoView.selectedIndexes()
         if indexes:
             index           = indexes[0]
             row             = index.row()
             msg             = f"completing {row = }"
-            self.append_msg( msg )
+            print( msg )
             status, text = self.model.todos[row]
             self.model.todos[row] = (True, text)
             # .dataChanged takes top-left and bottom right, which are equal
@@ -320,11 +318,11 @@ class Fitz_23_A_Tab( tab_base.TabBase ) :
             self.todoView.clearSelection()
         else:
             msg    = "no selection to complete"
-            self.append_msg( msg )
+            print( msg )
 
     def set_headers( self ):
         """ """
-        self.append_function_msg( "set_headers()" )
+        print_func_header( "select_with_filter" )
 
         model    = self.model      # would think in view but no
 
@@ -333,9 +331,9 @@ class Fitz_23_A_Tab( tab_base.TabBase ) :
 
     def remove_columns( self ):
         """ """
-        self.append_function_msg( "remove_columns from what is visible " )
+        print_func_header( "remove_columns from what is visible " )
         msg                 = "here remove by column name"
-        self.append_msg( msg )
+        print( msg )
         model               = self.model
         columns_to_remove   = ['name', 'something']
         for c_name in columns_to_remove:
@@ -344,18 +342,15 @@ class Fitz_23_A_Tab( tab_base.TabBase ) :
 
     def select_with_filter( self ):
         """ """
-        self.append_function_msg( "select_with_filter()" )
+        print_func_header( "select_with_filter" )
         a_name     = "a"
         filter_str = f"Name LIKE %{ a_name }%"
         self.model.setFilter( filter_str )
 
 
-
     def select_all( self ):
         """ """
-        self.append_function_msg( "select_all()" )
-
-
+        print_func_header( "select_all" )
 
         self.ix_sort    += 1
         if self.ix_sort > 1:
@@ -367,7 +362,7 @@ class Fitz_23_A_Tab( tab_base.TabBase ) :
             sort_order   = Qt.AscendingOrder
 
         msg      = f"{sort_order = }"
-        self.append_msg( msg )
+        print( msg )
 
         self.model.setFilter( "" )
         idx = self.model.fieldIndex( "age" )
@@ -376,15 +371,24 @@ class Fitz_23_A_Tab( tab_base.TabBase ) :
         self.model.select()
 
         #self.model.layoutChanged.emit() # This triggers a refresh of the entirety of the view. I
-        self.append_msg( "<<-- done" )
+
 
     def save(self):
-        self.append_function_msg( "save" )
+        print_func_header( "save" )
 
         with open("data.json", "w") as f:
             data = json.dump(self.model.todos, f)
-        self.append_msg( "<<-- done" )
 
+    #----------------------------
+    def mutate( self  ):
+        """
+        read it
+        """
+        print_func_header( "mutate" )
+        self.mutation_ix   += 1
+        if self.mutation_ix >= len( self.mutation_dispatch ):
+            self.mutation_ix = 0
+        self.mutation_dispatch[ self.mutation_ix ]()
 
     #----------------------------
     def mutate_0( self  ):
@@ -392,8 +396,7 @@ class Fitz_23_A_Tab( tab_base.TabBase ) :
         read it
         getText get text
         """
-        self.append_function_msg( "mutate_0  headers and width  " )
-        #self.append_function_msg( "mutate_0" )
+        print_func_header( "mutate_0  headers and width  " )
 
         # table   = self.table_widget
         # table.hideRow( 1 )
@@ -410,83 +413,132 @@ class Fitz_23_A_Tab( tab_base.TabBase ) :
         view.setColumnWidth( 1, 20  * WIDTH_MULP )
         view.setColumnWidth( 2, 20  * WIDTH_MULP )
 
-        self.append_msg( "<<-- done" )
+
 
     #----------------------------
     def mutate_1( self  ):
         """
         read it
         """
-        self.append_function_msg( "mutate_1 change width" )
+        print_func_header( "mutate_1 change width" )
 
         view     = self.view
         view.setColumnWidth( 1, 50 * WIDTH_MULP )
         view.setColumnWidth( 2, 50 * WIDTH_MULP )
 
-        self.append_msg( "<<-- done" )
     #----------------------------
     def mutate_2( self  ):
         """
         read it
         """
-        self.append_function_msg( "mutate_2" )
+        print_func_header( "mutate_2" )
 
-        # table   = self.table_widget
-        # table.showRow( 1 )
-        # table.showColumn( 1 )
+        table   = self.table_widget
+        table.showRow( 1 )
+        table.showColumn( 1 )
 
-        self.append_msg( "<<-- done" )
+
     #----------------------------
     def mutate_3( self  ):
         """
 
 
         """
-        self.append_function_msg( "mutate_3 -- change headers" )
+        print_func_header( "mutate_3 -- change headers" )
 
-        # table       = self.table_widget
-        # table.setHorizontalHeaderLabels( [ "xxxx", "yyy", ])
-        # table.setColumnWidth(2, 100)  # Set specific width for a column
-        self.append_msg( "<<-- done" )
+        table       = self.table_widget
+        table.setHorizontalHeaderLabels( [ "xxxx", "yyy", ])
+        table.setColumnWidth(2, 100)  # Set specific width for a column
+
     #----------------------------
     def mutate_4( self  ):
         """
         read it -- right now does nothing new
 
         """
-        self.append_function_msg( "mutate_4 -- change headers" )
+        print_func_header( "mutate_4 -- change headers" )
 
-        # table            = self.table_widget
-        # table_widget     = table
+        table            = self.table_widget
+        table_widget     = table
 
-        self.append_msg( "<<-- done" )
+
+    #from PyQt5.QtWidgets import QApplication, QTableWidget, QTableWidgetItem, QHeaderView
+
+        table.setColumnWidth(2, 10)  # Set specific width for a column
+
+        # Set horizontal headers
+        headers = ["Name", "Age", "City"]
+        table_widget.setHorizontalHeaderLabels(headers)
+
+            # # Set vertical headers
+            # vertical_headers = ["1", "2", "3"]
+            # table_widget.setVerticalHeaderLabels(vertical_headers)
+
+        # Customize header parameters
+        header = table_widget.horizontalHeader()
+
+        # Set column widths
+        header.setSectionResizeMode(0, QHeaderView.Stretch)  # First column stretches
+        header.setSectionResizeMode(1, QHeaderView.ResizeToContents)  # Auto-size based on content
+        header.setSectionResizeMode(2, QHeaderView.Interactive)  # Manually resizable
+
+
+        # table_widget.setColumnWidth(2, 100)  # Set specific width for a column
+
+        # Customize alignment of header text
+        header_item = table_widget.horizontalHeaderItem(0)  # Access a header item
+        if header_item:
+            header_item.setTextAlignment(Qt.AlignLeft)
+
+    # Header Alignment:
+
+    #     Use QTableWidgetItem.setTextAlignment(Qt.AlignmentFlag) for alignment.
+
+    # Row Height:
+
+    #     Customize row height similarly with setRowHeight.
+
+    # Header Styling:
+
+    #     Header items can be styled using QTableWidgetItem (e.g., font, color).
+
+    # Interactive Resizing:
+
+    #     Users can resize columns manually with Interactive.
+
+
+    # # Customize vertical header (optional)
+    # vertical_header = table_widget.verticalHeader()
+    # vertical_header.setSectionResizeMode(QHeaderView.Stretch)  # Stretch rows
+
+
+
 
     # ------------------------
     def inspect(self):
         """
         the usual
         """
-        #print_func_header( "inspect" )
-        self.append_msg( "inspect", clear = True )
+        print_func_header( "inspect" )
 
-        self_model          = self.model
-        self_view           = self.view
+        self_model         = self.model
+        self_view     = self.view
 
         wat_inspector.go(
              msg            = "locals for model and view",
              a_locals       = locals(),
              a_globals      = globals(), )
-        self.append_msg( "<<-- done" )
+
     # ------------------------
     def breakpoint(self):
         """
         each tab gets its own function so we break in that
         tabs code
         """
-        self.append_function_msg( "breakpoint" )
+        print_func_header( "breakpoint" )
 
         breakpoint()
 
-        self.append_msg( "<<-- done" )
+
 
 # ---- eof

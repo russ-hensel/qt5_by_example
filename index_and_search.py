@@ -159,7 +159,6 @@ class TabDBBuilder():
         db_file_name             = parameters.PARAMETERS.tab_db_file_name
 
         if db_file_name !=  ':memory:':  # delete for a fresh start
-
             delete_db_file( db_file_name )
 
         db              = QSqlDatabase.addDatabase( parameters.PARAMETERS.tab_db_type, "tab_db" )
@@ -285,7 +284,7 @@ class TabDBBuilder():
             module       = doc_data[ "module" ].strip()
             class_name   = doc_data[ "class_name" ].strip()
             if not bool( class_name ) or not bool( module ):
-                msg    = "TabDBBuilder dropping {module = }"
+                msg    = f"TabDBBuilder dropping {module = } because of -- not bool( {class_name = } ) or not bool( module )"
                 logging.debug( msg )
                 continue
 

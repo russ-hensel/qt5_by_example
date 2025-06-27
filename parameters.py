@@ -101,6 +101,8 @@ class Parameters( ):
         self.dir_for_tabs.append( "./tabs/basic_widgets" )
         self.dir_for_tabs.append( "./tabs/sql_widgets" )
 
+        self.dir_for_tabs.append( "./tabs/book_fitz" ) #  book_fitz
+
         # ---- for sample database
         self.db_file_name        = "/tmp/ramdisk/qt_sql.db"
         self.db_file_name        = ":memory:"
@@ -371,6 +373,8 @@ class Parameters( ):
         #may need to be on path sys.path.insert( 1, f"{src_root}/_projects/stuffdb/qt_tabs" )
         self.dir_for_tabs.append( "./tabs/basic_widgets" )
         self.dir_for_tabs.append( "./tabs/sql_widgets" )
+        self.dir_for_tabs.append( "./tabs/book_fitz" ) #  book_fitz
+#
 
         # ---- search
         self.default_search     = "qq"

@@ -5,12 +5,12 @@
 
 
 """
-KEY_WORDS:  Fitz chapter 22. A Table Model and View  formating    xxx
-CLASS_NAME: Fitz_22_Tab
+KEY_WORDS:  Fitz chapter 22. A Table Model and View  formating fitzz
+CLASS_NAME:      Fitz_22_Tab
 WIDGETS:    QAbstractTableModel  QTableView DecorationRole    BackgroundRole QIcon TextAlignmentRole
 STATUS:     runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
-TAB_TITLE:  Fitz TableModel
-
+TAB_TITLE:  Fitz chapter 22. A Table Model
+DESCRIPTION:    Code modeled on FitzBook ...
 
 
 looked at
@@ -226,7 +226,7 @@ class Fitz_22_Tab( tab_base.TabBase ) :
 
         """
         super().__init__()
-        self.help_file_name     =  "fitz_22_tab.txt"
+        self.module_file       = __file__      # save for help file usage
 
         self.mutate_dict[0]     = self.mutate_0
         self.mutate_dict[1]     = self.mutate_1
@@ -314,21 +314,9 @@ class Fitz_22_Tab( tab_base.TabBase ) :
         row_layout = QHBoxLayout(   )
         layout.addLayout( row_layout,  )
 
-
-        widget = QPushButton("mutate\n")
-        self.button_ex_1         = widget
-        widget.clicked.connect( lambda: self.mutate( ) )
-        row_layout.addWidget( widget )
-
-        # ---- self.inspect
-        widget = QPushButton("inspect\n")
-        widget.clicked.connect( self.inspect    )
-        row_layout.addWidget( widget,   )
-
-        # ---- PB self.breakpoint
-        widget = QPushButton("breakpoint\n")
-        widget.clicked.connect( self.breakpoint    )
-        row_layout.addWidget( widget,   )
+        # our ancestor finishes off the tab with some
+        # standard buttons
+        self.build_gui_last_buttons( row_layout )
 
     # -------------------------------
     def _build_model(self,   ):
@@ -361,7 +349,7 @@ class Fitz_22_Tab( tab_base.TabBase ) :
         Add an item to our todo list, getting the text from the QLineEdit .todoEdit
         and then clearing it.
         """
-        self.append_function_msg( "add" )
+        self.append_function_msg( "add()" )
 
         text = self.todoEdit.text()
         # Remove whitespace from the ends of the string.
@@ -376,7 +364,7 @@ class Fitz_22_Tab( tab_base.TabBase ) :
 
     def delete(self):
         """ """
-        self.append_function_msg( "delete" )
+        self.append_function_msg( "delete()" )
 
         indexes = self.todoView.selectedIndexes()
         if indexes:
@@ -392,7 +380,7 @@ class Fitz_22_Tab( tab_base.TabBase ) :
         """
         mark selected row as complete
         """
-        self.append_function_msg( "complete" )
+        self.append_function_msg( "complete()" )
 
         indexes = self.todoView.selectedIndexes()
         if indexes:
@@ -413,7 +401,7 @@ class Fitz_22_Tab( tab_base.TabBase ) :
 
     # tag::loadsave[]
     def load(self):
-        self.append_function_msg( "load" )
+        self.append_function_msg( "load()" )
 
         try:
             with open("data.json", "r") as f:
@@ -421,11 +409,12 @@ class Fitz_22_Tab( tab_base.TabBase ) :
         except Exception:
             pass
 
-        self.model.layoutChanged.emit() # This triggers a refresh of the entirety of the view. I
+        self.model.layoutChanged.emit()
+            # This triggers a refresh of the entirety of the view. I
 
 
     def save(self):
-        self.append_function_msg( "save" )
+        self.append_function_msg( "save()" )
 
         with open("data.json", "w") as f:
             data = json.dump(self.model.todos, f)
@@ -436,27 +425,31 @@ class Fitz_22_Tab( tab_base.TabBase ) :
         """
         read it -- mutate the widgets
         """
-        self.append_function_msg( "mutate_0" )
+        self.append_function_msg( "mutate_0()" )
 
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
+
+        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------------------
     def mutate_1( self ):
         """
         read it -- mutate the widgets
         """
-        self.append_function_msg( "mutate_1" )
+        self.append_function_msg( "mutate_1()" )
 
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
+
+        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------
     def inspect(self):
         """
         the usual
         """
-        self.append_function_msg( "inspect" )
+        self.append_function_msg( "inspect()" )
 
         self_model         = self.model
         self_todo_view     = self.view
@@ -472,6 +465,8 @@ class Fitz_22_Tab( tab_base.TabBase ) :
         each tab gets its own function so we break in that
         tabs code
         """
-        self.append_function_msg( "breakpoint" )
+        self.append_function_msg( "breakpoint()" )
 
         breakpoint()
+
+# ---- eof

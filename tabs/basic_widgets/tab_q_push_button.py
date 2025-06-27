@@ -4,6 +4,7 @@
 """
 # this material is used for selection access to the tab which must
 # be named tab_...python among other things
+
 KEY_WORDS:      pressed press PushBtton click connect rh
 CLASS_NAME:     QPushButtonTab
 WIDGETS:        QPushButton
@@ -16,7 +17,6 @@ DESCRIPTION:    A reference for the QPushButton widget
 if __name__ == "__main__":
     #----- run the full app
     import main
-    #main.main()
 # --------------------------------
 
 
@@ -101,6 +101,7 @@ class QPushButtonTab( tab_base.TabBase ):
         """
         super().__init__()
         self.module_file       = __file__      # save for help file usage
+
         # modify to match the number of mutate methods in this module
         self.mutate_dict[0]    = self.mutate_0
         self.mutate_dict[1]    = self.mutate_1
@@ -249,8 +250,6 @@ class QPushButtonTab( tab_base.TabBase ):
 
         self.append_msg( tab_base.DONE_MSG  )
 
-    # ---- mutate inspect breakpoint --------
-
     # ------------------------------------
     def mutate_0( self ):
         """
@@ -265,6 +264,8 @@ class QPushButtonTab( tab_base.TabBase ):
         self.append_function_msg( "mutate_0()" )
 
         # ---- change widget
+        msg    = "for q_push_button_1 we more or less reset it"
+        self.append_msg( msg, clear = False )
             # we use a local variable because it reduces the amount of code
             # and does not run any slower
             # we use this local variable idea in many places
