@@ -902,7 +902,9 @@ class QSqlDatabaseTab( tab_base.TabBase ):
 
     # ------------------------
     def mutate_0(self):
-        """ """
+        """
+        not used but here for compat.
+        """
         pass
 
 

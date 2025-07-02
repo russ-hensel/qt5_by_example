@@ -15,7 +15,7 @@ Table of Contents
 ---- Versions
 /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tab_select_tab.py
 
-Change list newest at bottom
+Change list newest at bottom --- really
 
 
 
@@ -54,6 +54,8 @@ Change list newest at bottom
     ver_08
         why
             major additions checkpoint
+            !! add external ref list
+            !! add HOW_COMPLETE
 
     ver_07
         why

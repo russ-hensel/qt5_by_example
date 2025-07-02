@@ -12,7 +12,7 @@ CLASS_NAME:     Fitz_2_Tab
 WIDGETS:        QPixmap QLabel
 STATUS:         ** runs   !! runs_correctly      demo_complete_0_10
 TAB_TITLE:      Lable with Image
-
+HOW_COMPLETE:   5  #  AND A COMMENT
 
 
 """

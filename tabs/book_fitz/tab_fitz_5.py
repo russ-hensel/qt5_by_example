@@ -8,8 +8,8 @@ CLASS_NAME:     Fitz_5_Tab
 WIDGETS:        QTimer pg.PlotWidget pg.mkPen
 STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
 TAB_TITLE:      Fitz Dynamic Plot
-
-
+DESCRIPTION:    Dynamic Plot base on Fitx ref is it the same as chapt 35 ??
+HOW_COMPLETE:   25  #  AND A COMMENT
 
 """
 
@@ -108,9 +108,10 @@ class Fitz_5_Tab( tab_base.TabBase ) :
         super().__init__()
 
 
-        self.help_file_name     =  "fitz_5_tab.txt"
-        self.mutate_dict[0]    = self.mutate_0
-        self.mutate_dict[1]    = self.mutate_1
+        self.module_file        = __file__      # save for help file usage
+
+        self.mutate_dict[0]     = self.mutate_0
+        self.mutate_dict[1]     = self.mutate_1
         # self.mutate_dict[2]    = self.mutate_2
         # self.mutate_dict[3]    = self.mutate_3
         # self.mutate_dict[4]    = self.mutate_4
@@ -162,20 +163,26 @@ class Fitz_5_Tab( tab_base.TabBase ) :
         widget.clicked.connect( self.stop    )
         row_layout.addWidget( widget,   )
 
-        widget = QPushButton("mutate\n")
-        self.button_ex_1         = widget
-        widget.clicked.connect( lambda: self.mutate( ) )
-        row_layout.addWidget( widget,   )
+        # our ancestor finishes off the tab with some
+        # standard buttons
+        self.build_gui_last_buttons( row_layout )
 
-        # ---- PB inspect
-        widget = QPushButton("inspect\n")
-        widget.clicked.connect( self.inspect    )
-        row_layout.addWidget( widget,   )
 
-        # ---- PB breakpoint
-        widget = QPushButton("breakpoint\n")
-        widget.clicked.connect( self.breakpoint    )
-        row_layout.addWidget( widget,   )
+
+        # widget = QPushButton("mutate\n")
+        # self.button_ex_1         = widget
+        # widget.clicked.connect( lambda: self.mutate( ) )
+        # row_layout.addWidget( widget,   )
+
+        # # ---- PB inspect
+        # widget = QPushButton("inspect\n")
+        # widget.clicked.connect( self.inspect    )
+        # row_layout.addWidget( widget,   )
+
+        # # ---- PB breakpoint
+        # widget = QPushButton("breakpoint\n")
+        # widget.clicked.connect( self.breakpoint    )
+        # row_layout.addWidget( widget,   )
 
     # ------------------------
     def start(self):

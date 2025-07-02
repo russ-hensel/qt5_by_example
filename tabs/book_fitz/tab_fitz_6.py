@@ -5,12 +5,13 @@
 could use a rename to chapter of the book
 
 
-KEY_WORDS:      some stuff from the m fitz book a line graph  with points of static data chapter 35
+KEY_WORDS:      some stuff from the m fitz book a line graph  with points of static data chapter 35 plot
 CLASS_NAME:     Fitz_6_Tab
 WIDGETS:        PlotWidget PyQtGraph pg.PlotWidget pg.mkPen  Grid Range
 STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
 TAB_TITLE:      Fitz_Chapter 35 A_Tab
-
+DESCRIPTION:    Dynamic Plot base on Fitx check against fitz_5
+HOW_READY       = 5
 
 
  "/mnt/WIN_D/Russ/0000/python00/python3/_examples/python_book_code/book_pyqt5_src/model-views/todo_1.py",
@@ -120,9 +121,10 @@ class Fitz_6_Tab( tab_base.TabBase ) :
 
         """
         super().__init__()
-        self.help_file_name    =  "fitz_6_tab.txt"
-        self.mutate_dict[0]    = self.mutate_0
-        self.mutate_dict[1]    = self.mutate_1
+        self.module_file        = __file__      # save for help file usage
+
+        self.mutate_dict[0]     = self.mutate_0
+        self.mutate_dict[1]     = self.mutate_1
         # self.mutate_dict[2]    = self.mutate_2
         # self.mutate_dict[3]    = self.mutate_3
         # self.mutate_dict[4]    = self.mutate_4
@@ -162,7 +164,7 @@ class Fitz_6_Tab( tab_base.TabBase ) :
         # Add grid
         self.graphWidget.showGrid(x=True, y=True)
         # Set Range
-        self.graphWidget.setXRange(0, 10, padding=0)
+        self.graphWidget.setXRange(0,  10, padding=0)
         self.graphWidget.setYRange(20, 55, padding=0)
 
         # ---- new row
@@ -179,20 +181,12 @@ class Fitz_6_Tab( tab_base.TabBase ) :
         widget.clicked.connect( self.plot    )
         row_layout.addWidget( widget,   )
 
-        widget = QPushButton("mutate\n")
-        self.button_ex_1         = widget
-        widget.clicked.connect( lambda: self.mutate( ) )
-        row_layout.addWidget( widget,   )
+        # our ancestor finishes off the tab with some
+        # standard buttons
+        self.build_gui_last_buttons( row_layout )
 
-        # ---- PB inspect
-        widget = QPushButton("inspect\n")
-        widget.clicked.connect( self.inspect    )
-        row_layout.addWidget( widget,   )
 
-        # ---- PB breakpoint
-        widget = QPushButton("breakpoint\n")
-        widget.clicked.connect( self.breakpoint    )
-        row_layout.addWidget( widget,   )
+
 
 
     def plot(self,  ):

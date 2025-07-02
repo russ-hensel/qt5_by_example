@@ -11,6 +11,7 @@ WIDGETS:    QTableView() QSqlTableModel
 STATUS:     june 2025 runs_functionally not in good shape
 TAB_TITLE:  Fitz_23_A_Tab Chapt 23 A
 DESCRIPTION:   This needs review
+HOW_COMPLETE:   5  #  AND A COMMENT
 
 looked at
 

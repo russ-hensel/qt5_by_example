@@ -11,6 +11,8 @@ WIDGETS:        QPushButton
 STATUS:         June 2025 ok: but more content would be nice
 TAB_TITLE:      QPushButton Reference
 DESCRIPTION:    A reference for the QPushButton widget
+HOW_COMPLETE:   25  #  AND A COMMENT
+
 
 """
 # --------------------
@@ -100,14 +102,15 @@ class QPushButtonTab( tab_base.TabBase ):
         this is pretty much boiler plate for a tab
         """
         super().__init__()
-        self.module_file       = __file__      # save for help file usage
+        self.module_file        = __file__      # save for help file usage
 
         # modify to match the number of mutate methods in this module
-        self.mutate_dict[0]    = self.mutate_0
-        self.mutate_dict[1]    = self.mutate_1
-        self.mutate_dict[2]    = self.mutate_2
-        self.mutate_dict[3]    = self.mutate_3
-        self.mutate_dict[4]    = self.mutate_4
+        self.mutate_dict[0]     = self.mutate_0
+        self.mutate_dict[1]     = self.mutate_1
+        self.mutate_dict[2]     = self.mutate_2
+        self.mutate_dict[3]     = self.mutate_3
+        self.mutate_dict[4]     = self.mutate_4
+
         self._build_gui()
 
     def _build_gui_widgets( self, main_layout ):
@@ -164,7 +167,7 @@ class QPushButtonTab( tab_base.TabBase ):
         widget.clicked.connect( connect_to    )
         row_layout.addWidget( widget,  )
 
-        # ---- new row, standard buttons
+        # ---- new row, standard bbutton_layoututtons
         button_layout = QHBoxLayout(   )
         layout.addLayout( button_layout,  )
 

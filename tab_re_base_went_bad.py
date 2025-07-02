@@ -5,7 +5,7 @@
 
 
 """
-Base class for demo tabs
+Base class for demo tabs  -- a second version plan to descent then override
 
 this is pretty much infrastructure for the application
 not part of the widget examples
@@ -123,7 +123,7 @@ BREAK_MSG       = ( "breakpoint()" )
 # tab_base.DONE_MSG
 
 #  --------
-class TabBase( QWidget ):
+class TabReBase( QWidget ):
     def __init__(self):
         """
         some var for later use
@@ -134,30 +134,24 @@ class TabBase( QWidget ):
         #self._build_model()
 
         self.mutate_dict    = {}
+
         self.mutate_ix      = 0
-        self.help_file_set  = set()
+
+        self.build_dict     = {}  # a list would suffice
+        self.build_ix       = 0
+
+        self.tab_layout     = None
+        #self.help_file_set  = set()
         # _build_gui(self,   ): call from child
 
-    # -------------------------------
-    def _build_gui(self,   ):
+    #------------------------
+    def post_init(self):
         """
-
-
-        for the first 2 tabs
-        layouts
-            a vbox for main layout
-            h_box for or each row of widgets
+        more init after child
         """
-        tab_page      = self
-        layout        = QVBoxLayout( tab_page )
-
-        self._build_gui_top(     layout )
-        self._build_gui_widgets( layout )
-        self._build_gui_bot(     layout )
-        self.mutate_0()
-        self.mutate_ix = 1
-
+        # max_build_dict   = len( )
         self.set_help_file_name()
+        self.next_gui_build()
 
 
     # -------------------------------
@@ -200,9 +194,10 @@ class TabBase( QWidget ):
         self.build_gui_last_buttons(  row_layout  )
         """
         # ---- mutate
-        widget = QPushButton("mutate-\nexamine")
-        self.button_ex_1         = widget
-        widget.clicked.connect( lambda: self.mutate( ) )
+        widget = QPushButton("rebuild-\ngui")
+
+        connect_to          = self.next_gui_build
+        widget.clicked.connect( connect_to )
         row_layout.addWidget( widget )
 
         # ---- PB inspect
@@ -216,6 +211,54 @@ class TabBase( QWidget ):
         connect_to          = self.breakpoint
         widget.clicked.connect( connect_to )
         row_layout.addWidget( widget )
+
+    def replace_top_layout( self ):
+        """
+
+        :return: DESCRIPTION
+        :rtype: TYPE
+
+        """
+
+        # Assuming tab_page is the parent widget (e.g., a QWidget or QTabWidget page)
+        # and layout is the current QVBoxLayout
+        # tab_page      = self
+        # layout        = QVBoxLayout( tab_page )
+        # self.tab_layout = layout
+        # Step 1: Delete all widgets in the existing layout
+
+        layout   = self.tab_layout
+        if layout is not None:
+            while layout.count():
+                item = layout.takeAt(0)  # Remove the item at index 0
+                widget = item.widget()
+                if widget is not None:
+                    widget.deleteLater()  # Schedule the widget for deletion
+                # If the item is a layout, recursively delete its widgets
+                elif item.layout() is not None:
+                    def clear_layout(sub_layout):
+                        while sub_layout.count():
+                            sub_item = sub_layout.takeAt(0)
+                            sub_widget = sub_item.widget()
+                            if sub_widget is not None:
+                                sub_widget.deleteLater()
+                            elif sub_item.layout() is not None:
+                                clear_layout(sub_item.layout())
+                    clear_layout(item.layout())
+                    item.layout().deleteLater()
+
+            # Step 2: Delete the old layout
+            layout.deleteLater()
+
+        # Step 3: Create and set a new layout
+        # new_layout = QVBoxLayout(tab_page)
+        # tab_page.setLayout(new_layout)
+        tab_page            = self
+        layout              = QVBoxLayout(tab_page )
+        self.tab_layout     = layout
+        self.main_layout    = layout   # bit of confusion here
+
+    # Now you can add new widgets to new_layout
 
 
     # ------------------------------------
@@ -248,9 +291,38 @@ class TabBase( QWidget ):
         logging.debug( msg )
 
     # ------------------------------------
+    def next_gui_build( self ):
+        """
+
+        :return: DESCRIPTION
+        :rtype: TYPE
+
+        """
+        # max_build_dict   = len( self.build_dict )
+
+        self.replace_top_layout()
+        layout     =  self.tab_layout
+
+        self._build_gui_top( layout )
+
+        self.build_dict[ self.build_ix ]()
+
+        row_layout = QHBoxLayout()
+        layout.addLayout( row_layout )
+        self.build_gui_last_buttons( row_layout )
+
+        self._build_gui_bot( layout )
+
+        # ready for next post increment
+        self.build_ix   += 1
+        if self.build_ix >= len( self.build_dict ):
+            self.build_ix = 0
+
+    # ------------------------------------
     def mutate( self ):
         """
         read it
+            may not be used may come back
             loop throug the mutate functions
         """
         max_ix          = len( self.mutate_dict)

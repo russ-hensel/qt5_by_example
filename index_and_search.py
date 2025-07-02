@@ -247,10 +247,10 @@ class TabDBBuilder():
         file_list           = []
         #i_directory    = Path( "./" )
         for i_directory in directory_list:
-            i_directory = Path( i_directory )
-            i_file_list    = [file  for file in i_directory.glob('tab*.py')  ]
+            i_directory     = Path( i_directory )
+            i_file_list     = [file  for file in i_directory.glob('tab*.py')  ]
                     # not .stem or .name whic may be needed later
-            file_list      = file_list + i_file_list
+            file_list       = file_list + i_file_list
 
         msg         = "index_and_search.py find_doc_files this is the file list"
         logging.debug( msg )
@@ -280,6 +280,24 @@ class TabDBBuilder():
 
             # tab_title                   =  eval( "'" + tab_title + "'" )
             # doc_data[ "tab_title" ]     = tab_title
+            #breakpoint()
+            module              = doc_data[ "module" ].strip()  # !! redundatan hack fix
+            how_complete       = doc_data[ "how_complete" ].strip()
+            how_complete       = how_complete.replace( "#", " ")
+
+            print( f"{how_complete = }" )
+            # if how_complete != "":
+            #     breakpoint()
+
+            if how_complete    == "":
+                how_complete   = "1 #default "
+            splits             = how_complete.split( " " )
+            how_complete       = int( splits[0] )
+
+            if how_complete < parameters.PARAMETERS.min_complete:
+                msg    = f"TabDBBuilder dropping {module = } because of -- not complete enough {how_complete = }  )"
+                logging.debug( msg )
+                continue
 
             module       = doc_data[ "module" ].strip()
             class_name   = doc_data[ "class_name" ].strip()
@@ -357,6 +375,9 @@ class TabDBBuilder():
         read the doc data into a dict strings?
         file_name think string or path
         change to with
+
+        !! better code would probably be a generator -- chat to fix??
+        !! do the stip here
         """
         #rint( f"get_doc_data {file_name = }")
         #rint( "could make a loop to do this maybe a comp !!")
@@ -366,7 +387,8 @@ class TabDBBuilder():
                                   "tab_title",
                                   "key_words",
                                   "widgets",
-                                  "description" ] # omit doc_file_name??
+                                  "description",
+                                  "how_complete" ] # omit doc_file_name -- for sure
 
         doc_data    = {}
         doc_data[ "module"  ]    = str( file_name )[ :-3 ]
@@ -380,6 +402,7 @@ class TabDBBuilder():
 
         for ix, i_line in enumerate( a_file ):
 
+            # looks like a loop woruld do all this
             i_line    = i_line.rstrip('\n')   # this i think is the best way --- think is arg to have python strip
             i_line    = i_line.strip()
             #rint( f"reading line no {ix} =  {i_line }")
@@ -409,6 +432,12 @@ class TabDBBuilder():
                     doc_data[ key ] = doc_data[ key ] + " " + i_line
 
             key         = "description"
+            if i_line.startswith(  f"{key.upper()}:"):
+                    i_line    = i_line[ len(key) + 1 : ].strip()
+                    #doc_data[ key ] = doc_data[ key ] + " " + i_line
+                    doc_data[ key ] = i_line  # needs to be on one line
+
+            key         = "how_complete"
             if i_line.startswith(  f"{key.upper()}:"):
                     i_line    = i_line[ len(key) + 1 : ].strip()
                     #doc_data[ key ] = doc_data[ key ] + " " + i_line

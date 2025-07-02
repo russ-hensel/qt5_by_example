@@ -1,3 +1,5 @@
+
+# ---- tof
 """
 
 an app that demonstrates the uses
@@ -8,9 +10,7 @@ Home · russ-hensel/qt5_by_example Wiki
 https://github.com/russ-hensel/qt5_by_example/wiki
 
 
-
 """
-
 
 # --------------------
 if __name__ == "__main__":
@@ -113,7 +113,7 @@ BEGIN_MARK_2    = uft.BEGIN_MARK_2
 
 print_func_header  = uft.print_func_header
 
-__VERSION__  = "ver_12 - 2025 06 05.01"
+__VERSION__  = "ver_13 - 2025 07 02.01"
 
 # ---- main window ===================================================================
 class Qt5ByExample( QMainWindow ):
@@ -163,6 +163,7 @@ class Qt5ByExample( QMainWindow ):
         self.doc_dir             = my_parameters.help_path
 
         self.build_gui()
+
 
         self.current_tab_index   = 0   # I need to track in changed
         self.tab_widget.setCurrentIndex( 0 )
@@ -369,17 +370,6 @@ class Qt5ByExample( QMainWindow ):
         """
         QMessageBox.information(self, "Not Implemented", "Working on this...")
 
-    #----------------------------
-    def inspect_mutate_not_conndectedxxxxxx ( self,   ):
-        """
-        what it says read:
-        """
-        uft.print_func_header( "inspect......" )
-        index = self.tab_widget.currentIndex()
-        self.tab_widget.setCurrentIndex(2)  # Set the active tab by index
-
-        text = self.tab_widget.tabText(0)  # Get the label of the first tab
-        self.tab_widget.setTabText(0, "New Label")  # Set a new label
 
     #-------
     def open_general_help( self,   ):
