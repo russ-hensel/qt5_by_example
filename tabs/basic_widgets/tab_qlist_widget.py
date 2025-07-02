@@ -96,8 +96,8 @@ class QListWidgetTab( tab_base.TabBase ) :
         self.module_file       = __file__      # save for help file usage
         self.mutate_dict[0]     = self.mutate_0
         self.mutate_dict[1]     = self.mutate_1
-        # self.mutate_dict[2]    = self.mutate_2
-        # self.mutate_dict[3]    = self.mutate_3
+        self.mutate_dict[2]     = self.mutate_2
+        self.mutate_dict[3]     = self.mutate_3
         # self.mutate_dict[4]    = self.mutate_4
         self.help_file_name      =  "list_widget_tab.txt"
         self._build_gui()
@@ -128,7 +128,7 @@ class QListWidgetTab( tab_base.TabBase ) :
 
         widget.clear()
 
-        values    =  [ "oneish", "twoish"]
+        values    =  [ "oneish", "twoish", "threeish"]
         for value in values:
             item = QListWidgetItem( value )
             widget.addItem( item )
@@ -212,8 +212,61 @@ class QListWidgetTab( tab_base.TabBase ) :
         self.append_msg( msg, )
         self.list_widget_1.setMaximumHeight( 200 ) # setMaximumHeight(self, maxh: int)
 
+        # sortingEnabled doesn't seem to do anything. It does nothing!
+
+        msg    = "self.list_widget_1.sortingEnabled=True #"
+        self.append_msg( msg, )
+        self.list_widget_1.sortingEnabled=True #
+        self.append_msg( f"{self.list_widget_1.isSortingEnabled()=}" )
+        self.append_msg( "Note discrepancy -- isSortingEnabled() returns false, isn't that weird?")
+
         self.append_msg( "mutate_1 done" )
 
+    # ------------------------------------
+    def mutate_2( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_2" )
+
+        # msg    = "so far not implemented "
+        # self.append_msg( msg, clear = False )
+        
+        self.append_msg( f"{self.list_widget_1.sortingEnabled=}" )
+
+
+        # msg    = "self.list_widget_1.sortingEnabled=False #"
+        # self.append_msg( msg, )
+        # self.list_widget_1.sortingEnabled=False #
+
+        self.append_msg( f"{self.list_widget_1.sortingEnabled=}" )
+        self.append_msg( f"{self.list_widget_1.isSortingEnabled()=}" )
+
+        self.append_msg( "self.list_widget_1.addItem( item ) # Another thing on the list" )
+        item = QListWidgetItem( "Another thing on the list" )
+        self.list_widget_1.addItem( item )
+
+        self.append_msg( "mutate_2 done" )
+
+    # ------------------------------------
+    def mutate_3( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_3" )
+
+        # msg    = "so far not implemented "
+        # self.append_msg( msg, clear = False )
+        
+
+
+        msg    = "self.list_widget_1.sortItems() #"
+        self.append_msg( msg, )
+        self.list_widget_1.sortItems() #
+
+
+
+        self.append_msg( "mutate_3 done" )
     # ------------------------
     def inspect(self):
         """

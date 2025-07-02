@@ -39,7 +39,7 @@ class Parameters( ):
             if you comment all out all modes you get the default mode which should
             run, perhaps not in the way you want
         """
-        self.mode_russ_on_theprof()
+        self.mode_dc_on_linux_mint()
         #self.new_user_mode()
         #self.millhouse_1_mode()
 
@@ -121,6 +121,45 @@ class Parameters( ):
         self.logging_level      = logging.DEBUG
 
     # -------
+    def mode_dc_on_linux_mint( self ):
+        """
+        a mode for the new user, pretty much empty,
+        a new user may experiment here.
+        """
+        self.mode               = "mode_dc_on_linux_mint"
+        # but do they use the same units ?QDateEdit
+        self.qt_width           = 1500
+        self.qt_height          = 600    # 700 most of win height
+        self.qt_xpos            = 10
+        self.qt_ypos            = 10
+
+        self.wat_qt_width       = 1500
+        self.wat_qt_height      = 900
+        self.wat_qt_xpos        = 10
+        self.wat_qt_ypos        = 10
+
+        self.dir_for_tabs       = [""]
+        self.dir_for_tabs.append( "./tabs/basic_widgets" )
+        self.dir_for_tabs.append( "./tabs/sql_widgets" )
+        self.dir_for_tabs.append( "./tabs/book_fitz" ) #  book_fitz
+
+        # ---- for sample database
+        self.db_file_name        = "/tmp/ramdisk/qt_sql.db"
+        self.db_file_name        = ":memory:"
+        # in memory is fast
+        # on disk (in "/tmp") is easier to debug
+
+        # ---- for qt tabs
+        self.tab_db_type         = "QSQLITE"
+
+        self.default_search     = "dc"
+        self.do_search_on_init  = True
+
+        self.logging_level      = logging.DEBUG
+
+
+
+    # -------
     def new_user_mode( self ):
         """
         a mode for the new user, pretty much empty,
@@ -161,6 +200,8 @@ class Parameters( ):
         computer_id    =   in_spect_env.InSpectEnv.computer_id
 
         print( f"Parameters running_on_tweaks {computer_id = }")
+        # 'mint22-virtualbox'
+        # fixme: what does Raspberry Pi do?
         print( f"Parameters {  in_spect_env.InSpectEnv.__str__()  } ")  #ok
         # print( "------------------------------")
         # print( f"{ str(in_spect_env.InSpectEnv)   } ")       # ng
@@ -310,7 +351,10 @@ class Parameters( ):
 
 
         self.text_editor        = "gedit"
-#        self.text_editor        = "xed"
+        self.text_editor        = "gedit"
+        self.text_editor        = "xed"
+        # xed is apparently installed by default on Linux Mint
+        # DAV had to install gedit on Linux Mint
 
         # ---- logging
         self.pylogging_fn       = "./app.py_log"   # file name for the python logging

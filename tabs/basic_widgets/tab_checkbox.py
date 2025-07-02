@@ -15,6 +15,18 @@ TAB_TITLE:      QCheckBox
 
 
 """
+
+"""
+
+QT documentation for QCheckBox
+https://doc.qt.io/qt-6/qcheckbox.html
+mentions "Exclusive Check Boxes", which are a terrible idea --
+if you only want 1 item selected,
+please use radio buttons instead.
+
+FIXME: should we demo the isTristate() and setTristate() options?
+
+"""
 # --------------------
 if __name__ == "__main__":
     #----- run the full app

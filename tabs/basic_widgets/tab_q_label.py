@@ -5,13 +5,18 @@
 
 tab_label.py
 
-KEY_WORDS:      pressed press push button click connect qq
+KEY_WORDS:      pressed press push button click connect dc
 CLASS_NAME:     QLabelTab
 WIDGETS:        QLabel
 STATUS:
-TAB_TITLE:      QLabel
+TAB_TITLE:      QLabel Reference
+DESCRIPTION:    QLabel Reference material demo
 
 
+"""
+
+"""
+FIXME: merge from tab_label_dc_salvage.py if there's anything useful.
 """
 # --------------------
 if __name__ == "__main__":
