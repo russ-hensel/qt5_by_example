@@ -29,7 +29,7 @@ import time
 from datetime import datetime
 from functools import partial
 from subprocess import PIPE, STDOUT, Popen, run
-
+import webbrowser
 import wat
 from PyQt5 import QtGui
 from PyQt5.QtCore import (QAbstractListModel,
@@ -132,10 +132,10 @@ class TabBase( QWidget ):
 
         self.help_file_name     =  "unknown.txt"
         #self._build_model()
-
-        self.mutate_dict    = {}
-        self.mutate_ix      = 0
-        self.help_file_set  = set()
+        self.web_link           = "web_link not set"
+        self.mutate_dict        = {}
+        self.mutate_ix          = 0
+        self.help_file_set      = set()
         # _build_gui(self,   ): call from child
 
     # -------------------------------
@@ -200,13 +200,13 @@ class TabBase( QWidget ):
         self.build_gui_last_buttons(  row_layout  )
         """
         # ---- mutate
-        widget = QPushButton("mutate-\nexamine")
-        self.button_ex_1         = widget
+        widget              = QPushButton("mutate-\nexamine")
+        self.button_ex_1    = widget
         widget.clicked.connect( lambda: self.mutate( ) )
         row_layout.addWidget( widget )
 
         # ---- PB inspect
-        widget              = QPushButton("wat\ninspect")
+        widget              = QPushButton("wat-\ninspect")
         connect_to          = self.inspect
         widget.clicked.connect( connect_to )
         row_layout.addWidget( widget )
@@ -214,6 +214,12 @@ class TabBase( QWidget ):
         # ---- PB breakpoint
         widget              = QPushButton("breakpoint-\ndebug")
         connect_to          = self.breakpoint
+        widget.clicked.connect( connect_to )
+        row_layout.addWidget( widget )
+
+        # ---- wiki\nwiki
+        widget              = QPushButton("wiki-\nwiki")
+        connect_to          = self.wiki_wiki
         widget.clicked.connect( connect_to )
         row_layout.addWidget( widget )
 
@@ -291,5 +297,18 @@ class TabBase( QWidget ):
             self.clear_msg(   )
         self.msg_widget.append( msg )
         print( msg )
+
+    def set_web_link( self, web_link ):
+        """ """
+        self.web_link   = web_link
+
+    def wiki_wiki( self ):
+        """
+        """
+        #self.wiki_link
+        webbrowser.open( self.wiki_link, new = 0, autoraise = True )
+
+
+
 
 # ---- eof

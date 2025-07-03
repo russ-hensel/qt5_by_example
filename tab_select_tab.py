@@ -97,6 +97,7 @@ class Search_Tab( QWidget ) :
         tab_misc_widgets.py
         """
         super().__init__()
+
         self._build_gui()
         self.mutate_ix   = 0
 
@@ -168,6 +169,8 @@ class Search_Tab( QWidget ) :
         row_layout          = QHBoxLayout(   )
         layout.addLayout( row_layout, ) # stretch = 6  )
 
+
+        # ---- model and view
         db                  = global_vars.TAB_DB
         model               = QSqlTableModel( self, db )
         self.list_model     = model
@@ -266,7 +269,7 @@ class Search_Tab( QWidget ) :
         kw_table_name                   = "tabs_key_word"
 
         column_list                     = [ "id", "tab_title", "widgets",
-                                           "description", "module", "class"     ]
+                                           "description", "module", "class", "web_link"  ]
 
         a_key_word_processor            = key_words.KeyWords( kw_table_name, global_vars.TAB_DB )
         query_builder.table_name        = "tabs"
@@ -343,16 +346,9 @@ class Search_Tab( QWidget ) :
         goes to controller.open_tab_select
 
 
-       sql for ref      CREATE TABLE tabs (
-                id              INTEGER PRIMARY KEY AUTOINCREMENT,
-                doc_file_name   TEXT,
-                name            TEXT,
-                tab_title       TEXT,
-                module          TEXT,
-                class           TEXT,
-                widgets         TEXT,
-                key_words       TEXT
-        """
+       sql for ref
+           look in index_and_search.py ?
+           """
 
         row         = index.row()
         model       = self.list_model
@@ -379,13 +375,17 @@ class Search_Tab( QWidget ) :
         widgets     = model.data( model_index ).strip()
         #rint( f"open_tab_select: {widgets} ====================================================")
 
+        column      = model.fieldIndex( "web_link" )
+        model_index = model.index( row, column)
+        web_link     = model.data( model_index ).strip()
+
         ix          = global_vars.CONTROLLER.switch_to_tab_by_class_name( a_class )
         if ix >= 0:
             return
 
         #rint( f"open_tab_select: {row = },  {tab_title = }    {module = }   {a_class = }   ")
 
-        global_vars.CONTROLLER.open_tab_select( module, a_class , tab_title, widgets = widgets  )
+        global_vars.CONTROLLER.open_tab_select( module, a_class , tab_title, web_link, widgets = widgets  )
 
 
 # ---- eof

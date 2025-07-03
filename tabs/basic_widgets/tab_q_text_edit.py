@@ -7,9 +7,20 @@ CLASS_NAME:     QTextEditTab
 WIDGETS:        QTextEdit
 STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
 TAB_TITLE:      QTextEdit Reference
+DESCRIPTION:    A reference for the QTextEdit widget
 HOW_COMPLETE:   25  #  AND A COMMENT
 
 """
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QTextEdit"
+
+"""
+What We Know About QTextEdit · russ-hensel/qt5_by_example Wiki
+https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QTextEdit
+
+
+
+"""
+
 
 # --------------------
 if __name__ == "__main__":
@@ -96,6 +107,10 @@ class QTextEditTab( tab_base.TabBase ) :
         """
         super().__init__()
         self.module_file        = __file__
+
+        global WIKI_LINK
+        self.wiki_link          = WIKI_LINK
+
         self.mutate_dict[0]     = self.mutate_0
         self.mutate_dict[1]     = self.mutate_1
         # self.mutate_dict[2]    = self.mutate_2

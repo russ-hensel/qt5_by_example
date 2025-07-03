@@ -39,7 +39,7 @@ class Parameters( ):
             if you comment all out all modes you get the default mode which should
             run, perhaps not in the way you want
         """
-        self.mode_dc_on_linux_mint()
+        self.mode_russ_on_theprof()
         #self.new_user_mode()
         #self.millhouse_1_mode()
 
@@ -91,17 +91,18 @@ class Parameters( ):
         self.wat_qt_xpos        = 10
         self.wat_qt_ypos        = 10
 
-        self.dir_for_tabs       = [
-                                    "/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb",
-                                    # "/mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/test",
-                                    "/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs",
-                                    "/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs",
-                                    "/mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/rshlib_qt",
-                                    ]
-        self.dir_for_tabs.append( "./tabs/basic_widgets" )
-        self.dir_for_tabs.append( "./tabs/sql_widgets" )
+        # self.dir_for_tabs       = [
+        #                             "/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb",
+        #                             # "/mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/test",
+        #                             "/mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs",
+        #                             "/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs",
+        #                             "/mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/rshlib_qt",
+        #                             ]
+        # self.dir_for_tabs.append( "./tabs/basic_widgets" )
+        # self.dir_for_tabs.append( "./tabs/sql_widgets" )
 
-        self.dir_for_tabs.append( "./tabs/book_fitz" ) #  book_fitz
+        # self.dir_for_tabs.append( "./tabs/book_fitz" ) #  book_fitz
+        # self.dir_for_tabs.append( "./tabs/more" )
 
         # ---- for sample database
         self.db_file_name        = "/tmp/ramdisk/qt_sql.db"
@@ -114,50 +115,11 @@ class Parameters( ):
         self.tab_db_file_name    = "/tmp/ramdisk/tab.db"
         self.tab_db_file_name    = ":memory:"    # ok no disk location needed
 
-
-        self.default_search     = "qq"
+        # ---- default
+        self.default_search     = "rh"
         self.do_search_on_init  = True
 
         self.logging_level      = logging.DEBUG
-
-    # -------
-    def mode_dc_on_linux_mint( self ):
-        """
-        a mode for the new user, pretty much empty,
-        a new user may experiment here.
-        """
-        self.mode               = "mode_dc_on_linux_mint"
-        # but do they use the same units ?QDateEdit
-        self.qt_width           = 1500
-        self.qt_height          = 600    # 700 most of win height
-        self.qt_xpos            = 10
-        self.qt_ypos            = 10
-
-        self.wat_qt_width       = 1500
-        self.wat_qt_height      = 900
-        self.wat_qt_xpos        = 10
-        self.wat_qt_ypos        = 10
-
-        self.dir_for_tabs       = [""]
-        self.dir_for_tabs.append( "./tabs/basic_widgets" )
-        self.dir_for_tabs.append( "./tabs/sql_widgets" )
-        self.dir_for_tabs.append( "./tabs/book_fitz" ) #  book_fitz
-
-        # ---- for sample database
-        self.db_file_name        = "/tmp/ramdisk/qt_sql.db"
-        self.db_file_name        = ":memory:"
-        # in memory is fast
-        # on disk (in "/tmp") is easier to debug
-
-        # ---- for qt tabs
-        self.tab_db_type         = "QSQLITE"
-
-        self.default_search     = "dc"
-        self.do_search_on_init  = True
-
-        self.logging_level      = logging.DEBUG
-
-
 
     # -------
     def new_user_mode( self ):
@@ -200,8 +162,6 @@ class Parameters( ):
         computer_id    =   in_spect_env.InSpectEnv.computer_id
 
         print( f"Parameters running_on_tweaks {computer_id = }")
-        # 'mint22-virtualbox'
-        # fixme: what does Raspberry Pi do?
         print( f"Parameters {  in_spect_env.InSpectEnv.__str__()  } ")  #ok
         # print( "------------------------------")
         # print( f"{ str(in_spect_env.InSpectEnv)   } ")       # ng
@@ -332,16 +292,7 @@ class Parameters( ):
         self.wat_qt_xpos        = 10
         self.wat_qt_ypos        = 10
 
-        # qt_xpos     = 10
-        # qt_ypos     = 10
-        # qt_width    = 3000
-        # qt_height   = 600
 
-        # # opens on main monitor
-        # qt_xpos     = 10
-        # qt_ypos     = 10
-        # qt_width    = 1400
-        # qt_height   = 700
 
         self.minimun_useful    =  10
 
@@ -351,10 +302,7 @@ class Parameters( ):
 
 
         self.text_editor        = "gedit"
-        self.text_editor        = "gedit"
-        self.text_editor        = "xed"
-        # xed is apparently installed by default on Linux Mint
-        # DAV had to install gedit on Linux Mint
+#        self.text_editor        = "xed"
 
         # ---- logging
         self.pylogging_fn       = "./app.py_log"   # file name for the python logging
@@ -363,30 +311,25 @@ class Parameters( ):
         self.log_mode               = "w"    # "a" append "w" truncate and write
         self.delete_log_on_start    = True
 
-
         self.logging_level      = logging.DEBUG         # may be very verbose
         self.logging_level      = logging.INFO
         #self.logging_level      = logging.INFO
 
         self.logger_id          = "qt_ex"         # id of app in logging file
 
-        # self.gui_text_log_fn    = None   # for edit window if None then no logging
-        # self.gui_text_log_fn    = "./logs/gui_log.log"
 
-        # self.log_gui_text       = False # this is for gui_ext message area
-                                             # goes to normal log file  not special one
-        # ---- database
+        self.auto_run           = True
+
+
+        # ---- database there are 2 ........
 
         self.db_type            = "QSQLITE"
             # the type of database, so far we only support sqllite
 
         # ---- for sample database
-        self.db_file_name       = "/tmp/ramdisk/qt_sql.db"
-        self.db_file_name       = ":memory:"     #  = "sample.db"   =  ":memory:"
+        self.db_file_name        = "/tmp/ramdisk/qt_sql.db"
+        self.db_file_name        = ":memory:"     #  = "sample.db"   =  ":memory:"
         #self.db_file_name        = "./qt_sql.db"    #  real files are very slow
-
-        self.auto_run           = True
-
 
         # ---- for qt tabs
         self.tab_db_type         = "QSQLITE"
@@ -398,7 +341,7 @@ class Parameters( ):
         # to be used in opening an external editor
         #self.db_file_name        = "sample2.db"   #  = "sample.db"   =  ":memory:"
 
-        # ---- file names
+        # ---- file names -- but not db
         # control button for editing the readme file
         self.readme_fn      = "readme_rsh.txt"   # or None to suppress in gui
             # a readme file accessable from the main menu
@@ -418,7 +361,10 @@ class Parameters( ):
         self.dir_for_tabs.append( "./tabs/basic_widgets" )
         self.dir_for_tabs.append( "./tabs/sql_widgets" )
         self.dir_for_tabs.append( "./tabs/book_fitz" ) #  book_fitz
-#
+        self.dir_for_tabs.append( "./tabs/more" )
+        self.dir_for_tabs.append( "./tabs/real_python" )
+
+        self.min_complete    = 10  # minimum value for HOW_COMPLETE
 
         # ---- search
         self.default_search     = "qq"

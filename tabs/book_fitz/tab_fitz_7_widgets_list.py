@@ -7,11 +7,17 @@
 KEY_WORDS:      some stuff from the m fitz book many misc simple widgets ddl   rh
 CLASS_NAME:     FitzWidgetListTab
 WIDGETS:        QCheckBox, QComboBox, QDateEdit, QDateTimeEdit, QDial, QDoubleSpinBox, QFontComboBox, QLCDNumber, QLineEdit,
-STATUS:         runs
+STATUS:         file name seems good
 TAB_TITLE:      Fitz 7.Widgets widgets_list.py
 DESCRIPTION:    Code like Fitz section 7 Widgets widgets_list.py
 HOW_COMPLETE:   25  #  AND A COMMENT
+"""
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/Fitz-7.Widgets-widgets_list.py"
 
+
+"""
+Fitz 7.Widgets widgets_list.py · russ-hensel/qt5_by_example Wiki
+https://github.com/russ-hensel/qt5_by_example/wiki/Fitz-7.Widgets-widgets_list.py
 
 Use as model for Fitz tabs
 from:
@@ -121,8 +127,11 @@ class FitzWidgetListTab( tab_base.TabBase ) :
 
         self.module_file       = __file__      # save for help file usage
 
+        global WIKI_LINK
+        self.wiki_link          = WIKI_LINK
+
         self.mutate_dict[0]    = self.mutate_0
-        # self.mutate_dict[1]    = self.mutate_1
+        self.mutate_dict[1]    = self.mutate_1
         # self.mutate_dict[2]    = self.mutate_2
         # self.mutate_dict[3]    = self.mutate_3
         # self.mutate_dict[4]    = self.mutate_4

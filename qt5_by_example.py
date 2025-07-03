@@ -101,6 +101,7 @@ import utils_for_tabs as uft
 import wat_inspector
 import show_parameters
 import tab_base
+import tab_re_base
 import app_logging    # /mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/app_services/app_logging.py
 
 #logger   = logging.getLogger()
@@ -219,7 +220,7 @@ class Qt5ByExample( QMainWindow ):
         self.tab_help_dict[ title ] = "select_tab.txt"
 
         #self.open_tab_select( "tab_base", "TabBase", "TabBase the base tab", widgets = "" )
-        self.open_tab_select( "tab_qsql_database", "QSqlDatabaseTab", "QSqlDatabase QSqlQuery", widgets = ""  )
+        self.open_tab_select( "tab_qsql_database", "QSqlDatabaseTab", "QSqlDatabase QSqlQuery", "web_link", widgets = ""  )
         #open_tab_select( self, module_name, class_name, title  ):
 
         button_layout = QHBoxLayout(   )
@@ -252,12 +253,12 @@ class Qt5ByExample( QMainWindow ):
         return tab_index
 
     # ------------------------
-    def open_tab_select( self, module_name, class_name, title,  widgets  ):
+    def open_tab_select( self, module_name, class_name, title, web_link,  widgets  ):
         """
-        open_tab_select( self, module_name, class_name, title  widgets = widgets  ) ):
+        open_tab_select( self, module_name, class_name, title,  web_link, widgets = widgets  ) ):
         widget          = self.selected_widget
         row             = widget.row( item )
-
+        qt5_by_example.open_tab_select( )
         text            = item.text()
         """
         tab             = app_services.create_instance( module_name, class_name, )
@@ -268,11 +269,22 @@ class Qt5ByExample( QMainWindow ):
         tab_index       = self.tab_widget.indexOf( tab  )
         self.tab_widget.setCurrentIndex( tab_index )
         self.tab_dict[  class_name  ]  = tab_index    # depricate i think
-
+        #breakpoint()
+        # very messy, web links could just be in class this
+        # is nonsense
         if   isinstance( tab, tab_base.TabBase ):
             #rint( f"yes widgets ==================={widgets}" )
-            msg       = f"Widgest of interest >> {widgets}"
+            msg       = f"Widget of interest >> {widgets}"
             tab.class_widget.setText( msg )
+
+            #tab.set_web_link( web_link )
+
+        elif isinstance( tab, tab_re_base.TabReBase ):
+            """need to poatpone for ReBase """
+            msg       = f"Widget of interest >> {widgets}"
+            tab.class_widget_text =   msg
+
+            #tab.set_web_link( web_link )
 
     # ------------------------------------
     def build_menu( self,  ):

@@ -29,7 +29,7 @@ import time
 from datetime import datetime
 from functools import partial
 from subprocess import PIPE, STDOUT, Popen, run
-
+import webbrowser
 import wat
 from PyQt5 import QtGui
 from PyQt5.QtCore import (QAbstractListModel,
@@ -141,8 +141,10 @@ class TabReBase( QWidget ):
         self.build_dict_msg = {}  # a list would suffice
         self.post_build_msg = []
         self.build_ix       = 0
-
+        self.web_link_text       = "web_link not set"
+        self.web_link   = "confusion continues"
         self.tab_layout     = None
+        self.class_widget_text = "rebase_not_set"
         #self.help_file_set  = set()
         # _build_gui(self,   ): call from child
         self.ix_recursion   = 0
@@ -168,9 +170,8 @@ class TabReBase( QWidget ):
         row_layout          = QHBoxLayout(   )
         layout.addLayout( row_layout,  )
 
-
         widget              = QLabel( "classes...... on this tab" )
-        self.class_widget   = widget  # widget showin calsses or widgets on tab
+        self.class_widget   = widget  # widget show classes or widgets on tab
         row_layout.addWidget( widget,   )
 
     # -------------------------------
@@ -194,18 +195,21 @@ class TabReBase( QWidget ):
     # -------------------------------
     def build_gui_last_buttons(self, row_layout  ):
         """
+        Builds the last buttons on the gui, part of the boilerplate
+
+
         self.build_gui_last_buttons(  row_layout  )
+
+        Note this is a bit more verbose than it needs to be
         """
         # ---- PB "rebuild\ngui"
-        widget = QPushButton("rebuild\ngui")
-        self.button_ex_1         = widget
-        connect_to          = self.breakpoint
+        widget = QPushButton("rebuild-\ngui")
         connect_to          = self.next_gui_build
         widget.clicked.connect( connect_to )
         row_layout.addWidget( widget )
 
         # ---- PB inspect
-        widget              = QPushButton("wat\ninspect")
+        widget              = QPushButton("wat-\ninspect")
         connect_to          = self.inspect
         widget.clicked.connect( connect_to )
         row_layout.addWidget( widget )
@@ -213,6 +217,12 @@ class TabReBase( QWidget ):
         # ---- PB breakpoint
         widget              = QPushButton("breakpoint-\ndebug")
         connect_to          = self.breakpoint
+        widget.clicked.connect( connect_to )
+        row_layout.addWidget( widget )
+
+        # ---- wiki\nwiki
+        widget              = QPushButton("wiki-\nwiki")
+        connect_to          = self.wiki_wiki
         widget.clicked.connect( connect_to )
         row_layout.addWidget( widget )
 
@@ -270,7 +280,7 @@ class TabReBase( QWidget ):
 
     # Now you can add new widgets to new_layout
     def finish_replace( self ):
-
+        """ """
         layout              = QVBoxLayout(   )
         self.setLayout( layout )
         self.tab_layout     = layout
@@ -288,7 +298,8 @@ class TabReBase( QWidget ):
         self._build_gui_bot( layout )
 
         #self.build_dict_msg[ self.build_ix ]()
-
+        self.class_widget.setText( self.class_widget_text )
+        print( f"setText {self.class_widget_text}")
         self.display_post_build_msg()
 
 
@@ -414,5 +425,18 @@ class TabReBase( QWidget ):
             self.clear_msg(   )
         self.msg_widget.append( msg )
         print( msg )
+
+    def set_web_link( self, web_link ):
+        """
+        """
+        breakpoint()
+        self.web_link   = web_link
+
+
+    def wiki_wiki( self ):
+        """
+        """
+        #webbrowser.open( self.web_link, new = 0, autoraise = True )
+        webbrowser.open( self.wiki_link, new = 0, autoraise = True )
 
 # ---- eof

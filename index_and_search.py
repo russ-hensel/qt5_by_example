@@ -204,7 +204,8 @@ class TabDBBuilder():
                 class           TEXT,
                 widgets         TEXT,
                 key_words       TEXT,
-                description     TEXT
+                description     TEXT,
+                web_link        TEXT
             )
         """
 
@@ -282,8 +283,8 @@ class TabDBBuilder():
             # doc_data[ "tab_title" ]     = tab_title
             #breakpoint()
             module              = doc_data[ "module" ].strip()  # !! redundatan hack fix
-            how_complete       = doc_data[ "how_complete" ].strip()
-            how_complete       = how_complete.replace( "#", " ")
+            how_complete        = doc_data[ "how_complete" ].strip()
+            how_complete        = how_complete.replace( "#", " ")
 
             print( f"{how_complete = }" )
             # if how_complete != "":
@@ -295,14 +296,16 @@ class TabDBBuilder():
             how_complete       = int( splits[0] )
 
             if how_complete < parameters.PARAMETERS.min_complete:
-                msg    = f"TabDBBuilder dropping {module = } because of -- not complete enough {how_complete = }  )"
+                msg    = ( f"TabDBBuilder dropping {module = } because of "
+                        "-- not complete enough {how_complete = }  )" )
                 logging.debug( msg )
                 continue
 
             module       = doc_data[ "module" ].strip()
             class_name   = doc_data[ "class_name" ].strip()
             if not bool( class_name ) or not bool( module ):
-                msg    = f"TabDBBuilder dropping {module = } because of -- not bool( {class_name = } ) or not bool( module )"
+                msg    = ( f"TabDBBuilder dropping {module = } because of "
+                            "-- not bool( {class_name = } ) or not bool( module )" )
                 logging.debug( msg )
                 continue
 
@@ -331,10 +334,11 @@ class TabDBBuilder():
               doc_data[ "widgets"],
               doc_data[ "key_words"],
               doc_data[ "description"],
+              doc_data[ "web_link"],
             ),
         ]
 
-        for doc_file_name, name,  tab_title, module, class_name, widgets, key_words, description  in table_data:
+        for doc_file_name, name,  tab_title, module, class_name, widgets, key_words, description, web_link  in table_data:
             # this only one way to bind
             sql     = """INSERT INTO tabs (
                 doc_file_name,
@@ -344,9 +348,10 @@ class TabDBBuilder():
                 class,
                 widgets,
                 key_words,
-                description
+                description,
+                web_link
                 )
-            VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )
+            VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? )
             """
             query.prepare( sql )
             query.addBindValue( doc_file_name )
@@ -357,11 +362,12 @@ class TabDBBuilder():
             query.addBindValue( widgets )
             query.addBindValue( key_words )
             query.addBindValue( description )
-
+            query.addBindValue( web_link )
 
             result   = query.exec_()
             if not result:
-                msg      = f"doc_data_to_db Error executing query:  {query.lastError().text()} "
+                msg      = ( f"doc_data_to_db Error executing query: "
+                              f" {query.lastError().text()} " )
                 logging.error( msg )
                 1/0
             else:
@@ -388,7 +394,8 @@ class TabDBBuilder():
                                   "key_words",
                                   "widgets",
                                   "description",
-                                  "how_complete" ] # omit doc_file_name -- for sure
+                                  "how_complete",
+                                  "web_link"] # omit doc_file_name -- for sure
 
         doc_data    = {}
         doc_data[ "module"  ]    = str( file_name )[ :-3 ]
@@ -396,7 +403,8 @@ class TabDBBuilder():
             doc_data[ i_doc_item ] = ""
 
         doc_data[ "doc_file_name" ] = file_name
-        doc_data[ "description" ] = "Description comming soon"
+        doc_data[ "description" ]   = "Description comming soon"
+        doc_data[ "web_link" ]      = "https://github.com/russ-hensel/qt5_by_example/wiki"
 
         a_file  = open( file_name, 'r', encoding = "utf8", errors = 'ignore' )
 
@@ -443,7 +451,13 @@ class TabDBBuilder():
                     #doc_data[ key ] = doc_data[ key ] + " " + i_line
                     doc_data[ key ] = i_line  # needs to be on one line
 
-            if ix > 25:   # line limit
+            key         = "wiki_link"
+            if i_line.startswith(  f"{key.upper()}:"):
+                    i_line    = i_line[ len(key) + 1 : ].strip()
+                    #doc_data[ key ] = doc_data[ key ] + " " + i_line
+                    doc_data[ key ] = i_line  # needs to be on one line
+
+            if ix > 35:   # line limit
                 #rint( "break on ix .....")
                 break
 

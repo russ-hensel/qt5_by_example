@@ -5,19 +5,21 @@
 # this material is used for selection access to the tab which must
 # be named tab_...python among other things
 
-KEY_WORDS:      rh
+KEY_WORDS:      QPushButton, QLabel, QHBoxLayout  QGridLayout RealPython rh
 CLASS_NAME:     RealPython1Tab
 WIDGETS:        QHBoxLayout QVBoxLayout QGridLayout QFormLayout
-STATUS:         June 2025  brand new test
+STATUS:         July 2025  runs incomplete
 TAB_TITLE:      RP: python-pyqt-gui-calculator
 DESCRIPTION:    RP: Python and PyQt: Building a GUI Desktop Calculator
-HOW_COMPLETE:   25  #  AND A COMMENT
+HOW_COMPLETE:   15  #  AND A COMMENT
+"""
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/Building-a-GUI-Desktop-Calculator"
 
+"""
 try this in a tab
 Python and PyQt: Building a GUI Desktop Calculator – Real Python
 https://realpython.com/python-pyqt-gui-calculator/
 
-Python and PyQt: Building a GUI Desktop Calculator
 
 
 --- but these are for main window that i do not want to do now, model after ??? that i already have
@@ -97,12 +99,7 @@ import tab_re_base
 
 print_func_header   = uft.print_func_header
 
-def greet(name, msg ):
 
-    if msg.text():
-        msg.setText("")
-    else:
-        msg.setText(f"Hello, {name}")
 
 #  --------
 class RealPython1Tab( tab_re_base.TabReBase ):
@@ -124,30 +121,20 @@ class RealPython1Tab( tab_re_base.TabReBase ):
         super().__init__()
         self.module_file        = __file__      # save for help file usage
 
+        global WIKI_LINK
+        self.wiki_link          = WIKI_LINK
+
         # modify to match the number of mutate methods in this module
+        # and this module may not use any mutate
         self.mutate_dict[0]     = self.mutate_0
-        # self.mutate_dict[1]     = self.mutate_1
-        # self.mutate_dict[2]     = self.mutate_2
-        # #self.mutate_dict[3]     = self.mutate_3
 
         self.build_dict[0]      = self.build_gui_widgets_0
-        self.build_dict_msg[0]  = self.build_gui_msg_0
-
         self.build_dict[1]      = self.build_gui_widgets_1
-        #self.build_dict_msg[1]  = self.build_gui_msg_1
-
         self.build_dict[2]      = self.build_gui_widgets_2
-        #self.build_dict_msg[2]  = self.build_gui_msg_2
-
         self.build_dict[3]      = self.build_gui_widgets_3
-        #self.build_dict_msg[3]  = self.build_gui_msg_3
         self.build_dict[4]      = self.build_gui_widgets_4
+        self.build_dict[5]      = self.build_gui_widgets_5
 
-        # self.mutate_dict[3]     = self.mutate_3
-        # self.mutate_dict[4]     = self.mutate_4
-
-        # self._build_gui_widgets = self.
-        # self._build_gui()
         self.post_init( )
 
 
@@ -159,7 +146,10 @@ class RealPython1Tab( tab_re_base.TabReBase ):
 
         content of the excercise
         """
+        self.post_build_msg  = [ "code from build_gui_widgets_0",
+                                 "Like RP h_layout.p" ]
 
+        # starting layout for the layout of this section of the tab
         main_layout     = self.main_layout
         layout          = QHBoxLayout()
         main_layout.addLayout( layout )
@@ -167,20 +157,6 @@ class RealPython1Tab( tab_re_base.TabReBase ):
         layout.addWidget(QPushButton("Left"))
         layout.addWidget(QPushButton("Center"))
         layout.addWidget(QPushButton("Right"))
-
-        self.post_build_msg  = [ "code from build_gui_widgets_0",
-                                 "Like RP h_layout.p" ]
-
-    #-----------------------
-    def build_gui_msg_0( self, ):
-        """
-        messages for build_gui_widgets_n
-
-        not part of excercise, but message about the code
-        """
-        self.append( "code from build_gui_widgets_0" )
-        msg    = "Like RP h_layout.py"
-        self.append_msg( msg,)
 
     #-----------------------
     def build_gui_widgets_1( self, ):
@@ -191,6 +167,10 @@ class RealPython1Tab( tab_re_base.TabReBase ):
         Vertical layout example.
         content of the excercise
         """
+        self.post_build_msg  = [ "code from build_gui_widgets_1",
+                                 "Like RP v_layout.p" ]
+
+
         main_layout     = self.main_layout
         layout          = QVBoxLayout()
         main_layout.addLayout( layout )
@@ -199,21 +179,8 @@ class RealPython1Tab( tab_re_base.TabReBase ):
         layout.addWidget(QPushButton("Center 3"))
         layout.addWidget(QPushButton("Bottom 4"))
 
-        self.post_build_msg  = [ "code from build_gui_widgets_1",
-                                 "Like RP v_layout.p" ]
 
-    #-----------------------
-    def build_gui_msg_1xxx( self, ):
-        """
-        messages for build_gui_widgets_n
-
-        not part of excercise, but message about the code
-        """
-        self.append( "code from build_gui_widgets_0" )
-        msg    = "Like RP v_layout.py"
-        self.append_msg( msg,)
-
-
+    #-------------------
     def build_gui_widgets_2( self, ):
         """
         g_layout.py
@@ -222,6 +189,12 @@ class RealPython1Tab( tab_re_base.TabReBase ):
         Grid layout example
         content of the excercise
         """
+        # part of framework msg function
+        self.post_build_msg  = [ "code from build_gui_widgets_2",
+                                 "Like RP g_layout.py" ]
+
+
+
         main_layout     = self.main_layout
         layout = QGridLayout()
         main_layout.addLayout( layout )
@@ -237,20 +210,7 @@ class RealPython1Tab( tab_re_base.TabReBase ):
                QPushButton("Button (2, 1) + 2 Columns Span"), 2, 1, 1, 2
                    )
 
-        # part of framework msg function
-        self.post_build_msg  = [ "code from build_gui_widgets_2",
-                                 "Like RP g_layout.py" ]
 
-    #-----------------------
-    def build_gui_msg_2xxx( self, ):
-        """
-        messages for build_gui_widgets_n
-
-
-        """
-        self.append_function_msg( "code from build_gui_widgets_0" )
-        msg    = "Like RP g_layout.py"
-        self.append_msg( msg,)
 
 
     def build_gui_widgets_3( self, ):
@@ -258,11 +218,11 @@ class RealPython1Tab( tab_re_base.TabReBase ):
 
         content of the excercise
         """
+        self.post_build_msg  = [ "code from build_gui_widgets_3",
+                                 "Like RP f_layout.py" ]
+
         main_layout     = self.main_layout
-
-
-        layout = QFormLayout()
-
+        layout          = QFormLayout()
         main_layout.addLayout( layout )
 
         # widgets like RP
@@ -271,9 +231,8 @@ class RealPython1Tab( tab_re_base.TabReBase ):
         layout.addRow( "Job:",       QLineEdit())
         layout.addRow( "Hobbies:",   QLineEdit())
 
-        self.post_build_msg  = [ "code from build_gui_widgets_3",
-                                 "Like RP f_layout.py" ]
-# signals_slots.py
+
+
 
 
 
@@ -285,41 +244,62 @@ class RealPython1Tab( tab_re_base.TabReBase ):
 
         content of the excercise
         """
+        self.post_build_msg  = [ "code from build_gui_widgets_4",
+                                 "signals_slots.py" ]
+
         main_layout     = self.main_layout
-
-
         layout = QVBoxLayout()
-
         main_layout.addLayout( layout )
 
-
-        #window.setWindowTitle("Signals and slots")
-
-
-        widget = QPushButton("Greet")
-        # widget.clicked.connect(greet)
-        widget.clicked.connect( partial(greet, "World!"))
-
-
+        widget = QPushButton("greet_no_arg")
+        widget.clicked.connect(  self.greet_no_arg, )
         layout.addWidget(widget)
+
+        widget = QPushButton("greet_with_arg")
+        widget.clicked.connect( partial(self.greet_with_arg, "North Hemi. partial World!"))
+        layout.addWidget(widget)
+
         widget         = QLabel("")
         self.msg_label = widget
         layout.addWidget( widget )
 
-        self.post_build_msg  = [ "code from build_gui_widgets_4",
-                                 "signals_slots.py" ]
+    def build_gui_widgets_5( self, ):
+        """
+        Signals and slots example.
+        signals_slots.py
 
 
-    # #-----------------------
-    # def build_gui_msg_3( self, ):
-    #     """
-    #     messages for build_gui_widgets_n
+        content of the excercise
+        """
+        self.post_build_msg  = [ "code from build_gui_widgets_5",
+                                 "work still to be done on this excercise " ]
 
-    #     not part of excercise, but message about the code
-    #     """
-    #     self.append_function_msg( "code from build_gui_widgets_3" )
-    #     msg    = "Like RP v_layout.py"
-    #     self.append_msg( msg,)
+
+        main_layout     = self.main_layout
+        layout = QVBoxLayout()
+        main_layout.addLayout( layout )
+
+        widget         = QLabel("work still to be done on this excercise -- this tab under construction ")
+        self.msg_label = widget
+        layout.addWidget( widget )
+
+
+
+    # ------------------------
+    def greet_with_arg( self, name ):
+        """ """
+        if self.msg_label.text():
+            self.msg_label.setText("")
+        else:
+            self.msg_label.setText(f"Hello, from greet_with_arg -- {name = }")
+    # ------------------------
+    def greet_no_arg( self, ):
+        """ """
+        if self.msg_label.text():
+            self.msg_label.setText("")
+        else:
+            self.msg_label.setText(f"Hello, from greet_no_arg -- World")
+
 
 
 
@@ -331,6 +311,7 @@ class RealPython1Tab( tab_re_base.TabReBase ):
             of a widget for the first push button the
             second will not be modified by mutate_0
 
+        this tab currently has no mutations so the following does not apply:
         this is important content for the widgets referenced on this tab
         read the code for more insight, note messages to app and comments
         """
@@ -343,23 +324,9 @@ class RealPython1Tab( tab_re_base.TabReBase ):
         """
         read it -- mutate the widgets
 
-        this is important content for the widgets referenced on this tab
-        read the code for more insight, note messages to app and comments
+        see message in other mutate_... messages
         """
         self.append_function_msg( "mutate_1()" )
-
-    #     #self.append_msg( tab_base.DONE_MSG )
-    # def greet(self ):
-    #     if self.msgLabel.text():
-    #         self.msgLabel.setText("")
-    #     else:
-    #         self.msgLabel.setText("Hello, World!")
-
-    def greet_with_arg(self, name):
-    if msg.text():
-        self.msg_label.setText("")
-    else:
-        self.msg_label.setText(f"Hello, {name}")
 
 
     # ------------------------

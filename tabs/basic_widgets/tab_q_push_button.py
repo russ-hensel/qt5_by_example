@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 # ---- tof
 """
-# this material is used for selection access to the tab which must
-# be named tab_...python among other things
+# metadata here including WIKI_LINK as Constant ( not comment )
+# this material is used for selection access to the tab module which must
+# be named tab_....py     among other things
 
 KEY_WORDS:      pressed press PushBtton click connect rh
 CLASS_NAME:     QPushButtonTab
@@ -11,7 +12,19 @@ WIDGETS:        QPushButton
 STATUS:         June 2025 ok: but more content would be nice
 TAB_TITLE:      QPushButton Reference
 DESCRIPTION:    A reference for the QPushButton widget
-HOW_COMPLETE:   25  #  AND A COMMENT
+HOW_COMPLETE:   20  #  AND A COMMENT -- <10 major probs  <15 runs but <20 fair not finished  <=25 not to shabby
+"""
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QPushButtons"
+
+"""
+Some Notes:
+
+Home · russ-hensel/qt5_by_example Wiki
+https://github.com/russ-hensel/qt5_by_example/wiki
+
+
+What We Know About QPushButtons · russ-hensel/qt5_by_example Wiki
+https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QPushButtons
 
 
 """
@@ -104,6 +117,9 @@ class QPushButtonTab( tab_base.TabBase ):
         super().__init__()
         self.module_file        = __file__      # save for help file usage
 
+        global WIKI_LINK
+        self.wiki_link          = WIKI_LINK
+
         # modify to match the number of mutate methods in this module
         self.mutate_dict[0]     = self.mutate_0
         self.mutate_dict[1]     = self.mutate_1
@@ -167,9 +183,9 @@ class QPushButtonTab( tab_base.TabBase ):
         widget.clicked.connect( connect_to    )
         row_layout.addWidget( widget,  )
 
-        # ---- new row, standard bbutton_layoututtons
+        # ---- new row, for build_gui_last_buttons
         button_layout = QHBoxLayout(   )
-        layout.addLayout( button_layout,  )
+        layout.addLayout( button_layout, )
 
         # our ancestor finishes off the tab with some
         # standard buttons
