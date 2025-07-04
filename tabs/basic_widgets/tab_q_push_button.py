@@ -296,7 +296,7 @@ class QPushButtonTab( tab_base.TabBase ):
 
         # ---- change widget
         msg    = "for q_push_button_2 no mutations"
-        self.append_msg( msg, clear = False )
+        self.append_msg( msg, )
 
         widget          = self.q_push_button_2
         # self.q_push_button_1.setDisabled( True )
@@ -476,7 +476,7 @@ class QPushButtonTab( tab_base.TabBase ):
 
         # we set local variables to make it handy to inspect them
         self_q_push_button_1    = self.q_push_button_1
-        self_q_push_button_2    = self.q_push_pbutton_2
+        self_q_push_button_2    = self.q_push_button_1
 
         wat_inspector.go(
              msg            = "for your inspection, inc. locals and globals",

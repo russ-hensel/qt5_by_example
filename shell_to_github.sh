@@ -28,6 +28,7 @@ rsync -u -t -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_
 rsync -u -t -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/basic_sql/*.*        /mnt/WIN_D/for_github/qt5_by_example/tabs/sql_widgets
 rsync -u -t -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/book_fitz/*.*        /mnt/WIN_D/for_github/qt5_by_example/tabs/book_fitz
 rsync -u -t -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/tabs/real_python/*.*      /mnt/WIN_D/for_github/qt5_by_example/tabs/real_python
+rsync -u -t -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/qt5_by_example/misc/*.*                  /mnt/WIN_D/for_github/qt5_by_example/misc
 
 # to libs ----------------------------------------------
 rsync -u -t -progress       /mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/rshlib_qt/*.*     /mnt/WIN_D/for_github/qt5_by_example/libs
