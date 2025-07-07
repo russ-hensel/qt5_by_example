@@ -328,6 +328,22 @@ class RealPython1Tab( tab_re_base.TabReBase ):
         """
         self.append_function_msg( "mutate_1()" )
 
+<<<<<<< Updated upstream
+=======
+    #     #self.append_msg( tab_base.DONE_MSG )
+    # def greet(self ):
+    #     if self.msgLabel.text():
+    #         self.msgLabel.setText("")
+    #     else:
+    #         self.msgLabel.setText("Hello, World!")
+
+    def greet_with_arg(self, name):
+        if msg.text():
+            self.msg_label.setText("")
+        else:
+            self.msg_label.setText(f"Hello, {name}")
+
+>>>>>>> Stashed changes
 
     # ------------------------
     def inspect(self):

@@ -9,7 +9,7 @@ CLASS_NAME:     QCheckBoxTab
 WIDGETS:        QCheckBox
 STATUS:         new
 TAB_TITLE:      QCheckBox Reference
-
+HOW_COMPLETE:   25  #  AND A COMMENT
 
 """
 # --------------------

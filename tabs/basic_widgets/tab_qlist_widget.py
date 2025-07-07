@@ -9,6 +9,7 @@ CLASS_NAME:     QListWidgetTab
 WIDGETS:        QListWidget
 STATUS:         
 TAB_TITLE:      QListWidget Reference
+HOW_COMPLETE:   25  #  AND A COMMENT 2025-07-02:DAV
 
 
 """

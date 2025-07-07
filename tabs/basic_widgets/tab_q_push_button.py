@@ -6,7 +6,7 @@
 # this material is used for selection access to the tab module which must
 # be named tab_....py     among other things
 
-KEY_WORDS:      pressed press PushBtton click connect rh
+KEY_WORDS:      pressed press PushBtton click connect rh dc
 CLASS_NAME:     QPushButtonTab
 WIDGETS:        QPushButton
 STATUS:         June 2025 ok: but more content would be nice
@@ -25,6 +25,9 @@ https://github.com/russ-hensel/qt5_by_example/wiki
 
 What We Know About QPushButtons · russ-hensel/qt5_by_example Wiki
 https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QPushButtons
+
+
+
 
 
 """
