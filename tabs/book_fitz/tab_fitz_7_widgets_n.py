@@ -3,38 +3,29 @@
 
 # ---- tof
 """
+based lousely on
 
-KEY_WORDS:      some stuff from the m fitz book many misc simple widgets ddl   rh
-CLASS_NAME:     FitzWidgetListTab
-WIDGETS:        QCheckBox, QComboBox, QDateEdit, QDateTimeEdit, QDial, QDoubleSpinBox, QFontComboBox, QLCDNumber, QLineEdit,
-STATUS:         file name seems good
-TAB_TITLE:      Fitz 7.Widgets widgets_list
-DESCRIPTION:    Code like Fitz section 7 Widgets widgets_list.py
-HOW_COMPLETE:   25  #  AND A COMMENT
-"""
-WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/Fitz-7-Widgets-List"
+Chapter 7
+Listing 14. basic/widgets_1.py
+Listing 15. basic/widgets_2.py
+Listing 16. basic/widgets_3.py
+Listing 17. basic/widgets_4.py
+Listing 18. basic/widgets_5.py
 
 
-"""
-Fitz 7.Widgets widgets_list.py · russ-hensel/qt5_by_example Wiki
-https://github.com/russ-hensel/qt5_by_example/wiki/Fitz-7.Widgets-widgets_list.py
+... /book_pyqt5_src/basic/widgets_2c.py
 
-Use as model for Fitz tabs
-from:
-/mnt/WIN_D/Russ/0000/python00/python3/_examples/python_book_code/book_pyqt5_src/basic/widgets_list.py
-  widgets_list.py
 
-Create GUI Applications with Python & Qt5
-The hands-on guide to making apps with Python
-Martin Fitzpatrick
-Version 4.0, 2020-09-12
-
-search for Fitz 7.Widgets widgets_list.py
-
-rename to tab_fitz_7_widgets_list.py  ??
-
+KEY_WORDS:      some stuff from the m fitz book lables with images  chapt 7   rh
+CLASS_NAME:     Fitz_2_Tab
+WIDGETS:        QCheckBox QPixmap QLabel QComboBox
+STATUS:         ** runs   !! runs_correctly      demo_complete_0_10
+TAB_TITLE:      Fitz Chap. 7 widgets_n
+HOW_COMPLETE:   15  #  AND A COMMENT
+DESCRIPTION:    Various widgets from the second half of the chapter
 
 """
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/Fitz-7-Widgets-N"
 
 # --------------------
 if __name__ == "__main__":
@@ -43,16 +34,18 @@ if __name__ == "__main__":
     #main.main()
 # --------------------
 
-# ---- imports
-#import inspect
-#import subprocess
-#import sys
-#import time
-#from datetime import datetime
+
+
+import inspect
+import os
+import subprocess
+import sys
+import time
+from datetime import datetime
 from functools import partial
 from subprocess import PIPE, STDOUT, Popen, run
 
-
+import wat
 from PyQt5 import QtGui
 from PyQt5.QtCore import (QDate,
                           QDateTime,
@@ -61,7 +54,7 @@ from PyQt5.QtCore import (QDate,
                           Qt,
                           QTime,
                           QTimer)
-from PyQt5.QtGui import QColor, QPalette, QTextCursor, QTextDocument
+from PyQt5.QtGui import QColor, QPalette, QPixmap, QTextCursor, QTextDocument
 # sql
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery, QSqlTableModel
 # widgets biger
@@ -103,20 +96,18 @@ from PyQt5.QtWidgets import (QAction,
                              QVBoxLayout,
                              QWidget)
 
-import wat
-
-# ---- local imports
 import parameters
 #import qt_widgets
 import utils_for_tabs as uft
 import wat_inspector
 import tab_base
 
+
+
 # ---- end imports
 
-
 #  --------
-class FitzWidgetListTab( tab_base.TabBase ) :
+class Fitz_2_Tab(  tab_base.TabBase ) :
     def __init__(self):
         """
         some content from and there may be more
@@ -124,8 +115,7 @@ class FitzWidgetListTab( tab_base.TabBase ) :
         tab_misc_widgets.py
         """
         super().__init__()
-
-        self.module_file       = __file__      # save for help file usage
+        self.module_file        = __file__      # save for help file usage
 
         global WIKI_LINK
         self.wiki_link          = WIKI_LINK
@@ -135,7 +125,11 @@ class FitzWidgetListTab( tab_base.TabBase ) :
         # self.mutate_dict[2]    = self.mutate_2
         # self.mutate_dict[3]    = self.mutate_3
         # self.mutate_dict[4]    = self.mutate_4
+
+
         self._build_gui()
+
+
 
     def _build_gui_widgets(self, main_layout  ):
         """
@@ -147,35 +141,76 @@ class FitzWidgetListTab( tab_base.TabBase ) :
         main_layout.addLayout( layout )
         button_layout        = QHBoxLayout(   )
 
-        widgets = [
-            QCheckBox,
-            QComboBox,
-            QDateEdit,
-            QDateTimeEdit,
-            QDial,
-            QDoubleSpinBox,
-            QFontComboBox,
-            QLCDNumber,
-            QLabel,
-            QLineEdit,
-            QProgressBar,
-            QPushButton,
-            QRadioButton,
-            QSlider,
-            QSpinBox,
-            QTimeEdit,
-        ]
+        # ---- fitz code here
+        basedir = os.path.dirname(__file__)
 
-        self.widgets_list   = widgets   # for inspection later
+        # ---- QLabel
+        widget = QLabel("Hello")
+        self.q_label_text  = widget
+        layout.addWidget( widget )
 
-        for w in widgets:
-            layout.addWidget(w())
+
+        # ---- QLabel
+        widget = QLabel( "a_jpg" )
+        self.q_label_jpg  = widget
+
+        # # # tag::scaledContents[]
+        # widget.setPixmap( QPixmap( "a_cat.jpg" ) )
+        # widget.setPixmap( QPixmap( "bird_house.jpg" ))
+
+        # for some photos you may loose control of size this whould fix
+        widget.setMinimumSize( 100, 75)  # Minimum width: 100px, Minimum height: 75px
+        widget.setMaximumSize( 400, 300)  # Maximum width: 400px, Maximum height: 300px
+
+        chat_says = """
+        Summary of Methods:
+
+            setFixedSize(width, height): Sets a fixed size.
+            setMinimumSize(width, height): Sets a minimum size.
+            setMaximumSize(width, height): Sets a maximum size.
+            setSizePolicy(policy_horizontal, policy_vertical): Sets resizing behavior.
+            resize(width, height): Sets the initial size of the QLabel.
+
+        """
+        widget.setPixmap( QPixmap( "./tabs/book_fitz/a_cat.jpg" ) )
+        #widget.setPixmap( QPixmap(os.path.join( basedir, "a_cat.jpg")) )
+        widget.setScaledContents(True)
+        # widget.setGeometry( 50, 50, 50, 50 ) #
+        layout.addWidget( widget )
+
+
+        # ---- QCheckBox
+        widget          = QCheckBox( "This is a checkbox" )
+        self.widget_q_check_box   = widget
+        widget.setCheckState( Qt.Checked )
+        # For tristate: widget.setCheckState(Qt.PartiallyChecked)
+        # Or: widget.setTriState(True)
+        #widget.stateChanged.connect(self.show_state)
+
+        layout.addWidget( widget )
+
+        # ----
+        widget = QComboBox()
+        self.q_combo_box_widget   = widget
+        widget.addItems(["One", "Two", "Three"])
+        widget.currentIndexChanged.connect(self.index_changed)
+
+        layout.addWidget( widget )
 
         # ---- new row, standard buttons
         button_layout = QHBoxLayout(   )
         layout.addLayout( button_layout,  )
 
+        # our ancestor finishes off the tab with some
+        # standard buttons
         self.build_gui_last_buttons( button_layout )
+
+    def index_changed(self, i):
+        print(i)# i is an int
+    def text_changed(self, s):
+        print(s)# s is a
+
+
 
     # ------------------------------------
     def mutate_0( self ):
@@ -184,36 +219,31 @@ class FitzWidgetListTab( tab_base.TabBase ) :
         """
         self.append_function_msg( "mutate_0()" )
 
-        msg    = "no implementation planned for this tab, because book does not contain that content "
+        msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
-
-        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------------------
     def mutate_1( self ):
         """
         read it -- mutate the widgets
         """
-        self.append_function_msg( "mutate_1" )
+        self.append_function_msg( "mutate_1()" )
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
 
-        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------
     def inspect(self):
         """
         the usual
         """
-        self.append_function_msg( "inspect" )
+        self.append_function_msg( "inspect()" )
 
-        self_widgets_list   = self.widgets_list
+        #self_widgets_list   = self.widgets_list
         wat_inspector.go(
              msg            = "see self_widgets_list",
              a_locals       = locals(),
              a_globals      = globals(), )
-
-        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------
     def breakpoint(self):
@@ -221,10 +251,8 @@ class FitzWidgetListTab( tab_base.TabBase ) :
         each tab gets its own function so we break in that
         tabs code
         """
-        self.append_function_msg( "breakpoint" )
+        self.append_function_msg( "breakpoint()" )
 
         breakpoint()
-
-        self.append_msg( tab_base.DONE_MSG )
 
 # ---- eof

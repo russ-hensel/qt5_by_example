@@ -1,67 +1,52 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# ---- tof
+# ----tof
 """
-
-KEY_WORDS:      some stuff from the m fitz book many misc simple widgets ddl   rh
-CLASS_NAME:     FitzWidgetListTab
-WIDGETS:        QCheckBox, QComboBox, QDateEdit, QDateTimeEdit, QDial, QDoubleSpinBox, QFontComboBox, QLCDNumber, QLineEdit,
-STATUS:         file name seems good
-TAB_TITLE:      Fitz 7.Widgets widgets_list
-DESCRIPTION:    Code like Fitz section 7 Widgets widgets_list.py
+KEY_WORDS:      some stuff from the m fitz book a dynamic graph revised
+CLASS_NAME:     Fitz_5_Tab
+WIDGETS:        QTimer pg.PlotWidget pg.mkPen
+STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
+TAB_TITLE:      Fitz Dynamic Plot
+DESCRIPTION:    Dynamic Plot base on Fitx ref is it the same as chapt 35 ??
 HOW_COMPLETE:   25  #  AND A COMMENT
-"""
-WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/Fitz-7-Widgets-List"
-
 
 """
-Fitz 7.Widgets widgets_list.py · russ-hensel/qt5_by_example Wiki
-https://github.com/russ-hensel/qt5_by_example/wiki/Fitz-7.Widgets-widgets_list.py
-
-Use as model for Fitz tabs
-from:
-/mnt/WIN_D/Russ/0000/python00/python3/_examples/python_book_code/book_pyqt5_src/basic/widgets_list.py
-  widgets_list.py
-
-Create GUI Applications with Python & Qt5
-The hands-on guide to making apps with Python
-Martin Fitzpatrick
-Version 4.0, 2020-09-12
-
-search for Fitz 7.Widgets widgets_list.py
-
-rename to tab_fitz_7_widgets_list.py  ??
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QPushButtons"
 
 
-"""
 
 # --------------------
 if __name__ == "__main__":
     #----- run the full app
     import main
-    #main.main()
+    #qt_fitz_book.main()
 # --------------------
 
-# ---- imports
-#import inspect
-#import subprocess
-#import sys
-#import time
-#from datetime import datetime
+
+import inspect
+import json
+import os
+import subprocess
+import sys
+import time
+from datetime import datetime
 from functools import partial
+from random import randint
 from subprocess import PIPE, STDOUT, Popen, run
 
-
+import pyqtgraph as pg  # import PyQtGraph after PyQt5
+import wat
 from PyQt5 import QtGui
-from PyQt5.QtCore import (QDate,
+from PyQt5.QtCore import (QAbstractListModel,
+                          QDate,
                           QDateTime,
                           QModelIndex,
                           QSize,
                           Qt,
                           QTime,
                           QTimer)
-from PyQt5.QtGui import QColor, QPalette, QTextCursor, QTextDocument
+from PyQt5.QtGui import QColor, QImage, QPalette, QTextCursor, QTextDocument
 # sql
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery, QSqlTableModel
 # widgets biger
@@ -83,6 +68,7 @@ from PyQt5.QtWidgets import (QAction,
                              QLabel,
                              QLCDNumber,
                              QLineEdit,
+                             QListView,
                              QListWidget,
                              QListWidgetItem,
                              QMainWindow,
@@ -103,10 +89,7 @@ from PyQt5.QtWidgets import (QAction,
                              QVBoxLayout,
                              QWidget)
 
-import wat
-
-# ---- local imports
-import parameters
+#import parameters
 #import qt_widgets
 import utils_for_tabs as uft
 import wat_inspector
@@ -115,27 +98,37 @@ import tab_base
 # ---- end imports
 
 
+
+basedir = os.path.dirname(__file__)
+
+
 #  --------
-class FitzWidgetListTab( tab_base.TabBase ) :
+class Fitz_5_Tab( tab_base.TabBase ) :
     def __init__(self):
         """
-        some content from and there may be more
-        /mnt/WIN_D/Russ/0000/python00/python3/_projects/rshlib/gui_qt_ext.py
-        tab_misc_widgets.py
+
         """
         super().__init__()
 
-        self.module_file       = __file__      # save for help file usage
+
+        self.module_file        = __file__      # save for help file usage
 
         global WIKI_LINK
         self.wiki_link          = WIKI_LINK
 
-        self.mutate_dict[0]    = self.mutate_0
-        self.mutate_dict[1]    = self.mutate_1
+
+        self.mutate_dict[0]     = self.mutate_0
+        self.mutate_dict[1]     = self.mutate_1
         # self.mutate_dict[2]    = self.mutate_2
         # self.mutate_dict[3]    = self.mutate_3
         # self.mutate_dict[4]    = self.mutate_4
+
+        self.timer = QTimer()
+        self.timer.setInterval(50)
         self._build_gui()
+
+        self.timer.timeout.connect(self.update_plot_data)
+        self.timer.start()
 
     def _build_gui_widgets(self, main_layout  ):
         """
@@ -145,49 +138,79 @@ class FitzWidgetListTab( tab_base.TabBase ) :
         layout              = QVBoxLayout(   )
 
         main_layout.addLayout( layout )
-        button_layout        = QHBoxLayout(   )
+        #button_layout        = QHBoxLayout(   )
 
-        widgets = [
-            QCheckBox,
-            QComboBox,
-            QDateEdit,
-            QDateTimeEdit,
-            QDial,
-            QDoubleSpinBox,
-            QFontComboBox,
-            QLCDNumber,
-            QLabel,
-            QLineEdit,
-            QProgressBar,
-            QPushButton,
-            QRadioButton,
-            QSlider,
-            QSpinBox,
-            QTimeEdit,
-        ]
+        widget              = pg.PlotWidget()
+        self.graphWidget    = widget
+        layout.addWidget( self.graphWidget )
 
-        self.widgets_list   = widgets   # for inspection later
+        self.x = list(range(100))  # 100 time points
+        self.y = [
+            randint(0, 100) for _ in range(100)
+        ]  # 100 data points
 
-        for w in widgets:
-            layout.addWidget(w())
+        self.graphWidget.setBackground("w")
 
-        # ---- new row, standard buttons
-        button_layout = QHBoxLayout(   )
-        layout.addLayout( button_layout,  )
+        pen = pg.mkPen(color=(255, 0, 0))
+        self.data_line = self.graphWidget.plot(
+            self.x, self.y, pen=pen
+        )  # <1>
 
-        self.build_gui_last_buttons( button_layout )
+        # ---- new row
+        row_layout    = QHBoxLayout(   )
+        layout.addLayout( row_layout,  )
+
+        # ---- PB "start\n"
+        widget = QPushButton("start\n")
+        widget.clicked.connect( self.start    )
+        row_layout.addWidget( widget,   )
+
+        # ---- PB breakpoint
+        widget = QPushButton("stop\n")
+        widget.clicked.connect( self.stop    )
+        row_layout.addWidget( widget,   )
+
+        # our ancestor finishes off the tab with some
+        # standard buttons
+        self.build_gui_last_buttons( row_layout )
+
+    # ------------------------
+    def start(self):
+        """ """
+        self.append_function_msg( "start" )
+
+        self.timer.start()
+        self.append_msg( "start done" )
+
+    # ------------------------
+    def stop(self):
+        """ """
+        self.append_function_msg( "stop" )
+
+        self.timer.stop()
+        self.append_msg( "stop done" )
+
+    # ------------------------
+    def update_plot_data(self):
+
+        self.x = self.x[1:]  # Remove the first y element.
+        self.x.append(
+            self.x[-1] + 1
+        )  # Add a new value 1 higher than the last.
+
+        self.y = self.y[1:]  # Remove the first
+        self.y.append(randint(0, 100))  # Add a new random value.
+
+        self.data_line.setData(self.x, self.y)  # Update the data.
 
     # ------------------------------------
     def mutate_0( self ):
         """
         read it -- mutate the widgets
         """
-        self.append_function_msg( "mutate_0()" )
-
-        msg    = "no implementation planned for this tab, because book does not contain that content "
+        self.append_function_msg( "mutate_0" )
+        msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
-
-        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------------------
     def mutate_1( self ):
@@ -197,8 +220,7 @@ class FitzWidgetListTab( tab_base.TabBase ) :
         self.append_function_msg( "mutate_1" )
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
-
-        self.append_msg( tab_base.DONE_MSG )
+        self.append_msg( "mutate_1 done" )
 
     # ------------------------
     def inspect(self):
@@ -207,13 +229,12 @@ class FitzWidgetListTab( tab_base.TabBase ) :
         """
         self.append_function_msg( "inspect" )
 
-        self_widgets_list   = self.widgets_list
+        self_graph_widget   = self.graphWidget
+        self_timer          = self.timer
         wat_inspector.go(
-             msg            = "see self_widgets_list",
+             msg            = "locals are graph and timer",
              a_locals       = locals(),
              a_globals      = globals(), )
-
-        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------
     def breakpoint(self):
@@ -225,6 +246,5 @@ class FitzWidgetListTab( tab_base.TabBase ) :
 
         breakpoint()
 
-        self.append_msg( tab_base.DONE_MSG )
 
 # ---- eof

@@ -5,13 +5,13 @@
 
 
 """
-KEY_WORDS:  Fitz chapter 23 C  Generic queries with QSqlQueryModel sql where like new_base
+KEY_WORDS:  Fitz chapter 23 C  Generic queries with QSqlQueryModel sql where like new_base qqq
 CLASS_NAME: Fitz_23_C_Tab
 WIDGETS:    QTableView QSqlQueryModel QSqlQuery
 STATUS:     runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
 TAB_TITLE:  Fitz SqlModel Chapt 23 C
-
-
+HOW_COMPLETE:   20  #  AND A COMMENT -- <10 major probs  <15 runs but <20 fair not finished  <=25 not to shabby
+DESCRIPTION:    this needs work
 
 looked at
 
@@ -43,7 +43,7 @@ looked at
 
 
 """
-
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QPushButtons"
 # --------------------
 if __name__ == "__main__":
     #----- run the full app
@@ -132,6 +132,9 @@ basedir = os.path.dirname(__file__)
 tick = QImage(os.path.join("tick.png"))
 
 
+
+
+
 # Color scale, which is taken from colorbrewer2.org.
 # Color range -5 to +5; 0 = light gray
 COLORS = [
@@ -149,7 +152,6 @@ COLORS = [
 ]
 
 
-
 #  --------
 class Fitz_23_C_Tab( tab_base.TabBase ) :
     def __init__(self):
@@ -157,7 +159,11 @@ class Fitz_23_C_Tab( tab_base.TabBase ) :
 
         """
         super().__init__()
-        self.help_file_name     =  "fitz_23_c_tab.txt"
+        self.module_file        = __file__      # save for help file usage
+
+        global WIKI_LINK
+        self.wiki_link          = WIKI_LINK
+
         self._build_model()
         self.mutate_dict[0]     = self.mutate_0
         self.mutate_dict[1]     = self.mutate_1
@@ -166,6 +172,7 @@ class Fitz_23_C_Tab( tab_base.TabBase ) :
         # self.mutate_dict[4]    = self.mutate_4
         self.mutate_ix   = 0
         self.ix_sort     = 0   # for sorting
+
         self._build_gui()
 
 
@@ -230,25 +237,16 @@ class Fitz_23_C_Tab( tab_base.TabBase ) :
         # widget = QPushButton("save\n")
         # widget.clicked.connect( self.save    )
         # row_layout.addWidget( widget,   )
+        # ---- new row, for build_gui_last_buttons
+        button_layout = QHBoxLayout(   )
+        layout.addLayout( button_layout, )
 
-        widget = QPushButton("mutate\n")
-        self.button_ex_1         = widget
-        widget.clicked.connect( lambda: self.mutate( ) )
-        row_layout.addWidget( widget )
-
-
-        # ---- self.inspect
-        widget = QPushButton("inspect\n")
-        widget.clicked.connect( self.inspect    )
-        row_layout.addWidget( widget,   )
-
-        # ---- PB self.breakpoint
-        widget = QPushButton("breakpoint\n")
-        widget.clicked.connect( self.breakpoint    )
-        row_layout.addWidget( widget,   )
+        # our ancestor finishes off the tab with some
+        # standard buttons
+        self.build_gui_last_buttons( button_layout )
 
     # -------------------------------
-    def _build_modelxx(self,   ):
+    def _build_model(self,   ):
         """        print_func_header(
         and the view
         """
@@ -324,7 +322,7 @@ class Fitz_23_C_Tab( tab_base.TabBase ) :
 
     def set_headers( self ):
         """ """
-        self.append_function_msg( "select_with_filter" )
+        self.append_function_msg( "set_headers()" )
 
         model    = self.model      # would think in view but no
 
@@ -333,7 +331,7 @@ class Fitz_23_C_Tab( tab_base.TabBase ) :
 
     def remove_columns( self ):
         """ """
-        self.append_function_msg( "remove_columns from what is visible " )
+        self.append_msg( "remove_columns()" )
         msg                 = "here remove by column name"
         print( msg )
         model               = self.model
@@ -344,8 +342,7 @@ class Fitz_23_C_Tab( tab_base.TabBase ) :
 
     def select_with_where( self ):
         """ """
-        self.append_function_msg( "select_with_where" )
-
+        self.append_msg( "select_with_where()" )
 
 
         a_name          = "%a%"
@@ -389,7 +386,7 @@ class Fitz_23_C_Tab( tab_base.TabBase ) :
 
 
     def save(self):
-        self.append_function_msg( "save" )
+        self.append_msg( "save()" )
 
         with open("data.json", "w") as f:
             data = json.dump(self.model.todos, f)
@@ -401,30 +398,30 @@ class Fitz_23_C_Tab( tab_base.TabBase ) :
         """
         read it -- mutate the widgets
         """
-        self.append_function_msg( "mutate_0" )
+        self.append_function_msg( "mutate_0()" )
 
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
 
-        self.append__msg( "mutate_0 done" )
+        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------------------
     def mutate_1( self ):
         """
         read it -- mutate the widgets
         """
-        self.append_function_msg( "mutate_1" )
+        self.append_function_msg( "mutate_1()" )
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
 
-        self.append__msg( "mutate_1 done" )
+        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------
     def inspect(self):
         """
         the usual
         """
-        self.append_function_msg( "inspect" )
+        self.append_function_msg( "inspect()" )
 
         self_model         = self.model
         self_view     = self.view
@@ -440,6 +437,9 @@ class Fitz_23_C_Tab( tab_base.TabBase ) :
         each tab gets its own function so we break in that
         tabs code
         """
-        self.append_function_msg( "breakpoint" )
+        self.append_function_msg( "breakpoint()" )
 
         breakpoint()
+
+
+# ---- eof

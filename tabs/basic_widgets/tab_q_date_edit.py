@@ -3,13 +3,20 @@
 
 # ---- tof
 """
-KEY_WORDS:      on a form a date edit can be used for user input/output context menu rh todo
+KEY_WORDS:      on a form a date edit can be used for user input/output context menu rh todo testme rr
 CLASS_NAME:     QDateEditTab
 WIDGETS:        QDateEdit  CalendarPopup QDateTimeEdit
 TAB_TITLE:      QDateEdit QDateTimeEdit Reference
 DESCRIPTION:    A reference for the QDateEdit and closely related widgets
+HOW_COMPLETE:   20  #  AND A COMMENT
+
+What We Know About QDateEdit · russ-hensel/qt5_by_example Wiki
+https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QDateEdit
 
 """
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QDateEdit"
+
+
 # --------------------
 if __name__ == "__main__":
     #----- run the full app
@@ -131,8 +138,14 @@ class QDateEditTab( tab_base.TabBase  ):
         """
         super().__init__()
 
-        self.date_format       = "dd/MM/yyyy"
+
         self.module_file       = __file__      # save for help file usage
+
+        global WIKI_LINK
+        self.wiki_link          = WIKI_LINK
+
+        self.date_format       = "dd/MM/yyyy"
+
         self.mutate_dict[0]    = self.mutate_0
         self.mutate_dict[1]    = self.mutate_1
         # self.mutate_dict[2]    = self.mutate_2

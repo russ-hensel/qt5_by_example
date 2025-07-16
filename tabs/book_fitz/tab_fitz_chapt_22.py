@@ -5,13 +5,13 @@
 
 
 """
-KEY_WORDS:  Fitz chapter 22. A Table Model and View  formating fitzz
+KEY_WORDS:  Fitz chapter 22. A Table Model and View  formating fitzz qqq
 CLASS_NAME:      Fitz_22_Tab
 WIDGETS:    QAbstractTableModel  QTableView DecorationRole    BackgroundRole QIcon TextAlignmentRole
 STATUS:     runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
 TAB_TITLE:  Fitz chapter 22. A Table Model
 DESCRIPTION:    Code modeled on FitzBook ...
-
+HOW_COMPLETE:   15  #  AND A COMMENT -- <10 major probs  <15 runs but <20 fair not finished  <=25 not to shabby
 
 looked at
 "/mnt/WIN_D/Russ/0000/python00/python3/_examples/python_book_code/book_pyqt5_src/model-views/tableview_demo.py",
@@ -32,7 +32,7 @@ largely the last
 
 
 """
-
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QPushButtons"
 # --------------------
 if __name__ == "__main__":
     #----- run the full app
@@ -113,11 +113,9 @@ import tab_base
 
 # ---- end imports
 
-
-
 basedir = os.path.dirname(__file__)
 
-tick = QImage(os.path.join("tick.png"))
+tick    = QImage(os.path.join("tick.png"))
 
 
 
@@ -227,6 +225,10 @@ class Fitz_22_Tab( tab_base.TabBase ) :
         """
         super().__init__()
         self.module_file       = __file__      # save for help file usage
+
+
+        global WIKI_LINK
+        self.wiki_link          = WIKI_LINK
 
         self.mutate_dict[0]     = self.mutate_0
         self.mutate_dict[1]     = self.mutate_1

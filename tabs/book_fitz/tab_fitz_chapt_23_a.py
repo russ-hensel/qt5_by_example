@@ -5,13 +5,13 @@
 
 
 """
-KEY_WORDS:  Fitz chapter 23.  23. Querying SQL databases with Qt models   fitzz
+KEY_WORDS:  Fitz chapter 23.  23. Querying SQL databases with Qt models   fitzz qqq
 CLASS_NAME: Fitz_23_A_Tab
 WIDGETS:    QTableView() QSqlTableModel
 STATUS:     june 2025 runs_functionally not in good shape
 TAB_TITLE:  Fitz_23_A_Tab Chapt 23 A
 DESCRIPTION:   This needs review
-HOW_COMPLETE:   5  #  AND A COMMENT
+HOW_COMPLETE:   15  #  AND A COMMENT
 
 looked at
 
@@ -34,7 +34,7 @@ looked at
 
 
 """
-
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QPushButtons"
 # --------------------
 if __name__ == "__main__":
     #----- run the full app
@@ -157,6 +157,13 @@ class Fitz_23_A_Tab( tab_base.TabBase ) :
         """
         super().__init__()
         self.module_file       = __file__      # save for help file usage
+
+
+
+        global WIKI_LINK
+        self.wiki_link          = WIKI_LINK
+
+
         # self._build_model()
         #self._build_gui()
         # self.mutate_ix   = 0

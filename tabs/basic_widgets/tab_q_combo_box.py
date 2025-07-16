@@ -1,15 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-KEY_WORDS:      combo box or drop down list box ddl   rh
+KEY_WORDS:      combo box or drop down list box ddl   rh testme rr
 CLASS_NAME:     QComboBoxTab
 WIDGETS:        QComboBox
 STATUS:         works  5/10
 TAB_TITLE:      QComboBox Reference
 NOTES:          replaces tab_combo_box.py which should be deleted
 DESCRIPTION:    A reference for the QComboBox widget
+HOW_COMPLETE:   15  #  AND A COMMENT
+What We Know About QComboBox · russ-hensel/qt5_by_example Wiki
+https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QComboBox
 
 """
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QComboBox"
+
+
 # ---- tof
 # --------------------
 if __name__ == "__main__":
@@ -88,6 +94,10 @@ class QComboBoxTab( tab_base.TabBase  ) :
         super().__init__()
 
         self.module_file       = __file__
+
+        global WIKI_LINK
+        self.wiki_link          = WIKI_LINK
+
         self.mutate_dict[0]    = self.mutate_0
         self.mutate_dict[1]    = self.mutate_1
         self.mutate_dict[2]    = self.mutate_2

@@ -167,7 +167,8 @@ class QTextEditTab( tab_base.TabBase ) :
         widget.setText( "Python")
         # widget.append(  "append a bit" )
         widget.setReadOnly( False )  # but this is default
-        self.set_custom_context_menu( widget )
+        # too soon to call
+        #self.set_custom_context_menu( widget )
         chat = """
 Font Settings:
 
@@ -271,12 +272,12 @@ Undo/Redo:
         widget = QPushButton( "copy_all\n_text" )
         widget.clicked.connect( self.copy_all_text  )
         button_layout.addWidget( widget,   )
-        # ---- PB
+        # ---- "copy_line_of_text\n"
         widget = QPushButton( "copy_line_of_text\n" )
         widget.clicked.connect(lambda: self.copy_line_of_text( text_edit ))
         button_layout.addWidget( widget,   )
 
-        # ---- PB
+        # ---- "copy_n_lines\n_of_text"
         widget = QPushButton( "copy_n_lines\n_of_text" )
         widget.clicked.connect(lambda: self.copy_n_lines_of_text( text_edit, 5 ))
         button_layout.addWidget( widget,   )
@@ -366,14 +367,29 @@ Undo/Redo:
         self.append_msg( "Button clicked:", text)
         self.append_msg( "print_message done" )
 
+
+    #----------------------------
+    def set_default_context_menu( self, widget ):
+        """
+        what it says
+        """
+        self.append_msg( "set_default_context_menu() -- try the context menu",)
+        # Revert to the default context menu
+        widget.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
+
+        # !! next mamy be needed but may throw error if not connected
+        # widget.customContextMenuRequested.disconnect( self.show_context_menu )
+
     #----------------------------
     def set_custom_context_menu( self, widget ):
         """
         what it says
         """
+        self.append_msg( "set_custom_context_menu() -- try the context menu",)
         widget.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         widget.customContextMenuRequested.connect( self.show_context_menu )
         self.context_widget   = widget # for later use in menu
+
 
     # ---------------------------------------
     def show_context_menu( self, pos ):
@@ -428,8 +444,6 @@ Undo/Redo:
 
         # Show the context menu
         menu.exec_(widget.mapToGlobal(pos))
-
-
 
     #  --------
     def clear_text( self ):
@@ -822,8 +836,13 @@ at the cursor ----<<""")
         """
         self.append_function_msg( "mutate_0()" )
 
-        msg    = "so far not implemented "
-        self.append_msg( msg, clear = False )
+        widget  = self.text_edit
+        self.set_default_context_menu( widget )
+
+
+        widget.setReadOnly( False )  # but this is default
+        # msg    = "so far not implemented "
+        # self.append_msg( msg )
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -834,8 +853,24 @@ at the cursor ----<<""")
         """
         self.append_function_msg( "mutate_1()" )
 
-        msg    = "so far not implemented "
-        self.append_msg( msg, clear = False )
+        # ----
+        widget  = self.text_edit
+        self.set_custom_context_menu( widget )
+
+        # ----
+        msg    = "all lines convertet to a list"
+        self.append_msg( msg, )
+        all_text    = widget.toPlainText()
+        lines       = all_text.split('\u2029')
+        if len( lines )  > 0 :
+            for ix, i_line in enumerate( lines ):
+                if ix < 10:
+                    self.append_msg( f"{ix} >>{i_line}<<" )
+                else:
+                    self.append_msg( "skipping additional lines " )
+
+        else:
+            self.append_msg( "no lines to print")
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -846,7 +881,7 @@ at the cursor ----<<""")
         """
         self.append_function_msg( "mutate_1()" )
 
-        msg    = "so far not implemented "
+        msg    = "change context menu"
         self.append_msg( msg, clear = False )
 
         self.append_msg( tab_base.DONE_MSG )
@@ -862,9 +897,6 @@ at the cursor ----<<""")
         self.append_msg( msg, clear = False )
 
         self.append_msg( tab_base.DONE_MSG )
-
-
-
 
     # ------------------------
     def inspect(self):

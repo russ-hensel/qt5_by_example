@@ -298,17 +298,15 @@ class TabBase( QWidget ):
         self.msg_widget.append( msg )
         print( msg )
 
+    #----------------------------
     def set_web_link( self, web_link ):
         """ """
         self.web_link   = web_link
 
+    #----------------------------
     def wiki_wiki( self ):
         """
         """
-        #self.wiki_link
         webbrowser.open( self.wiki_link, new = 0, autoraise = True )
-
-
-
 
 # ---- eof
