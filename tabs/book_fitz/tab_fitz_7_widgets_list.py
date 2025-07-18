@@ -4,7 +4,7 @@
 # ---- tof
 """
 
-KEY_WORDS:      some stuff from the m fitz book many misc simple widgets ddl   rh
+KEY_WORDS:      some stuff from the m fitz book many misc simple widgets ddl rsh
 CLASS_NAME:     FitzWidgetListTab
 WIDGETS:        QCheckBox, QComboBox, QDateEdit, QDateTimeEdit, QDial, QDoubleSpinBox, QFontComboBox, QLCDNumber, QLineEdit,
 STATUS:         file name seems good

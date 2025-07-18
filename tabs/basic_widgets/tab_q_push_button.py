@@ -6,7 +6,7 @@
 # this material is used for selection access to the tab module which must
 # be named tab_....py     among other things
 
-KEY_WORDS:      pressed press PushBtton click connect rh dc
+KEY_WORDS:      pressed press PushBtton click connect rsh
 CLASS_NAME:     QPushButtonTab
 WIDGETS:        QPushButton
 STATUS:         June 2025 ok: but more content would be nice
@@ -25,9 +25,6 @@ https://github.com/russ-hensel/qt5_by_example/wiki
 
 What We Know About QPushButtons · russ-hensel/qt5_by_example Wiki
 https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QPushButtons
-
-
-
 
 
 """
@@ -136,12 +133,14 @@ class QPushButtonTab( tab_base.TabBase ):
         """
         the usual, build the gui with the widgets of interest
 
+        main_layout will be a QVBoxLayout
         this just does a basic build -- the framework will then automatically
         call mutate_0()
 
         this is important content for the widgets referenced on this tab
+
         """
-        layout              = QVBoxLayout()
+        layout              = QHBoxLayout()
         main_layout.addLayout( layout )
 
         # too clever ??

@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-KEY_WORDS:      some stuff from the m fitz book .....
+KEY_WORDS:      some stuff from the m fitz book rsh
 CLASS_NAME:     Fitz_7_Tab
 WIDGETS:        QTableView QStyledItemDelegate QAbstractTableModel Qt.ToolTipRole QImage
 STATUS:         works
 TAB_TITLE:      Fitz7 Book
+DESCRIPTION:    This needs review
+HOW_COMPLETE:   15  #  AND A COMMENT
+"""
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QPushButtons"
 
+
+"""
         self.help_file_name     =  "fitz_7_tab.txt"
 
  /mnt/WIN_D/Russ/0000/python00/python3/_examples/python_book_code/book_pyqt5_src/model-views/delegate_1.py
@@ -20,7 +26,7 @@ tab_fitz_7
 if __name__ == "__main__":
     #----- run the full app
     import main
-    #qt_fitz_book.main()
+
 # --------------------
 
 
@@ -178,7 +184,7 @@ class Fitz_7_Tab( QWidget ) :
         global WIKI_LINK
         self.wiki_link          = WIKI_LINK
 
-        self.help_file_name     =  "fitz_7_tab.txt"
+
         self._build_gui()
         self.mutate_ix          = 0
 

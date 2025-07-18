@@ -1,60 +1,51 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# ---- tof
+# ----tof
 """
-based lousely on
-
-Chapter 7
-Listing 14. basic/widgets_1.py
-Listing 15. basic/widgets_2.py
-Listing 16. basic/widgets_3.py
-Listing 17. basic/widgets_4.py
-Listing 18. basic/widgets_5.py
-
-
-... /book_pyqt5_src/basic/widgets_2c.py
-
-
-KEY_WORDS:      fitz book lables with images   7   rsh
-CLASS_NAME:     Fitz_2_Tab
-WIDGETS:        QCheckBox QPixmap QLabel QComboBox
-STATUS:         ** runs   !! runs_correctly      demo_complete_0_10
-TAB_TITLE:      Fitz Chap. 7 widgets_n
-HOW_COMPLETE:   15  #  AND A COMMENT
-DESCRIPTION:    Various widgets from the second half of the chapter
+KEY_WORDS:      book a dynamic graph revised rsh
+CLASS_NAME:     Fitz_5_Tab
+WIDGETS:        QTimer pg.PlotWidget pg.mkPen
+STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
+TAB_TITLE:      Fitz Chapt 35 Dynamic Plot
+DESCRIPTION:    Code motivated by Fitz 35 Dynamic Plot
+HOW_COMPLETE:   25  #  AND A COMMENT
 
 """
-WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/Fitz-7-Widgets-N"
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QPushButtons"
+
 
 # --------------------
 if __name__ == "__main__":
     #----- run the full app
     import main
-    #main.main()
+    #qt_fitz_book.main()
 # --------------------
 
 
-
 import inspect
+import json
 import os
 import subprocess
 import sys
 import time
 from datetime import datetime
 from functools import partial
+from random import randint
 from subprocess import PIPE, STDOUT, Popen, run
 
+import pyqtgraph as pg  # import PyQtGraph after PyQt5
 import wat
 from PyQt5 import QtGui
-from PyQt5.QtCore import (QDate,
+from PyQt5.QtCore import (QAbstractListModel,
+                          QDate,
                           QDateTime,
                           QModelIndex,
                           QSize,
                           Qt,
                           QTime,
                           QTimer)
-from PyQt5.QtGui import QColor, QPalette, QPixmap, QTextCursor, QTextDocument
+from PyQt5.QtGui import QColor, QImage, QPalette, QTextCursor, QTextDocument
 # sql
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery, QSqlTableModel
 # widgets biger
@@ -76,6 +67,7 @@ from PyQt5.QtWidgets import (QAction,
                              QLabel,
                              QLCDNumber,
                              QLineEdit,
+                             QListView,
                              QListWidget,
                              QListWidgetItem,
                              QMainWindow,
@@ -96,40 +88,46 @@ from PyQt5.QtWidgets import (QAction,
                              QVBoxLayout,
                              QWidget)
 
-import parameters
+#import parameters
 #import qt_widgets
 import utils_for_tabs as uft
 import wat_inspector
 import tab_base
 
-
-
 # ---- end imports
 
+
+
+basedir = os.path.dirname(__file__)
+
+
 #  --------
-class Fitz_2_Tab(  tab_base.TabBase ) :
+class Fitz_5_Tab( tab_base.TabBase ) :
     def __init__(self):
         """
-        some content from and there may be more
-        /mnt/WIN_D/Russ/0000/python00/python3/_projects/rshlib/gui_qt_ext.py
-        tab_misc_widgets.py
+
         """
         super().__init__()
+
+
         self.module_file        = __file__      # save for help file usage
 
         global WIKI_LINK
         self.wiki_link          = WIKI_LINK
 
-        self.mutate_dict[0]    = self.mutate_0
-        self.mutate_dict[1]    = self.mutate_1
+
+        self.mutate_dict[0]     = self.mutate_0
+        self.mutate_dict[1]     = self.mutate_1
         # self.mutate_dict[2]    = self.mutate_2
         # self.mutate_dict[3]    = self.mutate_3
         # self.mutate_dict[4]    = self.mutate_4
 
-
+        self.timer = QTimer()
+        self.timer.setInterval(50)
         self._build_gui()
 
-
+        self.timer.timeout.connect(self.update_plot_data)
+        self.timer.start()
 
     def _build_gui_widgets(self, main_layout  ):
         """
@@ -139,86 +137,77 @@ class Fitz_2_Tab(  tab_base.TabBase ) :
         layout              = QVBoxLayout(   )
 
         main_layout.addLayout( layout )
-        button_layout        = QHBoxLayout(   )
+        #button_layout        = QHBoxLayout(   )
 
-        # ---- fitz code here
-        basedir = os.path.dirname(__file__)
+        widget              = pg.PlotWidget()
+        self.graphWidget    = widget
+        layout.addWidget( self.graphWidget )
 
-        # ---- QLabel
-        widget = QLabel("Hello")
-        self.q_label_text  = widget
-        layout.addWidget( widget )
+        self.x = list(range(100))  # 100 time points
+        self.y = [
+            randint(0, 100) for _ in range(100)
+        ]  # 100 data points
 
+        self.graphWidget.setBackground("w")
 
-        # ---- QLabel
-        widget = QLabel( "a_jpg" )
-        self.q_label_jpg  = widget
+        pen = pg.mkPen(color=(255, 0, 0))
+        self.data_line = self.graphWidget.plot(
+            self.x, self.y, pen=pen
+        )  # <1>
 
-        # # # tag::scaledContents[]
-        # widget.setPixmap( QPixmap( "a_cat.jpg" ) )
-        # widget.setPixmap( QPixmap( "bird_house.jpg" ))
+        # ---- new row
+        row_layout    = QHBoxLayout(   )
+        layout.addLayout( row_layout,  )
 
-        # for some photos you may loose control of size this whould fix
-        widget.setMinimumSize( 100, 75)  # Minimum width: 100px, Minimum height: 75px
-        widget.setMaximumSize( 400, 300)  # Maximum width: 400px, Maximum height: 300px
+        # ---- PB "start\n"
+        widget = QPushButton("start\n")
+        widget.clicked.connect( self.start    )
+        row_layout.addWidget( widget,   )
 
-        chat_says = """
-        Summary of Methods:
-
-            setFixedSize(width, height): Sets a fixed size.
-            setMinimumSize(width, height): Sets a minimum size.
-            setMaximumSize(width, height): Sets a maximum size.
-            setSizePolicy(policy_horizontal, policy_vertical): Sets resizing behavior.
-            resize(width, height): Sets the initial size of the QLabel.
-
-        """
-        widget.setPixmap( QPixmap( "./tabs/book_fitz/a_cat.jpg" ) )
-        #widget.setPixmap( QPixmap(os.path.join( basedir, "a_cat.jpg")) )
-        widget.setScaledContents(True)
-        # widget.setGeometry( 50, 50, 50, 50 ) #
-        layout.addWidget( widget )
-
-
-        # ---- QCheckBox
-        widget          = QCheckBox( "This is a checkbox" )
-        self.widget_q_check_box   = widget
-        widget.setCheckState( Qt.Checked )
-        # For tristate: widget.setCheckState(Qt.PartiallyChecked)
-        # Or: widget.setTriState(True)
-        #widget.stateChanged.connect(self.show_state)
-
-        layout.addWidget( widget )
-
-        # ----
-        widget = QComboBox()
-        self.q_combo_box_widget   = widget
-        widget.addItems(["One", "Two", "Three"])
-        widget.currentIndexChanged.connect(self.index_changed)
-
-        layout.addWidget( widget )
-
-        # ---- new row, standard buttons
-        button_layout = QHBoxLayout(   )
-        layout.addLayout( button_layout,  )
+        # ---- PB breakpoint
+        widget = QPushButton("stop\n")
+        widget.clicked.connect( self.stop    )
+        row_layout.addWidget( widget,   )
 
         # our ancestor finishes off the tab with some
         # standard buttons
-        self.build_gui_last_buttons( button_layout )
+        self.build_gui_last_buttons( row_layout )
 
-    def index_changed(self, i):
-        print(i)# i is an int
-    def text_changed(self, s):
-        print(s)# s is a
+    # ------------------------
+    def start(self):
+        """ """
+        self.append_function_msg( "start" )
 
+        self.timer.start()
+        self.append_msg( "start done" )
 
+    # ------------------------
+    def stop(self):
+        """ """
+        self.append_function_msg( "stop" )
+
+        self.timer.stop()
+        self.append_msg( "stop done" )
+
+    # ------------------------
+    def update_plot_data(self):
+
+        self.x = self.x[1:]  # Remove the first y element.
+        self.x.append(
+            self.x[-1] + 1
+        )  # Add a new value 1 higher than the last.
+
+        self.y = self.y[1:]  # Remove the first
+        self.y.append(randint(0, 100))  # Add a new random value.
+
+        self.data_line.setData(self.x, self.y)  # Update the data.
 
     # ------------------------------------
     def mutate_0( self ):
         """
         read it -- mutate the widgets
         """
-        self.append_function_msg( "mutate_0()" )
-
+        self.append_function_msg( "mutate_0" )
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
 
@@ -227,21 +216,22 @@ class Fitz_2_Tab(  tab_base.TabBase ) :
         """
         read it -- mutate the widgets
         """
-        self.append_function_msg( "mutate_1()" )
+        self.append_function_msg( "mutate_1" )
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
-
+        self.append_msg( "mutate_1 done" )
 
     # ------------------------
     def inspect(self):
         """
         the usual
         """
-        self.append_function_msg( "inspect()" )
+        self.append_function_msg( "inspect" )
 
-        #self_widgets_list   = self.widgets_list
+        self_graph_widget   = self.graphWidget
+        self_timer          = self.timer
         wat_inspector.go(
-             msg            = "see self_widgets_list",
+             msg            = "locals are graph and timer",
              a_locals       = locals(),
              a_globals      = globals(), )
 
@@ -251,8 +241,9 @@ class Fitz_2_Tab(  tab_base.TabBase ) :
         each tab gets its own function so we break in that
         tabs code
         """
-        self.append_function_msg( "breakpoint()" )
+        self.append_function_msg( "breakpoint" )
 
         breakpoint()
+
 
 # ---- eof

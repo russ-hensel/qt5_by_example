@@ -331,7 +331,7 @@ class Qt5ByExample( QMainWindow ):
         menu_help.addAction( action )
 
         action          = QAction( "General Help...", self )
-        connect_to      = partial( self.open_txt_file, "./docs/general_help.txt" )
+        connect_to      = partial( self.open_txt_file, "./misc/general_help.txt" )
         action.triggered.connect( connect_to )
         menu_help.addAction( action )
 
@@ -471,7 +471,7 @@ class Qt5ByExample( QMainWindow ):
         memory   = process_pid.memory_info().rss/1_000_000
         memory   = f"Memory = {memory} Mbytes"
         repo     = "Repo: https://github.com/russ-hensel/qt5_by_example/tree/main"
-        msg      = ( f"Stuff DB {version} {mode}"
+        msg      = ( f"QT5 By Example {version} {mode}"
                      f"\n{memory}"
                      f"\n{repo}"
                      "\nSee the book at the repo wiki!"
