@@ -9,7 +9,7 @@ KEY_WORDS:      QPushButton, QLabel, QHBoxLayout  QGridLayout RealPython rh
 CLASS_NAME:     RealPython1Tab
 WIDGETS:        QHBoxLayout QVBoxLayout QGridLayout QFormLayout
 STATUS:         July 2025  runs incomplete
-TAB_TITLE:      RP: python-pyqt-gui-calculator
+TAB_TITLE:      RP: python-pyqt- / gui-calculator
 DESCRIPTION:    RP: Python and PyQt: Building a GUI Desktop Calculator
 HOW_COMPLETE:   15  #  AND A COMMENT
 """
@@ -99,7 +99,10 @@ import tab_re_base
 
 print_func_header   = uft.print_func_header
 
-
+ERROR_MSG       = "ERROR"
+WINDOW_SIZE     = 235
+DISPLAY_HEIGHT  = 35
+BUTTON_SIZE     = 40
 
 #  --------
 class RealPython1Tab( tab_re_base.TabReBase ):
@@ -238,6 +241,13 @@ class RealPython1Tab( tab_re_base.TabReBase ):
 
     def build_gui_widgets_4( self, ):
         """
+        skip
+             dialog with form --- did we have a form
+             main window
+             application
+
+        then
+
         Signals and slots example.
         signals_slots.py
 
@@ -265,11 +275,9 @@ class RealPython1Tab( tab_re_base.TabReBase ):
 
     def build_gui_widgets_5( self, ):
         """
-        Signals and slots example.
-        signals_slots.py
+        really build the calculator here
 
 
-        content of the excercise
         """
         self.post_build_msg  = [ "code from build_gui_widgets_5",
                                  "work still to be done on this excercise " ]
@@ -278,10 +286,41 @@ class RealPython1Tab( tab_re_base.TabReBase ):
         main_layout     = self.main_layout
         layout = QVBoxLayout()
         main_layout.addLayout( layout )
+        self.calc_layout   = layout
+        self.create_display()
 
-        widget         = QLabel("work still to be done on this excercise -- this tab under construction ")
-        self.msg_label = widget
-        layout.addWidget( widget )
+        # widget         = QLabel("work still to be done on this excercise -- this tab under construction ")
+        # self.msg_label = widget
+        # layout.addWidget( widget )
+
+
+    # ------------------------
+    def create_display(self):
+        widget          = QLineEdit()
+        self.display    = widget
+        widget.setFixedHeight(DISPLAY_HEIGHT)
+        widget.setAlignment(Qt.AlignmentFlag.AlignRight)
+        widget.setReadOnly(True)
+        self.calc_layout.addWidget( widget )
+
+    # ------------------------
+    def create_buttons(self):
+        self.buttonMap = {}
+        buttonsLayout = QGridLayout()
+        keyBoard = [
+            ["7", "8", "9", "/", "C"],
+            ["4", "5", "6", "*", "("],
+            ["1", "2", "3", "-", ")"],
+            ["0", "00", ".", "+", "="],
+        ]
+
+        for row, keys in enumerate(keyBoard):
+            for col, key in enumerate(keys):
+                self.buttonMap[key] = QPushButton(key)
+                self.buttonMap[key].setFixedSize(BUTTON_SIZE, BUTTON_SIZE)
+                buttonsLayout.addWidget(self.buttonMap[key], row, col)
+
+        self.generalLayout.addLayout(buttonsLayout)
 
 
 
@@ -328,22 +367,6 @@ class RealPython1Tab( tab_re_base.TabReBase ):
         """
         self.append_function_msg( "mutate_1()" )
 
-<<<<<<< Updated upstream
-=======
-    #     #self.append_msg( tab_base.DONE_MSG )
-    # def greet(self ):
-    #     if self.msgLabel.text():
-    #         self.msgLabel.setText("")
-    #     else:
-    #         self.msgLabel.setText("Hello, World!")
-
-    def greet_with_arg(self, name):
-        if msg.text():
-            self.msg_label.setText("")
-        else:
-            self.msg_label.setText(f"Hello, {name}")
-
->>>>>>> Stashed changes
 
     # ------------------------
     def inspect(self):

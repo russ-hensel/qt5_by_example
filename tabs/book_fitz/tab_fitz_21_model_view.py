@@ -179,7 +179,6 @@ class Fitz_4_Tab( tab_base.TabBase ) :
         self._build_model()
         self._build_gui()
 
-
     # -------------------------------
     def _build_guixxx(self,   ):
         """
@@ -203,8 +202,6 @@ class Fitz_4_Tab( tab_base.TabBase ) :
         # ---- new row
         row_layout    = QHBoxLayout(   )
         layout.addLayout( row_layout,  )
-
-
 
         widget    =  self.todoView
         row_layout.addWidget( widget,   )
@@ -346,7 +343,6 @@ class Fitz_4_Tab( tab_base.TabBase ) :
 
         self.model.layoutChanged.emit() # This triggers a refresh of the entirety of the view. I
 
-
     def save(self):
         """ """
         self.append_function_msg( "save" )
@@ -397,3 +393,5 @@ class Fitz_4_Tab( tab_base.TabBase ) :
         self.append_function_msg( "breakpoint" )
 
         breakpoint()
+
+# ---- eof
