@@ -4,12 +4,12 @@
 # ---- tof
 """
 
-KEY_WORDS:      some stuff from the m fitz book many misc simple widgets ddl rsh
+KEY_WORDS:      book many misc simple widgets ddl rsh
 CLASS_NAME:     FitzWidgetListTab
 WIDGETS:        QCheckBox, QComboBox, QDateEdit, QDateTimeEdit, QDial, QDoubleSpinBox, QFontComboBox, QLCDNumber, QLineEdit,
 STATUS:         file name seems good
-TAB_TITLE:      Fitz 7.Widgets widgets_list
-DESCRIPTION:    Code like Fitz section 7 Widgets widgets_list.py
+TAB_TITLE:      Fitz Chapt  7 / Widgets widgets_list
+DESCRIPTION:    Code motivated by Fitz section 7 Widgets widgets_list.py
 HOW_COMPLETE:   25  #  AND A COMMENT
 """
 WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/Fitz-7-Widgets-List"
@@ -194,7 +194,7 @@ class FitzWidgetListTab( tab_base.TabBase ) :
         """
         read it -- mutate the widgets
         """
-        self.append_function_msg( "mutate_1" )
+        self.append_function_msg( "mutate_1()" )
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
 
@@ -209,7 +209,7 @@ class FitzWidgetListTab( tab_base.TabBase ) :
 
         self_widgets_list   = self.widgets_list
         wat_inspector.go(
-             msg            = "see self_widgets_list",
+             msg            = "items to inspect",
              a_locals       = locals(),
              a_globals      = globals(), )
 

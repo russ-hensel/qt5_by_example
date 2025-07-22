@@ -3,17 +3,17 @@
 
 # ----tof
 """
-KEY_WORDS:      book a dynamic graph revised rsh
+KEY_WORDS:      book a dynamic graph  fitzz
 CLASS_NAME:     Fitz_5_Tab
 WIDGETS:        QTimer pg.PlotWidget pg.mkPen
 STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
-TAB_TITLE:      Fitz Chapt 35 Dynamic Plot
+TAB_TITLE:      Fitz Chapt 35 / Dynamic Plot
 DESCRIPTION:    Code motivated by Fitz 35 Dynamic Plot
 HOW_COMPLETE:   25  #  AND A COMMENT
 
 """
-WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QPushButtons"
-
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/Fitz-Chapt-35-Qt-Graph"
+#WIKI_LINK     =  "https://github.com/russ-hensel/qt5_by_example/wiki/Fitz-Chapt-12-Events"
 
 # --------------------
 if __name__ == "__main__":
@@ -109,12 +109,10 @@ class Fitz_5_Tab( tab_base.TabBase ) :
         """
         super().__init__()
 
-
         self.module_file        = __file__      # save for help file usage
 
         global WIKI_LINK
         self.wiki_link          = WIKI_LINK
-
 
         self.mutate_dict[0]     = self.mutate_0
         self.mutate_dict[1]     = self.mutate_1
@@ -231,7 +229,7 @@ class Fitz_5_Tab( tab_base.TabBase ) :
         self_graph_widget   = self.graphWidget
         self_timer          = self.timer
         wat_inspector.go(
-             msg            = "locals are graph and timer",
+             msg            = "items to inspectr",
              a_locals       = locals(),
              a_globals      = globals(), )
 

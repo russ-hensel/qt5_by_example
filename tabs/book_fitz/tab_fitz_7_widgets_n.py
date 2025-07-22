@@ -16,11 +16,11 @@ Listing 18. basic/widgets_5.py
 ... /book_pyqt5_src/basic/widgets_2c.py
 
 
-KEY_WORDS:      fitz book lables with images   7   rsh
+KEY_WORDS:      fitzz chapter book lables with images   7   rsh
 CLASS_NAME:     Fitz_2_Tab
 WIDGETS:        QCheckBox QPixmap QLabel QComboBox
 STATUS:         ** runs   !! runs_correctly      demo_complete_0_10
-TAB_TITLE:      Fitz Chap. 7 widgets_n
+TAB_TITLE:      Fitz Chapt  7 / Widgets N
 HOW_COMPLETE:   15  #  AND A COMMENT
 DESCRIPTION:    Various widgets from the second half of the chapter
 
@@ -33,8 +33,6 @@ if __name__ == "__main__":
     import main
     #main.main()
 # --------------------
-
-
 
 import inspect
 import os
@@ -103,7 +101,6 @@ import wat_inspector
 import tab_base
 
 
-
 # ---- end imports
 
 #  --------
@@ -126,10 +123,7 @@ class Fitz_2_Tab(  tab_base.TabBase ) :
         # self.mutate_dict[3]    = self.mutate_3
         # self.mutate_dict[4]    = self.mutate_4
 
-
         self._build_gui()
-
-
 
     def _build_gui_widgets(self, main_layout  ):
         """
@@ -148,7 +142,6 @@ class Fitz_2_Tab(  tab_base.TabBase ) :
         widget = QLabel("Hello")
         self.q_label_text  = widget
         layout.addWidget( widget )
-
 
         # ---- QLabel
         widget = QLabel( "a_jpg" )
@@ -178,7 +171,6 @@ class Fitz_2_Tab(  tab_base.TabBase ) :
         # widget.setGeometry( 50, 50, 50, 50 ) #
         layout.addWidget( widget )
 
-
         # ---- QCheckBox
         widget          = QCheckBox( "This is a checkbox" )
         self.widget_q_check_box   = widget
@@ -207,10 +199,9 @@ class Fitz_2_Tab(  tab_base.TabBase ) :
 
     def index_changed(self, i):
         print(i)# i is an int
+
     def text_changed(self, s):
         print(s)# s is a
-
-
 
     # ------------------------------------
     def mutate_0( self ):
@@ -222,6 +213,8 @@ class Fitz_2_Tab(  tab_base.TabBase ) :
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
 
+        self.append_msg( tab_base.DONE_MSG )
+
     # ------------------------------------
     def mutate_1( self ):
         """
@@ -231,7 +224,7 @@ class Fitz_2_Tab(  tab_base.TabBase ) :
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
 
-
+        self.append_msg( tab_base.DONE_MSG )
     # ------------------------
     def inspect(self):
         """
@@ -244,7 +237,7 @@ class Fitz_2_Tab(  tab_base.TabBase ) :
              msg            = "see self_widgets_list",
              a_locals       = locals(),
              a_globals      = globals(), )
-
+        self.append_msg( tab_base.DONE_MSG )
     # ------------------------
     def breakpoint(self):
         """
@@ -254,5 +247,7 @@ class Fitz_2_Tab(  tab_base.TabBase ) :
         self.append_function_msg( "breakpoint()" )
 
         breakpoint()
+
+        self.append_msg( tab_base.DONE_MSG )
 
 # ---- eof

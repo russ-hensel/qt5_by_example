@@ -9,11 +9,11 @@ KEY_WORDS:    chapter      simple Model View  Todo List   rsh
 CLASS_NAME: Fitz_4_Tab
 WIDGETS:    QAbstractListModel QListView DecorationRole
 STATUS:     STATUS:      runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
-TAB_TITLE:  Fitz Chapt 21 Model View
+TAB_TITLE:  Fitz Chapt 21 / Model View
 DESCRIPTION:    Code motivated by Fitz Chapt 21 A simple Model View — a Todo List
 HOW_COMPLETE:   15  #  AND A COMMENT -- <10 major probs  <15 runs but <20 fair not finished  <=25 not to shabby
 """
-WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QPushButtons"
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/Fitz-21-Model-View"
 """
 
  "/mnt/WIN_D/Russ/0000/python00/python3/_examples/python_book_code/book_pyqt5_src/model-views/todo_1.py",

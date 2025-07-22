@@ -114,7 +114,7 @@ BEGIN_MARK_2    = uft.BEGIN_MARK_2
 
 print_func_header  = uft.print_func_header
 
-__VERSION__  = "ver_13 - 2025 07 02.01"
+__VERSION__  = "ver_13 - 2025 07 21.01"
 
 # ---- main window ===================================================================
 class Qt5ByExample( QMainWindow ):
@@ -265,6 +265,8 @@ class Qt5ByExample( QMainWindow ):
 
         tab_index       = self.tab_widget.indexOf( tab  )
 
+        title           = title.replace( r" / ", "\n" )
+
         self.tab_widget.addTab( tab, title  )
         tab_index       = self.tab_widget.indexOf( tab  )
         self.tab_widget.setCurrentIndex( tab_index )
@@ -323,19 +325,19 @@ class Qt5ByExample( QMainWindow ):
         a_menu.addSeparator()
 
         # ---- Help
-        menu_help       = menubar.addMenu( "Help" )
+        menu_help       = menubar.addMenu( "Help/Notes" )
 
         action          = QAction( "README.md...", self )
         connect_to      = partial( self.open_txt_file, "README.md" )
         action.triggered.connect( connect_to )
         menu_help.addAction( action )
 
-        action          = QAction( "General Help...", self )
+        action          = QAction( "General Notes/Help...", self )
         connect_to      = partial( self.open_txt_file, "./misc/general_help.txt" )
         action.triggered.connect( connect_to )
         menu_help.addAction( action )
 
-        action          = QAction( "Current Tab Help...", self )
+        action          = QAction( "Current Tab Notes...", self )
         connect_to      = self.open_tab_help
         action.triggered.connect( connect_to )
         menu_help.addAction( action )

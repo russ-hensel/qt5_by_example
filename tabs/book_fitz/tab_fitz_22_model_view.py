@@ -9,11 +9,11 @@ KEY_WORDS:      chapter View  formating fitzz rsh
 CLASS_NAME:     Fitz_22_Tab
 WIDGETS:        QAbstractTableModel  QTableView DecorationRole    BackgroundRole QIcon TextAlignmentRole
 STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
-TAB_TITLE:      Fitz Chapt 22 Table Model
+TAB_TITLE:      Fitz Chapt 22 / Table Model
 DESCRIPTION:    Code modeled on FitzBook ...
 HOW_COMPLETE:   15  #  AND A COMMENT -- <10 major probs  <15 runs but <20 fair not finished  <=25 not to shabby
 """
-WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QPushButtons"
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/fitz-22-model-view"
 """
 looked at
 "/mnt/WIN_D/Russ/0000/python00/python3/_examples/python_book_code/book_pyqt5_src/model-views/tableview_demo.py",
@@ -459,10 +459,11 @@ class Fitz_22_Tab( tab_base.TabBase ) :
         self_todo_view     = self.view
         self_data          = self.data
         wat_inspector.go(
-             msg            = "locals for model and view",
+             msg            = "items to inspect",
              a_locals       = locals(),
              a_globals      = globals(), )
 
+        self.append_msg( tab_base.DONE_MSG )
     # ------------------------
     def breakpoint(self):
         """
@@ -472,5 +473,7 @@ class Fitz_22_Tab( tab_base.TabBase ) :
         self.append_function_msg( "breakpoint()" )
 
         breakpoint()
+
+        self.append_msg( tab_base.DONE_MSG )
 
 # ---- eof

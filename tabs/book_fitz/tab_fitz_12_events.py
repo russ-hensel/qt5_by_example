@@ -5,19 +5,19 @@
 # ---- tof
 
 """
-KEY_WORDS:      book mouse events right click context menu fitzz rsh
+KEY_WORDS:      book mouse events right click context menu fitzz
 
 CLASS_NAME:     Fitz_3_Tab
 WIDGETS:        QMenu Qt.LeftButton
 STATUS:         2025  06 27 wip   contents needs review
 
-TAB_TITLE:      Fitz_3_Tab MouseEvents
+TAB_TITLE:      Fitz Chapt 12 / MouseEvents
 
 HOW_COMPLETE:   25  #  AND A COMMENT 2025  06 27 wip   contents needs review
 DESCRIPTION:    Code motivated by Fitz Chapt 12 Events, needs completion...
 
 """
-WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QPushButtons"
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/Fitz-Chapt-12-Events"
 """
 chapt 12
 Listing 61. basic/events_1.py
@@ -31,9 +31,6 @@ Listing 64. basic/events_4.py
 "/mnt/WIN_D/Russ/0000/python00/python3/_examples/python_book_code/book_pyqt5_src/basic/events_3.py",
 "/mnt/WIN_D/Russ/0000/python00/python3/_examples/python_book_code/book_pyqt5_src/basic/events_4.py"
 """
-WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QPushButtons"
-
-
 
 
 # --------------------
@@ -123,7 +120,7 @@ class Fitz_3_Tab( tab_base.TabBase  ) :
         self.module_file       = __file__      # save for help file usage
 
         global WIKI_LINK
-        self.wiki_link          = WIKI_LINK
+        self.wiki_link         = WIKI_LINK
 
         self.mutate_dict[0]    = self.mutate_0
         self.mutate_dict[1]    = self.mutate_1

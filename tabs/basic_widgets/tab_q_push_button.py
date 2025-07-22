@@ -6,11 +6,11 @@
 # this material is used for selection access to the tab module which must
 # be named tab_....py     among other things
 
-KEY_WORDS:      pressed press PushBtton click connect rsh
+KEY_WORDS:      pressed press PushBtton click connect rsh pushbutton
 CLASS_NAME:     QPushButtonTab
 WIDGETS:        QPushButton
 STATUS:         June 2025 ok: but more content would be nice
-TAB_TITLE:      QPushButton Reference
+TAB_TITLE:      QPushButton / Reference
 DESCRIPTION:    A reference for the QPushButton widget
 HOW_COMPLETE:   20  #  AND A COMMENT -- <10 major probs  <15 runs but <20 fair not finished  <=25 not to shabby
 """

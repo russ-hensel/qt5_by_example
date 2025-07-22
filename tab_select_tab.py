@@ -292,6 +292,8 @@ class Search_Tab( QWidget ) :
 
             query_builder.add_to_where( f" key_word IN {criteria_key_words}" , [] )
 
+        query_builder.add_to_order_by( "tab_title", "ASC"   )
+
         query_builder.prepare_and_bind()
 
         # msg      = f"{query_builder = }"

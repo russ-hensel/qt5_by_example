@@ -5,15 +5,15 @@
 
 
 """
-KEY_WORDS:      chapter 23 C  Generic queries with QSqlQueryModel sql where rsh
+KEY_WORDS:      chapter   C  Generic queries with QSqlQueryModel sql where  fitzz
 CLASS_NAME:     Fitz_23_C_Tab
 WIDGETS:        QTableView QSqlQueryModel QSqlQuery
 STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
-TAB_TITLE:      Fitz Chapt 23 SqlModel Chapt 23 C
+TAB_TITLE:      Fitz Chapt 23 / SqlModel
 HOW_COMPLETE:   20  #  AND A COMMENT -- <10 major probs  <15 runs but <20 fair not finished  <=25 not to shabby
 DESCRIPTION:    Code motivated by Fitz Chapt 23 Sql with QSqlQueryModel
 """
-WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QPushButtons"
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/Fitz-23-Query_Model"
 
 """
 looked at

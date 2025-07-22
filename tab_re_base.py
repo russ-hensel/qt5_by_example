@@ -202,13 +202,19 @@ class TabReBase( QWidget ):
 
         Note this is a bit more verbose than it needs to be
         """
-        # ---- PB "rebuild\ngui"
+        # ---- wiki\nwiki
+        widget              = QPushButton("wiki-\nwiki")
+        connect_to          = self.wiki_wiki
+        widget.clicked.connect( connect_to )
+        row_layout.addWidget( widget )
+
+        # ---- "rebuild\ngui"
         widget = QPushButton("rebuild-\ngui")
         connect_to          = self.next_gui_build
         widget.clicked.connect( connect_to )
         row_layout.addWidget( widget )
 
-        # ---- PB inspect
+        # ---- inspect
         widget              = QPushButton("wat-\ninspect")
         connect_to          = self.inspect
         widget.clicked.connect( connect_to )
@@ -220,11 +226,7 @@ class TabReBase( QWidget ):
         widget.clicked.connect( connect_to )
         row_layout.addWidget( widget )
 
-        # ---- wiki\nwiki
-        widget              = QPushButton("wiki-\nwiki")
-        connect_to          = self.wiki_wiki
-        widget.clicked.connect( connect_to )
-        row_layout.addWidget( widget )
+
 
     #---------------------
     def clear_layout( self, layout ):

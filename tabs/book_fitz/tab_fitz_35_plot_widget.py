@@ -9,7 +9,7 @@ KEY_WORDS:      line graph  with points of static data chapter     rsh
 CLASS_NAME:     Fitz_6_Tab
 WIDGETS:        PlotWidget PyQtGraph pg.PlotWidget pg.mkPen  Grid Range
 STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
-TAB_TITLE:      Fitz_Chap 35 Plot Widget x A_Tab
+TAB_TITLE:      Fitz_Chapt 35 / Plot Widget x A_Tab
 DESCRIPTION:    Code motivated by Fitz 35 Dynamic Plot
 HOW_COMPLETE:   15  #  AND A COMMENT
 
@@ -265,6 +265,8 @@ class Fitz_6_Tab( tab_base.TabBase ) :
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
 
+        self.append_msg( tab_base.DONE_MSG )
+
     # ------------------------
     def inspect(self):
         """
@@ -275,9 +277,11 @@ class Fitz_6_Tab( tab_base.TabBase ) :
         self_graph_widget   = self.graphWidget
 
         wat_inspector.go(
-             msg            = "locals are graph and timer",
+             msg            = "items to inspect",
              a_locals       = locals(),
              a_globals      = globals(), )
+
+        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------
     def breakpoint(self):
@@ -288,5 +292,7 @@ class Fitz_6_Tab( tab_base.TabBase ) :
         self.append_function_msg( "breakpoint" )
 
         breakpoint()
+
+        self.append_msg( tab_base.DONE_MSG )
 
 # ---- eof

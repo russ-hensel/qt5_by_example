@@ -9,7 +9,7 @@ KEY_WORDS:      Querying SQL databases with Qt models   rsh
 CLASS_NAME:     Fitz_23_A_Tab
 WIDGETS:        QTableView() QSqlTableModel
 STATUS:         june 2025 runs_functionally not in good shape
-TAB_TITLE:      Fitz Chapt 23 TableModel
+TAB_TITLE:      Fitz Chapt 23 / TableModel
 DESCRIPTION:    This needs review
 HOW_COMPLETE:   15  #  AND A COMMENT
 """

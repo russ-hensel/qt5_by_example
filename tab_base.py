@@ -199,6 +199,12 @@ class TabBase( QWidget ):
         """
         self.build_gui_last_buttons(  row_layout  )
         """
+        # ---- wiki\nwiki
+        widget              = QPushButton("wiki-\nwiki")
+        connect_to          = self.wiki_wiki
+        widget.clicked.connect( connect_to )
+        row_layout.addWidget( widget )
+
         # ---- mutate
         widget              = QPushButton("mutate-\nexamine")
         self.button_ex_1    = widget
@@ -217,11 +223,7 @@ class TabBase( QWidget ):
         widget.clicked.connect( connect_to )
         row_layout.addWidget( widget )
 
-        # ---- wiki\nwiki
-        widget              = QPushButton("wiki-\nwiki")
-        connect_to          = self.wiki_wiki
-        widget.clicked.connect( connect_to )
-        row_layout.addWidget( widget )
+
 
 
     # ------------------------------------
