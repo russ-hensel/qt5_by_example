@@ -223,7 +223,7 @@ class QSqlQueryTab( tab_base.TabBase ):
     #-----------------------------------------------
     def query_exec_error_check( self, query, sql = None, raise_except = True ):
         """
-        2025-07-22:DAV: query_exec_error_check() forked from libs/qsql_utils.py query_exec_error_check
+        2025-07-22:DAV: query_exec_error_check() forked from libs/qsql_utils.py query_exec_error_check()
     
         """
         query_ok    = True
