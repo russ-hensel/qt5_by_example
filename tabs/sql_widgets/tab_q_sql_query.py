@@ -6,7 +6,7 @@
 """
 self.help_file_name     =  "sql_query_model_tab.txt"
 
-KEY_WORDS:      sql query select insert delete update      rh
+KEY_WORDS:      sql query select insert delete update      rh dc
 CLASS_NAME:     QSqlQueryTab
 WIDGETS:        QSqlQuery
 STATUS:         works
@@ -26,8 +26,11 @@ WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Kn
 # --------------------
 if __name__ == "__main__":
     #----- run the full app
+    """
     import qt_sql_widgets
     qt_sql_widgets.main()
+    """
+    import main
 # --------------------
 
 
@@ -105,6 +108,31 @@ print_func_header =  uft.print_func_header
 print( "==================================mover rename into databasetab ")
 
 #-----------------------------------------------
+"""
+2025-07-22:DAV: SQLError forked from libs/qsql_utils.py SQLError
+
+"""
+class SQLError( Exception ):
+    """
+    raise SQLError( why, errors )
+    """
+    def __init__(self, why, errors = "not given"):
+        """
+
+        I really do not know what I am doing here, works
+        but fix in future
+
+        """
+
+        # Call the base class constructor with the parameters it needs
+        super( ).__init__( why )
+        self.why    = why
+        # Now for your custom code...
+        self.errors = errors
+
+
+
+#-----------------------------------------------
 class QSqlQueryTab( tab_base.TabBase ):
     """
 
@@ -150,7 +178,7 @@ class QSqlQueryTab( tab_base.TabBase ):
         layout.addWidget( widget,   )
 
         widget = QPushButton( "delete_\ndata" )
-        widget.clicked.connect( self.insert_data  )
+        widget.clicked.connect( self.delete_data  )
         layout.addWidget( widget,   )
 
         # ---- new row, for build_gui_last_buttons
@@ -165,7 +193,8 @@ class QSqlQueryTab( tab_base.TabBase ):
         select data then loop through with a print
         test qsql_utils
         """
-        msg    = ( "\nselect_and_print()" )
+        msg = ( "select_and_print()\n" )
+        print_func_header( msg )
         self.append_msg( msg )
 
         sql     = """
@@ -180,7 +209,7 @@ class QSqlQueryTab( tab_base.TabBase ):
 
         query_ok   =  qsql_utils.query_exec_error_check( query = query, sql = sql, raise_except = True )
 
-        msg         = ("book_club table:")
+        msg      = ("book_club table:")
         self.append_msg( msg )
 
         while query.next():
@@ -191,6 +220,38 @@ class QSqlQueryTab( tab_base.TabBase ):
             msg      = (f"ID: {a_id = }  { name = }  {frequency = }  ")
             self.append_msg( msg )
 
+    #-----------------------------------------------
+    def query_exec_error_check( self, query, sql = None, raise_except = True ):
+        """
+        2025-07-22:DAV: query_exec_error_check() forked from libs/qsql_utils.py query_exec_error_check
+    
+        """
+        query_ok    = True
+        if sql is None:
+            result  = query.exec_( )  # sql already in the query
+        else:
+            result  = query.exec_( sql )
+    
+        if not result:
+            query_ok        = False
+            error_txt       =  query.lastError().text()
+            loc             = "query_exec_error_check"
+            debug_msg        = f"{loc} >>> error sql = { sql } \n lastError = {error_txt = }"
+            # logging.debug( debug_msg )
+            # dialog          =  DisplaySQLError( parent = None, title = "SQL Error", msg = debug_msg )
+            # if dialog.exec_() == QDialog.Accepted:
+            #    pass
+            raise SQLError( "sqlerror", debug_msg )
+            msg = ( debug_msg )
+            print_func_header( msg )
+            self.append_msg( msg )
+    
+        else:
+            pass
+            #rint("Query executed successfully.")
+        return query_ok
+        
+    
     #-----------------------------------------------
     def select_and_print_error( self ):
         """
@@ -209,7 +270,13 @@ class QSqlQueryTab( tab_base.TabBase ):
 
         query      = QSqlQuery( global_vars.EX_DB )
 
-        query_ok   = qsql_utils.query_exec_error_check( query = query, sql = sql, raise_except = True )
+        # FIXME: pull code out of qsql_utils and post here directly --
+        # this should never refer to libs/qsql_utils.py
+        # because the learner doesn't need to be jumping around.
+        """
+        query_ok   =  qsql_utils.query_exec_error_check(   query = query, sql = sql, raise_except = True )
+        """
+        query_ok   =  self.query_exec_error_check(   query = query, sql = sql, raise_except = True )
 
         msg      = ("book_club table:")
         self.append_msg( msg )
@@ -229,7 +296,9 @@ class QSqlQueryTab( tab_base.TabBase ):
         this uses bind variables, probably the safeest way to execute sql
         """
         print_func_header( "insert_data()" )
-
+        msg = ( "insert_data()\n" )
+        self.append_msg( msg )
+        
         query = QSqlQuery(  global_vars.EX_DB  )
 
         table_data = [
@@ -251,15 +320,27 @@ class QSqlQueryTab( tab_base.TabBase ):
             query.addBindValue( name )
             query.addBindValue( frequency )
 
-        # !! do we ever execute
+        query.exec()
 
     #-----------------------------------------------
     def delete_data( self ):
         """
 
+        FIXME:
         """
-        print_func_header( "delete_data()  not implemented" )
-        self.append_msg( tab_base.DONE_MSG )
+        print_func_header( "insert_data()" )
+        msg = ( "delete_data()\n" )
+        self.append_msg( msg )
+        
+        query = QSqlQuery(  global_vars.EX_DB  )
+        
+        sql     = """
+            DELETE FROM book_club
+            WHERE name = "Biography";
+        """
+        
+        query.prepare( sql )
+        query.exec()
 
     # ------------------------------------
     def mutate_0( self ):
