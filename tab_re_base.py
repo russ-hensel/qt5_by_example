@@ -5,10 +5,7 @@
 
 
 """
-Base class for demo tabs  -- a second version plan to descent then override
 
-this is pretty much infrastructure for the application
-not part of the widget examples
 
 """
 
@@ -148,6 +145,9 @@ class TabReBase( QWidget ):
         #self.help_file_set  = set()
         # _build_gui(self,   ): call from child
         self.ix_recursion   = 0
+        self.my_next_layout_function  = None
+            # replace with function that builds
+            # desired part of gui
 
     #------------------------
     def post_init(self):
@@ -295,6 +295,7 @@ class TabReBase( QWidget ):
 
         row_layout = QHBoxLayout()
         layout.addLayout( row_layout )
+        self.build_ntl_buttons( layout )   # next to last  expected in child
         self.build_gui_last_buttons( row_layout )
 
         self._build_gui_bot( layout )

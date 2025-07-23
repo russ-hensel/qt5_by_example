@@ -291,7 +291,7 @@ class QPushButtonTab( tab_base.TabBase ):
             # and does not run any slower
             # we use this local variable idea in many places
         widget          = self.q_push_button_1
-        widget.setText( "text set in mutate_0" )
+        widget.setText( "text set in mutate_0()" )
         widget.width     = 300
         widget.setToolTip( None )
         widget.setStyleSheet("")

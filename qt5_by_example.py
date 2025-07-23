@@ -220,7 +220,7 @@ class Qt5ByExample( QMainWindow ):
         self.tab_help_dict[ title ] = "select_tab.txt"
 
         #self.open_tab_select( "tab_base", "TabBase", "TabBase the base tab", widgets = "" )
-        self.open_tab_select( "tab_qsql_database", "QSqlDatabaseTab", "QSqlDatabase QSqlQuery", "web_link", widgets = ""  )
+        self.open_tab_select( "tab_qsql_database", "QSqlDatabaseTab", "QSqlDatabase / QSqlQuery", "web_link", widgets = ""  )
         #open_tab_select( self, module_name, class_name, title  ):
 
         button_layout = QHBoxLayout(   )

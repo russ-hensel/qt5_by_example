@@ -165,7 +165,8 @@ class QSqlQueryTab( tab_base.TabBase ):
         select data then loop through with a print
         test qsql_utils
         """
-        print_func_header( "select_and_print()" )
+        msg    = ( "\nselect_and_print()" )
+        self.append_msg( msg )
 
         sql     = """
             SELECT
@@ -179,7 +180,7 @@ class QSqlQueryTab( tab_base.TabBase ):
 
         query_ok   =  qsql_utils.query_exec_error_check( query = query, sql = sql, raise_except = True )
 
-        msg      = ("book_club table:")
+        msg         = ("book_club table:")
         self.append_msg( msg )
 
         while query.next():
@@ -208,7 +209,7 @@ class QSqlQueryTab( tab_base.TabBase ):
 
         query      = QSqlQuery( global_vars.EX_DB )
 
-        query_ok   =  qsql_utils.query_exec_error_check(   query = query, sql = sql, raise_except = True )
+        query_ok   = qsql_utils.query_exec_error_check( query = query, sql = sql, raise_except = True )
 
         msg      = ("book_club table:")
         self.append_msg( msg )

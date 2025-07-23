@@ -6,7 +6,7 @@ KEY_WORDS:      Example of a text edit for string input fix rh
 CLASS_NAME:     QTextEditTab
 WIDGETS:        QTextEdit
 STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
-TAB_TITLE:      QTextEdit Reference
+TAB_TITLE:      QTextEdit / Reference
 DESCRIPTION:    A reference for the QTextEdit widget
 HOW_COMPLETE:   25  #  AND A COMMENT
 

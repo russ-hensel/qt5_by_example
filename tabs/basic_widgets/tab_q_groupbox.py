@@ -4,18 +4,20 @@
 # ---- tof
 """
 
-tab_groupbox.py
+tab_q_groupbox.py
 
-self.help_file_name     =  "group_widget_tab.txt"
 
-KEY_WORDS:      group collect widgets   new_base
+
+KEY_WORDS:      group collect widgets
 CLASS_NAME:     QGroupBoxTab
 WIDGETS:        QGroupBox  StyleSheet
-STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
-TAB_TITLE:      QGroupBox Reference
-
+STATUS:         runs_correctly_5_10
+TAB_TITLE:      QGroupBox / Reference
+DESCRIPTION:    A reference for the QGroupBox widget
+HOW_COMPLETE:   20  #  AND A COMMENT -- <10 major probs  <15 runs but <20 fair not finished  <=25 not to shabby
 
 """
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QGroupBox "
 # --------------------
 if __name__ == "__main__":
     #----- run the full app
@@ -104,6 +106,11 @@ class QGroupBoxTab( tab_base.TabBase  ) :
         """
         super().__init__()
 
+        self.module_file        = __file__      # save for help file usage
+
+        global WIKI_LINK
+        self.wiki_link          = WIKI_LINK
+
         self.mutate_dict[0]     = self.mutate_0
         self.mutate_dict[1]     = self.mutate_1
         # self.mutate_dict[2]    = self.mutate_2
@@ -111,13 +118,6 @@ class QGroupBoxTab( tab_base.TabBase  ) :
         # self.mutate_dict[4]    = self.mutate_4
 
         self._build_gui()
-
-    # def _build_gui(self,   ):
-    #     """
-    #     build the gui
-    #     """
-    #     tab_page      = self
-    #     layout        = QVBoxLayout( tab_page )
 
     #----------------------------
     def _build_gui_widgets(self, main_layout  ):
@@ -128,7 +128,6 @@ class QGroupBoxTab( tab_base.TabBase  ) :
         layout              = QVBoxLayout(   )
 
         main_layout.addLayout( layout )
-        #button_layout        = QHBoxLayout(   )
 
         # ---- QGroupBox
         #groupbox   = QGroupBox()  # no title
@@ -154,23 +153,13 @@ class QGroupBoxTab( tab_base.TabBase  ) :
 
         self.build_gui_in_groupbox( layout_b )
 
-        button_layout = layout # needs fixing
+        # ---- new row, for build_gui_last_buttons
+        button_layout = QHBoxLayout(   )
+        layout.addLayout( button_layout, )
 
-        widget = QPushButton("mutate\n")
-        self.button_ex_1         = widget
-        widget.clicked.connect( lambda: self.mutate( ) )
-        button_layout.addWidget( widget )
-
-        # ---- PB inspect
-        widget          = QPushButton("inspect\n")
-        widget.clicked.connect( self.inspect    )
-        clear_button    = widget
-        button_layout.addWidget( widget,   )
-
-        # ---- PB breakpoint
-        widget = QPushButton("breakpoint\n")
-        widget.clicked.connect( self.breakpoint    )
-        button_layout.addWidget( widget,   )
+        # our ancestor finishes off the tab with some
+        # standard buttons
+        self.build_gui_last_buttons( button_layout )
 
     # ---------------------------
     def build_gui_in_groupbox( self, layout ):
@@ -186,31 +175,31 @@ class QGroupBoxTab( tab_base.TabBase  ) :
         """
         read it -- mutate the widgets
         """
-        self.append_function_msg( "mutate_0" )
+        self.append_function_msg( "mutate_0()" )
 
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
 
-        self.append_msg( "mutate_0 done" )
+        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------------------
     def mutate_1( self ):
         """
         read it -- mutate the widgets
         """
-        self.append_function_msg( "mutate_1" )
+        self.append_function_msg( "mutate_1()" )
 
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
 
-        self.append_msg( "mutate_1 done" )
+        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------
     def inspect(self):
         """
         the usual
         """
-        self.append_function_msg(  "inspect" )
+        self.append_function_msg(  "inspect()" )
 
         # make some locals for inspection
         my_tab_widget = self
@@ -221,7 +210,7 @@ class QGroupBoxTab( tab_base.TabBase  ) :
              a_locals       = locals(),
              a_globals      = globals(), )
 
-        self.append_msg( "inspect done" )
+        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------
     def breakpoint(self):
@@ -229,10 +218,10 @@ class QGroupBoxTab( tab_base.TabBase  ) :
         each tab gets its own function so we break in that
         tabs code
         """
-        self.append_function_msg(  "breakpoint" )
+        self.append_function_msg(  "breakpoint()" )
 
         breakpoint()
 
-        self.append_msg( "breakpoint done" )
+        self.append_msg( tab_base.DONE_MSG )
 
 # ---- eof
