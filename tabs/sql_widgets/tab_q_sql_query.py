@@ -10,7 +10,7 @@ KEY_WORDS:      sql query select insert delete update      rh dc
 CLASS_NAME:     QSqlQueryTab
 WIDGETS:        QSqlQuery
 STATUS:         works
-TAB_TITLE:      QSqlQuery Reference
+TAB_TITLE:      QSqlQuery / Reference
 DESCRIPTION:    A reference for the QSqlQuery widget -- non visual sql
 HOW_COMPLETE:   20  #  AND A COMMENT
 
@@ -295,7 +295,6 @@ class QSqlQueryTab( tab_base.TabBase ):
         also see the tab_qsql_database.py  populate_book_club_table
         this uses bind variables, probably the safeest way to execute sql
         """
-        print_func_header( "insert_data()" )
         msg = ( "insert_data()\n" )
         self.append_msg( msg )
         
@@ -319,8 +318,10 @@ class QSqlQueryTab( tab_base.TabBase ):
             query.prepare( sql )
             query.addBindValue( name )
             query.addBindValue( frequency )
-
-        query.exec()
+            query.exec()
+        msg = ("added 4 things:")
+        self.append_msg( msg )
+        self.append_msg( f"added: {table_data}   " )
 
     #-----------------------------------------------
     def delete_data( self ):

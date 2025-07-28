@@ -8,10 +8,13 @@ KEY_WORDS:      QCheckBox  checkbox check box dc
 CLASS_NAME:     QCheckBoxTab
 WIDGETS:        QCheckBox
 STATUS:         new
-TAB_TITLE:      QCheckBox Reference
+TAB_TITLE:      QCheckBox / Reference
+DESCRIPTION:    A reference for the QCheckBox widget
 HOW_COMPLETE:   25  #  AND A COMMENT
 
 """
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QCheckBox"
+
 # --------------------
 if __name__ == "__main__":
     #----- run the full app
@@ -94,6 +97,8 @@ class QCheckBoxTab(  tab_base.TabBase  ):
         """
         super().__init__()
         self.module_file       = __file__      # save for help file usage
+        global WIKI_LINK
+        self.wiki_link          = WIKI_LINK
         self.mutate_dict[0]    = self.mutate_0
         self.mutate_dict[1]    = self.mutate_1
         self.mutate_dict[2]    = self.mutate_2
