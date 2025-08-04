@@ -73,6 +73,52 @@ class Parameters( ):
 
         self.dir_for_tabs       = [ "./",  ]
 
+
+    # -------
+    def mode_dc_on_linux_mint( self ):
+        """
+        a mode for the new user, pretty much empty,
+        a new user may experiment here.
+        """
+        self.mode               = "mode_dc_on_linux_mint"
+        # but do they use the same units ?QDateEdit
+        # self.qt_width           = 1500
+        # self.qt_height          = 600    # 700 most of win height
+        # self.qt_xpos            = 10
+        # self.qt_ypos            = 10
+
+        # self.wat_qt_width       = 1500
+        # self.wat_qt_height      = 900
+        # self.wat_qt_xpos        = 10
+        # self.wat_qt_ypos        = 10
+
+        # # self.dir_for_tabs       = [""]
+        # # self.dir_for_tabs.append( "./tabs/basic_widgets" )
+        # # self.dir_for_tabs.append( "./tabs/sql_widgets" )
+        # # self.dir_for_tabs.append( "./tabs/book_fitz" ) #  book_fitz
+
+        # # ---- for sample database
+        # self.db_file_name        = "/tmp/ramdisk/qt_sql.db"
+        # self.db_file_name        = ":memory:"
+        # # in memory is fast
+        # # on disk (in "/tmp") is easier to debug
+
+        # # ---- for qt tabs
+        # self.tab_db_type         = "QSQLITE"
+
+        # self.default_search     = "dc"
+        # self.do_search_on_init  = True
+
+        # # self.min_complete    = 10  # minimum value for HOW_COMPLETE
+
+
+        # self.logging_level      = logging.DEBUG
+
+
+
+
+
+
     # -------
     def mode_russ_on_theprof( self ):
         """
