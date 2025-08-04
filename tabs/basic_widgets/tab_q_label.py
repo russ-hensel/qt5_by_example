@@ -3,17 +3,16 @@
 # ---- tof
 """
 
-tab_label.py
-
-KEY_WORDS:      pressed press push button click connect dc
+KEY_WORDS:      label widget dc
 CLASS_NAME:     QLabelTab
 WIDGETS:        QLabel
-STATUS:
-TAB_TITLE:      QLabel Reference
+STATUS:         2025 july: rough draft
+TAB_TITLE:      QLabel / Reference
 DESCRIPTION:    QLabel Reference material demo
-
+HOW_COMPLETE:   20  #  AND A COMMENT -- <10 major probs  <15 runs but <20 fair not finished  <=25 not to shabby
 
 """
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QLabel"
 
 """
 FIXME: merge from tab_label_dc_salvage.py if there's anything useful.
@@ -102,6 +101,8 @@ class QLabelTab( tab_base.TabBase ):
         """
         super().__init__()
         self.module_file       = __file__      # save for help file usage
+        global WIKI_LINK
+        self.wiki_link          = WIKI_LINK
         self.mutate_dict[0]    = self.mutate_0
         self.mutate_dict[1]    = self.mutate_1
         self.mutate_dict[2]    = self.mutate_2
@@ -139,6 +140,10 @@ class QLabelTab( tab_base.TabBase ):
 
         widget              = QLabel("qlabel_2 -> ")
         self.qlabel_2   = widget
+        row_layout.addWidget( widget )
+
+        widget              = QLabel("qlabel_3 -> ")
+        self.qlabel_3   = widget
         row_layout.addWidget( widget )
 
         # ---- new row, standard buttons
@@ -286,6 +291,9 @@ class QLabelTab( tab_base.TabBase ):
         # msg        = f"{self.q_push_button_1.isChecked() = } "
         # self.append_msg( msg, )
 
+        self.qlabel_2.setStyleSheet("QLabel { background-color : black; color : yellow; }");
+        self.qlabel_3.setStyleSheet("QLabel { background-color : red; color : blue; }");
+
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -306,6 +314,10 @@ class QLabelTab( tab_base.TabBase ):
         # self.q_push_button_1.setCheckable( True )
         #     # does not seem to work
         # self.q_push_button_1.toggle()
+        
+        self.qlabel_2.setStyleSheet("");
+        self.qlabel_3.setStyleSheet("");
+
 
         self.append_msg( tab_base.DONE_MSG )
 

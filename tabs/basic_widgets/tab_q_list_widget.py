@@ -8,11 +8,13 @@ KEY_WORDS:      list widget  dc
 CLASS_NAME:     QListWidgetTab
 WIDGETS:        QListWidget
 STATUS:         
-TAB_TITLE:      QListWidget Reference
+TAB_TITLE:      QListWidget / Reference
+DESCRIPTION:    A reference for the QListWidget widget
 HOW_COMPLETE:   25  #  AND A COMMENT 2025-07-02:DAV
 
 
 """
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QListWidget"
 
 
 # --------------------
@@ -91,9 +93,12 @@ class QListWidgetTab( tab_base.TabBase ) :
     def __init__(self):
         """
         the usual
-        tab_list_widget.py
         """
         super().__init__()
+        
+        global WIKI_LINK
+        self.wiki_link          = WIKI_LINK
+        
         self.module_file       = __file__      # save for help file usage
         self.mutate_dict[0]     = self.mutate_0
         self.mutate_dict[1]     = self.mutate_1
@@ -137,24 +142,15 @@ class QListWidgetTab( tab_base.TabBase ) :
             widget.setCurrentRow(index_to_select)
 
         # --- buttons
-        layout.addLayout( button_layout,  )
 
-        #button_layout.addWidget( widget )
+        # ---- new row, for build_gui_last_buttons
+        button_layout = QHBoxLayout(   )
+        layout.addLayout( button_layout, )
 
-        widget = QPushButton("mutate\n")
-        self.button_ex_1         = widget
-        widget.clicked.connect( lambda: self.mutate( ) )
-        button_layout.addWidget( widget )
+        # our ancestor finishes off the tab with some
+        # standard buttons
+        self.build_gui_last_buttons( button_layout )
 
-        # ---- PB inspect
-        widget = QPushButton("inspect\n")
-        widget.clicked.connect( self.inspect    )
-        button_layout.addWidget( widget,   )
-
-        # ---- PB breakpoint
-        widget = QPushButton("breakpoint\n")
-        widget.clicked.connect( self.breakpoint    )
-        button_layout.addWidget( widget,   )
 
     # --------------------
     def list_clicked( self, item ):
@@ -228,7 +224,7 @@ class QListWidgetTab( tab_base.TabBase ) :
         """
         read it -- mutate the widgets
         """
-        self.append_function_msg( "mutate_2" )
+        self.append_function_msg( "mutate_2()" )
 
         # msg    = "so far not implemented "
         # self.append_msg( msg, clear = False )
