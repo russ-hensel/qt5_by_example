@@ -217,7 +217,7 @@ class QPushButtonTab( tab_base.TabBase ):
                 background-color: #3e8e41;
             }
         """
-
+        # i do not know what the default state, perhaps wat_inspector can tell
     # ------------------------------------
     def signal_sent( self, msg ):
         """
@@ -294,7 +294,7 @@ class QPushButtonTab( tab_base.TabBase ):
         widget.setText( "text set in mutate_0()" )
         widget.width     = 300
         widget.setToolTip( None )
-        widget.setStyleSheet("")
+        widget.setStyleSheet( "" )
 
         # ---- change widget
         msg    = "for q_push_button_2 no mutations"
@@ -326,6 +326,9 @@ class QPushButtonTab( tab_base.TabBase ):
             # it is often convenient to use a local variable,
             # you will see this a lot in our code, it does not seem to
             # be typical but we think it should be
+
+        msg    = "q_push_button_1 set a tooltip"
+        self.append_msg( msg, )
 
         widget.setToolTip( "this is a tool tip" )
         widget.setText( "text set in \nmutate_1()" )
@@ -359,13 +362,16 @@ class QPushButtonTab( tab_base.TabBase ):
         self.append_function_msg( "mutate_2()" )
 
         msg    = "change some attributes..."
-        self.append_msg( msg, clear = False )
+        self.append_msg( msg,  )
 
 
         widget     = self.q_push_button_1
         self.q_push_button_1.setText( "one line")
         self.q_push_button_1.width     = 500
         self.q_push_button_1.setVisible( False )
+
+        msg    = "q_push_button_1 mess with checkable enabled..."
+        self.append_msg( msg,  )
 
         self.q_push_button_1.setCheckable( True )
         self.q_push_button_1.setChecked( True )
@@ -409,6 +415,7 @@ class QPushButtonTab( tab_base.TabBase ):
 
         msg    = "add menu to q_push_button_1"
         self.append_msg( msg, clear = False )
+
         menu                = QMenu(self)
         menu.addAction("Option 1")
         menu.addAction("Option 2")
@@ -416,11 +423,16 @@ class QPushButtonTab( tab_base.TabBase ):
 
         # ---- change widget
         widget      = self.q_push_button_2
-        msg         = "some changes to q_push_button_2"
+        msg         = "\nsome changes to q_push_button_2"
         self.append_msg( msg, clear = False )
+
+        msg    = "q_push_button_2 mess with style sheet... hover ... color "
+        self.append_msg( msg,  )
 
         widget.setCheckable( False )
         widget.setStyleSheet( self.get_button_style_sheet() )
+        msg     = f"get style sheet from widget \n {widget.styleSheet()}"
+        self.append_msg( msg,  )
 
         self.append_msg( tab_base.DONE_MSG )
 
