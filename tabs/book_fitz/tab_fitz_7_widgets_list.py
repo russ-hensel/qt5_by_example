@@ -6,7 +6,7 @@
 
 KEY_WORDS:      book many misc simple widgets ddl rsh
 CLASS_NAME:     FitzWidgetListTab
-WIDGETS:        QCheckBox, QComboBox, QDateEdit, QDateTimeEdit, QDial, QDoubleSpinBox, QFontComboBox, QLCDNumber, QLineEdit,
+WIDGETS:        QCheckBox QComboBox QDateEdit QDateTimeEdit QDial QDoubleSpinBox QFontComboBox QLCDNumber QLineEdit
 STATUS:         file name seems good
 TAB_TITLE:      Fitz Chapt  7 / Widgets widgets_list
 DESCRIPTION:    Code motivated by Fitz section 7 Widgets widgets_list.py

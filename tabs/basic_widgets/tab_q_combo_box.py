@@ -5,7 +5,7 @@ KEY_WORDS:      combo box or drop down list box ddl   rh testme rr
 CLASS_NAME:     QComboBoxTab
 WIDGETS:        QComboBox
 STATUS:         works  5/10
-TAB_TITLE:      QComboBox Reference
+TAB_TITLE:      QComboBox / Reference
 NOTES:          replaces tab_combo_box.py which should be deleted
 DESCRIPTION:    A reference for the QComboBox widget
 HOW_COMPLETE:   15  #  AND A COMMENT

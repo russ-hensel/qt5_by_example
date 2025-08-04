@@ -165,7 +165,6 @@ class Qt5ByExample( QMainWindow ):
 
         self.build_gui()
 
-
         self.current_tab_index   = 0   # I need to track in changed
         self.tab_widget.setCurrentIndex( 0 )
 

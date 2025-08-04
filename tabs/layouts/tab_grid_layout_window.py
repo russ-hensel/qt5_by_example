@@ -10,7 +10,7 @@ KEY_WORDS:      column columnspan span  rh
 CLASS_NAME:     GridLayoutWindowsTab
 WIDGETS:        GridLayout
 STATUS:         new
-TAB_TITLE:      GridLayoutWindows
+TAB_TITLE:      GridLayout /n Windows
 DESCRIPTION:    A reference for the QGridLayout widget
 HOW_COMPLETE:   20  #  AND A COMMENT -- <10 major probs  <15 runs but <20 fair not finished  <=25 not to shabby
 """
