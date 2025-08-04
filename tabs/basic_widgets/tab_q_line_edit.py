@@ -3,14 +3,16 @@
 # ---- tof
 """
 
-KEY_WORDS:      lineEdit   input text rh
+KEY_WORDS:      lineEdit     text
 CLASS_NAME:     QLineEditTab
 WIDGETS:        QLineEdit
-STATUS:
-TAB_TITLE:      QLineEdit Reference
+STATUS:         revie me
+TAB_TITLE:      QLineEdit / Reference
 DESCRIPTION:    A reference for the QLineEdit widget
-
+HOW_COMPLETE:   20  #  AND A COMMENT -- <10 major probs  <15 runs but <20 fair not finished  <=25 not to shabby
 """
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QPushButtons"
+
 
 
 # --------------------
@@ -209,10 +211,9 @@ class QLineEditTab( tab_base.TabBase ) :
         msg    = "so far a bit  implemented "
         self.append_msg( msg, clear = False )
 
-
         # ---- new widget
         widget     = self.line_edit_1_widget
-        widget.setText( "some text from setText in mutate_1()" )False
+        widget.setText( "some text from setText in mutate_1()" )
 
         msg    = "disable line edit 1"
         self.append_msg( msg, clear = False )
@@ -224,9 +225,6 @@ class QLineEditTab( tab_base.TabBase ) :
 
         # ---- new widget
         self.append_msg( tab_base.DONE_MSG )
-
-
-
 
     # ------------------------------------
     def mutate_2( self ):
@@ -248,7 +246,6 @@ class QLineEditTab( tab_base.TabBase ) :
 
         widget.setEnabled( True )
 
-
         # ---- new widget
         self.append_msg( tab_base.DONE_MSG )
 
@@ -266,13 +263,13 @@ class QLineEditTab( tab_base.TabBase ) :
         self_line_edit_1_widget = self.line_edit_1_widget
         self_line_edit_2_widget = self.line_edit_2_widget
 
-
-
         wat_inspector.go(
              msg            = "for your inspection, inc. locals and globals",
              # inspect_me     = self.people_model,
              a_locals       = locals(),
              a_globals      = globals(), )
+
+        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------
     def breakpoint(self):
@@ -282,5 +279,5 @@ class QLineEditTab( tab_base.TabBase ) :
         self.append_function_msg( "breakpoint()" )
         breakpoint()
 
-
+        self.append_msg( tab_base.DONE_MSG )
 # ---- eof

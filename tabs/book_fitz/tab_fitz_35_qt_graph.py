@@ -177,7 +177,7 @@ class Fitz_5_Tab( tab_base.TabBase ) :
         self.append_function_msg( "start" )
 
         self.timer.start()
-        self.append_msg( "start done" )
+        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------
     def stop(self):
@@ -185,7 +185,7 @@ class Fitz_5_Tab( tab_base.TabBase ) :
         self.append_function_msg( "stop" )
 
         self.timer.stop()
-        self.append_msg( "stop done" )
+        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------
     def update_plot_data(self):
@@ -208,6 +208,7 @@ class Fitz_5_Tab( tab_base.TabBase ) :
         self.append_function_msg( "mutate_0" )
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
+        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------------------
     def mutate_1( self ):
@@ -217,7 +218,7 @@ class Fitz_5_Tab( tab_base.TabBase ) :
         self.append_function_msg( "mutate_1" )
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
-        self.append_msg( "mutate_1 done" )
+        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------
     def inspect(self):
@@ -233,6 +234,7 @@ class Fitz_5_Tab( tab_base.TabBase ) :
              a_locals       = locals(),
              a_globals      = globals(), )
 
+        self.append_msg( tab_base.DONE_MSG )
     # ------------------------
     def breakpoint(self):
         """
@@ -243,5 +245,6 @@ class Fitz_5_Tab( tab_base.TabBase ) :
 
         breakpoint()
 
+        self.append_msg( tab_base.DONE_MSG )
 
 # ---- eof

@@ -8,7 +8,7 @@
 KEY_WORDS:      book mouse events right click context menu fitzz
 
 CLASS_NAME:     Fitz_3_Tab
-WIDGETS:        QMenu Qt.LeftButton
+WIDGETS:        QMenu Qt.LeftButton contextMenuEvent
 STATUS:         2025  06 27 wip   contents needs review
 
 TAB_TITLE:      Fitz Chapt 12 / MouseEvents

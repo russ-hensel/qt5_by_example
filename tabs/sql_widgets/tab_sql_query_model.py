@@ -8,9 +8,9 @@ self.help_file_name     =  "sql_query_model_tab.txt"
 KEY_WORDS:      sql query model select update delete crud rh
 CLASS_NAME:     SqlQueryModelTab
 WIDGETS:        QSqlQueryModel  QTableWidget
-STATUS:         works
+STATUS:         works -- but unclear what it is trying to do and seems incomplete
 TAB_TITLE:      SqlQueryModel
-HOW_COMPLETE:   20  #  AND A COMMENT
+HOW_COMPLETE:   10  #  AND A COMMENT
 """
 WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QSqlQuery"
 """

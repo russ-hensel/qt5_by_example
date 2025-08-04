@@ -3,12 +3,13 @@
 
 # ---- tof
 """
-KEY_WORDS:      on a form a date edit can be used for user input/output context menu rh todo testme rr
+KEY_WORDS:      date edit time drop down
 CLASS_NAME:     QDateEditTab
 WIDGETS:        QDateEdit  CalendarPopup QDateTimeEdit
-TAB_TITLE:      QDateEdit QDateTimeEdit Reference
+TAB_TITLE:      QDateEdit QDateTimeEdit / Reference
 DESCRIPTION:    A reference for the QDateEdit and closely related widgets
-HOW_COMPLETE:   20  #  AND A COMMENT
+HOW_COMPLETE:   20  #   ...
+STATUS:         should not have a custom date edit, mutates should do more
 
 What We Know About QDateEdit · russ-hensel/qt5_by_example Wiki
 https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QDateEdit
@@ -94,10 +95,11 @@ INDENT          = uft.BEGIN_MARK_2
 #INDENT          = qt_sql_widgets.
 
 
-
 # ----------------------------
 class CustomDateEdit( QDateEdit ):
     """
+    not used, might keep to show addition of a context meny
+    but may want different name ....
     move a version to stuffdb
     custom_widget.pb   as CQDateEdit
     """
@@ -173,7 +175,8 @@ class QDateEditTab( tab_base.TabBase  ):
 
         ix_col                  += 1
         #widget                  = QDateEdit()
-        widget                  = CustomDateEdit()   # with context menu fro chat
+        #widget                  = CustomDateEdit()   # with context menu fro chat
+        widget                  = QDateEdit()
         self.start_date_widget  = widget
         # widget.userDateChanged.connect( lambda: self.date_changed( ) )
         # widget.editingFinished.connect( lambda: self.date_changed( ) )
@@ -208,7 +211,7 @@ class QDateEditTab( tab_base.TabBase  ):
 
         # ----- QDateTimeEdit
         ix_row                  += 1
-        ix_col                  =0
+        ix_col                  = 0
         # Create a QDateTimeEdit widget
         widget            = QDateTimeEdit( )
         self.dateTimeEdit = widget
@@ -255,10 +258,10 @@ class QDateEditTab( tab_base.TabBase  ):
         #widget.setSingleStep( 15 )   # fails
 
         # Enable time wrapping
-        widget.setWrapping(True)
+        widget.setWrapping( True )
 
         # Enable keyboard tracking to update immediately
-        widget.setKeyboardTracking(True)
+        widget.setKeyboardTracking( True )
 
         # Clear the time edit field
         widget.clear()
@@ -277,18 +280,20 @@ class QDateEditTab( tab_base.TabBase  ):
         # widget.clicked.connect( lambda: self.inspect( ) )
         # button_layout.addWidget( widget )
 
-        # ----set_empty
-        widget = QPushButton("set_empty\n")
-        widget.clicked.connect(lambda: self.set_empty( ))
-        a_widget        = widget
-        button_layout.addWidget( widget )
+        # # ----set_empty
+        # widget = QPushButton("set_empty\n")
+        # widget.clicked.connect(lambda: self.set_empty( ))
+        # a_widget        = widget
+        # button_layout.addWidget( widget )
 
         self.build_gui_last_buttons( button_layout )
 
     # ------------------------------------
     def set_empty( self ):
         """
+        not currently called may be deleted as not useful or not
         what is says
+        this is sort of a hack, remove for now
         """
         self.append_function_msg(  "set_empty" )
 
@@ -397,15 +402,15 @@ class QDateEditTab( tab_base.TabBase  ):
         return unix_time
 
     # --------
-    def date_changed( self, arg ):
+    def date_changed( self,   ):
         """
         what is says
         """
         self.append_function_msg(  "date_changed()" )
 
-        print( f"{arg = }")
+        #print( f"{arg = }")
 
-
+        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------------------
     def mutate_0( self ):
@@ -417,6 +422,9 @@ class QDateEditTab( tab_base.TabBase  ):
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
 
+        self.append_msg( tab_base.DONE_MSG )
+
+
     # ------------------------------------
     def mutate_1( self ):
         """
@@ -427,6 +435,7 @@ class QDateEditTab( tab_base.TabBase  ):
         msg    = "so far not implemented "
         self.append_msg( msg, clear = False )
         self.append_msg( tab_base.DONE_MSG )
+
     # ------------------------
     def inspect(self):
         """
@@ -442,6 +451,8 @@ class QDateEditTab( tab_base.TabBase  ):
              a_locals       = locals(),
              a_globals      = globals(), )
 
+        self.append_msg( tab_base.DONE_MSG )
+
     # ------------------------
     def breakpoint(self):
         """
@@ -452,4 +463,5 @@ class QDateEditTab( tab_base.TabBase  ):
 
         breakpoint()
         self.append_msg( tab_base.DONE_MSG )
-        # ---- eof
+
+# ---- eof
