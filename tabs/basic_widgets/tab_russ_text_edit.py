@@ -6,12 +6,12 @@
 # this material is used for selection access to the tab module which must
 # be named tab_....py     among other things
 
-KEY_WORDS:      pressed press PushBtton click connect rsh pushbutton
-CLASS_NAME:     QPushButtonTab
-WIDGETS:        QPushButton
-STATUS:         June 2025 ok: but more content would be nice
-TAB_TITLE:      QPushButton / Reference
-DESCRIPTION:    A reference for the QPushButton widget
+KEY_WORDS:      russ
+CLASS_NAME:     RussTextEditTab
+WIDGETS:        QTextEdit
+STATUS:         brand new
+TAB_TITLE:      RussTextEdit / Experiment
+DESCRIPTION:    Experiment with extending a text edit
 HOW_COMPLETE:   20  #  AND A COMMENT -- <10 major probs  <15 runs but <20 fair not finished  <=25 not to shabby
 """
 WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QPushButtons"
@@ -19,12 +19,7 @@ WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Kn
 """
 Some Notes:
 
-Home · russ-hensel/qt5_by_example Wiki
-https://github.com/russ-hensel/qt5_by_example/wiki
 
-
-What We Know About QPushButtons · russ-hensel/qt5_by_example Wiki
-https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QPushButtons
 
 
 """
@@ -44,6 +39,7 @@ from functools import partial
 from subprocess import PIPE, STDOUT, Popen, run
 
 import wat
+from PyQt5 import QtCore
 from PyQt5 import QtGui
 from PyQt5.QtCore import (QDate,
                           QDateTime,
@@ -97,8 +93,195 @@ import tab_base
 
 print_func_header   = uft.print_func_header
 
+
+
+# -------------------------------
+class RussEditBase(  ):
+    """
+
+
+    """
+    def __init__(self,
+                 parent                 = None, ):
+
+        self.up_button              = None
+        self.dn_button              = None
+        self.search_text_widget     = None
+        self.last_position          = 0
+        self.set_custom_context_menu(   )
+
+    def make_search_wigets( self, ):
+        """
+        search_text_widget,  up_button,  dn_button  =  text_edit.make_search_wigets(  )
+        """
+        widget      = QPushButton( "Up✓")
+        self.up_button  = widget
+        widget.clicked.connect(  self.search_up  )
+
+        widget      = QPushButton( "Down")
+        self.dn_button  = widget
+        widget.clicked.connect(  self.search_down )
+
+        widget      = QLineEdit()
+        self.search_text_widget   = widget
+
+
+        return self.search_text_widget, self.up_button, self.dn_button
+
+
+    # ---------------------
+    def search_down( self,   ):
+        """
+        search for text see search up
+            case insensitive
+        """
+        text_edit   = self
+        search_text = self.search_text_widget.text()
+        if search_text:
+            cursor = text_edit.textCursor()
+            cursor.setPosition( self.last_position )
+            found = text_edit.find( search_text )
+
+            if found:
+                self.last_position = text_edit.textCursor().position()
+                text_edit.ensureCursorVisible()  # Scroll to the found text
+
+            else:
+                # grok code
+                self.last_position = 0
+                cursor.setPosition(self.last_position)
+                text_edit.setTextCursor(cursor)
+                text_edit.ensureCursorVisible()  # Optional: Scroll to top if reset
+
+    # ---------------------
+    def search_up( self,  ):
+        """case insensitive
+        for an text edit search for a string
+        the line_edit contains the string that is the target
+        direction of search is up
+        case insensitive
+        may need to protect against trying to start beyond end !!
+        as user may have deleted some text
+
+        """
+        text_edit   = self
+        search_text = self.search_text_widget.text()
+        if search_text:
+            cursor = text_edit.textCursor()
+            cursor.setPosition( self.last_position )
+
+            found = text_edit.find( search_text, QTextDocument.FindBackward )
+
+            if found:
+                self.last_position = text_edit.textCursor().position()
+                text_edit.ensureCursorVisible()  # Scroll to the found text
+
+            else:
+                self.last_position = text_edit.document().characterCount()
+                cursor.setPosition( self.last_position )
+                text_edit.setTextCursor(cursor)
+                text_edit.ensureCursorVisible()  # Optional: Scroll to top if reset
+
+
+    #----------------------------
+    def set_custom_context_menu( self, ):
+        """
+        what it says
+        """
+        self.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.customContextMenuRequested.connect( self.show_context_menu )
+
+
+    # ---------------------------------------
+    def show_context_menu( self, pos ):
+        """
+        from chat, refactor please !!
+        !! needs extension
+
+        """
+        widget      = self
+        menu        = QMenu( widget )
+
+        # Add standard actions
+        undo_action = menu.addAction("Undo")
+        undo_action.triggered.connect(widget.undo)
+        menu.addSeparator()
+
+        cut_action = menu.addAction("Cut")
+        cut_action.triggered.connect(widget.cut)
+
+        copy_action = menu.addAction("Copy")
+        # copy_action.triggered.connect(widget.copy)
+
+        paste_action = menu.addAction("Paste")
+        paste_action.triggered.connect( widget.paste )
+        #menu.addSeparator()
+
+        # ---- "Smart Paste"
+        foo_action = menu.addAction("Smart Paste")
+        #foo_action.triggered.connect(self.smart_paste_clipboard )
+        menu.addSeparator()
+
+        # ---- "Strip Sel"
+        foo_action = menu.addAction("Strip Sel")
+        #foo_action.triggered.connect( self.strip_lines_in_selection)
+        #menu.addSeparator()
+
+        # ---- "RStrip Sel"
+        foo_action = menu.addAction("RStrip Sel")
+        #foo_action.triggered.connect( self.strip_eol_lines_in_selection )
+        #menu.addSeparator()
+
+        # ---- ""Update Markup""
+        foo_action = menu.addAction("Update Markup")
+        #foo_action.triggered.connect( self.update_markup )
+        menu.addSeparator()
+
+        # ---- "Open Urls"
+        foo_action = menu.addAction("Open Urls")
+        #foo_action.triggered.connect( self.goto_urls_in_selection )
+        menu.addSeparator()
+
+
+        select_all_action = menu.addAction("Select All")
+        select_all_action.triggered.connect(widget.selectAll)
+
+        # ---- >>   go
+        menu_action = menu.addAction(">>   go ...")
+        #menu_action.triggered.connect( self.cmd_exec )
+        menu.addSeparator()
+
+
+        # Enable/disable actions based on context
+        cursor = widget.textCursor()
+        has_selection   = cursor.hasSelection()
+        can_undo        = widget.document().isUndoAvailable()
+        can_paste       = QApplication.clipboard().text() != ""
+
+        undo_action.setEnabled(can_undo)
+        cut_action.setEnabled(has_selection)
+        copy_action.setEnabled(has_selection)
+        paste_action.setEnabled(can_paste)
+        foo_action.setEnabled(can_paste)
+
+        # Show the context menu
+        menu.exec_(widget.mapToGlobal(pos))
+
+
+
+# -------------------------------
+class RussTextEdit( QTextEdit, RussEditBase ):
+    """
+
+    """
+    def __init__(self,
+                 parent                 = None, ):
+
+        # Initialize QTextEdit properly
+        QTextEdit.__init__( self, parent )  # Call QTextEdit constructor with parent
+
 #  --------
-class QPushButtonTab( tab_base.TabBase ):
+class RussTextEditTab( tab_base.TabBase ):
     """
     Reference examples for QPushButton
 
@@ -123,75 +306,110 @@ class QPushButtonTab( tab_base.TabBase ):
         # modify to match the number of mutate methods in this module
         self.mutate_dict[0]     = self.mutate_0
         self.mutate_dict[1]     = self.mutate_1
-        self.mutate_dict[2]     = self.mutate_2
-        self.mutate_dict[3]     = self.mutate_3
-        self.mutate_dict[4]     = self.mutate_4
+        # self.mutate_dict[2]     = self.mutate_2
+        # self.mutate_dict[3]     = self.mutate_3
+        # self.mutate_dict[4]     = self.mutate_4
 
         self._build_gui()
 
-    def _build_gui_widgets( self, main_layout ):
+
+    #----------------------------
+    def _build_gui_widgets(self, main_layout  ):
         """
         the usual, build the gui with the widgets of interest
-
-        main_layout will be a QVBoxLayout
-        this just does a basic build -- the framework will then automatically
-        call mutate_0()
-
-        this is important content for the widgets referenced on this tab
-
+        and the buttons for examples
         """
-        layout              = QHBoxLayout()
+        layout              = QGridLayout(   )
+
         main_layout.addLayout( layout )
+        # button_layout        = QHBoxLayout(   )
 
-        # too clever ??
-        main_layout.addLayout( layout := QVBoxLayout() )
+        # ---- the QTextEdit
+        #text_edit       = QTextEdit()
+        text_edit       = RussTextEdit()
+        # layout.addWidget(text_edit, 4, 0, 1, 3)  # Row 4, Column 0, RowSpan 1, ColumnSpan 3
+        self.text_edit  = text_edit
 
-        # ---- new row c
-        row_layout          = QHBoxLayout(   )
-        layout.addLayout( row_layout )
+        print( f"{text_edit.minimumSize( ) =} ")
+        text_edit.setMinimumHeight( 100 )
+        # print(  ia_qt.q_text_edit( text_edit, msg = "QTextEditTab.text_edit" ) )
 
-        # ---- New Row button_1 and _2 ....
-        # make a layout to put the buttons in
-        row_layout          = QHBoxLayout(   )
-        layout.addLayout( row_layout )
+        ix_row     = 0
+        ix_col     = 0
+        row_span   = 1
+        col_span   = 3
 
-        # a label that points to q_pbutton_1
-        widget          = QLabel( "q_pbutton_1 -> ", alignment=Qt.AlignRight)
-            # no instance variable as we will not use after __init__
+        layout.addWidget( text_edit, ix_row, ix_col, row_span, col_span )  # rowSpan, columnSpan Alignment  # args are
+            # widget: The widget you want to add to the grid.
+            # row: The row number where the widget should appear (starting from 0).
+            # column: The column number where the widget should appear (starting from 0).
+            # rowSpan (optional): The number of rows the widget should span (default is 1).
+            # columnSpan (optional): The number of columns the widget should span (default is 1).
+            # alignment (optional): The ali
 
-        # layout ( add to the windows ) the widget
-        row_layout.addWidget( widget )
+        search_text_widget,  up_button,  dn_button  =  text_edit.make_search_wigets(  )
 
-        # we use a local variable because it reduces the amount of code
-        # and does not run any slower
-        # we use this local variable idea in many places
-        # because we will refer to the bu
-        widget              = QPushButton( "q_pbutton_1" )
-        self.q_push_button_1    = widget
+        ix_row     += 1
+        ix_col     = 0
+        row_span   = 1
+        col_span   = 1
 
-            # save a reference for later use
-        # this function will be called when the button is clicked
-        # the code is a little indirect, do on one line if you wish
-        connect_to          = self.pb_1_clicked
-        widget.clicked.connect( connect_to )
-        row_layout.addWidget( widget )
+        layout.addWidget( search_text_widget, ix_row, ix_col, row_span, col_span )
 
-        widget              = QLabel("q_pbutton_2 -> ", alignment=Qt.AlignRight)
-        row_layout.addWidget( widget )
+        #ix_row     += 1
+        ix_col     += 1
+        row_span   = 1
+        col_span   = 1
 
-        widget              = QPushButton( "q_pbutton_2" )
-        self.q_push_button_2    = widget
-        connect_to          = self.pb_2_clicked
-        widget.clicked.connect( connect_to    )
-        row_layout.addWidget( widget,  )
+        layout.addWidget( up_button, ix_row, ix_col, row_span, col_span )
 
-        # ---- new row, for build_gui_last_buttons
+        #ix_row     += 1
+        ix_col     += 1
+        row_span   = 1
+        col_span   = 1
+
+        layout.addWidget( dn_button, ix_row, ix_col, row_span, col_span )
+
+        # # ---- search
+        # ix_row     += 1
+        # ix_col     = 0
+        # row_span   = 1
+        # col_span   = 1
+
+        # widget             = QLineEdit()
+        # self.line_edit     = widget
+
+        # # ---- see if these are legal
+        # #widget.setHeight( 10 )   # ng
+        # widget.setText( "Python")
+        # # widget.append(  "append a bit" )
+        # widget.setReadOnly( False )  # but this is default
+        # # too soon to call
+        #self.set_custom_context_menu( widget )
+
+
+        # widget.maximumHeight(…) # maximumHeight(self) -> int
+        # widget.maximumSize(…) # maximumSize(self) -> QSize
+        # widget.maximumViewportSize(…) # maximumViewportSize(self) -> QSize
+        # widget.maximumWidth(  ) # maximumWidth(self) -> int
+
+
+        # ---- new row
+        button_layout = QHBoxLayout( )
+        ix_row    += 1
+        layout.addLayout ( button_layout, ix_row, ix_col, row_span,  col_span )
+
+
+        # ---- new row
         button_layout = QHBoxLayout(   )
-        layout.addLayout( button_layout, )
+        ix_row    += 1
+        layout.addLayout ( button_layout, ix_row, ix_col, row_span,  col_span )
 
-        # our ancestor finishes off the tab with some
-        # standard buttons
+
         self.build_gui_last_buttons( button_layout )
+
+
+
 
     #----------------------------
     def get_button_style_sheet( self ):
@@ -283,6 +501,7 @@ class QPushButtonTab( tab_base.TabBase ):
         read the code for more insight, note messages to app and comments
         """
         self.append_function_msg( "mutate_0()" )
+        return
 
         # ---- change widget
         msg    = "for q_push_button_1 we more or less reset it"
@@ -315,6 +534,7 @@ class QPushButtonTab( tab_base.TabBase ):
         read the code for more insight, note messages to app and comments
         """
         self.append_function_msg( "mutate_1()" )
+        return
         # msg    = "begin implementation"
         # self.append_msg( msg, clear     = False )
         # for self.q_push_button_1
@@ -360,6 +580,7 @@ class QPushButtonTab( tab_base.TabBase ):
         read the code for more insight, note messages to app and comments
         """
         self.append_function_msg( "mutate_2()" )
+        return
 
         msg    = "change some attributes..."
         self.append_msg( msg,  )
@@ -400,6 +621,7 @@ class QPushButtonTab( tab_base.TabBase ):
         read the code for more insight, note messages to app and comments
         """
         self.append_function_msg( "mutate_3()" )
+        return
 
         msg    = "re-enable some stuff -- change attributes"
         self.append_msg( msg, clear = False )
@@ -444,6 +666,7 @@ class QPushButtonTab( tab_base.TabBase ):
         this is important content for the widgets referenced on this tab
         """
         self.append_function_msg( "mutate_4()" )
+        return
 
         msg    = "undo many of earlier mutations"
         self.append_msg( msg, clear = False )

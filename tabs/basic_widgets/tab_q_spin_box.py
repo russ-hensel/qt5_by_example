@@ -6,15 +6,15 @@
 # this material is used for selection access to the tab module which must
 # be named tab_....py     among other things
 
-KEY_WORDS:      pressed press PushBtton click connect rsh pushbutton
-CLASS_NAME:     QPushButtonTab
-WIDGETS:        QPushButton
-STATUS:         June 2025 ok: but more content would be nice
-TAB_TITLE:      QPushButton / Reference
-DESCRIPTION:    A reference for the QPushButton widget
+KEY_WORDS:        integer float double
+CLASS_NAME:     QSpinBoxTab
+WIDGETS:        QSpinBox QDoubleSpinBox
+STATUS:         todo more mutate and mutate comments remove dead code  style sheet -- pick up from ss of spiin box
+TAB_TITLE:      QSpinBox  / Reference
+DESCRIPTION:    A reference for the QSpinBox, QDoubleSpinBox widgets
 HOW_COMPLETE:   20  #  AND A COMMENT -- <10 major probs  <15 runs but <20 fair not finished  <=25 not to shabby
 """
-WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QPushButtons"
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QSpinBoxes"
 
 """
 Some Notes:
@@ -44,6 +44,11 @@ from functools import partial
 from subprocess import PIPE, STDOUT, Popen, run
 
 import wat
+
+
+from PyQt5.QtWidgets import (  QSpinBox,  QDoubleSpinBox )
+
+
 from PyQt5 import QtGui
 from PyQt5.QtCore import (QDate,
                           QDateTime,
@@ -98,7 +103,7 @@ import tab_base
 print_func_header   = uft.print_func_header
 
 #  --------
-class QPushButtonTab( tab_base.TabBase ):
+class QSpinBoxTab( tab_base.TabBase ):
     """
     Reference examples for QPushButton
 
@@ -156,7 +161,7 @@ class QPushButtonTab( tab_base.TabBase ):
         layout.addLayout( row_layout )
 
         # a label that points to q_pbutton_1
-        widget          = QLabel( "q_pbutton_1 -> ", alignment=Qt.AlignRight)
+        widget          = QLabel( "q_spin_box_1 -> ", alignment=Qt.AlignRight)
             # no instance variable as we will not use after __init__
 
         # layout ( add to the windows ) the widget
@@ -166,23 +171,23 @@ class QPushButtonTab( tab_base.TabBase ):
         # and does not run any slower
         # we use this local variable idea in many places
         # because we will refer to the bu
-        widget              = QPushButton( "q_pbutton_1" )
-        self.q_push_button_1    = widget
+        widget                  = QSpinBox(   )
+        self.q_spin_box_1       = widget
 
             # save a reference for later use
         # this function will be called when the button is clicked
         # the code is a little indirect, do on one line if you wish
-        connect_to          = self.pb_1_clicked
-        widget.clicked.connect( connect_to )
+        # connect_to          = self.pb_1_clicked
+        # widget.clicked.connect( connect_to )
         row_layout.addWidget( widget )
 
-        widget              = QLabel("q_pbutton_2 -> ", alignment=Qt.AlignRight)
+        widget              = QLabel("q_double_spin_box_1 -> ", alignment=Qt.AlignRight)
         row_layout.addWidget( widget )
 
-        widget              = QPushButton( "q_pbutton_2" )
-        self.q_push_button_2    = widget
-        connect_to          = self.pb_2_clicked
-        widget.clicked.connect( connect_to    )
+        widget              = QDoubleSpinBox(   )
+        self.q_double_spin_box_1    = widget
+        # connect_to          = self.pb_2_clicked
+        # widget.clicked.connect( connect_to    )
         row_layout.addWidget( widget,  )
 
         # ---- new row, for build_gui_last_buttons
@@ -194,7 +199,7 @@ class QPushButtonTab( tab_base.TabBase ):
         self.build_gui_last_buttons( button_layout )
 
     #----------------------------
-    def get_button_style_sheet( self ):
+    def get_spin_box_style_sheet( self ):
         """
         what it says
 
@@ -203,20 +208,70 @@ class QPushButtonTab( tab_base.TabBase ):
         this is important content for the widgets referenced on this tab
         """
         return """
-            QPushButton {
-                background-color: #4CAF50;
-                color: white;
-                border: 2px solid #4CAF50;
-                border-radius: 8px;
-                padding: 8px;
-            }
-            QPushButton:hover {
-                background-color: #45a049;
-            }
-            QPushButton:pressed {
-                background-color: #3e8e41;
-            }
-        """
+    QSpinBox {
+        background-color: #f0f0f0;        /* Light gray background */
+        color: #333333;                   /* Dark text */
+        border: 1px solid #888888;        /* Subtle border */
+        border-radius: 4px;               /* Rounded corners */
+        padding: 2px 4px;                 /* Inner spacing */
+        font-size: 14px;                   /* Text size */
+        font-family: Arial, sans-serif;    /* Font */
+        min-width: 60px;                   /* Minimum width */
+    }
+
+    /* When hovered */
+    QSpinBox:hover {
+        background-color: #e6f2ff;         /* Light blue highlight */
+        border-color: #3399ff;             /* Blue border */
+    }
+
+    /* When focused */
+    QSpinBox:focus {
+        background-color: #ffffff;         /* White background */
+        border-color: #007acc;             /* Stronger blue border */
+        outline: none;
+    }
+
+    /* Up/Down arrow buttons */
+    QSpinBox::up-button {
+        subcontrol-origin: border;
+        subcontrol-position: top right;
+        width: 16px;
+        background-color: #cccccc;
+        border-left: 1px solid #888888;
+        border-top-right-radius: 4px;
+    }
+
+    QSpinBox::up-button:hover {
+        background-color: #b3d1ff;         /* Hover effect */
+    }
+
+    QSpinBox::down-button {
+        subcontrol-origin: border;
+        subcontrol-position: bottom right;
+        width: 16px;
+        background-color: #cccccc;
+        border-left: 1px solid #888888;
+        border-bottom-right-radius: 4px;
+    }
+
+    QSpinBox::down-button:hover {
+        background-color: #b3d1ff;         /* Hover effect */
+    }
+
+    /* The arrows themselves */
+    QSpinBox::up-arrow {
+        image: url(:/qt-project.org/styles/commonstyle/images/up_arrow.png);
+        width: 10px;
+        height: 10px;
+    }
+
+    QSpinBox::down-arrow {
+        image: url(:/qt-project.org/styles/commonstyle/images/down_arrow.png);
+        width: 10px;
+        height: 10px;
+    }
+"""
         # i do not know what the default state, perhaps wat_inspector can tell
     # ------------------------------------
     def signal_sent( self, msg ):
@@ -258,7 +313,7 @@ class QPushButtonTab( tab_base.TabBase ):
         self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------------------
-    def pb_2_clicked( self ):
+    def pb_2_clickedxxx( self ):
         """
         What it says
 
@@ -284,25 +339,25 @@ class QPushButtonTab( tab_base.TabBase ):
         """
         self.append_function_msg( "mutate_0()" )
 
-        # ---- change widget
-        msg    = "for q_push_button_1 we more or less reset it"
-        self.append_msg( msg, clear = False )
-            # we use a local variable because it reduces the amount of code
-            # and does not run any slower
-            # we use this local variable idea in many places
-        widget          = self.q_push_button_1
-        widget.setText( "text set in mutate_0()" )
-        widget.width     = 300
-        widget.setToolTip( None )
-        widget.setStyleSheet( "" )
+        # # ---- change widget
+        # msg    = "for q_push_button_1 we more or less reset it"
+        # self.append_msg( msg, clear = False )
+        #     # we use a local variable because it reduces the amount of code
+        #     # and does not run any slower
+        #     # we use this local variable idea in many places
+        # widget          = self.q_push_button_1
+        # widget.setText( "text set in mutate_0()" )
+        # widget.width     = 300
+        # widget.setToolTip( None )
+        # widget.setStyleSheet( "" )
 
-        # ---- change widget
-        msg    = "for q_push_button_2 no mutations"
-        self.append_msg( msg, )
+        # # ---- change widget
+        # msg    = "for q_push_button_2 no mutations"
+        # self.append_msg( msg, )
 
-        widget          = self.q_push_button_2
-        # self.q_push_button_1.setDisabled( True )
-        # self.q_push_button_2.setDisabled( False )
+        # widget          = self.q_push_button_2
+        # # self.q_push_button_1.setDisabled( True )
+        # # self.q_push_button_2.setDisabled( False )
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -322,32 +377,41 @@ class QPushButtonTab( tab_base.TabBase ):
         msg    = "mess with q_push_button_1"
         self.append_msg( msg, )
 
-        widget        = self.q_push_button_1
-            # it is often convenient to use a local variable,
-            # you will see this a lot in our code, it does not seem to
-            # be typical but we think it should be
+        widget        = self.q_spin_box_1
+        widget.setRange(0, 100)
+        widget.setValue(10)
+        # Mutation after construction
+        widget.setSingleStep(5)
+        widget.setSuffix(" units")
 
-        msg    = "q_push_button_1 set a tooltip"
-        self.append_msg( msg, )
+        # widget        = self.q_push_button_1
+        # --- Double SpinBox ---
+        widget      = self.q_double_spin_box_1
 
-        widget.setToolTip( "this is a tool tip" )
-        widget.setText( "text set in \nmutate_1()" )
-            # note \n
-        widget.width     = 200
+        widget.setRange(-10.0, 10.0)
+        widget.setDecimals(2)
+        widget.setValue(1.23)
+        # Mutation after construction
+        widget.setSingleStep(0.5)
+        widget.setPrefix("$")
 
-        # ---- change widget
-        msg    = "some changes to q_push_button_2"
-        self.append_msg( msg, clear = False )
 
-        # ---- self.q_push_button_2
-        widget        = self.q_push_button_2
-        # msg    = "setChecked(True )"
+        # msg    = "q_push_button_1 set a tooltip"
         # self.append_msg( msg, )
 
+        # widget.setToolTip( "this is a tool tip" )
+        # widget.setText( "text set in \nmutate_1()" )
+        #     # note \n
+        # widget.width     = 200
 
-        # msg        = f"{self.q_push_button_1.isChecked() = } "
-        # self.append_msg( msg, )
+        # # ---- change widget
+        # msg    = "some changes to q_push_button_2"
+        # self.append_msg( msg, clear = False )
 
+        # # ---- self.q_push_button_2
+        # widget        = self.q_push_button_2
+        # # msg    = "setChecked(True )"
+        # # self.append_msg( msg, )
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -365,29 +429,29 @@ class QPushButtonTab( tab_base.TabBase ):
         self.append_msg( msg,  )
 
 
-        widget     = self.q_push_button_1
-        self.q_push_button_1.setText( "one line")
-        self.q_push_button_1.width     = 500
-        self.q_push_button_1.setVisible( False )
+        # widget     = self.q_push_button_1
+        # self.q_push_button_1.setText( "one line")
+        # self.q_push_button_1.width     = 500
+        # self.q_push_button_1.setVisible( False )
 
-        msg    = "q_push_button_1 mess with checkable enabled..."
-        self.append_msg( msg,  )
+        # msg    = "q_push_button_1 mess with checkable enabled..."
+        # self.append_msg( msg,  )
 
-        self.q_push_button_1.setCheckable( True )
-        self.q_push_button_1.setChecked( True )
-        self.q_push_button_1.setDisabled( True )
+        # self.q_push_button_1.setCheckable( True )
+        # self.q_push_button_1.setChecked( True )
+        # self.q_push_button_1.setDisabled( True )
 
-        self.q_push_button_1.setVisible( True )
+        # self.q_push_button_1.setVisible( True )
 
-        # next does not seem to work
-        self.q_push_button_1.setCheckable( True )
+        # # next does not seem to work
+        # self.q_push_button_1.setCheckable( True )
 
-        # ---- change widget
-        msg    = "some changes to q_push_button_2"
-        self.append_msg( msg, clear = False )
+        # # ---- change widget
+        # msg    = "some changes to q_push_button_2"
+        # self.append_msg( msg, clear = False )
 
-        widget     = self.q_push_button_2
-        widget.setCheckable( True )
+        # widget     = self.q_push_button_2
+        # widget.setCheckable( True )
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -404,35 +468,40 @@ class QPushButtonTab( tab_base.TabBase ):
         msg    = "re-enable some stuff -- change attributes"
         self.append_msg( msg, clear = False )
 
-        # ---- first widget
-        widget      = self.q_push_button_1
-        self.q_push_button_1.setText( "one line")
-        self.q_push_button_1.width     = 500
-        self.q_push_button_1.setDisabled( False )
-        self.q_push_button_1.setVisible( True )
-        self.q_push_button_1.setCheckable( True )
-        self.q_push_button_1.toggle()
+        # # ---- first widget
+        msg    = "apply style sheet"
+        self.append_msg( msg, )
+        widget        = self.q_spin_box_1
+        style_sheet   = self.get_spin_box_style_sheet()
+        widget.setStyleSheet( style_sheet )
+        # widget      = self.q_push_button_1
+        # self.q_push_button_1.setText( "one line")
+        # self.q_push_button_1.width     = 500
+        # self.q_push_button_1.setDisabled( False )
+        # self.q_push_button_1.setVisible( True )
+        # self.q_push_button_1.setCheckable( True )
+        # self.q_push_button_1.toggle()
 
-        msg    = "add menu to q_push_button_1"
-        self.append_msg( msg, clear = False )
+        # msg    = "add menu to q_push_button_1"
+        # self.append_msg( msg, clear = False )
 
-        menu                = QMenu(self)
-        menu.addAction("Option 1")
-        menu.addAction("Option 2")
-        widget.setMenu( menu )
+        # menu                = QMenu(self)
+        # menu.addAction("Option 1")
+        # menu.addAction("Option 2")
+        # widget.setMenu( menu )
 
-        # ---- change widget
-        widget      = self.q_push_button_2
-        msg         = "\nsome changes to q_push_button_2"
-        self.append_msg( msg, clear = False )
+        # # ---- change widget
+        # widget      = self.q_push_button_2
+        # msg         = "\nsome changes to q_push_button_2"
+        # self.append_msg( msg, clear = False )
 
-        msg    = "q_push_button_2 mess with style sheet... hover ... color "
-        self.append_msg( msg,  )
+        # msg    = "q_push_button_2 mess with style sheet... hover ... color "
+        # self.append_msg( msg,  )
 
-        widget.setCheckable( False )
-        widget.setStyleSheet( self.get_button_style_sheet() )
-        msg     = f"get style sheet from widget \n {widget.styleSheet()}"
-        self.append_msg( msg,  )
+        # widget.setCheckable( False )
+        # widget.setStyleSheet( self.get_button_style_sheet() )
+        # msg     = f"get style sheet from widget \n {widget.styleSheet()}"
+        # self.append_msg( msg,  )
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -445,34 +514,38 @@ class QPushButtonTab( tab_base.TabBase ):
         """
         self.append_function_msg( "mutate_4()" )
 
-        msg    = "undo many of earlier mutations"
-        self.append_msg( msg, clear = False )
+        widget        = self.q_spin_box_1
 
-        widget      = self.q_push_button_1
-        self.q_push_button_1.setText( "one line")
-        self.q_push_button_1.width     = 500
-        self.q_push_button_1.setDisabled( False )
-        self.q_push_button_1.setVisible( True )
-        self.q_push_button_1.setCheckable( True )
+        widget.setStyleSheet( "" )
 
-        # seems to make togable, how to turn off
-        #self.q_push_button_1.toggle()
+        # msg    = "undo many of earlier mutations"
+        # self.append_msg( msg, clear = False )
 
-        msg    = "add menu to q_push_button_1"
-        self.append_msg( msg, clear = False )
-        menu                = QMenu(self)
-        menu.addAction("Menu Option 1")
-        menu.addAction("Menu Option 2")
-        # try to clear the menu
-        widget.setMenu( None )
+        # widget      = self.q_push_button_1
+        # self.q_push_button_1.setText( "one line")
+        # self.q_push_button_1.width     = 500
+        # self.q_push_button_1.setDisabled( False )
+        # self.q_push_button_1.setVisible( True )
+        # self.q_push_button_1.setCheckable( True )
 
-        # ---- change widget
-        widget      = self.q_push_button_2
-        msg         = "some changes to q_push_button_2"
-        self.append_msg( msg, clear = False )
+        # # seems to make togable, how to turn off
+        # #self.q_push_button_1.toggle()
 
-        widget.setStyleSheet("")
-            # no style sheet
+        # msg    = "add menu to q_push_button_1"
+        # self.append_msg( msg, clear = False )
+        # menu                = QMenu(self)
+        # menu.addAction("Menu Option 1")
+        # menu.addAction("Menu Option 2")
+        # # try to clear the menu
+        # widget.setMenu( None )
+
+        # # ---- change widget
+        # widget      = self.q_push_button_2
+        # msg         = "some changes to q_push_button_2"
+        # self.append_msg( msg, clear = False )
+
+        # widget.setStyleSheet("")
+        #     # no style sheet
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -489,8 +562,8 @@ class QPushButtonTab( tab_base.TabBase ):
         self.append_function_msg( tab_base.INSPECT_MSG )
 
         # we set local variables to make it handy to inspect them
-        self_q_push_button_1    = self.q_push_button_1
-        self_q_push_button_2    = self.q_push_button_1
+        self_q_spin_box_1    = self.q_spin_box_1
+        self_q_double_spin_box_1   = self.q_double_spin_box_1
 
         wat_inspector.go(
              msg            = "for your inspection, some locals and globals",

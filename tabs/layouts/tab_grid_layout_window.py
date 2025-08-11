@@ -8,7 +8,7 @@
 
 KEY_WORDS:      column columnspan span  rh
 CLASS_NAME:     GridLayoutWindowsTab
-WIDGETS:        GridLayout
+WIDGETS:        GridLayout QSpacerItem
 STATUS:         new
 TAB_TITLE:      GridLayout / Windows
 DESCRIPTION:    A reference for the QGridLayout widget
@@ -111,7 +111,7 @@ print_func_header =  uft.print_func_header
 def layout_at_str( layout_at ):
     return f"{layout_at[0] }, {layout_at[1] }, {layout_at[2] }, {layout_at[3] }"
 
-def layout_widget( widget, layout, layout_at, widget_list ):
+def layout_widget( widget, layout, layout_at, ):
     """only for a grid
         self.line_edits.append(QLineEdit( "Edit 1") )
         layout_at    = 0, 0, 1, 2   # row coulum rowspan column_span
@@ -123,7 +123,7 @@ def layout_widget( widget, layout, layout_at, widget_list ):
     text         = layout_at_str( layout_at )
     layout.addWidget( widget, * layout_at )
     widget.setText( text )
-    widget_list.append( widget )
+    #widget_list.append( widget )
 
 
 # ----------------------------
@@ -163,31 +163,32 @@ class GridLayoutWindowsTab( tab_base.TabBase  ) :
         button_layout        = layout
 
         # # !! idea that did not get implemented ??  no just not valid
-        # widget          = QPushButton("grid_window\n_0")
+        # widget          = QPushButton("GridWindow.\n_0")
         # connect_to      = partial( self.open_grid_window, 0  )
         # widget.clicked.connect( connect_to  )
         # button_layout.addWidget( widget )
 
-        # ---- layout 1
-        widget = QPushButton("grid_window\n build_grid_chat")
-        connect_to   = partial( self.open_grid_window, GridWindowOne.build_grid_chat )
+        # ---- "GridWindow.\n build_grid_chat"
+        widget = QPushButton("GridWindow.\n build_grid_chat")
+        connect_to   = partial( self.open_grid_window, GridWindow.build_grid_chat )
         widget.clicked.connect( connect_to  )
         button_layout.addWidget( widget )
 
         # ---- GridWindowOne.build_grid_chat_row_0
-        widget = QPushButton("grid_window\n build_grid_chat_row_0.")
-        connect_to   = partial( self.open_grid_window, GridWindowOne.build_grid_chat_row_0  )
+        widget = QPushButton("GridWindow.\n build_grid_chat_row_0")
+        connect_to   = partial( self.open_grid_window, GridWindow.build_grid_chat_row_0  )
         widget.clicked.connect( connect_to  )
         button_layout.addWidget( widget )
 
-        # ---- build_grid_chat_row_0_spaced
-        widget = QPushButton("grid_window\n build_grid_chat_row_0_spaced.")
-        connect_to   = partial( self.open_grid_window, GridWindowOne.build_grid_chat_row_0_spaced  )
+        # ---- GridWindow.build_grid_chat_row_0_spaced
+        widget = QPushButton("GridWindow.\n build_grid_chat_row_0_spaced.")
+        connect_to   = partial( self.open_grid_window, GridWindow.build_grid_chat_row_0_spaced  )
         widget.clicked.connect( connect_to  )
         button_layout.addWidget( widget )
 
-        widget = QPushButton("grid_window\n build_grid_chat_refactored")
-        connect_to   = partial( self.open_grid_window, GridWindowOne.build_grid_chat_refactored  )
+        # ---- "GridWindow.\n build_grid_chat_refactored"
+        widget = QPushButton("GridWindow.\n build_grid_chat_refactored")
+        connect_to   = partial( self.open_grid_window, GridWindow.build_grid_chat_refactored  )
         widget.clicked.connect( connect_to  )
         button_layout.addWidget( widget )
 
@@ -206,7 +207,7 @@ class GridLayoutWindowsTab( tab_base.TabBase  ) :
         layout_method is a method in GridWindowOne that will be called
         from its init
         """
-        self.grid_window = GridWindowOne( layout_method )  # No parent specified
+        self.grid_window = GridWindow( layout_method )  # No parent specified
         self.grid_window.show()
 
     # ------------------------------------
@@ -259,8 +260,8 @@ class GridLayoutWindowsTab( tab_base.TabBase  ) :
 
         self.append_msg( tab_base.DONE_MSG )
 
-
-class GridWindowOne( QWidget ):
+ # ---------------------------
+class GridWindow( QWidget ):
     def __init__(self, layout_method ):  # Removed parent parameter
         super().__init__()  # No parent passed to super()
 
@@ -278,94 +279,95 @@ class GridWindowOne( QWidget ):
         self.setAttribute(Qt.WA_DeleteOnClose)
 
 
+
+    # ---------------------------
     def  build_grid_chat_refactored( self,  ):
         """russ build """
         self.setWindowTitle( f"GridWindowOne build_grid_chat_refactored ")
 
         # Create and add 20 QLineEdits with varying column spans
-        self.line_edits = []
+        # self.line_edits = []
 
         # Row 0  should have 5 columns like them all
         layout_at  =  ( 0, 0, 1, 2)
-        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, self.line_edits )
+        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, ) # self.line_edits )
 
         layout_at  =  ( 0, 2, 1, 1)
-        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, self.line_edits )
+        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, ) # self.line_edits )
 
         layout_at  =  ( 0, 3, 1, 1)
-        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, self.line_edits )
+        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, ) # self.line_edits )
 
         layout_at  =  ( 0, 4, 1, 1)
-        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, self.line_edits )
+        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, ) # self.line_edits )
 
         # Row 1
         layout_at  =  ( 1, 0, 1, 1)
-        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, self.line_edits )
+        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, ) # self.line_edits )
 
         layout_at  =  ( 1, 1, 1, 3)  # spans 3 columns
-        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, self.line_edits )
+        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, ) # self.line_edits )
 
         layout_at  =  ( 1, 4, 1, 1)
-        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, self.line_edits )
+        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, ) # self.line_edits )
 
         # Row 2
         #self.line_edits.append(QLineEdit("Edit 8"))
         layout_at  =  ( 2, 0, 1, 1)
-        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, self.line_edits )
+        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, ) # self.line_edits )
         #self.line_edits.append(QLineEdit("Edit 9"))
         layout_at  =  ( 2, 1, 1, 1)
-        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, self.line_edits )
+        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, ) # self.line_edits )
         #self.line_edits.append(QLineEdit("Edit 10"))
         layout_at  =  ( 2, 2, 1, 2)  # spans 2 columns
-        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, self.line_edits )
+        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, ) # self.line_edits )
         #self.line_edits.append(QLineEdit("Edit 11"))
         layout_at  =  ( 2, 4, 1, 1)
-        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, self.line_edits )
+        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, ) # self.line_edits )
 
         # ---- Row 3  --- adds to 5
         #self.line_edits.append(QLineEdit("Edit 12"))
         layout_at  =  (  3, 0, 1, 3)  # spans 3 columns
-        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, self.line_edits )
+        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, ) # self.line_edits )
         #self.line_edits.append(QLineEdit("Edit 13"))
         layout_at  =  (  3, 3, 1, 1)
-        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, self.line_edits )
+        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, ) # self.line_edits )
         #self.line_edits.append(QLineEdit("Edit 14"))
         layout_at  =  (  3, 4, 1, 1)
-        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, self.line_edits )
+        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, ) # self.line_edits )
 
         # --- Row 4 (adding extra row to complete 20 QLineEdits)
         #self.line_edits.append(QLineEdit("Edit 15"))
         layout_at  =  (   4, 0, 1, 1)
-        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, self.line_edits )
+        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, ) # self.line_edits )
         #self.line_edits.append(QLineEdit("Edit 16"))
         layout_at  =  (   4, 1, 1, 2)  # spans 2 columns
-        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, self.line_edits )
+        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, ) # self.line_edits )
         #self.line_edits.append(QLineEdit("Edit 17"))
         layout_at  =  (   4, 3, 1, 1)
-        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, self.line_edits )
+        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, ) # self.line_edits )
         #self.line_edits.append(QLineEdit("Edit 18"))
         layout_at  =  (   4, 4, 1, 1)
-        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, self.line_edits )
+        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, ) # self.line_edits )
         #self.line_edits.append(QLineEdit("Edit 19"))
 
         # ---- Row 5
         layout_at  =  (   5, 0, 1, 2)  # spans 2 columns
-        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, self.line_edits )
+        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, ) # self.line_edits )
         #self.line_edits.append(QLineEdit("Edit 20"))
         layout_at  =  (   5, 2, 1, 3)  # spans 3 columns
-        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, self.line_edits )
+        layout_widget( QLineEdit( "---"), self.grid_layout, layout_at, ) # self.line_edits )
 
 
+    # ---------------------------
     def  build_grid_chat_row_0_spaced( self,  ):
         """ add spacers to stabalize  """
         self.setWindowTitle( f"GridWindowOne build_grid_1 build_grid_chat_row_0_spaced")
         self.line_edits = []
         # ---- Row -1 the spacer trick, makd sure spaces are big enough
         for ix in range( 5 ):  # layout.col_max
-
             widget   = QSpacerItem( 200, 10, QSizePolicy.Minimum, QSizePolicy.Minimum ) # hsize, vsize hpolicy vpolicy
             self.grid_layout.addItem( widget, 0, ix  )  # row column
-
 
         # ---- Row 0
         self.line_edits.append(QLineEdit("Edit 1"))
@@ -379,8 +381,11 @@ class GridWindowOne( QWidget ):
 
     # -----------------
     def  build_grid_chat_row_0( self,  ):
-        """inbetween 0 and 1 """
-        self.setWindowTitle( f"GridWindowOne build_grid_1 build_grid_chat_row_0")
+        """
+        inbetween 0 and 1
+
+        """
+        self.setWindowTitle( f"GridWindowOne.build_grid_chat_row_0")
         self.line_edits = []
         # Row 0
         self.line_edits.append(QLineEdit("Edit 1"))
@@ -394,10 +399,13 @@ class GridWindowOne( QWidget ):
 
 
     def  build_grid_chat( self,  ):
-        """what chat did with some alterations  """
+        """
+        what chat did with some very minor alterations
+
+        """
 
 
-        self.setWindowTitle( f"GridWindowOne build_grid_0 mostly chat ")
+        self.setWindowTitle( f"GridWindowOne.build_grid_chat")
 
 
         # Create and add 20 QLineEdits with varying column spans
@@ -453,13 +461,7 @@ class GridWindowOne( QWidget ):
         self.line_edits.append(QLineEdit("Edit 20"))
         self.grid_layout.addWidget(self.line_edits[-1], 5, 2, 1, 3)  # spans 3 columns
 
-    def  build_grid_3( self,  ):
-        """russ build """
-        self.setWindowTitle( f"GridWindowOne build_grid_3")
 
-    def  build_grid_4( self,  ):
-        """russ build """
-        self.setWindowTitle( f"GridWindowOne build_grid_4")
 
 
 # ---- eof

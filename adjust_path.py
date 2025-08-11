@@ -21,11 +21,20 @@ me                    = __file__
 
 
 
+print( hostname )
+
+
 
 if   hostname == "russ-ThinkPad-P72":
     src_root         = "/mnt/WIN_D/russ/0000/python00/python3"
+
+elif hostname == "theprof":
+    src_root         = r"D:/russ\0000\python00\python3"
+
+
 elif hostname == "fattony":
     src_root         = "/media/russ/j_sg_bigcase/sync_py_3"
+
 else:
     src_root         = "/mnt/WIN_D/russ/0000/python00/python3"
 

@@ -114,7 +114,7 @@ class Search_Tab( QWidget ) :
         widget          = QLabel("Enter key words to search for a widget or use  "
                         "-- Box works, list works...  "
                         "-- Capitilization... is ignored  "
-                        "-- Click on widget to add to select  ")
+                        "-- Click on widget list to add widget to select  ")
 
         layout.addWidget( widget  )
 

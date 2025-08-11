@@ -18,7 +18,6 @@ What We Know About QTextEdit · russ-hensel/qt5_by_example Wiki
 https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QTextEdit
 
 
-
 """
 
 

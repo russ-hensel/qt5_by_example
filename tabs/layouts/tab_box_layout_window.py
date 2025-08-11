@@ -14,7 +14,7 @@ TAB_TITLE:      BoxLayout / Windows
 DESCRIPTION:    A reference for the QGridLayout widget
 HOW_COMPLETE:   20  #  AND A COMMENT -- <10 major probs  <15 runs but <20 fair not finished  <=25 not to shabby
 """
-WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QGridLayout"
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QBoxLayout"
 
 
 chat = """
@@ -127,7 +127,7 @@ def layout_widget( widget, layout, layout_at, widget_list ):
 
 
 # ----------------------------
-class GridLayoutWindowsTab( tab_base.TabBase  ) :
+class BoxLayoutWindowsTab( tab_base.TabBase  ) :
     def __init__(self):
         """
         the usual
@@ -170,24 +170,24 @@ class GridLayoutWindowsTab( tab_base.TabBase  ) :
 
         # ---- layout 1
         widget = QPushButton("grid_window\n build_grid_chat")
-        connect_to   = partial( self.open_grid_window, GridWindowOne.build_grid_chat )
+        connect_to   = partial( self.open_grid_window, GridWindow.build_grid_chat )
         widget.clicked.connect( connect_to  )
         button_layout.addWidget( widget )
 
-        # ---- GridWindowOne.build_grid_chat_row_0
+        # ---- GridWindow.build_grid_chat_row_0
         widget = QPushButton("grid_window\n build_grid_chat_row_0.")
-        connect_to   = partial( self.open_grid_window, GridWindowOne.build_grid_chat_row_0  )
+        connect_to   = partial( self.open_grid_window, GridWindow.build_grid_chat_row_0  )
         widget.clicked.connect( connect_to  )
         button_layout.addWidget( widget )
 
         # ---- build_grid_chat_row_0_spaced
         widget = QPushButton("grid_window\n build_grid_chat_row_0_spaced.")
-        connect_to   = partial( self.open_grid_window, GridWindowOne.build_grid_chat_row_0_spaced  )
+        connect_to   = partial( self.open_grid_window, GridWindow.build_grid_chat_row_0_spaced  )
         widget.clicked.connect( connect_to  )
         button_layout.addWidget( widget )
 
         widget = QPushButton("grid_window\n build_grid_chat_refactored")
-        connect_to   = partial( self.open_grid_window, GridWindowOne.build_grid_chat_refactored  )
+        connect_to   = partial( self.open_grid_window, GridWindow.build_grid_chat_refactored  )
         widget.clicked.connect( connect_to  )
         button_layout.addWidget( widget )
 
@@ -203,10 +203,10 @@ class GridLayoutWindowsTab( tab_base.TabBase  ) :
     def open_grid_window(self, layout_method ):
         """
         One the grid window using ones of its layout methods
-        layout_method is a method in GridWindowOne that will be called
+        layout_method is a method in GridWindow that will be called
         from its init
         """
-        self.grid_window = GridWindowOne( layout_method )  # No parent specified
+        self.grid_window = GridWindow( layout_method )  # No parent specified
         self.grid_window.show()
 
     # ------------------------------------
@@ -242,7 +242,7 @@ class GridLayoutWindowsTab( tab_base.TabBase  ) :
 
         # make some locals for inspection
         wat_inspector.go(
-             msg            = "gridlayouttab",
+             msg            = "for your inspection, some locals and globals",
              a_locals       = locals(),
              a_globals      = globals(), )
 
@@ -260,12 +260,12 @@ class GridLayoutWindowsTab( tab_base.TabBase  ) :
         self.append_msg( tab_base.DONE_MSG )
 
 
-class GridWindowOne( QWidget ):
+class GridWindow( QWidget ):
     def __init__(self, layout_method ):  # Removed parent parameter
         super().__init__()  # No parent passed to super()
 
         # Set window properties
-        self.setWindowTitle( f"GridWindowOne {layout_method}")
+        self.setWindowTitle( f"GridWindow {layout_method}")
         self.setMinimumSize(400, 300)
 
         # Create grid layout
@@ -280,7 +280,7 @@ class GridWindowOne( QWidget ):
 
     def  build_grid_chat_refactored( self,  ):
         """russ build """
-        self.setWindowTitle( f"GridWindowOne build_grid_chat_refactored ")
+        self.setWindowTitle( f"GridWindow build_grid_chat_refactored ")
 
         # Create and add 20 QLineEdits with varying column spans
         self.line_edits = []
@@ -358,7 +358,7 @@ class GridWindowOne( QWidget ):
 
     def  build_grid_chat_row_0_spaced( self,  ):
         """ add spacers to stabalize  """
-        self.setWindowTitle( f"GridWindowOne build_grid_1 build_grid_chat_row_0_spaced")
+        self.setWindowTitle( f"GridWindow build_grid_1 build_grid_chat_row_0_spaced")
         self.line_edits = []
         # ---- Row -1 the spacer trick, makd sure spaces are big enough
         for ix in range( 5 ):  # layout.col_max
@@ -380,7 +380,7 @@ class GridWindowOne( QWidget ):
     # -----------------
     def  build_grid_chat_row_0( self,  ):
         """inbetween 0 and 1 """
-        self.setWindowTitle( f"GridWindowOne build_grid_1 build_grid_chat_row_0")
+        self.setWindowTitle( f"GridWindow build_grid_1 build_grid_chat_row_0")
         self.line_edits = []
         # Row 0
         self.line_edits.append(QLineEdit("Edit 1"))
@@ -397,7 +397,7 @@ class GridWindowOne( QWidget ):
         """what chat did with some alterations  """
 
 
-        self.setWindowTitle( f"GridWindowOne build_grid_0 mostly chat ")
+        self.setWindowTitle( f"GridWindow build_grid_0 mostly chat ")
 
 
         # Create and add 20 QLineEdits with varying column spans
@@ -455,11 +455,11 @@ class GridWindowOne( QWidget ):
 
     def  build_grid_3( self,  ):
         """russ build """
-        self.setWindowTitle( f"GridWindowOne build_grid_3")
+        self.setWindowTitle( f"GridWindow build_grid_3")
 
     def  build_grid_4( self,  ):
         """russ build """
-        self.setWindowTitle( f"GridWindowOne build_grid_4")
+        self.setWindowTitle( f"GridWindow build_grid_4")
 
 
 # ---- eof
