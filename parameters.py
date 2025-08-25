@@ -162,7 +162,7 @@ class Parameters( ):
         self.tab_db_file_name    = ":memory:"    # ok no disk location needed
 
         # ---- default
-        self.default_search     = "rh"
+        self.default_search     = "russ"
         self.do_search_on_init  = True
 
         self.logging_level      = logging.DEBUG
