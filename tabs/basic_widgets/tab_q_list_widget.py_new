@@ -3,18 +3,17 @@
 
 # ---- tof
 """
-tab_qlist.py
 
-
-KEY_WORDS:      list widget  new_base qq
+KEY_WORDS:      list widget  dc
 CLASS_NAME:     QListWidgetTab
 WIDGETS:        QListWidget
-STATUS:         runs_correctly_5_10      demo_complete_2_10   !! review_key_words   !! review_help_0_10
-TAB_TITLE:      QListWidgetTab
+STATUS:         
+TAB_TITLE:      QListWidget Reference
+HOW_COMPLETE:   25  #  AND A COMMENT 2025-07-02:DAV
 
 
 """
-
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QPushButtons"
 
 # --------------------
 if __name__ == "__main__":
@@ -96,11 +95,12 @@ class QListWidgetTab( tab_base.TabBase ) :
         """
         super().__init__()
         self.module_file       = __file__      # save for help file usage
-
+        global WIKI_LINK
+        self.wiki_link          = WIKI_LINK
         self.mutate_dict[0]     = self.mutate_0
         self.mutate_dict[1]     = self.mutate_1
-        # self.mutate_dict[2]    = self.mutate_2
-        # self.mutate_dict[3]    = self.mutate_3
+        self.mutate_dict[2]     = self.mutate_2
+        self.mutate_dict[3]     = self.mutate_3
         # self.mutate_dict[4]    = self.mutate_4
         self.help_file_name      =  "list_widget_tab.txt"
         self._build_gui()
@@ -131,7 +131,7 @@ class QListWidgetTab( tab_base.TabBase ) :
 
         widget.clear()
 
-        values    =  [ "oneish", "twoish"]
+        values    =  [ "oneish", "twoish", "threeish"]
         for value in values:
             item = QListWidgetItem( value )
             widget.addItem( item )
@@ -142,8 +142,6 @@ class QListWidgetTab( tab_base.TabBase ) :
         layout.addLayout( button_layout,  )
 
         #button_layout.addWidget( widget )
-
-        """
 
         widget = QPushButton("mutate\n")
         self.button_ex_1         = widget
@@ -159,16 +157,13 @@ class QListWidgetTab( tab_base.TabBase ) :
         widget = QPushButton("breakpoint\n")
         widget.clicked.connect( self.breakpoint    )
         button_layout.addWidget( widget,   )
-        """
-
-        self.build_gui_last_buttons( button_layout )
 
     # --------------------
     def list_clicked( self, item ):
         """
         when the list is clicked get the text
         """
-        self.append_msg( "list_clicked" )
+        self.append_function_msg( "list_clicked" )
 
         widget        = self.list_widget_1
         row           = widget.row(item)
@@ -220,8 +215,61 @@ class QListWidgetTab( tab_base.TabBase ) :
         self.append_msg( msg, )
         self.list_widget_1.setMaximumHeight( 200 ) # setMaximumHeight(self, maxh: int)
 
+        # sortingEnabled doesn't seem to do anything. It does nothing!
+
+        msg    = "self.list_widget_1.sortingEnabled=True #"
+        self.append_msg( msg, )
+        self.list_widget_1.sortingEnabled=True #
+        self.append_msg( f"{self.list_widget_1.isSortingEnabled()=}" )
+        self.append_msg( "Note discrepancy -- isSortingEnabled() returns false, isn't that weird?")
+
         self.append_msg( "mutate_1 done" )
 
+    # ------------------------------------
+    def mutate_2( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_2" )
+
+        # msg    = "so far not implemented "
+        # self.append_msg( msg, clear = False )
+        
+        self.append_msg( f"{self.list_widget_1.sortingEnabled=}" )
+
+
+        # msg    = "self.list_widget_1.sortingEnabled=False #"
+        # self.append_msg( msg, )
+        # self.list_widget_1.sortingEnabled=False #
+
+        self.append_msg( f"{self.list_widget_1.sortingEnabled=}" )
+        self.append_msg( f"{self.list_widget_1.isSortingEnabled()=}" )
+
+        self.append_msg( "self.list_widget_1.addItem( item ) # Another thing on the list" )
+        item = QListWidgetItem( "Another thing on the list" )
+        self.list_widget_1.addItem( item )
+
+        self.append_msg( "mutate_2 done" )
+
+    # ------------------------------------
+    def mutate_3( self ):
+        """
+        read it -- mutate the widgets
+        """
+        self.append_function_msg( "mutate_3" )
+
+        # msg    = "so far not implemented "
+        # self.append_msg( msg, clear = False )
+        
+
+
+        msg    = "self.list_widget_1.sortItems() #"
+        self.append_msg( msg, )
+        self.list_widget_1.sortItems() #
+
+
+
+        self.append_msg( "mutate_3 done" )
     # ------------------------
     def inspect(self):
         """
