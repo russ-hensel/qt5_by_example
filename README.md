@@ -6,6 +6,8 @@ be deleted real soon )
 
 It is also part of a book in progress: What We Know About QT5 -- see the Wiki -- join in!
 
+https://github.com/russ-hensel/qt5_by_example/wiki
+
 Also included is a GUI version of wat-inspector a great little introspection
 utility.
 
@@ -23,22 +25,12 @@ Watch for updates and for postings here of any overall change in status.
 Contact the author for questions.
 
 Status:
-    Running, 
-    Infested with dead but harmless code.
-    Repo may be incomplete -- contact author if anything found missing
-    There are on the order of 40 tabs, but coverage of qt is still very
-    incomplete.
+    https://github.com/russ-hensel/qt5_by_example/wiki/Status-App-Book-Wiki
+
  
 Install:
+    https://github.com/russ-hensel/qt5_by_example/wiki/Installing-QT-Example-App
 
-    There is no install the intent is to run from your dev environment
-    -- the whold app is intended for programmers.
-    Put in your dev environment, launch the main app and look for dependencies
-    wat-inspector ( on pip and conda-forge ) and a peice of qt that will
-    let itself be known.
-    I run in python .12, but I think it runs in .10 and maybe even lower.
-
-    I will help anyone motivated to run this.
 
 Contributions:
 
