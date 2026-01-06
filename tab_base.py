@@ -16,7 +16,6 @@ not part of the widget examples
 if __name__ == "__main__":
     #----- run the full app
     import main
-    #qt_fitz_book.main()
 # --------------------
 
 
@@ -30,7 +29,8 @@ from datetime import datetime
 from functools import partial
 from subprocess import PIPE, STDOUT, Popen, run
 import webbrowser
-import wat
+#import wat
+from pathlib import Path
 from PyQt5 import QtGui
 from PyQt5.QtCore import (QAbstractListModel,
                           QAbstractTableModel,
@@ -42,11 +42,9 @@ from PyQt5.QtCore import (QAbstractListModel,
                           QTime,
                           QTimer)
 from PyQt5.QtGui import QColor, QImage, QPalette, QTextCursor, QTextDocument, QIcon
-# sql
+
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery, QSqlTableModel, QSqlQueryModel
-# widgets biger
-# widgets -- small
-# layouts
+
 from PyQt5.QtWidgets import (QAction,
                              QApplication,
                              QButtonGroup,
@@ -136,12 +134,12 @@ class TabBase( QWidget ):
         self.mutate_dict        = {}
         self.mutate_ix          = 0
         self.help_file_set      = set()
+        # self.module_file_name   = "not_set"
         # _build_gui(self,   ): call from child
 
     # -------------------------------
     def _build_gui(self,   ):
         """
-
 
         for the first 2 tabs
         layouts
@@ -159,7 +157,6 @@ class TabBase( QWidget ):
 
         self.set_help_file_name()
 
-
     # -------------------------------
     def _build_gui_top( self, layout ):
         """
@@ -170,7 +167,6 @@ class TabBase( QWidget ):
         # ---- new row
         row_layout          = QHBoxLayout(   )
         layout.addLayout( row_layout,  )
-
 
         widget              = QLabel( "classes...... on this tab" )
         self.class_widget   = widget  # widget showin calsses or widgets on tab
@@ -199,6 +195,12 @@ class TabBase( QWidget ):
         """
         self.build_gui_last_buttons(  row_layout  )
         """
+        # ---- "copy\nmod fn"
+        widget              = QPushButton("copy\nmodule fn")
+        connect_to          = self.copy_module_file_name
+        widget.clicked.connect( connect_to )
+        row_layout.addWidget( widget )
+
         # ---- wiki\nwiki
         widget              = QPushButton("wiki-\nwiki")
         connect_to          = self.wiki_wiki
@@ -207,7 +209,7 @@ class TabBase( QWidget ):
 
         # ---- mutate
         widget              = QPushButton("mutate-\nexamine")
-        self.button_ex_1    = widget
+        #self.button_ex_1    = widget
         widget.clicked.connect( lambda: self.mutate( ) )
         row_layout.addWidget( widget )
 
@@ -218,13 +220,11 @@ class TabBase( QWidget ):
         row_layout.addWidget( widget )
 
         # ---- PB breakpoint
-        widget              = QPushButton("breakpoint-\ndebug")
-        connect_to          = self.breakpoint
-        widget.clicked.connect( connect_to )
-        row_layout.addWidget( widget )
-
-
-
+        if global_vars.CONTROLLER.breakpoint_ok:
+            widget              = QPushButton("breakpoint-\ndebug")
+            connect_to          = self.breakpoint
+            widget.clicked.connect( connect_to )
+            row_layout.addWidget( widget )
 
     # ------------------------------------
     def set_help_file_name( self,   ):
@@ -233,7 +233,6 @@ class TabBase( QWidget ):
              check for dups and warn !!
 
          !! move help file to the dir where the class file is
-
 
          """
 
@@ -311,4 +310,14 @@ class TabBase( QWidget ):
         """
         webbrowser.open( self.wiki_link, new = 0, autoraise = True )
 
+    #----------------------------
+    def copy_module_file_name( self ):
+        """
+        """
+        file_path           = Path( self.module_file )
+        full_file_name      = str( file_path.resolve( ) )
+        QApplication.clipboard().setText( full_file_name  )
+
+
 # ---- eof
+

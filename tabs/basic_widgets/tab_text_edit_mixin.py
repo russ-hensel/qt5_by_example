@@ -6,7 +6,7 @@
 # this material is used for selection access to the tab module which must
 # be named tab_....py     among other things
 
-KEY_WORDS:      russ zz
+KEY_WORDS:      russ mix in contextMenu
 CLASS_NAME:     TextEditMixinTab
 WIDGETS:        TextEditMixin
 STATUS:         brand new
@@ -18,8 +18,6 @@ WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/Russ-Exper
 
 """
 Some Notes:
-
-
 
 
 """
@@ -41,6 +39,12 @@ import webbrowser
 
 
 import wat
+
+
+from PyQt5.QtWidgets import QApplication, QTextEdit, QMenu
+from PyQt5.QtCore import Qt, QPoint, QTimer
+from PyQt5.QtGui import QContextMenuEvent
+from PyQt5.QtCore import QPoint
 from PyQt5 import QtCore
 from PyQt5 import QtGui
 from PyQt5.QtCore import (QDate,
@@ -53,9 +57,7 @@ from PyQt5.QtCore import (QDate,
 from PyQt5.QtGui import QColor, QPalette, QTextCursor, QTextDocument
 # sql
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery, QSqlTableModel
-# widgets biger
-# widgets -- small
-# layouts
+
 from PyQt5.QtWidgets import (QAction,
                              QApplication,
                              QButtonGroup,
@@ -85,11 +87,11 @@ from PyQt5.QtWidgets import (QAction,
                              QVBoxLayout,
                              QWidget)
 
-#import parameters
+
 
 import os
 import platform
-import subprocess
+
 
 import utils_for_tabs as uft
 import wat_inspector
@@ -121,7 +123,7 @@ class TextEditMixin(  ):
         self.dn_button              = None
         self.search_text_widget     = None
         self.last_position          = 0
-        self.set_custom_context_menu(   )
+        self.set_custom_context_menu( self.show_context_menu_1 )
 
         # --- external optional services
         self.stuffdb                = None
@@ -173,30 +175,31 @@ class TextEditMixin(  ):
 
     def make_search_widgets( self, ):
         """
+        example:
         search_text_widget,  up_button,  dn_button  =  text_edit.make_search_wigets(  )
         """
-        widget      = QPushButton( "Up✓")
+        widget          = QPushButton( "⇑ Up ⇑")
         self.up_button  = widget
         widget.clicked.connect(  self.search_up  )
 
-        widget      = QPushButton( "Down")
+        widget          = QPushButton( "⇓ Down ⇓")
         self.dn_button  = widget
         widget.clicked.connect(  self.search_down )
 
-        widget      = QLineEdit()
-        self.search_text_widget   = widget
+        widget                  = QLineEdit()
+        self.search_text_widget = widget
 
         return self.search_text_widget, self.up_button, self.dn_button
 
     # ---------------------
     def ctrl_f_search_down( self,   ):
         """
-
+        what it says
         """
         selected_text    = self.capture_selected_text()
         #self.append( f"ctrl_f_search_down {selected_text = }")
         self.search_text_widget.setText( selected_text )
-        # do not do the firs search
+
 
     # ---------------------
     def search_down( self,   ):
@@ -255,15 +258,50 @@ class TextEditMixin(  ):
                 text_edit.ensureCursorVisible()
 
     #----------------------------
-    def set_custom_context_menu( self, ):
+    def fake_context_click( self,   ):
+        """
+        will this get rid of right click delay
+        """
+        pos = QPoint(10, 10)
+        global_pos      = self.mapToGlobal(pos)
+        ev              = QContextMenuEvent(
+                             QContextMenuEvent.Mouse, pos, global_pos, )
+
+        # choose one of the below
+        # Post it so it's handled like a real user click (delayed)
+        QApplication.postEvent( self, ev)
+        # next seems to be alterantive to above ??
+        # no this really makes a mess bad try
+        # self.contextMenuEvent(ev)
+
+    #----------------------------
+    def set_custom_context_menu( self, show_context_function ):
         """
         what it says
+        need disconnect if you connect more than once
+        still may get a one right click delay afer you
+        change the connection
+        there are way around this ask a chatbot
         """
+
+        try:
+            self.customContextMenuRequested.disconnect()
+        except TypeError:
+            # no previous connection
+            pass
+
         self.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        self.customContextMenuRequested.connect( self.show_context_menu )
+        self.customContextMenuRequested.connect( show_context_function )
+
+        # Optionally emit once to ensure the connection is live
+        # now we get a menu too soon so this is not a fix to one click delay
+        #self.customContextMenuRequested.emit( QPoint(0, 0)  )
+
+        # next does not fix the problem either seems to have no effect
+        self.fake_context_click()
 
     # ---------------------------------------
-    def show_context_menu( self, pos ):
+    def show_context_menu_1( self, pos ):
         """
         from chat, refactor please !!
         !! needs extension
@@ -331,6 +369,78 @@ class TextEditMixin(  ):
         copy_action.setEnabled(has_selection)
         paste_action.setEnabled(can_paste)
         foo_action.setEnabled(can_paste)
+
+        # Show the context menu
+        menu.exec_(widget.mapToGlobal(pos))
+
+    # ---------------------------------------
+    def show_context_menu_2( self, pos ):
+        """
+        big difference from _1 is text in caps
+
+        """
+        widget      = self
+        menu        = QMenu( widget )
+
+        # Add standard actions
+        undo_action = menu.addAction("UNDO")
+        undo_action.triggered.connect(widget.undo)
+        menu.addSeparator()
+
+        cut_action = menu.addAction("CUT")
+        cut_action.triggered.connect(widget.cut)
+
+        copy_action = menu.addAction("COPY")
+        # copy_action.triggered.connect(widget.copy)
+
+        paste_action = menu.addAction("PASTE")
+        paste_action.triggered.connect( widget.paste )
+        #menu.addSeparator()
+
+        # # ---- "Smart Paste"
+        # foo_action = menu.addAction("Smart Paste")
+        # #foo_action.triggered.connect(self.smart_paste_clipboard )
+        # menu.addSeparator()
+
+        # # ---- "Strip Sel"
+        # foo_action = menu.addAction("Strip Sel")
+        # #foo_action.triggered.connect( self.strip_lines_in_selection)
+        # #menu.addSeparator()
+
+        # # ---- "RStrip Sel"
+        # foo_action = menu.addAction("RStrip Sel")
+        # #foo_action.triggered.connect( self.strip_eol_lines_in_selection )
+        # #menu.addSeparator()
+
+        # # ---- ""Update Markup""
+        # foo_action = menu.addAction("Update Markup")
+        # #foo_action.triggered.connect( self.update_markup )
+        # menu.addSeparator()
+
+        # # ---- "Open Urls"
+        # foo_action = menu.addAction("Open Urls")
+        # #foo_action.triggered.connect( self.goto_urls_in_selection )
+        # menu.addSeparator()
+
+        select_all_action = menu.addAction("SELECT ALL")
+        select_all_action.triggered.connect(widget.selectAll)
+
+        # # ---- >>   go
+        # menu_action = menu.addAction(">>   go ...")
+        # menu_action.triggered.connect( self.cmd_exec )
+        # menu.addSeparator()
+
+        # Enable/disable actions based on context
+        cursor = widget.textCursor()
+        has_selection   = cursor.hasSelection()
+        can_undo        = widget.document().isUndoAvailable()
+        can_paste       = QApplication.clipboard().text() != ""
+
+        undo_action.setEnabled(can_undo)
+        cut_action.setEnabled(has_selection)
+        copy_action.setEnabled(has_selection)
+        paste_action.setEnabled(can_paste)
+        # foo_action.setEnabled(can_paste)
 
         # Show the context menu
         menu.exec_(widget.mapToGlobal(pos))
@@ -574,7 +684,7 @@ class TextEditMixin(  ):
             if position == prior_start_of_line:
                 debug_msg = ( f"is error !! hit the top of all text {ix =}")
                 # self.logging.log( LOG_LEVEL,  debug_msg, )
-                self.log( msg = msg, )
+                self.log( msg = debug_msg, )
                 break
             else:
                 prior_start_of_line  = position
@@ -702,8 +812,8 @@ class TextEditMixinTab( tab_base.TabBase ):
         # modify to match the number of mutate methods in this module
         self.mutate_dict[0]     = self.mutate_0
         self.mutate_dict[1]     = self.mutate_1
-        # self.mutate_dict[2]     = self.mutate_2
-        # self.mutate_dict[3]     = self.mutate_3
+        self.mutate_dict[2]     = self.mutate_2
+        self.mutate_dict[3]     = self.mutate_3
         # self.mutate_dict[4]     = self.mutate_4
 
         self._build_gui()
@@ -792,18 +902,18 @@ class TextEditMixinTab( tab_base.TabBase ):
 
         # ---- new row
         button_layout = QHBoxLayout( )
-        ix_row    += 1
+        ix_row     += 1
+        ix_col      = 0
+        col_span    = 2
         layout.addLayout ( button_layout, ix_row, ix_col, row_span,  col_span )
 
 
-        # ---- new row
-        button_layout = QHBoxLayout(   )
-        ix_row    += 1
-        layout.addLayout ( button_layout, ix_row, ix_col, row_span,  col_span )
-
+        # # ---- new row
+        # button_layout = QHBoxLayout(   )
+        # ix_row    += 1
+        # layout.addLayout ( button_layout, ix_row, ix_col, row_span,  col_span )
 
         self.build_gui_last_buttons( button_layout )
-
 
 
 
@@ -858,32 +968,7 @@ class TextEditMixinTab( tab_base.TabBase ):
 
         self.append_msg( tab_base.DONE_MSG )
 
-    # ------------------------------------
-    def pb_1_clicked( self ):
-        """
-        What it says
 
-            this function may be connected to a button normally
-            q_push_button_1
-
-        this is important content for the widgets referenced on this tab
-        """
-        self.append_msg( "pb_1_clicked()" )
-        self.append_msg( tab_base.DONE_MSG )
-
-    # ------------------------------------
-    def pb_2_clicked( self ):
-        """
-        What it says
-
-            this function may be connected to a button normally
-            q_push_button_1
-
-        this is important content for the widgets referenced on this tab
-        """
-        self.append_msg( "pb_2_clicked()" )
-
-        self.append_msg( tab_base.DONE_MSG  )
 
     # ------------------------------------
     def mutate_0( self ):
@@ -897,29 +982,16 @@ class TextEditMixinTab( tab_base.TabBase ):
         read the code for more insight, note messages to app and comments
         """
         self.append_function_msg( "mutate_0()" )
-        return
+        self.append_msg( "default_context_menu" )
+        widget          = self.text_edit
 
-        # ---- change widget
-        msg    = "for q_push_button_1 we more or less reset it"
-        self.append_msg( msg, clear = False )
-            # we use a local variable because it reduces the amount of code
-            # and does not run any slower
-            # we use this local variable idea in many places
-        widget          = self.q_push_button_1
-        widget.setText( "text set in mutate_0()" )
-        widget.width     = 300
-        widget.setToolTip( None )
-        widget.setStyleSheet( "" )
 
-        # ---- change widget
-        msg    = "for q_push_button_2 no mutations"
-        self.append_msg( msg, )
+        widget.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
 
-        widget          = self.q_push_button_2
-        # self.q_push_button_1.setDisabled( True )
-        # self.q_push_button_2.setDisabled( False )
 
         self.append_msg( tab_base.DONE_MSG )
+
+        return
 
     # ------------------------------------
     def mutate_1( self ):
@@ -930,40 +1002,11 @@ class TextEditMixinTab( tab_base.TabBase ):
         read the code for more insight, note messages to app and comments
         """
         self.append_function_msg( "mutate_1()" )
-        return
-        # msg    = "begin implementation"
-        # self.append_msg( msg, clear     = False )
-        # for self.q_push_button_1
+        widget          = self.text_edit
+        self.append_msg( "context_1 custom in mixed case, first click ignored error " )
 
-        msg    = "mess with q_push_button_1"
-        self.append_msg( msg, )
-
-        widget        = self.q_push_button_1
-            # it is often convenient to use a local variable,
-            # you will see this a lot in our code, it does not seem to
-            # be typical but we think it should be
-
-        msg    = "q_push_button_1 set a tooltip"
-        self.append_msg( msg, )
-
-        widget.setToolTip( "this is a tool tip" )
-        widget.setText( "text set in \nmutate_1()" )
-            # note \n
-        widget.width     = 200
-
-        # ---- change widget
-        msg    = "some changes to q_push_button_2"
-        self.append_msg( msg, clear = False )
-
-        # ---- self.q_push_button_2
-        widget        = self.q_push_button_2
-        # msg    = "setChecked(True )"
-        # self.append_msg( msg, )
-
-
-        # msg        = f"{self.q_push_button_1.isChecked() = } "
-        # self.append_msg( msg, )
-
+        foo     = partial( widget.set_custom_context_menu, widget.show_context_menu_1 )
+        widget.set_custom_context_menu( foo )
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -976,35 +1019,12 @@ class TextEditMixinTab( tab_base.TabBase ):
         read the code for more insight, note messages to app and comments
         """
         self.append_function_msg( "mutate_2()" )
-        return
 
-        msg    = "change some attributes..."
-        self.append_msg( msg,  )
+        widget          = self.text_edit
+        self.append_msg( "context_2  custom in CAP case, first click ignored error" )
 
-
-        widget     = self.q_push_button_1
-        self.q_push_button_1.setText( "one line")
-        self.q_push_button_1.width     = 500
-        self.q_push_button_1.setVisible( False )
-
-        msg    = "q_push_button_1 mess with checkable enabled..."
-        self.append_msg( msg,  )
-
-        self.q_push_button_1.setCheckable( True )
-        self.q_push_button_1.setChecked( True )
-        self.q_push_button_1.setDisabled( True )
-
-        self.q_push_button_1.setVisible( True )
-
-        # next does not seem to work
-        self.q_push_button_1.setCheckable( True )
-
-        # ---- change widget
-        msg    = "some changes to q_push_button_2"
-        self.append_msg( msg, clear = False )
-
-        widget     = self.q_push_button_2
-        widget.setCheckable( True )
+        foo     = partial( widget.set_custom_context_menu, widget.show_context_menu_2 )
+        widget.set_custom_context_menu( foo )
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -1017,40 +1037,11 @@ class TextEditMixinTab( tab_base.TabBase ):
         read the code for more insight, note messages to app and comments
         """
         self.append_function_msg( "mutate_3()" )
-        return
 
-        msg    = "re-enable some stuff -- change attributes"
-        self.append_msg( msg, clear = False )
+        self.append_msg( "no_context_menu" )
 
-        # ---- first widget
-        widget      = self.q_push_button_1
-        self.q_push_button_1.setText( "one line")
-        self.q_push_button_1.width     = 500
-        self.q_push_button_1.setDisabled( False )
-        self.q_push_button_1.setVisible( True )
-        self.q_push_button_1.setCheckable( True )
-        self.q_push_button_1.toggle()
-
-        msg    = "add menu to q_push_button_1"
-        self.append_msg( msg, clear = False )
-
-        menu                = QMenu(self)
-        menu.addAction("Option 1")
-        menu.addAction("Option 2")
-        widget.setMenu( menu )
-
-        # ---- change widget
-        widget      = self.q_push_button_2
-        msg         = "\nsome changes to q_push_button_2"
-        self.append_msg( msg, clear = False )
-
-        msg    = "q_push_button_2 mess with style sheet... hover ... color "
-        self.append_msg( msg,  )
-
-        widget.setCheckable( False )
-        widget.setStyleSheet( self.get_button_style_sheet() )
-        msg     = f"get style sheet from widget \n {widget.styleSheet()}"
-        self.append_msg( msg,  )
+        widget = self.text_edit
+        widget.setContextMenuPolicy( QtCore.Qt.NoContextMenu )
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -1062,36 +1053,7 @@ class TextEditMixinTab( tab_base.TabBase ):
         this is important content for the widgets referenced on this tab
         """
         self.append_function_msg( "mutate_4()" )
-        return
 
-        msg    = "undo many of earlier mutations"
-        self.append_msg( msg, clear = False )
-
-        widget      = self.q_push_button_1
-        self.q_push_button_1.setText( "one line")
-        self.q_push_button_1.width     = 500
-        self.q_push_button_1.setDisabled( False )
-        self.q_push_button_1.setVisible( True )
-        self.q_push_button_1.setCheckable( True )
-
-        # seems to make togable, how to turn off
-        #self.q_push_button_1.toggle()
-
-        msg    = "add menu to q_push_button_1"
-        self.append_msg( msg, clear = False )
-        menu                = QMenu(self)
-        menu.addAction("Menu Option 1")
-        menu.addAction("Menu Option 2")
-        # try to clear the menu
-        widget.setMenu( None )
-
-        # ---- change widget
-        widget      = self.q_push_button_2
-        msg         = "some changes to q_push_button_2"
-        self.append_msg( msg, clear = False )
-
-        widget.setStyleSheet("")
-            # no style sheet
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -1108,8 +1070,7 @@ class TextEditMixinTab( tab_base.TabBase ):
         self.append_function_msg( tab_base.INSPECT_MSG )
 
         # we set local variables to make it handy to inspect them
-        self_q_push_button_1    = self.q_push_button_1
-        self_q_push_button_2    = self.q_push_button_1
+        self_text_edit    = self.text_edit
 
         wat_inspector.go(
              msg            = "for your inspection, some locals and globals",

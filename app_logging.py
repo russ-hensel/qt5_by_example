@@ -83,29 +83,6 @@ APP_LOGGING     = None
 
 # this is a mess as code is in flux
 
-PARAMETERS      = None
-if PARAMETERS is None:
-    try:
-        import app_globals
-
-        PARAMETERS      = app_globals.PARAMETERS
-
-    except:
-        pass
-
-
-if PARAMETERS is None:
-    try:
-        from app_global import AppGlobal
-
-        PARAMETERS      = AppGlobal.parameters
-
-    except:
-        pass
-
-
-
-
 
 
 
@@ -198,7 +175,7 @@ class AppLogging( ):
         """
         Configure the Python logger to allow logging from other modules.
         """
-        # PARAMETERS      = app_globals.PARAMETERS
+        PARAMETERS      = AppGlobal.parameters
 
         log_file_name   = PARAMETERS.pylogging_fn  # File to log messages
         log_mode        = PARAMETERS.log_mode

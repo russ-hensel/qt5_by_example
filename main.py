@@ -5,7 +5,7 @@
 
 """
 import os
-
+import sys
 # Get the directory of the current .py file
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -16,4 +16,9 @@ print(os.getcwd())  # Prints the new working directory
 import adjust_path
 import qt5_by_example
 
+
+print( f"sys.argv  = >>>{sys.argv}<<< ")
+
 qt5_by_example.main()
+
+

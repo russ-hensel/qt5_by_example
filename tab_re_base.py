@@ -202,6 +202,13 @@ class TabReBase( QWidget ):
 
         Note this is a bit more verbose than it needs to be
         """
+
+        # ---- "copy\nmod fn"
+        widget              = QPushButton("copy\nmod fn")
+        connect_to          = self.copy_module_file_name
+        widget.clicked.connect( connect_to )
+        row_layout.addWidget( widget )
+
         # ---- wiki\nwiki
         widget              = QPushButton("wiki-\nwiki")
         connect_to          = self.wiki_wiki
@@ -221,10 +228,11 @@ class TabReBase( QWidget ):
         row_layout.addWidget( widget )
 
         # ---- PB breakpoint
-        widget              = QPushButton("breakpoint-\ndebug")
-        connect_to          = self.breakpoint
-        widget.clicked.connect( connect_to )
-        row_layout.addWidget( widget )
+        if global_vars.CONTROLLER.breakpoint_ok:
+            widget              = QPushButton("breakpoint-\ndebug")
+            connect_to          = self.breakpoint
+            widget.clicked.connect( connect_to )
+            row_layout.addWidget( widget )
 
 
 
@@ -441,5 +449,16 @@ class TabReBase( QWidget ):
         """
         #webbrowser.open( self.web_link, new = 0, autoraise = True )
         webbrowser.open( self.wiki_link, new = 0, autoraise = True )
+
+
+    #----------------------------
+    def copy_module_file_name( self ):
+        """
+        """
+        file_path           = Path( self.module_file )
+        full_file_name      = str( file_path.resolve( ) )
+        QApplication.clipboard().setText( full_file_name  )
+
+
 
 # ---- eof

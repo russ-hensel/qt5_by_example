@@ -23,7 +23,7 @@ if __name__ == "__main__":
     #----- run the full app
     import main
     #qt_fitz_book.main()
-# --------------------
+# --------------------VERBOSE
 
 import inspect
 import subprocess
@@ -100,9 +100,7 @@ INDENT          = uft.BEGIN_MARK_2
 class QGroupBoxTab( tab_base.TabBase  ) :
     def __init__(self):
         """
-        some content from and there may be more
-        /mnt/WIN_D/Russ/0000/python00/python3/_projects/rshlib/gui_qt_ext.py
-        tab_groupbox.py
+        setup except for gui
         """
         super().__init__()
 
@@ -147,6 +145,9 @@ class QGroupBoxTab( tab_base.TabBase  ) :
                 background-color: white;
             }
         """)
+
+        # layout the groupbox and make
+        # another layout inside it
 
         layout.addWidget( groupbox )
         layout_b     = QHBoxLayout( groupbox  )

@@ -139,7 +139,6 @@ class QLineEditTab( tab_base.TabBase ) :
         row_layout       = QHBoxLayout( )
         layout.addLayout( row_layout )
 
-
         # # ---- edits --------------------------------
         # layout.addWidget( groupbox_edits )
         # g_layout            = QVBoxLayout( groupbox_edits  )
@@ -162,7 +161,6 @@ class QLineEditTab( tab_base.TabBase ) :
         self.line_edit_2_widget = widget
         row_layout.addWidget( widget,  ) # stretch = lbl_stretch )
 
-
         # ---- new row
         row_layout        = QHBoxLayout( )
         layout.addLayout( row_layout )
@@ -170,9 +168,6 @@ class QLineEditTab( tab_base.TabBase ) :
         # our ancestor finishes off the tab with some
         # standard buttons
         self.build_gui_last_buttons( row_layout )
-
-
-
 
     # ------------------------------------
     def mutate_0( self ):

@@ -39,7 +39,7 @@ class Parameters( ):
             if you comment all out all modes you get the default mode which should
             run, perhaps not in the way you want
         """
-        self.mode_russ_on_theprof()
+        #self.mode_russ_on_theprof()
         #self.new_user_mode()
         #self.millhouse_1_mode()
 
@@ -166,7 +166,7 @@ class Parameters( ):
         self.do_search_on_init  = True
 
         self.logging_level      = logging.DEBUG
-
+        self.logging_level      = logging.INFO
     # -------
     def new_user_mode( self ):
         """
@@ -202,19 +202,16 @@ class Parameters( ):
             import in_spect_env
             in_spect_env.InSpectEnv.value
         """
-        pass
-        # self.os_tweaks()
-
         computer_id    =   in_spect_env.InSpectEnv.computer_id
 
         print( f"Parameters running_on_tweaks {computer_id = }")
         print( f"Parameters {  in_spect_env.InSpectEnv.__str__()  } ")  #ok
         # print( "------------------------------")
         # print( f"{ str(in_spect_env.InSpectEnv)   } ")       # ng
-        pass
+
         # if computer_id == "smithers":
         #     self.win_geometry       = '1450x700+20+20'      # width x height position
-        #     self.ex_editor          =  r"D:\apps\Notepad++\notepad++.exe"
+        #     self.ex_aleditor          =  r"D:\apps\Notepad++\notepad++.exe"
         #     self.db_file_name       =  "smithers_db.db"
 
         # # ---- bulldog
@@ -228,28 +225,30 @@ class Parameters( ):
         #     #self.win_geometry   = '1300x600+20+20'
         #     self.db_file_name       =  "millhouse_db.db"
 
-        # elif computer_id == "millhouse-mint":
-        #     #self.ex_editor          =  r"C:\apps\Notepad++\notepad++.exe"
-        #     #self.win_geometry   = '1300x600+20+20'
+        # ---- 'millhouse-mint'
+        if computer_id == 'millhouse-mint':
+            self.ex_editor          =  r"C:\apps\Notepad++\notepad++.exe"
 
-        #     pass
+            # ---- for sample database
+            self.db_type            = "QSQLITE"
+                # the type of database, so far we only support sqllite
+
+            self.db_file_name        = ":memory:"     #  = "sample.db"   =  ":memory:"
+            #self.db_file_name        = "./qt_sql.db"    #  real files are very slow
+
+            # ---- for qt tabs
+            self.tab_db_type         = "QSQLITE"
+            self.tab_db_file_name    = ":memory:"
+
+            #self.dir_for_tabs       = [ "./",  ]
+            #self.dir_for_tabs       = [    ]
+            #self.dir_for_tabs      =  [ "/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/qt_tabs" ]
+            self.dir_for_tabs.append(  "/home/russ/sync_with_fattony/python3/_projects/stuffdb/qt_tabs"  )
 
         # # ---- theprof
         # elif computer_id == "theprof":
         #     self.ex_editor          =  r"C:\apps\Notepad++\notepad++.exe"
         #     self.db_file_name       =  "the_prof_db.db"
-
-
-        # # ---- "russ-thinkpad-p72":
-        # elif computer_id == "russ-thinkpad-p72":
-        #     self.win_geometry       = '1500x750+20+20'     # width x height position  x, y  good for the prof, mint
-
-        #     self.logging_level      = logging.DEBUG
-
-
-
-        # elif computer_id == "bulldog-mint-russ":
-        #     self.ex_editor          =  r"xed"
 
 
         # else:
@@ -364,6 +363,10 @@ class Parameters( ):
         self.logger_id          = "qt_ex"         # id of app in logging file
 
 
+        self.breakpoint_ok      = True  # enable breakpoin button
+
+
+
         self.auto_run           = True
 
 
@@ -413,8 +416,8 @@ class Parameters( ):
 
         self.min_complete    = 10  # minimum value for HOW_COMPLETE
 
-        # ---- search
-        self.default_search     = "qq"
+        # ---- search and default
+        self.default_search     = "progress"
         self.do_search_on_init  = True
 
         # probably not used ??
@@ -528,6 +531,8 @@ class Parameters( ):
         a_str   = self.to_columns( a_str, ["minimun_useful",
                                            f"{self.minimun_useful}" ] )
 
+        a_str   = self.to_columns( a_str, ["breakpoint_ok",
+                                           f"{self.breakpoint_ok}" ] )
 
 
         a_str   = self.to_columns( a_str, ["pylogging_fn",

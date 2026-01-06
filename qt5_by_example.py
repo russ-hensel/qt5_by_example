@@ -52,7 +52,6 @@ from PyQt5.QtSql import (QSqlDatabase,
                          QSqlRelationalTableModel,
                          QSqlTableModel)
 
-
 from PyQt5.QtWidgets import (QAbstractItemView,
                              QAction,
                              QApplication,
@@ -102,7 +101,10 @@ import wat_inspector
 import show_parameters
 import tab_base
 import tab_re_base
+from   app_global import AppGlobal
+# import app_logging    # /mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/app_services/app_logging.py
 import app_logging    # /mnt/WIN_D/russ/0000/python00/python3/_projects/rshlib/app_services/app_logging.py
+
 
 #logger   = logging.getLogger()
 
@@ -114,7 +116,7 @@ BEGIN_MARK_2    = uft.BEGIN_MARK_2
 
 print_func_header  = uft.print_func_header
 
-__VERSION__  = "ver_13 - 2025 07 21.01"
+__VERSION__  = "ver_13 - 2025 09 30.01"
 
 # ---- main window ===================================================================
 class Qt5ByExample( QMainWindow ):
@@ -129,6 +131,11 @@ class Qt5ByExample( QMainWindow ):
         my_parameters       = parameters.Parameters()
         self.parameters     = my_parameters
         uft.parameters      = my_parameters
+        #my_parameters.PARAMETERS = my_parameters
+        AppGlobal.parameters  = my_parameters
+
+        # kluge untill better fix
+
         uft.main_window     = self
 
         qt_xpos             = my_parameters.qt_xpos
@@ -140,12 +147,13 @@ class Qt5ByExample( QMainWindow ):
         for i_path in my_parameters.dir_for_tabs:
             unsafe   = f'sys.path.insert( 1, "{i_path}" ) '
             #rint( unsafe )
-            eval( unsafe,   globals(), locals()  )
+            eval( unsafe, globals(), locals()  )
 
         uft.TEXT_EDITOR     = my_parameters.text_editor
 
         global DB_FILE
         DB_FILE             = my_parameters.db_file_name
+
 
         app_logging.init()
 
@@ -167,6 +175,17 @@ class Qt5ByExample( QMainWindow ):
 
         self.current_tab_index   = 0   # I need to track in changed
         self.tab_widget.setCurrentIndex( 0 )
+
+        # ---- breakpoint -- not overrid of sys.argv
+        # argv not gettin passed in reliably put in parameters for now
+        # if sys.argv[1] = "breakpoint_ok"
+        # self.breakpoint_ok
+        if len( sys.argv ) > 1:
+            self.breakpoint_ok = sys.argv[1] ==  "breakpoint_ok"
+        else:
+            self.breakpoint_ok = False
+
+        self.breakpoint_ok = parameters.PARAMETERS.breakpoint_ok
 
         if parameters.PARAMETERS.do_search_on_init:
             self.search_tab.criteria_select()
@@ -237,14 +256,14 @@ class Qt5ByExample( QMainWindow ):
         #print( f"looking for {class_name} = " )
         tab            =  self.tab_widget
         for ix_tab in range( tab.count() ):
-             tab_page       = tab.widget( ix_tab )
-             full_type      = type( tab_page )
-             i_class_name   = full_type.__name__
+            tab_page       = tab.widget( ix_tab )
+            full_type      = type( tab_page )
+            i_class_name   = full_type.__name__
 
-             #rint( f"found for {class_name =}   " )
-             if class_name == i_class_name:
-                 tab_index   = ix_tab
-                 break
+            #rint( f"found for {class_name =}   " )
+            if class_name == i_class_name:
+                tab_index   = ix_tab
+                break
 
         if tab_index >= 0:
             self.tab_widget.setCurrentIndex( tab_index )
@@ -281,11 +300,9 @@ class Qt5ByExample( QMainWindow ):
             #tab.set_web_link( web_link )
 
         elif isinstance( tab, tab_re_base.TabReBase ):
-            """need to poatpone for ReBase """
+            # need to poatpone for ReBase
             msg       = f"Widget of interest >> {widgets}"
             tab.class_widget_text =   msg
-
-            #tab.set_web_link( web_link )
 
     # ------------------------------------
     def build_menu( self,  ):
@@ -383,7 +400,6 @@ class Qt5ByExample( QMainWindow ):
         """
         QMessageBox.information(self, "Not Implemented", "Working on this...")
 
-
     #-------
     def open_general_help( self,   ):
         """
@@ -410,9 +426,9 @@ class Qt5ByExample( QMainWindow ):
 
     #----------------------------
     def on_tab_clicked(self, index):
-
+        """ """
         return    # return to silence
-        print(f"Tab {index} clicked.")
+        #rint(f"Tab {index} clicked.")
 
     #----------------------------
     def tab_page_info( self ):
@@ -420,10 +436,10 @@ class Qt5ByExample( QMainWindow ):
         what it says, read it
         """
         return    # return to silence
-        nb    = self.tab_widget
-        print(f"nb.select()  >>{nb.currentIndex() = }<<")
-        print(f'>>{nb.tabText(nb.currentIndex()) = }<<')
-        # print(f'{ nb.index("current" ) = }' )
+        # nb    = self.tab_widget
+        # print(f"nb.select()  >>{nb.currentIndex() = }<<")
+        # print(f'>>{nb.tabText(nb.currentIndex()) = }<<')
+        # # print(f'{ nb.index("current" ) = }' )
 
     # ----
     def iconify( self ):

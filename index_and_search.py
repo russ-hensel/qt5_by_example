@@ -253,6 +253,7 @@ class TabDBBuilder():
                     # not .stem or .name whic may be needed later
             file_list       = file_list + i_file_list
 
+
         msg         = "index_and_search.py find_doc_files this is the file list"
         logging.debug( msg )
         for ix, i_file in enumerate( file_list ):

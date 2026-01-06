@@ -6,15 +6,15 @@
 # this material is used for selection access to the tab module which must
 # be named tab_....py     among other things
 
-KEY_WORDS:      file directory path dialog
-CLASS_NAME:     QFileDialogTab
-WIDGETS:        QFileDialog QDirectoryDialog
-STATUS:         aug 2025 draft
-TAB_TITLE:      QFileDialog / QDirectoryDialog
-DESCRIPTION:    A reference for the QFileDialog and QDirectoryDialog
+KEY_WORDS:      dialog questionBox  Message Box
+CLASS_NAME:     QDialogsTab
+WIDGETS:        QMessageBox QDialog
+STATUS:         2025 dec draft
+TAB_TITLE:      QDialogsTab / various
+DESCRIPTION:    A few examples of dialogs
 HOW_COMPLETE:   20  #  AND A COMMENT -- <10 major probs  <15 runs but <20 fair not finished  <=25 not to shabby
 """
-WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-QFileDialogs-QDirectoryDialogs"
+WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-Misc-Dialogs"
 
 
 # --------------------
@@ -96,11 +96,58 @@ print_func_header   = uft.print_func_header
 #     """
 
 
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QPushButton, QLineEdit
+from PyQt5.QtCore import Qt
 
+class ExQDialog( QDialog ):
+    """
+    An example dialog from chat then edited """
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setupUI()
+
+    def setupUI(self):
+        # Set the dialog title
+        self.setWindowTitle("My Custom Dialog")
+
+        # Explicitly set the size (width, height)
+        self.resize(400, 250)
+
+        # Optional: Set minimum and maximum sizes
+        self.setMinimumSize(300, 200)
+        self.setMaximumSize(600, 400)
+
+        # Create layout
+        layout = QVBoxLayout()
+
+        # Add some widgets
+        label = QLabel("Enter your name:")
+        self.name_input = QLineEdit()
+
+        # Add buttons
+        ok_button = QPushButton("OK")
+        cancel_button = QPushButton("Cancel")
+
+        # Connect buttons
+        ok_button.clicked.connect(self.accept)
+        cancel_button.clicked.connect(self.reject)
+
+        # Add widgets to layout
+        layout.addWidget(label)
+        layout.addWidget(self.name_input)
+        layout.addWidget(ok_button)
+        layout.addWidget(cancel_button)
+
+        # Set the layout
+        self.setLayout(layout)
+
+    def get_name(self):
+        """Return the entered name"""
+        return self.name_input.text()
 
 
 #  --------
-class QFileDialogTab( tab_base.TabBase ):
+class QDialogsTab( tab_base.TabBase ):
     """
     Reference examples for QFileDialogTab and
 
@@ -126,6 +173,7 @@ class QFileDialogTab( tab_base.TabBase ):
 
         self._build_gui()
 
+    #---------------------------
     def _build_gui_widgets( self, main_layout ):
         """
         the usual, build the gui with the widgets of interest
@@ -156,16 +204,16 @@ class QFileDialogTab( tab_base.TabBase ):
         # and does not run any slower
         # we use this local variable idea in many places
         # because we will refer to the bu
-        widget              = QPushButton( "open_file_dialog" )
+        widget              = QPushButton( "open_message_box" )
         self.q_push_button_1    = widget
 
-        connect_to          = self.open_file_dialog
+        connect_to          = self.open_message_box
         widget.clicked.connect( connect_to )
         row_layout.addWidget( widget )
 
-        widget              = QPushButton( "open_directory_dialog" )
+        widget              = QPushButton( "open_ex_qdialog" )
         self.q_push_button_2    = widget
-        connect_to          = self.open_directory_dialog
+        connect_to          = self.open_ex_qdialog
         widget.clicked.connect( connect_to    )
         row_layout.addWidget( widget,  )
 
@@ -178,7 +226,7 @@ class QFileDialogTab( tab_base.TabBase ):
         self.build_gui_last_buttons( button_layout )
 
     # ------------------------------------
-    def signal_sent( self, msg ):
+    def signal_sentxxx( self, msg ):
         """
         when a signal is sent, use find ???
 
@@ -193,68 +241,41 @@ class QFileDialogTab( tab_base.TabBase ):
 
 
     # ------------------------------------
-    def open_memory_file_dialog( self ):
+    def open_ex_qdialog( self ):
         """
         What it says
-            add some returns
-            not written as isues
+
         """
+
+        dialog = ExQDialog()
+        if dialog.exec_() == QDialog.Accepted:
+            name = dialog.get_name()
+            print(f"Name entered: {name}")
+        else:
+            print("Dialog cancelled")
+
+
 
     # ------------------------------------
-    def open_file_dialog( self ):
+    def open_message_box( self ):
         """
         What it says
             add some returns
         """
-        self.append_msg( "open_file_dialog()" )
 
-        dialog = QFileDialog(self, "Select Files")
+        from PyQt5.QtWidgets import (  QMessageBox, )
 
-        # --- dialog options ---
-        dialog.setFileMode(QFileDialog.ExistingFiles)     # multiple selection allowed
-        dialog.setViewMode(QFileDialog.Detail)            # list vs detail view
-        dialog.setOption(QFileDialog.DontUseNativeDialog, True)  # force Qt dialog
-        dialog.setOption(QFileDialog.ReadOnly, False)     # allow editing file name
-        dialog.setOption(QFileDialog.DontResolveSymlinks, False)
-        dialog.setOption(QFileDialog.HideNameFilterDetails, False)
 
-        # ---- default directory ---
-        #dialog.setDirectory("/mnt")  # change as needed
-        # next to give memory
-        dialog.setDirectory( self.current_default_dir )
-        #dialog.setDirectory( "/mnt/WIN_D/russ/0000/python00/python3/_projects/stuffdb/data/russ2025"  )
+        msg_box_msg    = "this is a message"
+        msg_box             = QMessageBox()
+        msg_box.setIcon( QMessageBox.Information )
+        msg_box.setText(  msg_box_msg  )
+        msg_box.setWindowTitle( "Sorry that is a No Go " )
+        msg_box.setStandardButtons( QMessageBox.Ok )
 
-        # --- filters ---
-        dialog.setNameFilter("Images (*.png *.jpg *.jpeg *.bmp *.gif)")
-        # or
-        dialog.setNameFilters([
-            "All files (*)",
-            "Images (*.png *.jpg *.jpeg *.bmp *.gif)",
-            "Text files (*.txt *.md *.log)",
-        ])
+        ret    = msg_box.exec_()
+        print( f"{ret = }" )
 
-        # --- default selected filter ---
-        dialog.selectNameFilter("Images (*.png *.jpg *.jpeg *.bmp *.gif)")
-        # or
-        dialog.selectNameFilter( "All files (*)" )
-        # --- default file suggestion ---
-        dialog.selectFile( "untitled.txt" )
-
-        # --- execute the dialog ---
-        if dialog.exec_():
-            selected_files = dialog.selectedFiles()
-            print("You selected:")
-            for ix, i_file_name in enumerate (selected_files ):
-                if ix == 0:
-                    file_name_path   = Path( i_file_name )
-                    last_dir         = str( file_name_path.parent )
-                    msg              = ( f"directory ( could be saved ) is  {last_dir}" )
-                    self.current_default_dir = last_dir
-                    self.append_msg( msg )
-                msg   = ( f"   {ix} {i_file_name}" )
-                self.append_msg( msg )
-
-        self.append_msg( tab_base.DONE_MSG )
 
     # ------------------------------------
     def open_directory_dialog( self ):
@@ -263,35 +284,6 @@ class QFileDialogTab( tab_base.TabBase ):
             add some returns !!
             code written as if we could return multiples, but we cannot
         """
-        self.append_msg( "open_directory_dialog()" )
-
-        dialog = QFileDialog(self, "Select a Directory")
-
-        # --- dialog options ---
-        dialog.setFileMode(QFileDialog.Directory)           # directory selection
-        dialog.setOption(QFileDialog.ShowDirsOnly, True)    # show only directories
-        dialog.setOption(QFileDialog.DontUseNativeDialog, True)  # force Qt dialog
-        dialog.setOption(QFileDialog.ReadOnly, False)       # allow typing path manually
-        dialog.setOption(QFileDialog.DontResolveSymlinks, False)
-
-        # --- default start directory ---
-        dialog.setDirectory("/mnt")  # adjust as needed
-
-        # --- default directory suggestion ---
-        dialog.selectFile("Photos")  # highlights/suggests this folder if exists
-
-        # --- execute the dialog ---
-        if dialog.exec_():
-            selected_dirs = dialog.selectedFiles()  # list, usually one item
-            print("You selected:")
-            for d in selected_dirs:
-                msg   = ( f"   {d}" )
-                self.append_msg( msg )
-
-
-        self.append_msg( tab_base.DONE_MSG )
-
-
 
 
     # ------------------------------------
@@ -388,8 +380,8 @@ class QFileDialogTab( tab_base.TabBase ):
         self.append_function_msg( tab_base.INSPECT_MSG )
 
         # we set local variables to make it handy to inspect them
-        self_q_push_button_1    = self.q_push_button_1
-        self_q_push_button_2    = self.q_push_button_1
+        # self_q_push_button_1    = self.q_push_button_1
+        # self_q_push_button_2    = self.q_push_button_1
 
         wat_inspector.go(
              msg            = "for your inspection, some locals and globals",

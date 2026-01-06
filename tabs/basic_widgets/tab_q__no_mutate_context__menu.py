@@ -1,18 +1,22 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # ---- tof
+
+
+
 """
 
-tab_context_menu.py
-
-KEY_WORDS:      context menu custom right click
-CLASS_NAME:     ContextMenuTab
+tab_....
+because mutating aroun a cotext menu causes issue
+KEY_WORDS:      context menu custom right click no mutate constant two leel
+CLASS_NAME:     ConstantContextMenuTab
 WIDGETS:        QMenu QtCore.Qt.CustomContextMenu
 STATUS:         seem fairly complete
-TAB_TITLE:      QMenu / as a context menu
-DESCRIPTION:    A QMenu as a context menu
-HOW_COMPLETE:   20  #  AND A COMMENT -- <10 major probs  <15 runs but <20 fair not finished  <=25 not to shabby
+TAB_TITLE:      QMenu no Mutate / context menu
+DESCRIPTION:    A QMenu as a constant context menu
+HOW_COMPLETE:   20  #  just works really need editing  -- <10 major probs  <15 runs but <20 fair not finished  <=25 not to shabby
 """
+
 WIKI_LINK      =  "https://github.com/russ-hensel/qt5_by_example/wiki/What-We-Know-About-CustomContextMenu"
 
 
@@ -90,7 +94,7 @@ import tab_base
 print_func_header   = uft.print_func_header
 
 #  --------
-class ContextMenuTab( tab_base.TabBase ):
+class ConstantContextMenuTab( tab_base.TabBase ):
     """
     Now i have a doc string.
 
@@ -109,10 +113,7 @@ class ContextMenuTab( tab_base.TabBase ):
 
         self.mutate_dict[0]     = self.mutate_0
         self.mutate_dict[1]     = self.mutate_1
-        self.mutate_dict[2]     = self.mutate_2
-        self.mutate_dict[3]     = self.mutate_3
-        self.mutate_dict[4]     = self.mutate_4
-        self.mutate_dict[5]     = self.mutate_5
+
 
         self.right_click_menu   = False
 
@@ -130,9 +131,7 @@ class ContextMenuTab( tab_base.TabBase ):
         # too clever ??
         main_layout.addLayout( layout := QVBoxLayout() )
 
-
-
-        # ---- new row c
+        # ---- new row
         row_layout          = QHBoxLayout(   )
         layout.addLayout( row_layout )
 
@@ -142,10 +141,11 @@ class ContextMenuTab( tab_base.TabBase ):
 
         # ---- the QTextEdit
         widget       = QTextEdit()
-        # layout.addWidget(text_edit, 4, 0, 1, 3)  # Row 4, Column 0, RowSpan 1, ColumnSpan 3
         self.text_edit  = widget   # later we will need to know this
-
         row_layout.addWidget( widget,  )
+
+        widget.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        widget.customContextMenuRequested.connect(self.show_context_menu)
 
         # ---- new row, standard buttons
         button_layout = QHBoxLayout(   )
@@ -153,25 +153,8 @@ class ContextMenuTab( tab_base.TabBase ):
 
         self.build_gui_last_buttons( button_layout )
 
-    #-------------------------
-    def default_context_menu(self, widget ):
-        """
-        set to use the default contex menu
-        """
-        self.append_msg( "default_context_menu" )
-        widget.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
 
-    #-------------------------
-    def no_context_menu(self, widget ):
-        """
-        what it says
 
-        """
-        self.append_msg( "no_context_menu" )
-        # Option 1: Revert to default context menu
-        #widget.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
-        # Option 2: Disable context menu entirely
-        widget.setContextMenuPolicy(QtCore.Qt.NoContextMenu)
 
     #----------------------------
     def mouseDoubleClickEvent(self, event ):
@@ -180,24 +163,7 @@ class ContextMenuTab( tab_base.TabBase ):
         self.append_msg( msg )
         super().mouseDoubleClickEvent(event)
 
-    #----------------------------
-    def custom_context_menu( self, widget ):
-        """
-        what it says
-            configure for the custom context widget
-        """
-        msg    = ("custom_context_menu")
-        self.append_msg( msg )
-        widget.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
 
-        # need to disconnect existing if any
-        try:
-            self.customContextMenuRequested.disconnect()
-        except TypeError:
-            # no previous connection
-            pass
-
-        widget.customContextMenuRequested.connect(self.show_context_menu)
 
     #----------------------------
     def foo(self):
@@ -250,53 +216,59 @@ class ContextMenuTab( tab_base.TabBase ):
         """
         self.append_msg( "begin show_context_menu" )
 
-        widget = self.text_edit
-        menu   = QMenu( widget )   # maybe widget ??
+        widget          = self.text_edit
+        menu            = QMenu( widget )   # maybe widget ??
+        main_menu       = menu
+
+        #  for  Enable/disable actions based on context
+        cursor          = widget.textCursor()
+
+        can_undo        = widget.document().isUndoAvailable()
+        can_paste       = QApplication.clipboard().text() != ""
+        has_selection   = cursor.hasSelection()
 
         # Add standard actions
-        undo_action = menu.addAction("UN-DOO")
-        undo_action.triggered.connect(widget.undo)
+        menu_action     = menu.addAction("UN-DOO")
+        menu_action.triggered.connect( widget.undo )
+        undo_action     = menu_action
+        menu_action.setEnabled( can_undo )
+
         menu.addSeparator()
 
-        cut_action = menu.addAction("CUT")
-        cut_action.triggered.connect(widget.cut)
-        copy_action = menu.addAction("COPY")
-        copy_action.triggered.connect(widget.copy)
-        paste_action = menu.addAction("PASTE")
-        paste_action.triggered.connect(widget.paste)
+        menu_action     = menu.addAction("CUT")
+        menu_action.triggered.connect(widget.cut)
+        cut_action      = menu_action
+        menu_action.setEnabled( has_selection )
+
+        # ---- "COPY"
+        menu_action     = menu.addAction( "COPY" )
+        menu_action.triggered.connect(widget.copy)
+        menu_action.setEnabled( has_selection )
+
+        # ---- "PASTE"
+        menu_action     = paste_action = menu.addAction( "PASTE" )
+        menu_action.triggered.connect(widget.paste)
+        menu_action.setEnabled(can_paste)
+
         menu.addSeparator()
 
         # Add custom action
-        foo_action = menu.addAction("Foo")
-        foo_action.triggered.connect(self.foo)
+        menu_action     = menu.addAction("FOO")
+        menu_action.triggered.connect(self.foo)
 
+        export_submenu = menu.addMenu("EXPORT AS ...")
 
-        export_submenu = menu.addMenu("Export As...")
-
-        # Add actions to the submenu
+        # Add actions to the submenu -- but for now these might not connet to anything
         pdf_action   = export_submenu.addAction("Export to PDF")
         csv_action   = export_submenu.addAction("Export to CSV")
         json_action  = export_submenu.addAction("Export to JSON")
 
 
-
-
-        # Enable/disable actions based on context
-        cursor = widget.textCursor()
-        has_selection = cursor.hasSelection()
-        can_undo = widget.document().isUndoAvailable()
-        can_paste = QApplication.clipboard().text() != ""
-
-        undo_action.setEnabled(can_undo)
-        cut_action.setEnabled(has_selection)
-        copy_action.setEnabled(has_selection)
-        paste_action.setEnabled(can_paste)
-
         # Show the context menu
         menu.exec_(widget.mapToGlobal(pos))
 
     # ------------------------------------
-    def signal_sent( self, msg ):
+    def signal_sentxxxx( self, msg ):
         """
         when a signal is sent, use find
         """
@@ -308,7 +280,7 @@ class ContextMenuTab( tab_base.TabBase ):
         self.append_msg( "<<-- done" )
 
     # ------------------------------------
-    def put_in_clipboard( self, a_string ):
+    def put_in_clipboardxxxx( self, a_string ):
         """
         what it says:
         """
@@ -331,12 +303,12 @@ class ContextMenuTab( tab_base.TabBase ):
         """
         self.append_function_msg( "mutate_0" )
 
-        widget    = self.text_edit
-        self.default_context_menu( widget )
+        # widget    = self.text_edit
+        # self.default_context_menu( widget )
 
-        self.right_click_menu   = False
-        msg                     = f"{self.right_click_menu = }"
-        self.append_msg( msg, )
+        # self.right_click_menu   = False
+        # msg                     = f"{self.right_click_menu = }"
+        # self.append_msg( msg, )
 
         self.append_msg( tab_base.DONE_MSG )
 
@@ -367,47 +339,7 @@ class ContextMenuTab( tab_base.TabBase ):
 
         self.append_msg( tab_base.DONE_MSG )
 
-    # ------------------------------------
-    def mutate_3( self ):
-        """
-        read it -- mutate the widgets
-        """
-        self.append_function_msg( "mutate_3" )
 
-        self.no_context_menu( self.text_edit )
-
-        self.right_click_menu       = True
-        msg                         = f"{self.right_click_menu = }"
-        self.append_msg( msg, )
-
-        self.append_msg( tab_base.DONE_MSG )
-
-    # ------------------------------------
-    def mutate_4( self ):
-        """
-        read it -- mutate the widgets
-        """
-        self.append_function_msg( "mutate_4" )
-
-        self.right_click_menu       = False
-        msg                         = f"{self.right_click_menu = }"
-        self.append_msg( msg, )
-
-        self.append_msg( tab_base.DONE_MSG )
-
-    # ------------------------------------
-    def mutate_5( self ):
-        """
-        read it -- mutate the widgets
-        """
-        self.append_function_msg( "mutate_5" )
-
-        self.right_click_menu       = True
-        msg                         = f"{self.right_click_menu = }"
-        self.append_msg( msg, )
-
-        self.custom_context_menu( self.text_edit )
-        self.append_msg( tab_base.DONE_MSG )
 
     # ---- connects -----------------------
     # --------------------------
