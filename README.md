@@ -1,5 +1,14 @@
 # qt5_by_example
 
+THIS IS IN PROCESS OF BEING REPLACED BY https://github.com/russ-hensel/pyqt_by_example which is running
+on my machine, but not yet uploaded.  After a bit more clean up this repository will be abandoned
+an probably deleted.  For now most things work in QT5
+
+The new repo uses qppy and is conpatible qith qt5 and qt6 and even pyside, which is how I am
+going to program qt in the future
+
+-----------------------
+
 This is a single GUI application with many tabs.  Each tab illustrates the
 use of some of of qt5's widgets. ( this replaces my app/repository "qt_by_example" which will
 be deleted real soon )
