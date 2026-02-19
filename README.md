@@ -1,7 +1,12 @@
 # qt5_by_example
 
 THIS IS IN PROCESS OF BEING REPLACED BY https://github.com/russ-hensel/pyqt_by_example which is running
-on my machine, but not yet uploaded.  After a bit more clean up this repository will be abandoned
+on my machine, AND IS NOW UPLOADED
+
+USE THE NEW REPO NOT THIS WHICH WILL BE DELETED ONCE I FEEL EVERYTHING IS TRANSFERED
+THERE ARE FEWER BUGS IN PYQT_BY_EXAMPLE
+
+After a bit more clean up this repository will be abandoned
 an probably deleted.  For now most things work in QT5
 
 The new repo uses qppy and is conpatible qith qt5 and qt6 and even pyside, which is how I am
