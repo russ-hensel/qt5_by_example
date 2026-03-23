@@ -1,5 +1,0 @@
-This is the general help
-
-Move all text to the qsql for now
-
--- do some consistent version with qt_sql ......
