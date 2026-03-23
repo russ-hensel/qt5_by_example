@@ -1,10 +1,10 @@
 # qt5_by_example
 
-THIS IS IN PROCESS OF BEING REPLACED BY https://github.com/russ-hensel/pyqt_by_example which is running
+THIS HAS BEEN REPLACED BY https://github.com/russ-hensel/pyqt_by_example which is running
 on my machine, AND IS NOW UPLOADED
 
-USE THE NEW REPO NOT THIS WHICH WILL BE DELETED ONCE I FEEL EVERYTHING IS TRANSFERED
-THERE ARE FEWER BUGS IN PYQT_BY_EXAMPLE
+USE THE NEW REPO NOT THIS WHICH WILL BE DELETED ONCE I GET TO IT. FIRST THE FILES WILL GO
+THEN THE REST.
 
 After a bit more clean up this repository will be abandoned
 an probably deleted.  For now most things work in QT5
