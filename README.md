@@ -4,4 +4,4 @@ USE THE NEW REPO NOT THIS WHICH WILL BE DELETED ONCE I GET TO IT. FIRST THE FILE
 
 After a bit more clean up this repository will be abandoned an probably deleted. For now most things work in QT5
 
-The new repo uses qppy and is conpatible qith qt5 and qt6 and even pyside, which is how I am going to program qt in the future
+The new repo uses qtpy and is compatible with qt5 and qt6 and even pyside, which is how I am going to program qt in the future
